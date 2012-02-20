@@ -1,0 +1,172 @@
+
+{
+    "timeline":
+    {
+        "headline":"The Kitchen Sink, Évier de la Cuisine ",
+        "type":"default",
+		"startDate":"1888",
+		"text":"An example of the different kinds of stuff you can do.",
+		"asset":
+        {
+            "media":"http://2.bp.blogspot.com/-dxJbW0CG8Zs/TmkoMA5-cPI/AAAAAAAAAqw/fQpsz9GpFdo/s1600/voyage-dans-la-lune-1902-02-g.jpg",
+            "credit":"",
+            "caption":""
+        },
+        "date": [
+            {
+                "startDate":"2012,1,18",
+                "headline":"YouTube",
+                "text":"To add a YouTube video, just add a link to it.",
+                "asset":
+                {
+                    "media":"http://youtu.be/yRvJylbSg7o",
+                    "credit":"",
+                    "caption":"Directed and Edited by Matt Mayer, Produced by Seth Keim, Written by Eliot Glazer. Featuring Eliot and Ilana Glazer, who are siblings, not married."
+                }
+            },
+			{
+                "startDate":"1980,1,18",
+                "headline":"Google Map",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://maps.google.com/?ll=42.054932,-87.674654&spn=0.014785,0.023754&hnear=1630+Lake+Ave,+Wilmette,+Illinois+60091&t=v&z=16",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2000,1,18",
+                "headline":"Google Map",
+                "text":"Just add the link to the map!",
+                "asset":
+                {
+                    "media":"http://maps.google.com/maps?q=Northwestern+University,+Sheridan+Road,+Evanston,+IL&hl=en&ll=42.056972,-87.676907&spn=0.02957,0.047507&sll=42.054932,-87.674654&sspn=0.014785,0.023754&oq=northwestern+&t=v&hq=Northwestern+University,+Sheridan+Road,+Evanston,+IL&z=15",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+
+			{
+                "startDate":"1899",
+                "headline":"Le portrait mystérieux ",
+                "text":"To add a YouTube video, just add a link to it.",
+                "asset":
+                {
+                    "media":"http://youtu.be/lIvftGgps24",
+                    "credit":"Georges Méliès",
+                    "caption":"Le portrait mystérieux"
+                }
+            },
+			{
+                "startDate":"1902",
+                "headline":"L'oeuf du sorcier",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://youtu.be/JdBqHgwN7Pg",
+                    "credit":"Georges Méliès",
+                    "caption":"L'oeuf du sorcier"
+                }
+            },
+			{
+                "startDate":"1905",
+                "headline":"Le juif errant",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://youtu.be/SvmM_YSnWX8",
+                    "credit":"Georges Méliès",
+                    "caption":"Le juif errant"
+                }
+            },
+			{
+                "startDate":"1903",
+                "headline":"Le tonnerre de Jupiter",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://youtu.be/nIylL8ufx3Y",
+                    "credit":"Georges Méliès",
+                    "caption":"Le tonnerre de Jupiter"
+                }
+            },
+			{
+                "startDate":"1980,2,7",
+                "headline":"Flickr",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://www.flickr.com/photos/zachwise/6856858425/in/photostream",
+                    "credit":"Zach Wise",
+                    "caption":"Feels like Siberia again"
+                }
+            },
+			{
+                "startDate":"1990,2,7",
+                "headline":"Flickr",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://www.flickr.com/photos/zachwise/6687123779/in/photostream",
+                    "credit":"Zach Wise",
+                    "caption":"Enjoying the snow while sheltered at the train station"
+                }
+            },
+			{
+                "startDate":"2012,2,7",
+                "headline":"A Tweet",
+                "text":"To add a tweet, just add the link.",
+                "asset":
+                {
+                    "media":"https://twitter.com/#!/neonmarg/status/167006310850760706",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+
+			{
+                "startDate":"2012,1,18",
+                "headline":"SoundCloud ",
+                "text":"Just add a link to the track",
+                "asset":
+                {
+                    "media":"http://soundcloud.com/radiohead/radiohead_separator-anstam-rmx",
+                    "credit":"Radiohead Separator - Anstam RMX",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2011,12,23",
+                "headline":"Vimeo",
+                "text":"<p>Whitestone Motion Pictures proudly presents ‘Jack and the Dustbowl’, a short film about overcoming adversity and making the impossible, possible.</p><p>Jack Spriggs, a poor dust bowl farmer from Alabama, is determined to keep his family’s land. Set during the Great Depression, record heat waves and over-farming have turned the once fertile soil into worthless dust. Refusing to become a victim of his circumstances, Jack embraces his surroundings and digs in. Jack’s tenacious spirit and ingenuity will either keep his family together or he'll lose everything trying.</p>",
+                "asset":
+                {
+                    "media":"https://vimeo.com/34724990",
+                    "credit":"Whitestone Motion Pictures",
+                    "caption":"Whitestone Motion Pictures proudly presents ‘Jack and the Dustbowl’, a short film about overcoming adversity and making the impossible, possible."
+                }
+            },
+			{
+                "startDate":"2011,2,10",
+                "headline":"Some Tweet Response also",
+                "asset":
+                {
+                    "media":"http://twitter.com/alykat/status/164184609519697920",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2011,12,10",
+                "headline":"Some Tweet Response",
+                "asset":
+                {
+                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+                    "credit":"",
+                    "caption":""
+                }
+            }
+        ]
+    }
+}

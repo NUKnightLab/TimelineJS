@@ -1,0 +1,165 @@
+/*
+ * Structure
+ * Basic and global styles for generating structural layout
+ * ------------------------------------------------------------------------------------------- */
+
+/* TESTING PURPOSES
+================================================== */
+html, body {
+	height:100%;
+	padding: 0px;
+	margin: 0px;
+}
+/* IPHONE ETC
+================================================== */
+
+
+
+#timeline {
+	width: 100%;
+	height:100%;
+	//border: 1px solid @color-line;
+	padding:0px;
+	margin:0px;
+	background-color:@color-background;
+	position: absolute;
+	//border: 1px solid @color-line;
+	overflow:hidden;
+	
+	
+	
+	/* FEEDBACK
+	================================================== */
+	.feedback {
+		position: absolute;
+		display:table;
+		overflow:hidden;
+		top:0px;
+		left:0px;
+		z-index:2000;
+		width: 100%;
+		height:100%;
+		background-color:@color-background-dark;
+		border: 1px solid @color-line;
+		//.opacity(80);
+		.messege {
+			display:table-cell;
+			vertical-align:middle;
+			font-size: 28px;
+			font-family:@font-sansserif;
+			font-weight: bold;
+			text-transform: uppercase;
+			line-height: 36px;
+			width:75%;
+			margin-left:auto;
+			margin-right:auto;
+			margin-top:auto;
+			margin-bottom:auto;
+			text-align: center;
+			
+		}
+	}
+	
+	/* Container
+	================================================== */
+	.container.main {
+		//margin-bottom:@base-space;
+		//margin-top:@base-space;
+		position: absolute;
+		top:0px:
+		left:0px;
+		padding-bottom:3px;
+		//margin-top:@base-space;
+		width: auto;
+		height: auto;
+		margin:0px;
+		clear:both;
+	}
+	img, embed, object, video, iframe {
+		max-width: 100%;
+	}
+	iframe {
+		//margin-bottom:5px;
+	}
+	img {
+		max-height:100%;
+		//border: 1px solid @color-line;
+		border: 1px solid @color-credit;
+	}
+	a {
+		color:@color-theme;
+		text-decoration: none;
+	}
+	a:hover {
+		color:@color-theme-dark;
+		text-decoration: underline;
+	}
+	.twitter {
+		text-align:left;
+		//max-width:500px;
+		background-color:@white;
+		margin-left: auto;
+		margin-right: auto;
+		blockquote {
+			font-size: @base-font;
+			line-height: @base-line;
+			font-family: @font-sansserif;
+			color:@color-feature-description;
+			p {
+				font-size: 28px;
+				line-height: 36px;
+				margin-bottom: 6px;
+				padding-top: 10px;
+				background-color:@white;
+				font-family: @font-serif;
+				color:@color-feature-title;
+
+			}
+		}
+
+	}
+	
+	.layout-media {
+		.twitter {
+			max-width:70%;
+		}
+	}
+	
+	.thumbnail {
+		width:24px;
+		height:24px;
+		overflow:hidden;
+		float:left;
+		margin-right:5px;
+		border: 1px solid @color-line;
+	}
+	.thumbnail.twitter {
+		.icon-twitter();
+	}
+	.thumbnail.vimeo {
+		.icon-vimeo();
+	}
+	.thumbnail.youtube {
+		.icon-youtube();
+	}
+	.thumbnail.soundcloud {
+		.icon-soundcloud();
+	}
+	.thumbnail.map {
+		.icon-map();
+		//.icon-map-pin();
+	}
+	.zFront {
+		z-index:500;
+	}
+	
+}
+
+
+
+@import "structure-feature.less";
+
+@import "slider.less";
+
+@import "structure-navigation.less";
+

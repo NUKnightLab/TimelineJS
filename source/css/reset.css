@@ -1,0 +1,20 @@
+#timeline h1,#timeline h2,#timeline h3,#timeline h4,#timeline h5,#timeline h6,#timeline p,#timeline blockquote,#timeline pre,#timeline a,#timeline abbr,#timeline acronym,#timeline address,#timeline cite,#timeline code,#timeline del,#timeline dfn,#timeline em,#timeline img,#timeline q,#timeline s,#timeline samp,#timeline small,#timeline strike,#timeline strong,#timeline sub,#timeline sup,#timeline tt,#timeline var,#timeline dd,#timeline dl,#timeline dt,#timeline li,#timeline ol,#timeline ul,#timeline fieldset,#timeline form,#timeline label,#timeline legend,#timeline button,#timeline table,#timeline caption,#timeline tbody,#timeline tfoot,#timeline thead,#timeline tr,#timeline th,#timeline td{margin:0;padding:0;border:0;font-weight:normal;font-style:normal;font-size:100%;line-height:1;font-family:inherit;}
+#timeline table{border-collapse:collapse;border-spacing:0;}
+#timeline ol,#timeline ul{list-style:none;}
+#timeline q:before,#timeline q:after,#timeline blockquote:before,#timeline blockquote:after{content:"";}
+#timeline a:focus{outline:thin dotted;}
+#timeline a:hover,#timeline a:active{outline:0;}
+#timeline article,#timeline aside,#timeline details,#timeline figcaption,#timeline figure,#timeline footer,#timeline header,#timeline hgroup,#timeline nav,#timeline section{display:block;}
+#timeline audio,#timeline canvas,#timeline video{display:inline-block;*display:inline;*zoom:1;}
+#timeline audio:not([controls]){display:none;}
+#timeline sub,#timeline sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline;}
+#timeline sup{top:-0.5em;}
+#timeline sub{bottom:-0.25em;}
+#timeline img{border:0;-ms-interpolation-mode:bicubic;}
+#timeline button,#timeline input,#timeline select,#timeline textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle;}
+#timeline button,#timeline input{line-height:normal;*overflow:visible;}
+#timeline button::-moz-focus-inner,#timeline input::-moz-focus-inner{border:0;padding:0;}
+#timeline button,#timeline input[type="button"],#timeline input[type="reset"],#timeline input[type="submit"]{cursor:pointer;-webkit-appearance:button;}
+#timeline input[type="search"]{-webkit-appearance:textfield;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;}
+#timeline input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;}
+#timeline textarea{overflow:auto;vertical-align:top;}
