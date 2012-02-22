@@ -1704,9 +1704,10 @@ if (typeof VMM == 'undefined') {
 		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
 			trace("google map " + media.id);
 			success = true;
-		} else if (d.match("flickr.com")) {
+		} else if (d.match("flickr.com/photos")) {
 			media.type = "flickr";
 			//media.id = d.split('/photos/[^/]+/([0-9]+)/gi');
+			
 			media.id = d.split("photos\/")[1].split("/")[1];
 			//media.id = media.id.split("/")[1];
 			trace("FLICKR " + media.id);
