@@ -81,6 +81,8 @@ html, body {
 	iframe {
 		//margin-bottom:5px;
 	}
+	
+	
 	img {
 		max-height:100%;
 		//border: 1px solid @color-line;
@@ -97,13 +99,14 @@ html, body {
 	.twitter {
 		text-align:left;
 		//max-width:500px;
+		font-family: @font-sansserif;
 		background-color:@white;
 		margin-left: auto;
 		margin-right: auto;
+		clear:both;
 		blockquote {
 			font-size: @base-font;
 			line-height: @base-line;
-			font-family: @font-sansserif;
 			color:@color-feature-description;
 			p {
 				font-size: 28px;
@@ -113,9 +116,68 @@ html, body {
 				background-color:@white;
 				font-family: @font-serif;
 				color:@color-feature-title;
-
+				//margin-left:10px;
+			}
+			.quote-mark {
+				color:@color-dark-third;
 			}
 		}
+		.created-at {
+			.icon-twitter();
+			width:24px;
+			height:24px;
+			overflow:hidden;
+			margin-left:@base-space;
+			display:inline-block;
+			float:right;
+			.opacity(25);
+		}
+		.created-at:hover {
+			.opacity(100);
+		}
+		.vcard {
+			float:right;
+			//position: relative;
+			a {
+				color: @color-dark-second;
+			}
+			a:hover {
+				text-decoration: none;
+				.fn {
+					text-decoration: underline;
+				}
+			}
+			.fn, .nickname {
+				
+				padding-left: 42px;
+			}
+			.fn {
+				display:block;
+				//display:inline;
+				font-weight: bold;
+
+			}
+			.nickname {
+				margin-top:3px;
+				display:block;
+				color: @color-dark-third;
+			}
+			
+			.avatar {
+				float:left;
+				//position: absolute;
+				display: block;
+				width: 32px;
+				height: 32px;
+				img {
+					//border: 0px solid #999;
+					-moz-border-radius: 5px;
+					-webkit-border-radius: 5px;
+					border-radius: 5px;
+				}
+			}
+		}
+		
 
 	}
 	
@@ -149,6 +211,10 @@ html, body {
 		.icon-map();
 		//.icon-map-pin();
 	}
+	.thumbnail.website {
+		.icon-website();
+	}
+	
 	.zFront {
 		z-index:500;
 	}

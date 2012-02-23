@@ -389,6 +389,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return sps.join(" ");
 		},
 		
+		/* Replaces dumb quote marks with smart ones
+		================================================== */
+		properQuotes: function(str) {
+			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
+		},
 		/* Given an int or decimal, return a string with pretty commas in the correct spot.
 		================================================== */
 		niceNumber: function(n){

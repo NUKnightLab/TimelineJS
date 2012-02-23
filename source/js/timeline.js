@@ -634,7 +634,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			min_multiplier:1,
 			has_start_page:false,
 		};
-		
+		 
 		
 		
 		//config.rows = [1, config.marker_height, config.marker_height*2];

@@ -1269,6 +1269,12 @@ if (typeof VMM == 'undefined') {
 				} else if (m.type == "google-map") {
 					mediaElem = "<div class='thumbnail map'></div>";
 					return mediaElem;
+				} else if (m.type == "unknown") {
+					mediaElem = "";
+					return mediaElem;
+				} else if (m.type == "website") {
+					mediaElem = "<div class='thumbnail website'></div>";
+					return mediaElem;
 				} else {
 					mediaElem = "<div class='thumbnail'></div>";
 					return mediaElem;
@@ -1338,10 +1344,13 @@ if (typeof VMM == 'undefined') {
 					var soundcloud_id = "soundcloud_" + VMM.Util.unique_ID(5);
 					mediaElem = "<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
 					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id)
-				} else if (m.type = "google-map") {
-					trace("GOOGLE MAP MEDIA CREATE");
+				} else if (m.type == "google-map") {
 					mediaElem = "<iframe class='media-frame map' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
-					//mediaElem = "<iframe class='media-frame video vimeo' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+				} else if (m.type == "unknown") { 
+					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
+					mediaElem = VMM.Util.properQuotes(m.id); 
+				} else if (m.type == "website") { 
+					mediaElem = "<iframe class='media-frame' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>"
 				} else {
 					trace("NO KNOWN MEDIA TYPE FOUND");
 					trace(m.type);
@@ -1366,11 +1375,97 @@ if (typeof VMM == 'undefined') {
 		
 	}).init();
 	
+	//VMM.mediaType.youtube(d); //should return a true or false
+	// VMM.MediaType(url); //returns an object with .type and .id
+	VMM.MediaType = function(d) {
+		var success = false;
+		var media   = {};
+		if (d.match("div class='twitter'")) {
+			media.type  = "twitter-ready";
+		    media.id    = d;
+		    success = true;
+		} else if (d.match('(www.)?youtube|youtu\.be')) {
+			if (d.match('embed')) { 
+				youtube_id = d.split(/embed\//)[1].split('"')[0];
+			} else { 
+				youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+			}
+			//youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+		    media.type  = "youtube";
+		    media.id    = youtube_id;
+		    success = true;
+		} else if (d.match('(player.)?vimeo\.com')) {
+		    //vimeo_id = d.split(/video\/|http:\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
+		    vimeo_id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
+		
+		    media.type  = "vimeo";
+		    media.id    = vimeo_id;
+		    success = true;
+		} else if (d.match('(player.)?soundcloud\.com')) {
+			//soundcloud_url = unescape(d.split(/value="/)[1].split(/["]/)[0]);
+			//soundcloud_id = soundcloud_url.split(/tracks\//)[1].split(/[&"]/)[0];
+			media.type  = "soundcloud";
+			media.id    = d;
+			success = true;
+		} else if (d.match('(www.)?twitter\.com')) {
+			trace("TWITTER MATCH");
+			// https://twitter.com/#!/twitterapi/statuses/133640144317198338
+			// https://twitter.com/#!/DeliciousHot/status/23189589820702720
+			if (d.match("status\/")) {
+				twitter_id = d.split("status\/")[1];
+			} else if (d.match("statuses\/")) {
+				twitter_id = d.split("statuses\/")[1];
+			} else {
+				twitter_id = "";
+			}
+
+			media.type = "twitter";
+			media.id = twitter_id;
+			success = true;
+		} else if (d.match("maps.google.com")) {
+			//maps.google.com
+			media.type  = "google-map";
+		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
+			trace("google map " + media.id);
+			success = true;
+		} else if (d.match("flickr.com/photos")) {
+			media.type = "flickr";
+			//media.id = d.split('/photos/[^/]+/([0-9]+)/gi');
+			
+			media.id = d.split("photos\/")[1].split("/")[1];
+			//media.id = media.id.split("/")[1];
+			trace("FLICKR " + media.id);
+			success = true;
+		} else if (d.match(/jpg|png|gif/i)) {
+			media.type  = "image";
+			media.id    = d;
+			success = true;
+		} 	else if (d.indexOf('http://') == 0) {
+			media.type  = "website";
+			media.id    = d;
+			success = true;
+		} else {
+			trace("unknown media");  
+			media.type  = "unknown";
+			media.id    = d;
+			success = true;
+		}
+		
+		if (success) { 
+			return media;
+		} else {
+			trace("No valid media id detected");
+			trace(d);
+		}
+		return false;
+	}
+	
 	VMM.Keys = {
 		flickr: "6d6f59d8d30d79f4f402a7644d5073e3",
 	}
 	
 	VMM.ExternalAPI = {
+		
 		twitter: {
 			tweetArray: [],
 			// VMM.ExternalAPI.twitter.getHTML(id);
@@ -1508,6 +1603,7 @@ if (typeof VMM == 'undefined') {
 					VMM.ExternalAPI.twitter.formatJSON(d, id);
 				});
 			},
+			
 			formatJSON: function(d, id) {
 				var twit = "<blockquote><p>";
 				var td = VMM.Util.linkify(d.text);
@@ -1515,8 +1611,21 @@ if (typeof VMM == 'undefined') {
 				td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2'>$1</a>");
 				//twit += VMM.Util.linkify(d.text);
 				twit += td;
-				twit += "</p>";
-				twit += "— " + d.user.name + " (<a href='https://twitter.com/" + d.user.screen_name + "'>@" + d.user.screen_name + "</a>) <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + d.created_at + " </a></blockquote>";
+				twit += "</p></blockquote>";
+				//twit += "— " + d.user.name + " (<a href='https://twitter.com/" + d.user.screen_name + "'>@" + d.user.screen_name + "</a>) <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + d.created_at + " </a>";
+				//twit += "<a href='" +  + "'>" + VMM.ExternalAPI.twitter.prettyParseTwitterDate(d.created_at);
+				//twit += "<span class='created-at'><a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + VMM.ExternalAPI.twitter.prettyParseTwitterDate(d.created_at) + " </a></span>";
+				//twit += "<span class='created-at'><a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + "Tweet Details" + " </a></span>";
+				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
+				twit += "<div class='vcard author'>"
+				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "'>";
+				twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
+				twit += "<span class='fn'>" + d.user.name + "</span>";
+				twit += "<span class='nickname'>@" + d.user.screen_name + "</span>";
+				twit += "</a>"
+				twit += "</div>"
+				
+				
 				/*
 				<blockquote class="twitter-tweet">
 				<p>Tom Brokaw asks <a href="https://twitter.com/search/%2523Romney">#Romney</a> to remove from ads 1997 NBC report on <a href="https://twitter.com/search/%2523Gingrich">#Gingrich</a> legal troubles. Romney unmoved. <a href="http://t.co/re7vtLNt" title="http://thecaucus.blogs.nytimes.com/2012/01/28/nbc-news-asks-romney-campaign-to-remove-ad/?hp">thecaucus.blogs.nytimes.com/2012/01/28/nbc…</a></p>
@@ -1528,6 +1637,7 @@ if (typeof VMM == 'undefined') {
 			}
 			
 		},
+		
 		maps: {
 			
 		},
@@ -1651,81 +1761,7 @@ if (typeof VMM == 'undefined') {
 			
 		}
 	}
-	//VMM.mediaType.youtube(d); //should return a true or false
-	// VMM.MediaType(url); //returns an object with .type and .id
-	VMM.MediaType = function(d) {
-		var success = false;
-		var media   = {};
-		if (d.match("div class='twitter'")) {
-			media.type  = "twitter-ready";
-		    media.id    = d;
-		    success = true;
-		} else if (d.match('(www.)?youtube|youtu\.be')) {
-			if (d.match('embed')) { 
-				youtube_id = d.split(/embed\//)[1].split('"')[0];
-			} else { 
-				youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
-			}
-			//youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
-		    media.type  = "youtube";
-		    media.id    = youtube_id;
-		    success = true;
-		} else if (d.match('(player.)?vimeo\.com')) {
-		    //vimeo_id = d.split(/video\/|http:\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
-		    vimeo_id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
-		
-		    media.type  = "vimeo";
-		    media.id    = vimeo_id;
-		    success = true;
-		} else if (d.match('(player.)?soundcloud\.com')) {
-			//soundcloud_url = unescape(d.split(/value="/)[1].split(/["]/)[0]);
-			//soundcloud_id = soundcloud_url.split(/tracks\//)[1].split(/[&"]/)[0];
-			media.type  = "soundcloud";
-			media.id    = d;
-			success = true;
-		} else if (d.match('(www.)?twitter\.com')) {
-			trace("TWITTER MATCH");
-			// https://twitter.com/#!/twitterapi/statuses/133640144317198338
-			// https://twitter.com/#!/DeliciousHot/status/23189589820702720
-			if (d.match("status\/")) {
-				twitter_id = d.split("status\/")[1];
-			} else if (d.match("statuses\/")) {
-				twitter_id = d.split("statuses\/")[1];
-			} else {
-				twitter_id = "";
-			}
-
-			media.type = "twitter";
-			media.id = twitter_id;
-			success = true;
-		} else if (d.match("maps.google.com")) {
-			//maps.google.com
-			media.type  = "google-map";
-		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
-			trace("google map " + media.id);
-			success = true;
-		} else if (d.match("flickr.com/photos")) {
-			media.type = "flickr";
-			//media.id = d.split('/photos/[^/]+/([0-9]+)/gi');
-			
-			media.id = d.split("photos\/")[1].split("/")[1];
-			//media.id = media.id.split("/")[1];
-			trace("FLICKR " + media.id);
-			success = true;
-		} else if (d.match(/jpg|png|gif/i)) {
-			media.type  = "image";
-			media.id    = d;
-			success = true;
-		}
-		
-		if (success) { 
-			return media;
-		} else {
-			trace("No valid media id detected");
-			trace(d);
-		}
-		return false;
-	}
+	
 	
 	/* MEDIA
 	================================================== */
