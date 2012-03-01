@@ -35,12 +35,12 @@ Add a `<div>` with an id called “timeline” in the `<body>` of your site.
 ### Step 3
 
 Initialize the data source in either the `<head>` or the `<body>`
-`<script>
-	$(document).ready(function() {
-		timeline = new VMM.Timeline();
-		timeline.init("your_data.json");
-	});
-</script>`
+`	<script>
+		$(document).ready(function() {
+			timeline = new VMM.Timeline();
+			timeline.init("your_data.json");
+		});
+	</script>`
 
 ## File Formats
 
