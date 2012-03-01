@@ -19,12 +19,12 @@ JSON.
 
 Include these lines in the `<head>` of your site.
 
-	`<!-- CSS -->`
-	`<link href="timeline.css" rel="stylesheet">`
+	`<!-- CSS -->
+	<link href="timeline.css" rel="stylesheet">
 
-	`<!-- JavaScript -->`
-	`<script type="text/javascript" src="jquery-min.js"></script>`
-	`<script type="text/javascript" src="timeline-min.js"></script>`
+	<!-- JavaScript -->
+	<script type="text/javascript" src="jquery-min.js"></script>
+	<script type="text/javascript" src="timeline-min.js"></script>`
 
 ### Step 2
 
@@ -35,12 +35,12 @@ Add a `<div>` with an id called “timeline” in the `<body>` of your site.
 ### Step 3
 
 Initialize the data source in either the `<head>` or the `<body>`
-`<script>`
-	`$(document).ready(function() {`
-		`timeline = new VMM.Timeline();`
-		`timeline.init("your_data.json");`
-	`});`
-`</script>`
+`<script>
+	$(document).ready(function() {
+		timeline = new VMM.Timeline();
+		timeline.init("your_data.json");
+	});
+</script>`
 
 ## File Formats
 
@@ -59,10 +59,7 @@ If you don’t want to mess with JSON, fire up Google Docs and build your
 timeline in a spreadsheet. It’s as simple as dropping a date, text, and links
 into the appropriate columns in Timeline’s template.
 
-You can find the template here: [https://docs.google.com/a/digitalartwork.net/
-previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public](h
-ttps://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdE
-hzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
+You can find the template here: [https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public](https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
 
 There are only four things you need to know in order to create a timeline
 using Google Docs:
@@ -91,7 +88,7 @@ file. Copy the link for the Web Page option (as opposed to PDF, HTML, XLS,
 etc.), then paste it into the timeline’s HTML file:
 
   
-timeline.init(“URL goes here”)
+`timeline.init(“URL goes here”)`
 
   4. Designate the “start” slide  
 This indicates which event is the title slide, the one that begins the
