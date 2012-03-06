@@ -1,5 +1,5 @@
 /*!
-	Verite Timeline 0.75
+	Verite Timeline 0.82
 	Copyright 2011 Verite.co
 	Designed and built by Zach Wise digitalartwork.net
 	Date: February 7, 2012
@@ -38,7 +38,8 @@
 // @codekit-prepend "VMM.js";
 // @codekit-prepend "VMM.Core.js";
 // @codekit-prepend "VMM.Util.js";
- 
+// @codekit-prepend "bootstrap-tooltip.js";
+
 /* Timeline Class contained in VMM (verite) namespace
 ================================================== */
 
@@ -746,6 +747,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function onZoomIn() {
+			trace("CLICK");
 			VMM.DragSlider.cancelSlide();
 			if (config.multiplier > config.min_multiplier) {
 				config.multiplier = config.multiplier - 1;
@@ -756,7 +758,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 		}
 		
+
+		
 		function onZoomOut() {
+			trace("CLICK");
 			VMM.DragSlider.cancelSlide();
 			if (config.multiplier < config.max_multiplier) {
 				config.multiplier = config.multiplier + 1;
@@ -766,6 +771,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				refreshTimeline();
 			}
 		}
+		
 		
 		function onBackHome(e) {
 			VMM.DragSlider.cancelSlide();
@@ -1635,7 +1641,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* BUILD
 		================================================== */
 		var build = function() {
-			
 			// Clear out existing content
 			VMM.attachElement(layout, "");
 			
@@ -1667,9 +1672,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$zoomin = VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
+			VMM.Element.attribute($backhome, "title", "Return to Title");
+			VMM.Element.attribute($backhome, "rel", "tooltip");
+			
+			VMM.Element.attribute($zoomin, "title", "Expand Timeline");
+			VMM.Element.attribute($zoomin, "rel", "tooltip");
+			
+			VMM.Element.attribute($zoomout, "title", "Contract Timeline");
+			VMM.Element.attribute($zoomout, "rel", "tooltip");
+			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
 			VMM.bindEvent(".zoom-out", onZoomOut, "click");
 			
+
+			$toolbar.tooltip({
+				selector: "div[rel=tooltip]",
+				placement: "right"
+			})
 			/* MAKE TIMELINE TOUCHABLE
 			================================================== */
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
