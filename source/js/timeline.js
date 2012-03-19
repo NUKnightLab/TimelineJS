@@ -1974,7 +1974,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					
 					var dd = d.feed.entry[i];
 					
-					if (dd.gsx$titleslide.$t == "start") {
+					if (dd.gsx$titleslide.$t.match("start")) {
 						_data_obj.timeline.startDate = dd.gsx$startdate.$t;
 						_data_obj.timeline.headline = dd.gsx$headline.$t;
 						_data_obj.timeline.asset.media = dd.gsx$media.$t;

@@ -1436,7 +1436,7 @@ if (typeof VMM == 'undefined') {
 			//media.id = media.id.split("/")[1];
 			trace("FLICKR " + media.id);
 			success = true;
-		} else if (d.match(/jpg|png|gif/i)) {
+		} else if (d.match(/jpg|jpeg|png|gif/i)) {
 			media.type  = "image";
 			media.id    = d;
 			success = true;
