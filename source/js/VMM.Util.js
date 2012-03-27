@@ -123,53 +123,47 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		// VMM.Util.date.day[0];
 		// VMM.Util.date.get12HRTime(time, seconds_true);
 		date: {
-			// somestring = VMM.Util.date.month[2]; // Returns March
-			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			// somestring = VMM.Util.date.month_abbrev[1]; // Returns Feb.
-			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
-			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
-			hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
-			hour_suffix: ["am"],
-			//VMM.Util.date.prettyDate(d, is_abbr)
 			prettyDate: function(d, is_abbr, date_type) {
 				var _date = "";
-				
 				if (type.of(d) == "date") {
+					
+					dateFormat.i18n = {
+						dayNames: VMM.master_config.i18n.date.day_abbr.concat( VMM.master_config.i18n.date.day ),
+						monthNames: VMM.master_config.i18n.date.month_abbr.concat( VMM.master_config.i18n.date.month ),
+					};
+				
 					if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
 						// trace("YEAR ONLY");
-						_date = d.getFullYear();
+						_date = dateFormat( d, VMM.master_config.i18n.dateformats.year );
 					} else {
 						if (d.getDate() <= 1 && d.getHours() === 0 && d.getMinutes() === 0) {
 							// trace("YEAR MONTH");
 							if (is_abbr) {
-								_date = VMM.Util.date.month_abbr[d.getMonth()];
-								
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.month_short );
 							} else {
-								_date = VMM.Util.date.month[d.getMonth()] + " " + d.getFullYear() ;
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.month );
 							}
 							
 						} else if (d.getHours() === 0 && d.getMinutes() === 0) {
 							// trace("YEAR MONTH DAY");
 							if (is_abbr) {
-								_date = VMM.Util.date.month_abbr[d.getMonth()] + " " + d.getDate();
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.full_short );
 							} else {
-								_date = VMM.Util.date.month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() ;
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.full );
 							}
 						} else  if (d.getMinutes() === 0) {
 							// trace("YEAR MONTH DAY HOUR");
-							if (is_abbr){
-								//_date = VMM.Util.date.get12HRTime(d) + " " + (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear() ;
-								_date = VMM.Util.date.get12HRTime(d);
+							if (is_abbr) {
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.time_no_seconds_short );
 							} else {
-								_date = VMM.Util.date.get12HRTime(d) + "<br/><small>" + VMM.Util.date.month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " </small> ";
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.time_no_seconds_small_date );
 							}
 						} else {
 							// trace("YEAR MONTH DAY HOUR MINUTE");
-							if (is_abbr){
-								_date = VMM.Util.date.day[d.getDay()] + ", " + VMM.Util.date.month_abbr[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " at " + VMM.Util.date.get12HRTime(d);
+							if (is_abbr) {
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.full_long );								
 							} else {
-								_date = VMM.Util.date.get12HRTime(d) + "<br/><small>" + VMM.Util.date.day[d.getDay()] + ", " + VMM.Util.date.month[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear() + " </small> ";
+								_date = dateFormat( d, VMM.master_config.i18n.dateformats.full_long );								
 							}
 						}
 						
@@ -184,59 +178,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				
 				return _date;
 			},
-			
-			prettyMonth: function(m, is_year) {
-				var _month = "";
-				if (type.of(t) == "date") {
-					
-					
-				}
-				return _month;
-			},
-			
-			get12HRTime: function(t, is_seconds) {
-				var _time = "";
-				
-				if (type.of(t) == "date") {
-					
-					_time = VMM.Util.date.theHour(t.getHours()) + ":" + VMM.Util.date.minuteZeroFill(t.getMinutes());
-					
-					if (is_seconds) {
-						_time = _time + ":" + VMM.Util.date.minuteZeroFill(t.getSeconds());
-					}
-					
-					_time = _time +  VMM.Util.date.hourSuffix(t.getHours());
-					
-				}
-				
-				return _time;
-			},
-
-			theHour: function(hr) {
-				if (hr > 0 && hr < 13) {
-					return (hr);
-				}
-				if (hr == "0") {
-					hr = 12;
-					return (hr);
-				}
-				if (hr === 0) {
-					return (12);
-				}
-				return (hr-12);
-			},
-			minuteZeroFill: function(v) {
-				if (v > 9) {
-					return "" + v;
-				}
-				return "0" + v;
-			},
-			hourSuffix: function(t) {
-				if (t < 12) {
-					return (" am");
-				}
-				return (" pm");
-			}
 		},
 		
 		// VMM.Util.doubledigit(number).

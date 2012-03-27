@@ -58,7 +58,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		//VMM.attachElement($timeline, "");
 		
 		$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-		$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Loading Timeline");
+		$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.i18n.messages.loading_timeline);
 		
 		//VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
 		
@@ -158,7 +158,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function onComponentLoaded(e) {
 			config.loaded.percentloaded = config.loaded.percentloaded + 25;
-			showMessege("Loading Timeline " + config.loaded.percentloaded);
+			showMessege(VMM.master_config.i18n.messages.loading_timeline + config.loaded.percentloaded);
 			if (config.loaded.slider && config.loaded.timenav) {
 				hideMessege();
 			}
@@ -197,7 +197,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			//VMM.attachElement($timeline, "");
 
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Loading Timeline");
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.i18n.messages.loading_timeline);
 			
 		};
 		
@@ -1538,7 +1538,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				interval = interval_calc.second;
 				//interval_major = interval_calc.minute;
 			} else {
-				trace("NO FUCKING IDEA WHAT THE TYPE SHOULD BE");
+				trace("NO ******* IDEA WHAT THE TYPE SHOULD BE");
 				interval.type = "unknown";
 			}
 			
@@ -1566,7 +1566,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			} else if (timespan.seconds > 1) {
 				interval_major = interval_calc.minute;
 			} else {
-				trace("NO FUCKING IDEA WHAT THE TYPE SHOULD BE");
+				trace("NO ******* IDEA WHAT THE TYPE SHOULD BE");
 				interval_major.type = "unknown";
 			}
 			
@@ -1672,13 +1672,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$zoomin = VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Element.attribute($backhome, "title", "Return to Title");
+			VMM.Element.attribute($backhome, "title", VMM.master_config.i18n.messages.return_to_title);
 			VMM.Element.attribute($backhome, "rel", "tooltip");
 			
-			VMM.Element.attribute($zoomin, "title", "Expand Timeline");
+			VMM.Element.attribute($zoomin, "title", VMM.master_config.i18n.messages.expand_timeline);
 			VMM.Element.attribute($zoomin, "rel", "tooltip");
 			
-			VMM.Element.attribute($zoomout, "title", "Contract Timeline");
+			VMM.Element.attribute($zoomout, "title", VMM.master_config.i18n.messages.contract_timeline);
 			VMM.Element.attribute($zoomout, "rel", "tooltip");
 			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
