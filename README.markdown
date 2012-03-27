@@ -118,3 +118,42 @@ Tips and tricks to best utilize Timeline
   1. Keep it light - don’t get bogged down by text or other elements
   2. Pick stories that have a strong chronological narrative. It does not work well for stories that need to jump around in the timeline.
   3. Include events that build up to major occurrences, not just the major events.
+
+
+# i18n support
+
+One thing missing in the original version is i18n support. Especially when it comes to date output the format was hardcoded into the sources.
+
+Adding support for a different language is as easy as modifying `VMM.master_config.i20n` before initializing the `VMM.Timeline`. An example for the German (Austrian) language:
+
+`
+				VMM.master_config.i18n = {
+					date: {
+						month: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+						month_abbr: ["Jän.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
+						day: ["Sonntag","Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+						day_abbr: ["So.","Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+					},
+					dateformats: {
+						year: "yyyy",
+						month_short: "mmm",
+						month: "mmmm yyyy",
+						full_short: "d. mmm",
+						full: "d. mmmm yyyy",
+						time_no_seconds_short: "HH:MM",
+						time_no_seconds_small_date: "HH:MM'<br/><small>'d. mmmm yyyy'</small>'",
+						full_long: "dddd',' d. mmm yyyy 'um' HH:MM",
+						full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'",
+					},
+					messages: {
+						loading_timeline: "Chronologie wird geladen...",
+						return_to_title: "Zurück zum Anfang",
+						expand_timeline: "Chronologie vergrößern",
+						contract_timeline: "Chronologie verkleinern"						
+					}
+				};
+				timeline = new VMM.Timeline();
+`
+
+For more information about the dateformats, you may refer to the documentation available at the following URL: http://blog.stevenlevithan.com/archives/date-time-format
+
