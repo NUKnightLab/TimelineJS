@@ -1359,7 +1359,7 @@ if (typeof VMM == 'undefined') {
 					VMM.ExternalAPI.youtube.init(m.id);
 					//mediaElem = "<iframe class='media-frame youtube' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white&enablejsapi=1' allowfullscreen></iframe>";
 				} else if (m.type == "vimeo") {
-					mediaElem = "<iframe class='media-frame video vimeo' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+					mediaElem = "<iframe class='media-frame video vimeo' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
 				} else if (m.type == "twitter"){
 					mediaElem = "<div class='twitter' id='" + m.id + "'>Loading Tweet</div>";
 					//VMM.ExternalAPI.twitter.getHTML(m.id);
@@ -1373,12 +1373,12 @@ if (typeof VMM == 'undefined') {
 					mediaElem = "<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
 					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id)
 				} else if (m.type == "google-map") {
-					mediaElem = "<iframe class='media-frame map' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
+					mediaElem = "<iframe class='media-frame map' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
 				} else if (m.type == "unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
 					mediaElem = VMM.Util.properQuotes(m.id); 
 				} else if (m.type == "website") { 
-					mediaElem = "<iframe class='media-frame' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>"
+					mediaElem = "<iframe class='media-frame' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>"
 				} else {
 					trace("NO KNOWN MEDIA TYPE FOUND");
 					trace(m.type);
