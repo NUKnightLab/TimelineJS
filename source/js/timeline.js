@@ -44,7 +44,6 @@
 ================================================== */
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
-	
 	VMM.Timeline = function(w, h) {
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
@@ -265,7 +264,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		// BUILD SLIDE CONTENT	pass in json object
-		var buildSlide = function(dd, d_date) {
+		var buildSlide = function(dd, d_date, d_enddate) {
 			updateSize();
 			var d = dd;
 			var slide = "";
@@ -285,7 +284,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				if (dd.type == "start") {
 					
 				} else {
-					c._text += VMM.createElement("h2", VMM.Util.date.prettyDate(d_date), "date");
+               var prettyDate = VMM.Util.date.prettyDate(d_date);
+               if (d_enddate != d_date) {
+                  prettyDate += " - " + VMM.Util.date.prettyDate(d_enddate);
+               }
+					c._text += VMM.createElement("h2", prettyDate, "date");
 				}
 				//c._text += VMM.createElement("h2", d.strDate, "date");
 				
@@ -487,7 +490,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.type = data.date[i].type;
 					
 					// DATE
-					_date.date = VMM.Util.date.prettyDate(_date.startdate);
+               var prettyDate = VMM.Util.date.prettyDate(_date.startdate);
+               if (_date.enddate != _date.startdate) {
+                  prettyDate += " - " + VMM.Util.date.prettyDate(_date.enddate);
+               }
+					_date.date = prettyDate;
 					
 					// ASSET
 					_date.asset = data.date[i].asset;
@@ -498,7 +505,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate = _date.startdate.getTime();
 					// BUILD SLIDE CONTENT
 					// Won't be added unless there is content
-					_date.content = buildSlide(data.date[i], _date.startdate);
+					_date.content = buildSlide(data.date[i], _date.startdate, _date.enddate);
 					
 					if (_date.content != null && _date.content != "") {
 						_dates.push(_date);
