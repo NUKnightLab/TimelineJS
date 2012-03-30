@@ -6,10 +6,6 @@
 		<meta name="description" content="Template Description">
 		<meta name="author" content="Zach Wise">
 		
-		<!-- Set the viewport for mobile devices -->
-		<!-- <meta name="viewport" content="width=device-width,maximum-scale=1.0" /> -->
-		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;"/>
-		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -24,32 +20,12 @@
 		<script type="text/javascript" src="../../timeline-min.js"></script>
 		<script>
 			$(document).ready(function() {
-				timeline = new VMM.Timeline();
+				var timeline = new VMM.Timeline();
 				timeline.init("https://docs.google.com/a/digitalartwork.net/spreadsheet/ccc?hl=en_US&key=0Agl_Dv6iEbDadGRwZjJSRTR4RHJpanE2U3lkb0lyYUE&rm=full#gid=0");
 			});
 		</script>
 
-		<!-- Icons -->
-		<link rel="shortcut icon" href="../../gfx/favicons/favicon.ico">
-		<link rel="apple-touch-icon" href="../../gfx/favicons/apple-touch-icon.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="../../gfx/favicons/apple-touch-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="../../gfx/favicons/apple-touch-icon-114x114.png">
-		
-		<!-- Google Analytics -->
-		<script type="text/javascript">
 
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-537357-18']);
-		  _gaq.push(['_setDomainName', 'verite.co']);
-		  _gaq.push(['_trackPageview']);
-
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
-
-		</script>
 		
 	</head>
 
