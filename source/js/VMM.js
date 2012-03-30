@@ -172,7 +172,7 @@ if (typeof VMM == 'undefined') {
 				month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 				month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 				day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-				day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
+				day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
 			}, 
 			dateformats: {
 				year: "yyyy",
@@ -183,7 +183,7 @@ if (typeof VMM == 'undefined') {
 				time_no_seconds_short: "hh:MM TT",
 				time_no_seconds_small_date: "hh:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'"
 			},
 			messages: {
 				loading_timeline: "Loading Taimeline",
