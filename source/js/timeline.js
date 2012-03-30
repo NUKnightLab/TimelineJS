@@ -1971,7 +1971,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					}
 					xdr.send();
 				} else {
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
+					VMM.getJSON( "https:" + _url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 				}
 				
 			},
