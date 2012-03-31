@@ -1,8 +1,7 @@
 /*!
-	Verite Timeline 0.82
-	Copyright 2011 Verite.co
+	Verite Timeline 0.85
 	Designed and built by Zach Wise digitalartwork.net
-	Date: February 7, 2012
+	Date: March 30, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,11 +19,12 @@
 
 /*!
 	TODO
-	-	Better Flags
-	-	Google Spreadsheets support
+	-	
+	-	
 	FUTURE PLANS
 	-	Better iPhone usability
 	-	Support feeds from popular sources
+	-	Storify integration
 	-	Code optimization
 	-	Clean up config flow
 	-	Possible tagging of events (depends on usability factors)
@@ -116,11 +116,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature_height = config.height - config.nav_height;
 		}
 		
+		/* CHECK FOR IE7
+		================================================== */
+		var ie7 = false;
+		
+		if ( $.browser.msie ) {
+			if ( parseInt($.browser.version, 10) == 7) {
+				ie7 = true;
+			}
+		}
 
 		
 		/* VER
 		================================================== */
-		this.ver = "0.5";
+		this.ver = "0.85";
 		
 		
 		/* ON EVENT
@@ -187,17 +196,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* GET DATA
 			================================================== */
-			if (type.of(d) == "string") {
-				VMM.Timeline.DataObj.getData(d);
+			if (ie7) {
+				$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+				$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Internet Explorer 7 is not supported by Timeline.");
 			} else {
-				VMM.Timeline.DataObj.getData(html_string);
-				//VMM.attachElement(element, content);
+				if (type.of(d) == "string") {
+					VMM.Timeline.DataObj.getData(d);
+				} else {
+					VMM.Timeline.DataObj.getData(html_string);
+					//VMM.attachElement(element, content);
+				}
+
+				//VMM.attachElement($timeline, "");
+
+				$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+				$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Loading Timeline");
 			}
 			
-			//VMM.attachElement($timeline, "");
-
-			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Loading Timeline");
 			
 		};
 		
