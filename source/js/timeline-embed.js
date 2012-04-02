@@ -24,29 +24,72 @@
 
 
 /* TIMELINE CDN LOADER
-	Add container div so that user can set width and height
-	
 ================================================== */
-// <div id="timeline-embed"></div><script src="load-timeline.js"></script>
+
+/* Embed code with config
+================================================== */
+/*
+<!-- Begin Embed Code -->
+<div id="timeline-embed"></div>
+<script type="text/javascript">
+    var config = {
+		width: 900,
+		height: 700,
+		source: 'https://docs.google.com/a/digitalartwork.net/spreadsheet/ccc?hl=en_US&key=0Agl_Dv6iEbDadGRwZjJSRTR4RHJpanE2U3lkb0lyYUE&rm=full#gid=0',
+		css: '../timeline.css',
+		js: '../timeline.js'
+	}
+</script>
+<script type="text/javascript" src="../timeline-embed.js"></script>
+<!-- End Embed Code -->
+*/
 
 
-(function(embed_loc, embed_doc, embed_window) {
+(function() {
 	
+	/* CONFIG Default
+	================================================== */
+	var embed_config = {
+		width: 800,
+		height: 600,
+		source: 'taylor/data.json',
+		css: 'http://veritetimeline.appspot.com/latest/timeline.css',
+		js: 'http://veritetimeline.appspot.com/latest/timeline-min.js'
+	}
 	
+	if (typeof config == 'object') {
+	    var x;
+		for (x in config) {
+			if (Object.prototype.hasOwnProperty.call(config, x)) {
+				embed_config[x] = config[x];
+			}
+		}
+	}
+	
+	/* VARS
+	================================================== */
 	var jsReady = false;
 	var cssReady = false;
+	var isReady = false;
 	var preload_checks = 0;
-	
+	var timeout;
+	var timeline;
 	/* Add Timeline Div
 	================================================== */
 	var t = document.createElement('div');
-	document.getElementById("timeline-embed").appendChild(t);
+	var te = document.getElementById("timeline-embed");
+	te.appendChild(t);
 	t.setAttribute("id", 'timeline');
+	te.style.width = embed_config.width + 'px';
+	te.style.height = embed_config.height + 'px';
+	t.style.position = 'relative';
 	
+	/* Load CSS
+	================================================== */
+	LazyLoad.css(embed_config.css, cssComplete);
 	
-	
-	LazyLoad.css('http://veritetimeline.appspot.com/latest/timeline.css', cssComplete);
-	
+	/* Check for jQuery
+	================================================== */
 	try {
 	    var jqueryLoaded=jQuery;
 	    jqueryLoaded=true;
@@ -54,7 +97,8 @@
 	    var jqueryLoaded=false;
 	}
 	
-	//var head= document.getElementsByTagName('head')[0];
+	/* Load jQuery if it doesn't exist
+	================================================== */
 	if (!jqueryLoaded) {
 		LazyLoad.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
 	} else {
@@ -63,7 +107,7 @@
 	
 	
 	function onJQueryLoaded() {
-		LazyLoad.js('http://veritetimeline.appspot.com/latest/timeline-min.js', onJSLoaded);
+		LazyLoad.js(embed_config.js, onJSLoaded);
 	}
 	
 	function onJSLoaded() {
@@ -76,65 +120,50 @@
 		checkLoad();
 	}
 	
+	/* Check to see if everything is loaded.
+	================================================== */
 	function checkLoad() {
 		if (preload_checks > 40) {
 			return;
-			alert("Error Loading Files")
+			alert("Error Loading Files");
 		} else {
 			preload_checks++;
 			
 			if (jsReady && cssReady) {
-				var timeline = new VMM.Timeline();
-				timeline.init("taylor/data.json");
+				if (!isReady) {
+					isReady = true;
+					timeline = new VMM.Timeline();
+					timeline.init(embed_config.source);
+				}
 			} else {
-				setTimeout('checkLoad();', 250);
+				//alert("run timeout");
+				timeout = setTimeout('checkAgain();', 250);
 			}
 		}
 	}
-	
-	
-	/*
-	var stylesheet = document.createElement('link');
-	stylesheet.href = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
-	stylesheet.rel = 'stylesheet';
-	stylesheet.type = 'text/css';
-	document.getElementsByTagName('head')[0].appendChild(stylesheet);
 
-	var tjs = document.createElement('script');
-	tjs.type = 'text/javascript';
-	tjs.async = true;
-	tjs.url = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
-	document.getElementsByTagName('head')[0].appendChild(tjs);
-	*/
+	this.checkAgain = function() {
+		checkLoad();
+	}
 	
-}) (this, document, window);
+	
+	
+})();
+
 
 /*
+	Thinking of ditching Lazy loader after some more testing.
+*/
+/*
+var stylesheet = document.createElement('link');
+stylesheet.href = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
+stylesheet.rel = 'stylesheet';
+stylesheet.type = 'text/css';
+document.getElementsByTagName('head')[0].appendChild(stylesheet);
 
-document.getElementById('myText');
-function(embed_loc, embed_doc, embed_window) {
-	function e(embed_loc, embed_doc) {
-        var c,
-        d = [],
-        e,
-        g;
-        try {
-            if (document.querySelectorAll) d = document.querySelectorAll(embed_loc + "." + embed_doc);
-            else if (document.getElementsByClassName) {
-                c = document.getElementsByClassName(embed_doc);
-                for (e = 0; g = c[e]; e++) g.tagName.toLowerCase() == embed_loc && d.push(g)
-            } else {
-                c = document.getElementsByTagName(a);
-                var h = RegExp("\\b" + embed_doc + "\\b");
-                f(c,
-                function(embed_loc, embed_doc) {
-                    var c = embed_loc.className || embed_loc.getAttribute("class");
-                    c && c.match(h) && d.push(embed_loc)
-                })
-            }
-        } catch(i) {}
-        return d
-    }
-	
-} (this, document, window)
+var tjs = document.createElement('script');
+tjs.type = 'text/javascript';
+tjs.async = true;
+tjs.url = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
+document.getElementsByTagName('head')[0].appendChild(tjs);
 */
