@@ -1,35 +1,10 @@
-/*!
-	Verite Timeline 0.85
-	Designed and built by Zach Wise digitalartwork.net
-	Date: March 30, 2012
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    http://www.gnu.org/licenses/
-
-*/  
-
-/*!
-	TODO
-	-	
-	-	
-	FUTURE PLANS
-	-	Better iPhone usability
-	-	Support feeds from popular sources
-	-	Storify integration
-	-	Code optimization
-	-	Clean up config flow
-	-	Possible tagging of events (depends on usability factors)
-	
-*/
+/* Verite
+ * Verite JS Master
+ * Version: 0.1
+ * Date: December 12, 2011
+ * Copyright 2011 Verite
+ * Designed and built by Zach Wise digitalartwork.net
+ * ----------------------------------------------------- */
 
 
 /* CodeKit Import
