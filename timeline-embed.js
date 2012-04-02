@@ -1,4 +1,6 @@
-/*jslint browser: true, eqeqeq: true, bitwise: true, newcap: true, immed: true, regexp: false *//**
+/*jslint browser: true, eqeqeq: true, bitwise: true, newcap: true, immed: true, regexp: false */
+
+/**
 LazyLoad makes it easy and painless to lazily load one or more external
 JavaScript or CSS files on demand either during or after the rendering of a web
 page.
@@ -33,4 +35,503 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 @class LazyLoad
 @static
 @version 2.0.3 (git)
-*/LazyLoad=function(a){function h(b,c){var d=a.createElement(b),e;for(e in c)c.hasOwnProperty(e)&&d.setAttribute(e,c[e]);return d}function i(a){var b=d[a],c,g;if(b){c=b.callback;g=b.urls;g.shift();e=0;if(!g.length){c&&c.call(b.context,b.obj);d[a]=null;f[a].length&&k(a)}}}function j(){var c=navigator.userAgent;b={async:a.createElement("script").async===!0};(b.webkit=/AppleWebKit\//.test(c))||(b.ie=/MSIE/.test(c))||(b.opera=/Opera/.test(c))||(b.gecko=/Gecko\//.test(c))||(b.unknown=!0)}function k(e,g,k,n,o){var p=function(){i(e)},q=e==="css",r=[],s,t,u,v,w,x;b||j();if(g){g=typeof g=="string"?[g]:g.concat();if(q||b.async||b.gecko||b.opera)f[e].push({urls:g,callback:k,obj:n,context:o});else for(s=0,t=g.length;s<t;++s)f[e].push({urls:[g[s]],callback:s===t-1?k:null,obj:n,context:o})}if(d[e]||!(v=d[e]=f[e].shift()))return;c||(c=a.head||a.getElementsByTagName("head")[0]);w=v.urls;for(s=0,t=w.length;s<t;++s){x=w[s];if(q)u=b.gecko?h("style"):h("link",{href:x,rel:"stylesheet"});else{u=h("script",{src:x});u.async=!1}u.className="lazyload";u.setAttribute("charset","utf-8");if(b.ie&&!q)u.onreadystatechange=function(){if(/loaded|complete/.test(u.readyState)){u.onreadystatechange=null;p()}};else if(q&&(b.gecko||b.webkit))if(b.webkit){v.urls[s]=u.href;m()}else{u.innerHTML='@import "'+x+'";';l(u)}else u.onload=u.onerror=p;r.push(u)}for(s=0,t=r.length;s<t;++s)c.appendChild(r[s])}function l(a){var b;try{b=!!a.sheet.cssRules}catch(c){e+=1;e<200?setTimeout(function(){l(a)},50):b&&i("css");return}i("css")}function m(){var a=d.css,b;if(a){b=g.length;while(--b>=0)if(g[b].href===a.urls[0]){i("css");break}e+=1;a&&(e<200?setTimeout(m,50):i("css"))}}var b,c,d={},e=0,f={css:[],js:[]},g=a.styleSheets;return{css:function(a,b,c,d){k("css",a,b,c,d)},js:function(a,b,c,d){k("js",a,b,c,d)}}}(this.document);(function(a,b,c){function j(){LazyLoad.js("http://veritetimeline.appspot.com/latest/timeline-min.js",k)}function k(){d=!0;m()}function l(){e=!0;m()}function m(){if(f>40)return;f++;if(d&&e){var a=new VMM.Timeline;a.init("taylor/data.json")}else setTimeout("checkLoad();",250)}var d=!1,e=!1,f=0,g=document.createElement("div");document.getElementById("timeline-embed").appendChild(g);g.setAttribute("id","timeline");LazyLoad.css("http://veritetimeline.appspot.com/latest/timeline.css",l);try{var h=jQuery;h=!0}catch(i){var h=!1}h?j():LazyLoad.js("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js",j)})(this,document,window);
+*/
+
+LazyLoad = (function (doc) {
+  // -- Private Variables ------------------------------------------------------
+
+  // User agent and feature test information.
+  var env,
+
+  // Reference to the <head> element (populated lazily).
+  head,
+
+  // Requests currently in progress, if any.
+  pending = {},
+
+  // Number of times we've polled to check whether a pending stylesheet has
+  // finished loading. If this gets too high, we're probably stalled.
+  pollCount = 0,
+
+  // Queued requests.
+  queue = {css: [], js: []},
+
+  // Reference to the browser's list of stylesheets.
+  styleSheets = doc.styleSheets;
+
+  // -- Private Methods --------------------------------------------------------
+
+  /**
+  Creates and returns an HTML element with the specified name and attributes.
+
+  @method createNode
+  @param {String} name element name
+  @param {Object} attrs name/value mapping of element attributes
+  @return {HTMLElement}
+  @private
+  */
+  function createNode(name, attrs) {
+    var node = doc.createElement(name), attr;
+
+    for (attr in attrs) {
+      if (attrs.hasOwnProperty(attr)) {
+        node.setAttribute(attr, attrs[attr]);
+      }
+    }
+
+    return node;
+  }
+
+  /**
+  Called when the current pending resource of the specified type has finished
+  loading. Executes the associated callback (if any) and loads the next
+  resource in the queue.
+
+  @method finish
+  @param {String} type resource type ('css' or 'js')
+  @private
+  */
+  function finish(type) {
+    var p = pending[type],
+        callback,
+        urls;
+
+    if (p) {
+      callback = p.callback;
+      urls     = p.urls;
+
+      urls.shift();
+      pollCount = 0;
+
+      // If this is the last of the pending URLs, execute the callback and
+      // start the next request in the queue (if any).
+      if (!urls.length) {
+        callback && callback.call(p.context, p.obj);
+        pending[type] = null;
+        queue[type].length && load(type);
+      }
+    }
+  }
+
+  /**
+  Populates the <code>env</code> variable with user agent and feature test
+  information.
+
+  @method getEnv
+  @private
+  */
+  function getEnv() {
+    var ua = navigator.userAgent;
+
+    env = {
+      // True if this browser supports disabling async mode on dynamically
+      // created script nodes. See
+      // http://wiki.whatwg.org/wiki/Dynamic_Script_Execution_Order
+      async: doc.createElement('script').async === true
+    };
+
+    (env.webkit = /AppleWebKit\//.test(ua))
+      || (env.ie = /MSIE/.test(ua))
+      || (env.opera = /Opera/.test(ua))
+      || (env.gecko = /Gecko\//.test(ua))
+      || (env.unknown = true);
+  }
+
+  /**
+  Loads the specified resources, or the next resource of the specified type
+  in the queue if no resources are specified. If a resource of the specified
+  type is already being loaded, the new request will be queued until the
+  first request has been finished.
+
+  When an array of resource URLs is specified, those URLs will be loaded in
+  parallel if it is possible to do so while preserving execution order. All
+  browsers support parallel loading of CSS, but only Firefox and Opera
+  support parallel loading of scripts. In other browsers, scripts will be
+  queued and loaded one at a time to ensure correct execution order.
+
+  @method load
+  @param {String} type resource type ('css' or 'js')
+  @param {String|Array} urls (optional) URL or array of URLs to load
+  @param {Function} callback (optional) callback function to execute when the
+    resource is loaded
+  @param {Object} obj (optional) object to pass to the callback function
+  @param {Object} context (optional) if provided, the callback function will
+    be executed in this object's context
+  @private
+  */
+  function load(type, urls, callback, obj, context) {
+    var _finish = function () { finish(type); },
+        isCSS   = type === 'css',
+        nodes   = [],
+        i, len, node, p, pendingUrls, url;
+
+    env || getEnv();
+
+    if (urls) {
+      // If urls is a string, wrap it in an array. Otherwise assume it's an
+      // array and create a copy of it so modifications won't be made to the
+      // original.
+      urls = typeof urls === 'string' ? [urls] : urls.concat();
+
+      // Create a request object for each URL. If multiple URLs are specified,
+      // the callback will only be executed after all URLs have been loaded.
+      //
+      // Sadly, Firefox and Opera are the only browsers capable of loading
+      // scripts in parallel while preserving execution order. In all other
+      // browsers, scripts must be loaded sequentially.
+      //
+      // All browsers respect CSS specificity based on the order of the link
+      // elements in the DOM, regardless of the order in which the stylesheets
+      // are actually downloaded.
+      if (isCSS || env.async || env.gecko || env.opera) {
+        // Load in parallel.
+        queue[type].push({
+          urls    : urls,
+          callback: callback,
+          obj     : obj,
+          context : context
+        });
+      } else {
+        // Load sequentially.
+        for (i = 0, len = urls.length; i < len; ++i) {
+          queue[type].push({
+            urls    : [urls[i]],
+            callback: i === len - 1 ? callback : null, // callback is only added to the last URL
+            obj     : obj,
+            context : context
+          });
+        }
+      }
+    }
+
+    // If a previous load request of this type is currently in progress, we'll
+    // wait our turn. Otherwise, grab the next item in the queue.
+    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
+      return;
+    }
+
+    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
+    pendingUrls = p.urls;
+
+    for (i = 0, len = pendingUrls.length; i < len; ++i) {
+      url = pendingUrls[i];
+
+      if (isCSS) {
+          node = env.gecko ? createNode('style') : createNode('link', {
+            href: url,
+            rel : 'stylesheet'
+          });
+      } else {
+        node = createNode('script', {src: url});
+        node.async = false;
+      }
+
+      node.className = 'lazyload';
+      node.setAttribute('charset', 'utf-8');
+
+      if (env.ie && !isCSS) {
+        node.onreadystatechange = function () {
+          if (/loaded|complete/.test(node.readyState)) {
+            node.onreadystatechange = null;
+            _finish();
+          }
+        };
+      } else if (isCSS && (env.gecko || env.webkit)) {
+        // Gecko and WebKit don't support the onload event on link nodes.
+        if (env.webkit) {
+          // In WebKit, we can poll for changes to document.styleSheets to
+          // figure out when stylesheets have loaded.
+          p.urls[i] = node.href; // resolve relative URLs (or polling won't work)
+          pollWebKit();
+        } else {
+          // In Gecko, we can import the requested URL into a <style> node and
+          // poll for the existence of node.sheet.cssRules. Props to Zach
+          // Leatherman for calling my attention to this technique.
+          node.innerHTML = '@import "' + url + '";';
+          pollGecko(node);
+        }
+      } else {
+        node.onload = node.onerror = _finish;
+      }
+
+      nodes.push(node);
+    }
+
+    for (i = 0, len = nodes.length; i < len; ++i) {
+      head.appendChild(nodes[i]);
+    }
+  }
+
+  /**
+  Begins polling to determine when the specified stylesheet has finished loading
+  in Gecko. Polling stops when all pending stylesheets have loaded or after 10
+  seconds (to prevent stalls).
+
+  Thanks to Zach Leatherman for calling my attention to the @import-based
+  cross-domain technique used here, and to Oleg Slobodskoi for an earlier
+  same-domain implementation. See Zach's blog for more details:
+  http://www.zachleat.com/web/2010/07/29/load-css-dynamically/
+
+  @method pollGecko
+  @param {HTMLElement} node Style node to poll.
+  @private
+  */
+  function pollGecko(node) {
+    var hasRules;
+
+    try {
+      // We don't really need to store this value or ever refer to it again, but
+      // if we don't store it, Closure Compiler assumes the code is useless and
+      // removes it.
+      hasRules = !!node.sheet.cssRules;
+    } catch (ex) {
+      // An exception means the stylesheet is still loading.
+      pollCount += 1;
+
+      if (pollCount < 200) {
+        setTimeout(function () { pollGecko(node); }, 50);
+      } else {
+        // We've been polling for 10 seconds and nothing's happened. Stop
+        // polling and finish the pending requests to avoid blocking further
+        // requests.
+        hasRules && finish('css');
+      }
+
+      return;
+    }
+
+    // If we get here, the stylesheet has loaded.
+    finish('css');
+  }
+
+  /**
+  Begins polling to determine when pending stylesheets have finished loading
+  in WebKit. Polling stops when all pending stylesheets have loaded or after 10
+  seconds (to prevent stalls).
+
+  @method pollWebKit
+  @private
+  */
+  function pollWebKit() {
+    var css = pending.css, i;
+
+    if (css) {
+      i = styleSheets.length;
+
+      // Look for a stylesheet matching the pending URL.
+      while (--i >= 0) {
+        if (styleSheets[i].href === css.urls[0]) {
+          finish('css');
+          break;
+        }
+      }
+
+      pollCount += 1;
+
+      if (css) {
+        if (pollCount < 200) {
+          setTimeout(pollWebKit, 50);
+        } else {
+          // We've been polling for 10 seconds and nothing's happened, which may
+          // indicate that the stylesheet has been removed from the document
+          // before it had a chance to load. Stop polling and finish the pending
+          // request to prevent blocking further requests.
+          finish('css');
+        }
+      }
+    }
+  }
+
+  return {
+
+    /**
+    Requests the specified CSS URL or URLs and executes the specified
+    callback (if any) when they have finished loading. If an array of URLs is
+    specified, the stylesheets will be loaded in parallel and the callback
+    will be executed after all stylesheets have finished loading.
+
+    @method css
+    @param {String|Array} urls CSS URL or array of CSS URLs to load
+    @param {Function} callback (optional) callback function to execute when
+      the specified stylesheets are loaded
+    @param {Object} obj (optional) object to pass to the callback function
+    @param {Object} context (optional) if provided, the callback function
+      will be executed in this object's context
+    @static
+    */
+    css: function (urls, callback, obj, context) {
+      load('css', urls, callback, obj, context);
+    },
+
+    /**
+    Requests the specified JavaScript URL or URLs and executes the specified
+    callback (if any) when they have finished loading. If an array of URLs is
+    specified and the browser supports it, the scripts will be loaded in
+    parallel and the callback will be executed after all scripts have
+    finished loading.
+
+    Currently, only Firefox and Opera support parallel loading of scripts while
+    preserving execution order. In other browsers, scripts will be
+    queued and loaded one at a time to ensure correct execution order.
+
+    @method js
+    @param {String|Array} urls JS URL or array of JS URLs to load
+    @param {Function} callback (optional) callback function to execute when
+      the specified scripts are loaded
+    @param {Object} obj (optional) object to pass to the callback function
+    @param {Object} context (optional) if provided, the callback function
+      will be executed in this object's context
+    @static
+    */
+    js: function (urls, callback, obj, context) {
+      load('js', urls, callback, obj, context);
+    }
+
+  };
+})(this.document);
+
+
+/*********************************************** 
+     Begin timeline-embed.js 
+***********************************************/ 
+
+/*!
+	Verite Timeline Loader 0.1
+	Designed and built by Zach Wise digitalartwork.net
+	Date: March 30, 2012
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    http://www.gnu.org/licenses/
+
+*/  
+
+/* 	CodeKit Import
+	http://incident57.com/codekit/
+================================================== */
+// @codekit-prepend "lazyload.js";
+
+
+/* TIMELINE CDN LOADER
+	Add container div so that user can set width and height
+	
+================================================== */
+// <div id="timeline-embed"></div><script src="load-timeline.js"></script>
+
+
+(function(embed_loc, embed_doc, embed_window) {
+	
+	
+	var jsReady = false;
+	var cssReady = false;
+	var preload_checks = 0;
+	
+	/* Add Timeline Div
+	================================================== */
+	var t = document.createElement('div');
+	document.getElementById("timeline-embed").appendChild(t);
+	t.setAttribute("id", 'timeline');
+	
+	
+	
+	LazyLoad.css('http://veritetimeline.appspot.com/latest/timeline.css', cssComplete);
+	
+	try {
+	    var jqueryLoaded=jQuery;
+	    jqueryLoaded=true;
+	} catch(err) {
+	    var jqueryLoaded=false;
+	}
+	
+	//var head= document.getElementsByTagName('head')[0];
+	if (!jqueryLoaded) {
+		LazyLoad.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
+	} else {
+		onJQueryLoaded();
+	}
+	
+	
+	function onJQueryLoaded() {
+		LazyLoad.js('http://veritetimeline.appspot.com/latest/timeline-min.js', onJSLoaded);
+	}
+	
+	function onJSLoaded() {
+		jsReady = true;
+		checkLoad();
+	}
+	
+	function cssComplete() {
+		cssReady = true;
+		checkLoad();
+	}
+	
+	function checkLoad() {
+		if (preload_checks > 40) {
+			return;
+			alert("Error Loading Files")
+		} else {
+			preload_checks++;
+			
+			if (jsReady && cssReady) {
+				var timeline = new VMM.Timeline();
+				timeline.init("taylor/data.json");
+			} else {
+				setTimeout('checkLoad();', 250);
+			}
+		}
+	}
+	
+	
+	/*
+	var stylesheet = document.createElement('link');
+	stylesheet.href = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
+	stylesheet.rel = 'stylesheet';
+	stylesheet.type = 'text/css';
+	document.getElementsByTagName('head')[0].appendChild(stylesheet);
+
+	var tjs = document.createElement('script');
+	tjs.type = 'text/javascript';
+	tjs.async = true;
+	tjs.url = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
+	document.getElementsByTagName('head')[0].appendChild(tjs);
+	*/
+	
+}) (this, document, window);
+
+/*
+
+document.getElementById('myText');
+function(embed_loc, embed_doc, embed_window) {
+	function e(embed_loc, embed_doc) {
+        var c,
+        d = [],
+        e,
+        g;
+        try {
+            if (document.querySelectorAll) d = document.querySelectorAll(embed_loc + "." + embed_doc);
+            else if (document.getElementsByClassName) {
+                c = document.getElementsByClassName(embed_doc);
+                for (e = 0; g = c[e]; e++) g.tagName.toLowerCase() == embed_loc && d.push(g)
+            } else {
+                c = document.getElementsByTagName(a);
+                var h = RegExp("\\b" + embed_doc + "\\b");
+                f(c,
+                function(embed_loc, embed_doc) {
+                    var c = embed_loc.className || embed_loc.getAttribute("class");
+                    c && c.match(h) && d.push(embed_loc)
+                })
+            }
+        } catch(i) {}
+        return d
+    }
+	
+} (this, document, window)
+*/
