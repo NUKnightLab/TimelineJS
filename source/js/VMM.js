@@ -347,7 +347,12 @@ if (typeof VMM == 'undefined') {
 			$.getJSON(url, the_function);
 		}
 	}
-	
+	// VMM.parseJSON(the_json);
+	VMM.parseJSON = function(the_json) {
+		if( typeof( jQuery ) != 'undefined' ){
+			return $.parseJSON(the_json);
+		}
+	}
 	// ADD ELEMENT AND RETURN IT
 	// VMM.appendAndGetElement(append_to_element, tag, cName, content, [attrib]);
 	VMM.appendAndGetElement = function(append_to_element, tag, cName, content) {
