@@ -12,3 +12,9 @@ dev_examples/
 *.tmproject
 
 tmtags
+
+jsonp_test.html
+.gitignore
+url.php
+url.html
+index.html

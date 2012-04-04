@@ -1,0 +1,93 @@
+<html>
+
+<head>
+	<link href="./timeline.css" rel="stylesheet">
+	<script type="text/javascript" src="./jquery-min.js"></script>
+	<script type="text/javascript" src="./timeline.js"></script>
+	
+	<meta property="og:title" content="Oregon Football | Oregon Daily Emerald" />
+	<meta property="og:description" content="Using JSONP to dynamically build timelines from topic archives. In this case, for football." />
+	<meta property="og:image" content="http://i.imgur.com/cokYj.png" />
+	
+</head>
+
+<body>
+	<div id="timeline"></div>
+</body>
+
+<script>
+
+var jsonSkeleton = {
+    "timeline":
+    {
+        "headline":"OREGON FOOTBALL",
+        "type":"default",
+		"startDate":"2012",
+		"text":'<p>Recent stories from the Oregon Daily Emerald.<br><br>Click the "next" button on the right to get started.</p>',
+        "date": []
+    }
+}
+
+function jsonpcallback(data) {
+	console.log(data);
+	
+	data.forEach(function(story) {
+		var storyJSON = {};
+		
+		if (typeof story.thumbnail != 'undefined') {
+			storyJSON.asset = {};
+			storyJSON.asset.media = story.thumbnail;
+			storyJSON.asset.credit = "Oregon Daily Emerald"
+			storyJSON.asset.caption = "";
+		}
+
+		var dateArray = story.date.split(" ")[0];
+		dateArray = dateArray.split("-");
+		storyJSON.startDate = dateArray[0]+","+dateArray[1]+","+dateArray[2];
+		storyJSON.endDate = storyJSON.startDate;
+
+		storyJSON.headline = story.title;
+
+		storyJSON.text = "<p><a href=\""+story.permalink+"\">"+story.excerpt+"</a></p>";
+
+		jsonSkeleton.timeline.date.push(storyJSON);
+
+		console.log(dateArray);
+		console.log(story);
+		console.log(storyJSON);
+		console.log("-------");
+	});
+	
+	console.log(jsonSkeleton);
+	
+	var timeline = new VMM.Timeline();
+	timeline.init(jsonSkeleton);
+	
+}
+
+$(document).ready(function() {
+
+	$.ajax({
+		url: "http://dailyemerald.com/topics/oregon-football/json/?callback=jsonpcallback",
+		dataType: "script",
+		callback: "jsonpcallback"
+	});
+
+});
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30583639-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</html>
