@@ -3686,6 +3686,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			} else {
 				if (type.of(d) == "string") {
 					VMM.Timeline.DataObj.getData(d);
+				} else if (type.of(d) == 'object' && d.timeline.type == "default") { // we got a JSON object passed in, let's go!
+					VMM.fireEvent(global, "DATAREADY", d);
 				} else {
 					VMM.Timeline.DataObj.getData(html_string);
 					//VMM.attachElement(element, content);
