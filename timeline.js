@@ -3432,10 +3432,8 @@ if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
 
 		js: function (urls, callback, obj, context) {
 			if (isLoaded(urls)) {
-				console.log("already LOADED");
 				return callback;
 			} else {
-				console.log("NOT LOADED");
 				load('js', urls, callback, obj, context);
 			}
 		}
