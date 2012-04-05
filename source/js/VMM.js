@@ -1,8 +1,9 @@
 /* Verite
  * Verite JS Master
- * Version: 0.1
- * Date: December 12, 2011
- * Copyright 2011 Verite
+ * Version: 0.5
+ * Date: April 5, 2012
+ * Copyright 2012 Verite unless part of Verite Timeline, 
+ * if part of Timeline then it inherits Timeline's license.
  * Designed and built by Zach Wise digitalartwork.net
  * ----------------------------------------------------- */
 
@@ -11,131 +12,87 @@
 ================================================== */
 
 
-
 /* Simple JavaScript Inheritance
  * By John Resig http://ejohn.org/
  * MIT Licensed.
 ================================================== */
+(function() {
+	var initializing = false,
+	fnTest = /xyz/.test(function() {
+		xyz;
+		}) ? /\b_super\b/: /.*/;
+		// The base Class implementation (does nothing)
+	this.Class = function() {};
 
-(function(){
-  var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-  // The base Class implementation (does nothing)
-  this.Class = function(){};
-  
-  // Create a new Class that inherits from this class
-  Class.extend = function(prop) {
-    var _super = this.prototype;
-    
-    // Instantiate a base class (but only create the instance,
-    // don't run the init constructor)
-    initializing = true;
-    var prototype = new this();
-    initializing = false;
-    
-    // Copy the properties over onto the new prototype
-    for (var name in prop) {
-      // Check if we're overwriting an existing function
-      prototype[name] = typeof prop[name] == "function" && 
-        typeof _super[name] == "function" && fnTest.test(prop[name]) ?
-        (function(name, fn){
-          return function() {
-            var tmp = this._super;
-            
-            // Add a new ._super() method that is the same method
-            // but on the super-class
-            this._super = _super[name];
-            
-            // The method only need to be bound temporarily, so we
-            // remove it when we're done executing
-            var ret = fn.apply(this, arguments);        
-            this._super = tmp;
-            
-            return ret;
-          };
-        })(name, prop[name]) :
-        prop[name];
-    }
-    
-    // The dummy class constructor
-    function Class() {
-      // All construction is actually done in the init method
-      if ( !initializing && this.init )
-        this.init.apply(this, arguments);
-    }
-    
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-    
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
+    // Create a new Class that inherits from this class
+	Class.extend = function(prop) {
+		var _super = this.prototype;
 
-    // And make this class extendable
-    Class.extend = arguments.callee;
-    
-    return Class;
-  };
+        // Instantiate a base class (but only create the instance,
+        // don't run the init constructor)
+		initializing = true;
+		var prototype = new this();
+		initializing = false;
+
+        // Copy the properties over onto the new prototype
+		for (var name in prop) {
+            // Check if we're overwriting an existing function
+			prototype[name] = typeof prop[name] == "function" &&
+			typeof _super[name] == "function" && fnTest.test(prop[name]) ?
+			(function(name, fn) {
+				return function() {
+					var tmp = this._super;
+
+					// Add a new ._super() method that is the same method
+					// but on the super-class
+					this._super = _super[name];
+
+					// The method only need to be bound temporarily, so we
+					// remove it when we're done executing
+					var ret = fn.apply(this, arguments);
+					this._super = tmp;
+
+					return ret;
+				};
+			})(name, prop[name]) :
+			prop[name];
+		}
+
+		// The dummy class constructor
+		function Class() {
+			// All construction is actually done in the init method
+			if (!initializing && this.init)
+			this.init.apply(this, arguments);
+		}
+
+		// Populate our constructed prototype object
+		Class.prototype = prototype;
+
+		// Enforce the constructor to be what we expect
+		Class.prototype.constructor = Class;
+
+		// And make this class extendable
+		Class.extend = arguments.callee;
+
+		return Class;
+    };
 })();
-
-
-
-/* CLASS EXTEND EXAMPLE
-================================================== */
-/*
-var Person = Class.extend({
-  init: function(isDancing){
-    this.dancing = isDancing;
-  },
-  dance: function(){
-    return this.dancing;
-  }
-});
-var Ninja = Person.extend({
-  init: function(){
-    this._super( false );
-  },
-  dance: function(){
-    // Call the inherited version of dance()
-    return this._super();
-  },
-  swingSword: function(){
-    return true;
-  }
-});
-
-var p = new Person(true);
-p.dance(); // => true
-
-var n = new Ninja();
-n.dance(); // => false
-n.swingSword(); // => true
-
-// Should all be true
-p instanceof Person && p instanceof Class &&
-n instanceof Ninja && n instanceof Person && n instanceof Class
-*/
-
-
 
 /* Access to the Global Object
  * access the global object without hard-coding the identifier window
 ================================================== */
-
 var global = (function () {
    return this || (1,eval)('this');
 }());
 
-
 /* VMM
 ================================================== */
-
 if (typeof VMM == 'undefined') {
 	
 	/* Main Scope Container
 	================================================== */
 	//var VMM = {};
-	var VMM = Class.extend({
-
-	});
+	var VMM = Class.extend({});
 	
 	/* Master Config
 	================================================== */
@@ -238,7 +195,6 @@ if (typeof VMM == 'undefined') {
 		
     };
 
-	
 	
 	/* LIBRARY ABSTRACTION
 	================================================== */
@@ -344,7 +300,30 @@ if (typeof VMM == 'undefined') {
 	// VMM.getJSON(url, the_function);
 	VMM.getJSON = function(url, the_function) {
 		if( typeof( jQuery ) != 'undefined' ){
-			$.getJSON(url, the_function);
+			
+			/* CHECK FOR IE AND USE Use Microsoft XDR
+			================================================== */
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 8 && window.XDomainRequest) {
+				trace("it's ie");
+				var ie_url = url;
+
+				if (ie_url.match('^http://')){
+				     //ie_url = ie_url.replace("http://","//");
+					$.getJSON(url, the_function);
+				} else if (ie_url.match('^https://')) {
+					ie_url = ie_url.replace("https://","http://");
+					var xdr = new XDomainRequest();
+					xdr.open("get", ie_url);
+					xdr.onload = function() {
+						var ie_json = VMM.parseJSON(xdr.responseText);
+						return the_function(ie_json);
+					}
+					xdr.send();
+				}
+			} else {
+				$.getJSON(url, the_function);
+				
+			}
 		}
 	}
 	// VMM.parseJSON(the_json);
@@ -1259,6 +1238,8 @@ if (typeof VMM == 'undefined') {
 				} else if (m.type == "youtube") {
 					mediaElem = "<div class='thumbnail youtube'></div>";
 					return mediaElem;
+				} else if (m.type == "googledoc") {
+					mediaElem = "";
 				} else if (m.type == "vimeo") {
 					mediaElem = "<div class='thumbnail vimeo'></div>";
 					return mediaElem;
@@ -1278,7 +1259,9 @@ if (typeof VMM == 'undefined') {
 					mediaElem = "";
 					return mediaElem;
 				} else if (m.type == "website") {
-					mediaElem = "<div class='thumbnail website'></div>";
+					//mediaElem = "<div class='thumbnail website'></div>";
+					mediaElem = "<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					
 					return mediaElem;
 				} else {
 					mediaElem = "<div class='thumbnail'></div>";
@@ -1331,6 +1314,14 @@ if (typeof VMM == 'undefined') {
 					var flickr_id = "flickr_" + m.id;
 					mediaElem = "<img id='" + flickr_id + "_large" + "'>";
 					VMM.ExternalAPI.flickr.getPhoto(m.id, "#" + flickr_id);
+				} else if (m.type == "googledoc") {
+					if (m.id.match(/docs.google.com/i)) {
+						mediaElem = "<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&embedded=true'></iframe>";
+					} else {
+						mediaElem = "<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + m.id + "&embedded=true'></iframe>";
+					}
+					
+					
 				} else if (m.type == "youtube") {
 					mediaElem = "<div class='media-frame video youtube' id='youtube_" + m.id + "'>Loading YouTube video...</div>";
 					VMM.ExternalAPI.youtube.init(m.id);
@@ -1355,7 +1346,8 @@ if (typeof VMM == 'undefined') {
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
 					mediaElem = VMM.Util.properQuotes(m.id); 
 				} else if (m.type == "website") { 
-					mediaElem = "<iframe class='media-frame' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>"
+					//mediaElem = "<iframe class='media-frame' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
+					mediaElem = "<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
 				} else {
 					trace("NO KNOWN MEDIA TYPE FOUND");
 					trace(m.type);
@@ -1431,7 +1423,7 @@ if (typeof VMM == 'undefined') {
 			//maps.google.com
 			media.type  = "google-map";
 		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
-			trace("google map " + media.id);
+			//trace("google map " + media.id);
 			success = true;
 		} else if (d.match("flickr.com/photos")) {
 			media.type = "flickr";
@@ -1439,10 +1431,15 @@ if (typeof VMM == 'undefined') {
 			
 			media.id = d.split("photos\/")[1].split("/")[1];
 			//media.id = media.id.split("/")[1];
-			trace("FLICKR " + media.id);
+			//trace("FLICKR " + media.id);
 			success = true;
 		} else if (d.match(/jpg|jpeg|png|gif/i)) {
 			media.type  = "image";
+			media.id    = d;
+			success = true;
+			
+		} else if (d.match(/docs.google.com|.DOC|.DOCX|.XLS|.XLSX|.PPT|.PPTX|.PDF|.PAGES|.AI|.PSD|.TIFF|.DXF|.SVG|.EPS|.PS|.TTF|.XPS|.ZIP|.RAR/i)) {
+			media.type  = "googledoc";
 			media.id    = d;
 			success = true;
 		} 	else if (d.indexOf('http://') == 0) {
@@ -1467,6 +1464,7 @@ if (typeof VMM == 'undefined') {
 	
 	VMM.Keys = {
 		flickr: "6d6f59d8d30d79f4f402a7644d5073e3",
+		google: "AIzaSyDUHXB8hefYssfwGpySnQmzTqL9n0qZ3T4"
 	}
 	
 	VMM.ExternalAPI = {
@@ -1475,13 +1473,13 @@ if (typeof VMM == 'undefined') {
 			tweetArray: [],
 			// VMM.ExternalAPI.twitter.getHTML(id);
 			getHTML: function(id) {
-				var the_url = "https://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
-				
-				VMM.getJSON(the_url, function(d) {
-					VMM.ExternalAPI.twitter.onJSONLoaded(d, id);
-				});
+				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
+				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
+				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.onJSONLoaded);
 			},
-			onJSONLoaded: function(d, id) {
+			onJSONLoaded: function(d) {
+				trace("TWITTER JSON LOADED");
+				var id = d.id;
 				VMM.attachElement("#"+id, VMM.ExternalAPI.twitter.linkify(d.html) );
 			},
 			//somestring = VMM.ExternalAPI.twitter.linkify(d);
@@ -1531,7 +1529,7 @@ if (typeof VMM == 'undefined') {
 					
 					/* FETCH THE DATA
 					================================================== */
-					var the_url = "https://api.twitter.com/1/statuses/show.json?id=" + twitter_id + "&include_entities=true&callback=?";
+					var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + twitter_id + "&include_entities=true&callback=?";
 					VMM.getJSON(the_url, function(d) {
 						
 						var tweet = {}
@@ -1602,43 +1600,32 @@ if (typeof VMM == 'undefined') {
 			// VMM.ExternalAPI.twitter.prettyHTML(id);
 			prettyHTML: function(id) {
 				
-				// https://api.twitter.com/1/statuses/show.json?id=164165553810976768&include_entities=true
-				var the_url = "https://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
-				VMM.getJSON(the_url, function(d) {
-					VMM.ExternalAPI.twitter.formatJSON(d, id);
-				});
+				// https://api.twitter.com/1/statuses/show.json?id=164165553810976768&include_entities=true&callback=?
+				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
+				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON);
 			},
 			
-			formatJSON: function(d, id) {
+			formatJSON: function(d) {
+				trace("TWITTER JSON LOADED F");
+				var id = d.id_str;
+				
 				var twit = "<blockquote><p>";
 				var td = VMM.Util.linkify(d.text);
 				td = td.replace(/(@([\w]+))/g,"<a href='http://twitter.com/$2'>$1</a>");
 				td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2'>$1</a>");
-				//twit += VMM.Util.linkify(d.text);
 				twit += td;
 				twit += "</p></blockquote>";
-				//twit += "— " + d.user.name + " (<a href='https://twitter.com/" + d.user.screen_name + "'>@" + d.user.screen_name + "</a>) <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + d.created_at + " </a>";
-				//twit += "<a href='" +  + "'>" + VMM.ExternalAPI.twitter.prettyParseTwitterDate(d.created_at);
-				//twit += "<span class='created-at'><a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + VMM.ExternalAPI.twitter.prettyParseTwitterDate(d.created_at) + " </a></span>";
-				//twit += "<span class='created-at'><a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "'>" + "Tweet Details" + " </a></span>";
 				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
-				twit += "<div class='vcard author'>"
+				twit += "<div class='vcard author'>";
 				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "'>";
 				twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
 				twit += "<span class='fn'>" + d.user.name + "</span>";
 				twit += "<span class='nickname'>@" + d.user.screen_name + "</span>";
-				twit += "</a>"
-				twit += "</div>"
+				twit += "</a>";
+				twit += "</div>";
 				
-				
-				/*
-				<blockquote class="twitter-tweet">
-				<p>Tom Brokaw asks <a href="https://twitter.com/search/%2523Romney">#Romney</a> to remove from ads 1997 NBC report on <a href="https://twitter.com/search/%2523Gingrich">#Gingrich</a> legal troubles. Romney unmoved. <a href="http://t.co/re7vtLNt" title="http://thecaucus.blogs.nytimes.com/2012/01/28/nbc-news-asks-romney-campaign-to-remove-ad/?hp">thecaucus.blogs.nytimes.com/2012/01/28/nbc…</a></p>
-				— Jim Roberts (<a href="http://twitter.com/nytjim">@nytjim</a>) <a href="https://twitter.com/nytjim/status/163461388193366016" data-datetime="2012-01-29T03:20:06+00:00">January 29, 2012</a>
-				</blockquote>
-				*/
 				VMM.attachElement("#"+id, twit );
-				//VMM.attachElement("#"+id, VMM.ExternalAPI.twitter.linkify(twit) );
+				
 			}
 			
 		},
@@ -1650,32 +1637,38 @@ if (typeof VMM == 'undefined') {
 		flickr: {
 			
 			getPhoto: function(mid, id) {
-				// http://soundcloud.com/oembed?iframe=true&url=http://soundcloud.com/erasedtapes/olafur-arnalds-poland
-				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + VMM.Keys.flickr + "&photo_id=" + mid + "&format=json&nojsoncallback=1";
-				VMM.getJSON(the_url, function(d) {
-					
-					var flickr_large_id = id + "_large";
-					var flickr_thumb_id = id + "_thumb";
-					var flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
-					var flickr_img_thumb = d.sizes.size[0].source;
-					
-					VMM.Element.attr(flickr_large_id, "src", flickr_img_large);
-					VMM.Element.attr(flickr_thumb_id, "src", flickr_img_thumb);
-				});
+				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
+				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + VMM.Keys.flickr + "&photo_id=" + mid + "&format=json&jsoncallback=?";
+				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
 			},
+			//VMM.ExternalAPI.flickr.setPhoto(d);
+			setPhoto: function(d) {
+				var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
+				var id = "flickr_" + flickr_id;
+				var flickr_large_id = id + "_large";
+				var flickr_thumb_id = id + "_thumb";
+				var flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				var flickr_img_thumb = d.sizes.size[0].source;
+				VMM.Element.attr("#"+flickr_large_id, "src", flickr_img_large);
+				VMM.Element.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+			}
 			
 			
 		},
 		
 		soundcloud: {
 			// VMM.ExternalAPI.soundcloud.getSound(url, id)
+			/* 
+				REFORMAT TO USE API FOR CUSTOM PLAYERS
+			*/
 			getSound: function(url, id) {
 				// http://soundcloud.com/oembed?iframe=true&url=http://soundcloud.com/erasedtapes/olafur-arnalds-poland
-				var the_url = "http://soundcloud.com/oembed?iframe=true&url=" + url + "";
+				var the_url = "http://soundcloud.com/oembed?url=" + url + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+id, d.html );
 				});
 			},
+			
 		},
 		
 		// VMM.ExternalAPI.youtube.init(id);
@@ -1691,11 +1684,10 @@ if (typeof VMM == 'undefined') {
 					if (VMM.master_config.youtube.api_loaded) {
 						
 					} else {
-						var tag = document.createElement('script');
-						tag.src = "http://www.youtube.com/player_api";
-						var firstScriptTag = document.getElementsByTagName('script')[0];
-						firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-						VMM.master_config.youtube.api_loaded = true;
+						
+						VMM.LoadLib.js('http://www.youtube.com/player_api', function() {
+							trace("YouTube API Library Loaded");
+						});
 					}
 					
 				}
@@ -2034,18 +2026,3 @@ if( typeof( jQuery ) != 'undefined' ){
 
 
 
-
-
-/* CLONE OBJECTS
-================================================== */
-/*
-Object.prototype.clone = function() {
-  var newObj = (this instanceof Array) ? [] : {};
-  for (i in this) {
-    if (i == 'clone') continue;
-    if (this[i] && typeof this[i] == "object") {
-      newObj[i] = this[i].clone();
-    } else newObj[i] = this[i]
-  } return newObj;
-};
-*/

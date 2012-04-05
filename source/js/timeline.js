@@ -38,6 +38,7 @@
 // @codekit-prepend "VMM.js";
 // @codekit-prepend "VMM.Core.js";
 // @codekit-prepend "VMM.Util.js";
+// @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "bootstrap-tooltip.js";
 
 /* Timeline Class contained in VMM (verite) namespace
@@ -350,6 +351,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				//c._media = VMM.createElement("div", c._media, "media-wrapper");
 				
 				slide = VMM.createElement("div", c._text + c._media, _layout_class);
+				
+				
+				
 				//trace(slide);
 
 			}
@@ -1973,7 +1977,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			getData: function(raw_data) {
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
 				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-				
+				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
+				/*
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 8 && window.XDomainRequest) {
 					// Use Microsoft XDR
 					// going to move this to VMM.getJSON
@@ -1993,11 +1998,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					trace("not ie");
 					VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 				}
+				*/
 				
 			},
 			
 			buildData: function(d) {
-				
 				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 				for(var i = 0; i < d.feed.entry.length; i++) {
