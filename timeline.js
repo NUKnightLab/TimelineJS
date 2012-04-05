@@ -1437,8 +1437,8 @@ if (typeof VMM == 'undefined') {
 			media.type  = "image";
 			media.id    = d;
 			success = true;
-			
-		} else if (d.match(/docs.google.com|.DOC|.DOCX|.XLS|.XLSX|.PPT|.PPTX|.PDF|.PAGES|.AI|.PSD|.TIFF|.DXF|.SVG|.EPS|.PS|.TTF|.XPS|.ZIP|.RAR/i)) {
+		} else if (VMM.FileExtention.googleDocType(d)) {
+			trace("GOOGLE DOC " + d);
 			media.type  = "googledoc";
 			media.id    = d;
 			success = true;
@@ -1460,6 +1460,29 @@ if (typeof VMM == 'undefined') {
 			trace(d);
 		}
 		return false;
+	}
+	//VMM.FileExtention.googleDocType(url);
+	VMM.FileExtention = {
+		googleDocType: function(url) {
+			var fileName = url;
+			var fileExtension = "";
+			//fileExtension = fileName.substr(5);
+			fileExtension = fileName.substr(fileName.length - 5, 5);
+			var validFileExtensions = ["DOC","DOCX","XLS","XLSX","PPT","PPTX","PDF","PAGES","AI","PSD","TIFF","DXF","SVG","EPS","PS","TTF","XPS","ZIP","RAR"];
+			var flag = false;
+			
+			for (var i = 0; i < validFileExtensions.length; i++) {
+				trace("TEST " + fileExtension);
+				
+				if (fileExtension.toLowerCase().match(validFileExtensions[i].toString().toLowerCase()) || fileName.match("docs.google.com") ) {
+					flag = true;
+				}
+				
+			}
+			
+			return flag;
+
+		}
 	}
 	
 	VMM.Keys = {
