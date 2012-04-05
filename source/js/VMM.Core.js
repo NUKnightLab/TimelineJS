@@ -409,7 +409,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				var _media;
 				
 				bw = VMM.createElement("div", d[i].content, "content");
+				
 				_slide = VMM.appendAndGetElement($slides_items, "<div>", "slider-item" , bw);
+				
 				slides.push(_slide);
 			}
 			
