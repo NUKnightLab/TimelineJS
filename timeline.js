@@ -97,19 +97,8 @@ if (typeof VMM == 'undefined') {
 	/* Master Config
 	================================================== */
 	//VMM.master_config.youtube_array
-	VMM.master_config = ({
-		
-		init: function() {
-			return this;
-		},
-		
-		youtube: {
-			active: false,
-			array: [],
-			api_loaded:false
-		},
-		
-	}).init();
+	//VMM.master_config.loadedJS
+
 	
 	VMM.master_config = ({
 		
@@ -1438,7 +1427,6 @@ if (typeof VMM == 'undefined') {
 			media.id    = d;
 			success = true;
 		} else if (VMM.FileExtention.googleDocType(d)) {
-			trace("GOOGLE DOC " + d);
 			media.type  = "googledoc";
 			media.id    = d;
 			success = true;
@@ -1472,7 +1460,7 @@ if (typeof VMM == 'undefined') {
 			var flag = false;
 			
 			for (var i = 0; i < validFileExtensions.length; i++) {
-				trace("TEST " + fileExtension);
+
 				
 				if (fileExtension.toLowerCase().match(validFileExtensions[i].toString().toLowerCase()) || fileName.match("docs.google.com") ) {
 					flag = true;
@@ -3225,14 +3213,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 	copies or substantial portions of the Software.
 
 ================================================== */
-
+window.loadedJS = [];
 
 
 if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
 	//VMM.LoadLib.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
 	//VMM.LoadLib.css('http://someurl.css', onCSSLoaded);
 	
-
+	
 	
 	VMM.LoadLib = (function (doc) {
 		var env,
@@ -3245,20 +3233,16 @@ if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
 		var loaded_Array = [];
 	
 		function isLoaded(url) {
-			
+			var has_been_loaded = false;
 			for(var i=0; i<loaded_Array.length; i++) {
-				var has_been_loaded = false;
 				if (loaded_Array[i] == url) {
 					has_been_loaded = true;
 				}
-				
-				if (!has_been_loaded) {
-					loaded_Array.push(url);
-				}
-				
-				return has_been_loaded;
 			}
-			
+			if (!has_been_loaded) {
+				loaded_Array.push(url);
+			}
+			return has_been_loaded;
 		}
 
 		function createNode(name, attrs) {
@@ -3448,8 +3432,10 @@ if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
 
 		js: function (urls, callback, obj, context) {
 			if (isLoaded(urls)) {
+				console.log("already LOADED");
 				return callback;
 			} else {
+				console.log("NOT LOADED");
 				load('js', urls, callback, obj, context);
 			}
 		}

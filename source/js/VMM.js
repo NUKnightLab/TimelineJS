@@ -97,19 +97,8 @@ if (typeof VMM == 'undefined') {
 	/* Master Config
 	================================================== */
 	//VMM.master_config.youtube_array
-	VMM.master_config = ({
-		
-		init: function() {
-			return this;
-		},
-		
-		youtube: {
-			active: false,
-			array: [],
-			api_loaded:false
-		},
-		
-	}).init();
+	//VMM.master_config.loadedJS
+
 	
 	VMM.master_config = ({
 		
@@ -1438,7 +1427,6 @@ if (typeof VMM == 'undefined') {
 			media.id    = d;
 			success = true;
 		} else if (VMM.FileExtention.googleDocType(d)) {
-			trace("GOOGLE DOC " + d);
 			media.type  = "googledoc";
 			media.id    = d;
 			success = true;
@@ -1472,7 +1460,7 @@ if (typeof VMM == 'undefined') {
 			var flag = false;
 			
 			for (var i = 0; i < validFileExtensions.length; i++) {
-				trace("TEST " + fileExtension);
+
 				
 				if (fileExtension.toLowerCase().match(validFileExtensions[i].toString().toLowerCase()) || fileName.match("docs.google.com") ) {
 					flag = true;
