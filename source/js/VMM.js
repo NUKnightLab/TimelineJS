@@ -1408,7 +1408,7 @@ if (typeof VMM == 'undefined') {
 			media.type = "twitter";
 			media.id = twitter_id;
 			success = true;
-		} else if (d.match("maps.google.com")) {
+		} else if (d.match("maps.google")) {
 			//maps.google.com
 			media.type  = "google-map";
 		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);

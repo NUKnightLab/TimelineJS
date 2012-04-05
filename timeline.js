@@ -1,6 +1,6 @@
 /* Verite
  * Verite JS Master
- * Version: 0.5
+ * Version: 0.6
  * Date: April 5, 2012
  * Copyright 2012 Verite unless part of Verite Timeline, 
  * if part of Timeline then it inherits Timeline's license.
@@ -1408,7 +1408,7 @@ if (typeof VMM == 'undefined') {
 			media.type = "twitter";
 			media.id = twitter_id;
 			success = true;
-		} else if (d.match("maps.google.com")) {
+		} else if (d.match("maps.google")) {
 			//maps.google.com
 			media.type  = "google-map";
 		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
