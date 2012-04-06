@@ -80,8 +80,19 @@
 	var te = document.getElementById("timeline-embed");
 	te.appendChild(t);
 	t.setAttribute("id", 'timeline');
-	te.style.width = embed_config.width + 'px';
-	te.style.height = embed_config.height + 'px';
+	
+	if (embed_config.width.toString().match("%") || embed_config.width.toString().match("px")) {
+		te.style.width = embed_config.width;
+	} else {
+		te.style.width = embed_config.width + 'px';
+	}
+	
+	if (embed_config.height.toString().match("%") || embed_config.height.toString().match("px")) {
+		te.style.height = embed_config.height;
+	} else {
+		te.style.height = embed_config.height + 'px';
+	}
+	
 	t.style.position = 'relative';
 	
 	/* Load CSS
