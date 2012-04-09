@@ -12,3 +12,4 @@ dev_examples/
 *.tmproject
 
 tmtags
+source/gfx/.DS_Store
