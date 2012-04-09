@@ -296,7 +296,7 @@ if (typeof VMM == 'undefined') {
 	};
 
 	// VMM.getJSON(url, the_function);
-	VMM.getJSON = function(url, the_function) {
+	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
 			/* CHECK FOR IE AND USE Use Microsoft XDR
@@ -307,7 +307,7 @@ if (typeof VMM == 'undefined') {
 
 				if (ie_url.match('^http://')){
 				     //ie_url = ie_url.replace("http://","//");
-					$.getJSON(url, the_function);
+					$.getJSON(url, data);
 				} else if (ie_url.match('^https://')) {
 					ie_url = ie_url.replace("https://","http://");
 					var xdr = new XDomainRequest();
@@ -319,7 +319,9 @@ if (typeof VMM == 'undefined') {
 					xdr.send();
 				}
 			} else {
-				$.getJSON(url, the_function);
+				//$.getJSON(url, data);
+				return jQuery.getJSON(url, data, callback);
+				
 				
 			}
 		}
@@ -1295,11 +1297,11 @@ if (typeof VMM == 'undefined') {
 				
 				// CREDIT
 				if (data.credit != null && data.credit != "") {
-					creditElem = "<div class='credit'>" + data.credit + "</div>";
+					creditElem = "<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
 				}
 				// CAPTION
 				if (data.caption != null && data.caption != "") {
-					captionElem = "<div class='caption'>" + data.caption + "</div>";
+					captionElem = "<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
 				}
 				
 				// MEDIA TYPE
@@ -1327,7 +1329,7 @@ if (typeof VMM == 'undefined') {
 				} else if (m.type == "vimeo") {
 					mediaElem = "<iframe class='media-frame video vimeo' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
 				} else if (m.type == "twitter"){
-					mediaElem = "<div class='twitter' id='" + m.id + "'>Loading Tweet</div>";
+					mediaElem = "<div class='twitter' id='" + "twitter_" + m.id + "'>Loading Tweet</div>";
 					//VMM.ExternalAPI.twitter.getHTML(m.id);
 					trace("TWITTER");
 					VMM.ExternalAPI.twitter.prettyHTML(m.id);
@@ -1505,16 +1507,9 @@ if (typeof VMM == 'undefined') {
 			onJSONLoaded: function(d) {
 				trace("TWITTER JSON LOADED");
 				var id = d.id;
-				VMM.attachElement("#"+id, VMM.ExternalAPI.twitter.linkify(d.html) );
+				VMM.attachElement("#"+id, VMM.Util.linkify_with_twitter(d.html) );
 			},
-			//somestring = VMM.ExternalAPI.twitter.linkify(d);
-			linkify: function(d) {
-				return d.replace(/[@]+[A-Za-z0-9-_]+/g, function(u) {
-					var username = u.replace("@","");
-					
-					return u.link("http://twitter.com/"+username);
-				});
-			},
+			
 			// VMM.ExternalAPI.twitter.parseTwitterDate(date);
 			parseTwitterDate: function(d) {
 				var date = new Date(Date.parse(d));
@@ -1561,10 +1556,7 @@ if (typeof VMM == 'undefined') {
 						/* FORMAT RESPONSE
 						================================================== */
 						var twit = "<div class='twitter'><blockquote><p>";
-						var td = VMM.Util.linkify(d.text);
-						td = td.replace(/(@([\w]+))/g,"<a href='http://twitter.com/$2'>$1</a>");
-						td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2'>$1</a>");
-						//twit += VMM.Util.linkify(d.text);
+						var td = VMM.Util.linkify_with_twitter(d.text, "_blank");
 						twit += td;
 						twit += "</p>";
 						
@@ -1582,7 +1574,10 @@ if (typeof VMM == 'undefined') {
 							var the_tweets = {tweetdata: tweetArray}
 							VMM.fireEvent(global, "TWEETSLOADED", the_tweets);
 						}
-					});
+					})
+					.success(function() { trace("second success"); })
+					.error(function() { trace("error"); })
+					.complete(function() { trace("complete"); });
 					
 				}
 					
@@ -1591,8 +1586,6 @@ if (typeof VMM == 'undefined') {
 			
 			// VMM.ExternalAPI.twitter.getTweetSearch(search string);
 			getTweetSearch: function(tweets, number_of_tweets) {
-				
-				
 				var _number_of_tweets = 40;
 				if (number_of_tweets != null && number_of_tweets != "") {
 					_number_of_tweets = number_of_tweets;
@@ -1607,9 +1600,7 @@ if (typeof VMM == 'undefined') {
 					for(var i = 0; i < d.results.length; i++) {
 						var tweet = {}
 						var twit = "<div class='twitter'><blockquote><p>";
-						var td = VMM.Util.linkify(d.results[i].text);
-						td = td.replace(/(@([\w]+))/g,"<a href='http://twitter.com/$2'>$1</a>");
-						td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2'>$1</a>");
+						var td = VMM.Util.linkify_with_twitter(d.results[i].text, "_blank");
 						twit += td;
 						twit += "</p>";
 						twit += "— " + d.results[i].from_user_name + " (<a href='https://twitter.com/" + d.results[i].from_user + "'>@" + d.results[i].from_user + "</a>) <a href='https://twitter.com/" + d.results[i].from_user + "/status/" + d.id + "'>" + VMM.ExternalAPI.twitter.prettyParseTwitterDate(d.results[i].created_at) + " </a></blockquote></div>";
@@ -1624,32 +1615,51 @@ if (typeof VMM == 'undefined') {
 			},
 			// VMM.ExternalAPI.twitter.prettyHTML(id);
 			prettyHTML: function(id) {
-				
-				// https://api.twitter.com/1/statuses/show.json?id=164165553810976768&include_entities=true&callback=?
+				var id = id.toString();
+				var error_obj = {
+					twitterid: id
+				};
 				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
-				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON);
+				trace("id " + id);
+				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
+				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
+					.error(function(jqXHR, textStatus, errorThrown) {
+						trace("TWITTER error");
+						trace("TWITTER ERROR: " + textStatus + " " + qXHR.responseText);
+						VMM.attachElement("#twitter_"+id, "<p>ERROR LOADING TWEET " + id + "</p>" );
+					})
+					.success(function() {
+						clearTimeout(twitter_timeout);
+					});
+				
+			},
+			
+			notFoundError: function(id) {
+				trace("TWITTER JSON ERROR TIMEOUT " + id);
+				VMM.attachElement("#twitter_" + id, "<p>TWEET NOT FOUND " + id + "</p>"  );
 			},
 			
 			formatJSON: function(d) {
 				trace("TWITTER JSON LOADED F");
+				trace(d);
 				var id = d.id_str;
 				
 				var twit = "<blockquote><p>";
-				var td = VMM.Util.linkify(d.text);
-				td = td.replace(/(@([\w]+))/g,"<a href='http://twitter.com/$2'>$1</a>");
-				td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2'>$1</a>");
+				var td = VMM.Util.linkify_with_twitter(d.text, "_blank");
+				//td = td.replace(/(@([\w]+))/g,"<a href='http://twitter.com/$2' target='_blank'>$1</a>");
+				//td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2' target='_blank'>$1</a>");
 				twit += td;
 				twit += "</p></blockquote>";
-				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
+				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "' target='_blank' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
 				twit += "<div class='vcard author'>";
-				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "'>";
+				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "' target='_blank'>";
 				twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
 				twit += "<span class='fn'>" + d.user.name + "</span>";
 				twit += "<span class='nickname'>@" + d.user.screen_name + "</span>";
 				twit += "</a>";
 				twit += "</div>";
 				
-				VMM.attachElement("#"+id, twit );
+				VMM.attachElement("#twitter_"+id.toString(), twit );
 				
 			}
 			

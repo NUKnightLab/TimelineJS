@@ -1,5 +1,5 @@
 /*!
-	Verite Timeline 0.88
+	Open Timeline 0.88
 	Designed and built by Zach Wise digitalartwork.net
 	Date: April 8, 2012
 
@@ -40,7 +40,7 @@
 // @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "bootstrap-tooltip.js";
 
-/* Timeline Class contained in VMM (verite) namespace
+/* Open Timeline Class contained in VMM (verite) namespace
 ================================================== */
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
@@ -333,14 +333,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (d.type == "tweets") {
 						
 					} else if (dd.type == "start") {
-						c._text += VMM.createElement("h2", d.headline, "start");
+						c._text += VMM.createElement("h2", VMM.Util.linkify_with_twitter(d.headline, "_blank"), "start");
 					} else {
-						c._text += VMM.createElement("h3", d.headline);
+						c._text += VMM.createElement("h3", VMM.Util.linkify_with_twitter(d.headline, "_blank"));
 					}
 				}
 				if (d.text != null && d.text != "") {
 					_hastext = true;
-					c._text += VMM.createElement("p", d.text);
+					c._text += VMM.createElement("p", VMM.Util.linkify_with_twitter(d.text, "_blank"));
 				}
 				
 				c._text = VMM.createElement("div", c._text, "container");
