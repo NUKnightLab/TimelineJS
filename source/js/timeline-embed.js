@@ -32,7 +32,6 @@
 <!-- Begin Embed Code -->
 <div id="timeline-embed"></div>
 <script type="text/javascript">
-    var config = {
     var timeline_config = {
 		width: 900,
 		height: 700,
@@ -58,14 +57,23 @@
 		js: 'http://veritetimeline.appspot.com/latest/timeline-min.js'
 	}
 	
-	if (typeof config == 'object') {
+	if (typeof timeline_config == 'object') {
 	    var x;
+		for (x in timeline_config) {
+			if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
+				embed_config[x] = timeline_config[x];
+			}
+		}
+	} else if (typeof config == 'object') {
+		var x;
 		for (x in config) {
 			if (Object.prototype.hasOwnProperty.call(config, x)) {
 				embed_config[x] = config[x];
 			}
 		}
 	}
+	
+	timeline_config = embed_config;
 	
 	/* VARS
 	================================================== */
@@ -75,6 +83,7 @@
 	var preload_checks = 0;
 	var timeout;
 	var timeline;
+	
 	/* Add Timeline Div
 	================================================== */
 	var t = document.createElement('div');
