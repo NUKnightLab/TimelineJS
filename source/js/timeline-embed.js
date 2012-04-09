@@ -33,6 +33,7 @@
 <div id="timeline-embed"></div>
 <script type="text/javascript">
     var config = {
+    var timeline_config = {
 		width: 900,
 		height: 700,
 		source: 'https://docs.google.com/a/digitalartwork.net/spreadsheet/ccc?hl=en_US&key=0Agl_Dv6iEbDadGRwZjJSRTR4RHJpanE2U3lkb0lyYUE&rm=full#gid=0',
