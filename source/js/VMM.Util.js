@@ -351,7 +351,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* Get URL Variables
 		================================================== */
 		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
-		getUrlVars: function(str) {
+		getUrlVars: function(string) {
+			
+			var str = string.toString();
+			
 			var vars = [], hash;
 			var hashes = str.slice(str.indexOf('?') + 1).split('&');
 			for(var i = 0; i < hashes.length; i++) {
@@ -359,10 +362,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				vars.push(hash[0]);
 				vars[hash[0]] = hash[1];
 			}
-			trace(vars);
+			
 			return vars;
 		},
-		
+
 		/* Cleans up strings to become real HTML
 		================================================== */
 		toHTML: function(text) {
