@@ -113,6 +113,15 @@ if (typeof VMM == 'undefined') {
 			que: []
 		},
 		
+		googlemaps: {
+			active: false,
+			map_active: false,
+			places_active: false,
+			array: [],
+			api_loaded:false,
+			que: []
+		}
+		
 	}).init();
 	
 	/* Abstract out DOM element creation to make independent of library
@@ -1301,7 +1310,7 @@ if (typeof VMM == 'undefined') {
 					mediaElem = "<img src='" + m.id + "'>";
 				} else if (m.type == "flickr") {
 					var flickr_id = "flickr_" + m.id;
-					mediaElem = "<img id='" + flickr_id + "_large" + "'>";
+					mediaElem = "<a href='" + m.link + "' target='_blank'><img id='" + flickr_id + "_large" + "'></a>";
 					VMM.ExternalAPI.flickr.getPhoto(m.id, "#" + flickr_id);
 				} else if (m.type == "googledoc") {
 					if (m.id.match(/docs.google.com/i)) {
@@ -1330,7 +1339,10 @@ if (typeof VMM == 'undefined') {
 					mediaElem = "<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
 					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id)
 				} else if (m.type == "google-map") {
-					mediaElem = "<iframe class='media-frame map' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
+					//mediaElem = "<iframe class='media-frame map' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
+					var map_id = "googlemap_" + VMM.Util.unique_ID(7);
+					mediaElem = "<div class='media-frame map' id='" + map_id + "'>Loading Map...</div>";
+					VMM.ExternalAPI.googlemaps.getMap(m.id, map_id);
 				} else if (m.type == "unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
 					mediaElem = VMM.Util.properQuotes(m.id); 
@@ -1419,6 +1431,7 @@ if (typeof VMM == 'undefined') {
 			//media.id = d.split('/photos/[^/]+/([0-9]+)/gi');
 			
 			media.id = d.split("photos\/")[1].split("/")[1];
+			media.link = d;
 			//media.id = media.id.split("/")[1];
 			//trace("FLICKR " + media.id);
 			success = true;
@@ -1474,6 +1487,7 @@ if (typeof VMM == 'undefined') {
 	}
 	
 	VMM.Keys = {
+		// PLEASE REPLACE THESE WITH YOUR OWN API KEYS TO AVOID POSSIBLE OVERAGE BREAKS
 		flickr: "6d6f59d8d30d79f4f402a7644d5073e3",
 		google: "AIzaSyDUHXB8hefYssfwGpySnQmzTqL9n0qZ3T4"
 	}
@@ -1641,10 +1655,249 @@ if (typeof VMM == 'undefined') {
 			
 		},
 		
-		maps: {
+		//VMM.ExternalAPI.googlemaps.getMap()
+		googlemaps: {
+			/*
+				//http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9
+				
+				http://maps.google.com/maps?q=chicago&hl=en&sll=41.874961,-87.619054&sspn=0.159263,0.351906&t=t&hnear=Chicago,+Cook,+Illinois&z=11&output=kml
+				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a53ad1e3365113a32&msa=0
+				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a53ad1e3365113a32&msa=0&output=kml
+				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a21354b1a2f188082&msa=0&ll=38.719738,-9.142599&spn=0.04172,0.087976&iwloc=0004a214c0e99e2da91e0
+				http://maps.google.com/maps?q=Bavaria&hl=en&ll=47.597829,9.398804&spn=1.010316,2.709503&sll=37.0625,-95.677068&sspn=73.579623,173.408203&hnear=Bavaria,+Germany&t=m&z=10&output=embed
+			*/
+			getMap: function(url, id) {
+				var map_vars = VMM.Util.getUrlVars(url);
+				trace(map_vars);
+				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + VMM.Keys.google + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				var map = {
+					url: url,
+					vars: map_vars,
+					id: id
+				}
+				
+				if (VMM.master_config.googlemaps.active) {
+					VMM.master_config.googlemaps.createMap(map);
+				} else {
+					
+					VMM.master_config.googlemaps.que.push(map);
+					
+					if (VMM.master_config.googlemaps.api_loaded) {
+						
+					} else {
+						
+						VMM.LoadLib.js(map_url, function() {
+							trace("Google Maps API Library Loaded");
+						});
+					}
+					
+				}
+				
+
+				
+			},
+			
+			onMapAPIReady: function() {
+				VMM.master_config.googlemaps.map_active = true;
+				VMM.master_config.googlemaps.places_active = true;
+				VMM.ExternalAPI.googlemaps.onAPIReady();
+			},
+			onPlacesAPIReady: function() {
+				VMM.master_config.googlemaps.places_active = true;
+				VMM.ExternalAPI.googlemaps.onAPIReady();
+			},
+			onAPIReady: function() {
+				if (!VMM.master_config.googlemaps.active) {
+					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
+						VMM.master_config.googlemaps.active = true;
+						for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
+							VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
+						}
+					}
+				}
+			},
+			
+			stamen_map_attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
+			       'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' +
+			       'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ' +
+			       'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+			
+			map_subdomains: ["", "a.", "b.", "c.", "d."],
+			
+			map_providers: {
+				"toner": {
+			        "url": "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+			        "minZoom": 0,
+			        "maxZoom": 20
+			    },
+			    "toner-lines": {
+			        "url": "http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+			        "minZoom": 0,
+			        "maxZoom": 20
+			    },
+			    "toner-labels": {
+			        "url": "http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+			        "minZoom": 0,
+			        "maxZoom": 20
+			    },
+			    "sterrain": {
+			        "url": "http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+			        "minZoom": 4,
+			        "maxZoom": 18
+			    },
+				"apple": {
+			        "url": "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
+			        "minZoom": 4,
+			        "maxZoom": 18
+			    },
+			    "watercolor": {
+			        "url": "http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+			        "minZoom": 3,
+			        "maxZoom": 16
+			    }
+			},
+			
+			createMap: function(m) {
+				
+				/* 	MAP PROVIDERS
+					Including Stamen Maps
+					http://maps.stamen.com/
+					Except otherwise noted, each of these map tile sets are © Stamen Design, under a Creative Commons Attribution (CC BY 3.0) license.
+				================================================== */
+				function mapProvider(name) {
+					if (name in VMM.ExternalAPI.googlemaps.map_providers) {
+						return VMM.ExternalAPI.googlemaps.map_providers[name];
+					} else {
+						throw 'No such provider: "' + name + '"';
+					}
+				}
+				
+				google.maps.VeriteMapType = function(name) {
+					var provider = mapProvider(name);
+					return google.maps.ImageMapType.call(this, {
+						"getTileUrl": function(coord, zoom) {
+							var index = (zoom + coord.x + coord.y) % VMM.ExternalAPI.googlemaps.map_subdomains.length;
+							return [
+								provider.url
+									.replace("{S}", VMM.ExternalAPI.googlemaps.map_subdomains[index])
+									.replace("{Z}", zoom)
+									.replace("{X}", coord.x)
+									.replace("{Y}", coord.y)
+									.replace("{z}", zoom)
+									.replace("{x}", coord.x)
+									.replace("{y}", coord.y)
+							];
+						},
+						"tileSize": new google.maps.Size(256, 256),
+						"name":     name,
+						"minZoom":  provider.minZoom,
+						"maxZoom":  provider.maxZoom
+					});
+				};
+				
+				google.maps.VeriteMapType.prototype = new google.maps.ImageMapType("_");
+				
+				/* Make the Map
+				================================================== */
+				var layer;
+				
+				
+				if (type.of(VMM.master_config.Timeline.maptype) == "string") {
+					layer = VMM.master_config.Timeline.maptype;
+				} else {
+					layer = "toner";
+				}
+				
+				var location = new google.maps.LatLng(41.875696,-87.624207);
+				var latlong;
+				var zoom = 11;
+				var has_location = false;
+				var has_zoom = false;
+				var map_bounds;
+				
+				if (type.of(VMM.Util.getUrlVars(m.url)["ll"]) == "string") {
+					has_location = true;
+					latlong = VMM.Util.getUrlVars(m.url)["ll"].split(",");
+					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+					
+				} else if (type.of(VMM.Util.getUrlVars(m.url)["sll"]) == "string") {
+					has_location = true;
+					latlong = VMM.Util.getUrlVars(m.url)["sll"].split(",");
+					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+					
+				} 
+				
+				if (type.of(VMM.Util.getUrlVars(m.url)["z"]) == "string") {
+					has_zoom = true;
+					zoom = parseFloat(VMM.Util.getUrlVars(m.url)["z"]);
+				}
+				
+				var map_options = {
+					zoom:zoom,
+					disableDefaultUI: true,
+					mapTypeControl: false,
+					zoomControl: true,
+					zoomControlOptions: {
+						style: google.maps.ZoomControlStyle.SMALL,
+						position: google.maps.ControlPosition.TOP_RIGHT
+					},
+					center: location,
+					mapTypeId: layer,
+					mapTypeControlOptions: {
+				        mapTypeIds: [layer]
+				    }
+				}
+
+				var map = new google.maps.Map(document.getElementById(m.id), map_options);
+				map.mapTypes.set(layer, new google.maps.VeriteMapType(layer));
+				
+				loadKML();
+				
+				/* KML
+				================================================== */
+				function loadKML() {
+					var kml_url = m.url + "&output=kml";
+					kml_url = kml_url.replace("&output=embed", "");
+					
+					var kml_layer = new google.maps.KmlLayer(kml_url, {preserveViewport:true});
+					kml_layer.setMap(map);
+					
+					var infowindow = new google.maps.InfoWindow();
+
+					google.maps.event.addListenerOnce(kml_layer, "defaultviewport_changed", function() {
+						
+						
+						
+						if (has_location) {
+							map.panTo(location);
+						} 
+						
+						if (has_zoom) {
+							map.setZoom(zoom);
+						} else {
+							map.fitBounds(kml_layer.getDefaultViewport() );
+						}
+						
+						
+					});
+
+					google.maps.event.addListener(kml_layer, 'click', function(kmlEvent) {
+						var text = kmlEvent.featureData.description;
+						trace(kmlEvent.featureData.infoWindowHtml)
+						showInfoWindow(text);
+						function showInfoWindow(c) {
+							//trace("showInfoWindow")
+							infowindow.setContent(c);
+							infowindow.open(map);
+						}
+					});
+				}
+				
+			},
 			
 		},
 		
+		//VMM.ExternalAPI.flickr.getPhoto(mediaID, htmlID);
 		flickr: {
 			
 			getPhoto: function(mid, id) {
@@ -1652,7 +1905,7 @@ if (typeof VMM == 'undefined') {
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + VMM.Keys.flickr + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
 			},
-			//VMM.ExternalAPI.flickr.setPhoto(d);
+			
 			setPhoto: function(d) {
 				var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
 				var id = "flickr_" + flickr_id;
@@ -1705,6 +1958,7 @@ if (typeof VMM == 'undefined') {
 			},
 			
 			onAPIReady: function() {
+				trace("YOUTUBE API READY")
 				VMM.master_config.youtube.active = true;
 				
 				for(var i = 0; i < VMM.master_config.youtube.que.length; i++) {
@@ -1729,7 +1983,7 @@ if (typeof VMM == 'undefined') {
 						showinfo:0,
 						theme: 'light',
 						rel:0,
-						origin:'http://dev.verite.co'
+						origin:'http://timeline.verite.co'
 					},
 					videoId: id,
 					events: {
@@ -1991,11 +2245,15 @@ var type={
 	}
 };
 
-/* YOUTUBE API
+/*  YOUTUBE API READY
+	Can't find a way to customize this callback and keep it in the VMM namespace
+	Youtube wants it to be this function. 
 ================================================== */
 function onYouTubePlayerAPIReady() {
+	trace("GLOBAL YOUTUBE API CALLED")
 	VMM.ExternalAPI.youtube.onAPIReady();
 }
+
 
 /*	jQuery Easing v1.3
 	http://gsgd.co.uk/sandbox/jquery/easing/
@@ -2034,6 +2292,5 @@ if( typeof( jQuery ) != 'undefined' ){
 		},
 	});
 }
-
 
 

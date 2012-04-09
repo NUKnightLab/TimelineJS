@@ -1,7 +1,7 @@
 /*!
-	Verite Timeline 0.85
+	Verite Timeline 0.88
 	Designed and built by Zach Wise digitalartwork.net
-	Date: March 30, 2012
+	Date: April 8, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 	-	Support feeds from popular sources
 	-	Storify integration
 	-	Code optimization
-	-	Clean up config flow
 	-	Possible tagging of events (depends on usability factors)
 	
 */
@@ -46,7 +45,11 @@
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
-	VMM.Timeline = function(w, h) {
+	
+	
+	VMM.Timeline = function(w, h, conf) {
+		var version = "0.88";
+		trace("OPEN TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
 		var $feedback;
@@ -81,7 +84,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* CONFIG
 		================================================== */
-		var config = {};
+		var config = VMM.Timeline.Config;
+		VMM.master_config.Timeline = VMM.Timeline.Config;
+		
+		/* 	MAP TYPE
+			options include 
+			Stamen Maps		"toner", "watercolor", "sterrain", "toner-lines", "toner-labels" 
+			Apple			"apple" 
+			Google			"HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"
+		================================================== */
+		config.maptype = "toner";
 		config.interval = 10;
 		config.something = 0;
 		config.width = 960;
@@ -105,16 +117,34 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.height = VMM.Element.height($timeline);
 		}
 		
+		config.nav_width = config.width;
+		config.nav_height = 200;
+		config.feature_width = config.width;
+		
 		if (VMM.Browser.device == "mobile") {
-			config.nav_width = config.width;
-			config.nav_height = 200;
-			config.feature_width = config.width;
 			config.feature_height = config.height;
 		} else {
-			config.nav_width = config.width;
-			config.nav_height = 200;
-			config.feature_width = config.width;
 			config.feature_height = config.height - config.nav_height;
+		}
+		
+		/* APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
+		================================================== */
+		
+		if (typeof timeline_config == 'object') {
+			trace("HAS TIMELINE CONFIG");
+		    var x;
+			for (x in timeline_config) {
+				if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
+					config[x] = timeline_config[x];
+				}
+			}
+		} else if (typeof conf == 'object') {
+			var x;
+			for (x in conf) {
+				if (Object.prototype.hasOwnProperty.call(conf, x)) {
+					config[x] = conf[x];
+				}
+			}
 		}
 		
 		/* CHECK FOR IE7
@@ -125,12 +155,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				ie7 = true;
 			}
 		}
-		
-
-		
-		/* VER
-		================================================== */
-		this.ver = "0.85";
 		
 		
 		/* ON EVENT
@@ -632,32 +656,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			week: {}
 		};
 		
-		var config = {
-			interval: 10,
-			something: 0,
-			width: 900,
-			height: 150,
-			ease: "easeInOutExpo",
-			duration: 1000,
-			nav_width: 100,
-			nav_height: 200,
-			timeline: false,
-			spacing: 15,
-			marker_width: 150,
-			marker_height: 48,
-			density: 2,
-			timeline_width: 900,
-			interval_width: 200,
-			rows: [1, 1, 1],
-			multiplier: 6,
-			max_multiplier:16,
-			min_multiplier:1,
-			has_start_page:false,
-		};
-		 
+		/* ADD to Config
+		================================================== */
+		var config = VMM.Timeline.Config;
+		config.something = 0;
+		config.nav_width = 100;
+		config.nav_height = 200;
+		config.timeline = false;
+		config.marker_width = 150;
+		config.marker_height = 48;
+		config.density = 2;
+		config.timeline_width = 900;
+		config.interval_width = 200;
+		config.rows = [1, 1, 1];
+		config.multiplier = 6;
+		config.max_multiplier = 16;
+		config.min_multiplier = 1;
+		config.has_start_page = false;
 		
-		
-		//config.rows = [1, config.marker_height, config.marker_height*2];
 		config.rows = [config.marker_height, config.marker_height*2, 1];
 		
 		if (content_width != null && content_width != "") {
@@ -1735,7 +1751,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 	};
 	
-
+	VMM.Timeline.Config = {
+		
+	};
 	/* 	SOURCE DATA PROCESSOR
 	================================================== */
 	VMM.Timeline.DataObj = {
