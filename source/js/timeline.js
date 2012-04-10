@@ -1,5 +1,5 @@
 /*!
-	Open Timeline 0.88
+	Open Timeline 0.89
 	Designed and built by Zach Wise digitalartwork.net
 	Date: April 8, 2012
 
@@ -39,6 +39,7 @@
 // @codekit-prepend "VMM.Util.js";
 // @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "bootstrap-tooltip.js";
+// @codekit-prepend "AES.js";
 
 /* Open Timeline Class contained in VMM (verite) namespace
 ================================================== */
@@ -48,7 +49,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.88";
+		var version = "0.89";
 		trace("OPEN TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent

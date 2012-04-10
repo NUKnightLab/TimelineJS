@@ -96,14 +96,18 @@ if (typeof VMM == 'undefined') {
 	
 	/* Master Config
 	================================================== */
-	//VMM.master_config.youtube_array
-	//VMM.master_config.loadedJS
-
 	
 	VMM.master_config = ({
 		
 		init: function() {
 			return this;
+		},
+		
+		vp: "Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
+		
+		keys: {
+			flickr: "RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
+			google: "jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo="
 		},
 		
 		youtube: {
@@ -306,15 +310,27 @@ if (typeof VMM == 'undefined') {
 				var ie_url = url;
 
 				if (ie_url.match('^http://')){
+					trace("RUNNING GET JSON")
 				     //ie_url = ie_url.replace("http://","//");
-					$.getJSON(url, data);
+					return jQuery.getJSON(url, data, callback);
 				} else if (ie_url.match('^https://')) {
+					trace("RUNNING XDR");
 					ie_url = ie_url.replace("https://","http://");
 					var xdr = new XDomainRequest();
 					xdr.open("get", ie_url);
 					xdr.onload = function() {
 						var ie_json = VMM.parseJSON(xdr.responseText);
-						return the_function(ie_json);
+						trace(xdr.responseText);
+						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(ie_json)
+						}
+						
+								//.error(function() { trace("IE ERROR")})
+								//.success(function() { trace("IE SUCCESS")});
+								
+								
 					}
 					xdr.send();
 				}
@@ -1488,11 +1504,8 @@ if (typeof VMM == 'undefined') {
 		}
 	}
 	
-	VMM.Keys = {
-		// PLEASE REPLACE THESE WITH YOUR OWN API KEYS TO AVOID POSSIBLE OVERAGE BREAKS
-		flickr: "6d6f59d8d30d79f4f402a7644d5073e3",
-		google: "AIzaSyDUHXB8hefYssfwGpySnQmzTqL9n0qZ3T4"
-	}
+	
+	
 	
 	VMM.ExternalAPI = {
 		
@@ -1623,14 +1636,16 @@ if (typeof VMM == 'undefined') {
 				trace("id " + id);
 				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
+				
 					.error(function(jqXHR, textStatus, errorThrown) {
 						trace("TWITTER error");
-						trace("TWITTER ERROR: " + textStatus + " " + qXHR.responseText);
+						trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
 						VMM.attachElement("#twitter_"+id, "<p>ERROR LOADING TWEET " + id + "</p>" );
 					})
 					.success(function() {
 						clearTimeout(twitter_timeout);
 					});
+					
 				
 			},
 			
@@ -1679,7 +1694,7 @@ if (typeof VMM == 'undefined') {
 			getMap: function(url, id) {
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
-				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + VMM.Keys.google + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + Aes.Ctr.decrypt(VMM.master_config.keys.google, VMM.master_config.vp, 256) + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
 				var map = {
 					url: url,
 					vars: map_vars,
@@ -1912,7 +1927,7 @@ if (typeof VMM == 'undefined') {
 			
 			getPhoto: function(mid, id) {
 				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
-				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + VMM.Keys.flickr + "&photo_id=" + mid + "&format=json&jsoncallback=?";
+				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + Aes.Ctr.decrypt(VMM.master_config.keys.flickr, VMM.master_config.vp, 256) + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
 			},
 			
