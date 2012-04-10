@@ -231,6 +231,42 @@
 									max-height:none !important;
 									max-width:none !important;
 								}
+								.google-map {
+									height:100%;
+									width:100%;
+								}
+								.map-attribution {
+									position: absolute;
+									z-index: 1000003;
+									//right: 0px;
+									bottom: 0px;
+									width:100%;
+									overflow:hidden;
+
+									.attribution-text {
+										height: 19px;
+										overflow:hidden;
+										-webkit-user-select: none;
+										line-height: 19px;
+										margin-right: 60px;
+										padding-left: 65px;
+										font-family: Arial, sans-serif;
+										font-size: 10px;
+										//font-weight: bold;
+										color: #444;
+										white-space: nowrap;
+										color:@color-base;
+										text-shadow:1px 1px 1px @color-dark-second;
+										//direction: ltr;
+										text-align: center;
+										a {
+											color:@color-base !important;
+											
+										}
+
+									}
+									}
+								}
 							}
 							.credit, .caption {
 								font-family: @font-sansserif;

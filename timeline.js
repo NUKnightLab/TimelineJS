@@ -1744,55 +1744,70 @@ if (typeof VMM == 'undefined') {
 				}
 			},
 			
-			stamen_map_attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, ' +
-			       'under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. ' +
-			       'Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, ' +
-			       'under <a href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>.',
+
+			
 			
 			map_subdomains: ["", "a.", "b.", "c.", "d."],
 			
+			
+			map_attribution: {
+				"stamen": "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
+				"apple": "Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
+			},
+						
 			map_providers: {
 				"toner": {
-			        "url": "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
-			        "minZoom": 0,
-			        "maxZoom": 20
-			    },
-			    "toner-lines": {
-			        "url": "http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
-			        "minZoom": 0,
-			        "maxZoom": 20
-			    },
-			    "toner-labels": {
-			        "url": "http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
-			        "minZoom": 0,
-			        "maxZoom": 20
-			    },
-			    "sterrain": {
-			        "url": "http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
-			        "minZoom": 4,
-			        "maxZoom": 18
-			    },
+					"url": "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"minZoom": 0,
+					"maxZoom": 20,
+					"attribution": "stamen"
+					
+				},
+				"toner-lines": {
+					"url": "http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"minZoom": 0,
+					"maxZoom": 20,
+					"attribution": "stamen"
+				},
+				"toner-labels": {
+					"url": "http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"minZoom": 0,
+					"maxZoom": 20,
+					"attribution": "stamen"
+				},
+				"sterrain": {
+					"url": "http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"minZoom": 4,
+					"maxZoom": 20,
+					"attribution": "stamen"
+				},
 				"apple": {
-			        "url": "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
-			        "minZoom": 4,
-			        "maxZoom": 18
-			    },
-			    "watercolor": {
-			        "url": "http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
-			        "minZoom": 3,
-			        "maxZoom": 16
-			    }
+					"url": "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
+					"minZoom": 4,
+					"maxZoom": 20,
+					"attribution": "apple"
+				},
+				"watercolor": {
+					"url": "http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"minZoom": 3,
+					"maxZoom": 16,
+					"attribution": "stamen"
+				}
 			},
 			
 			createMap: function(m) {
-				
+				trace(VMM.ExternalAPI.googlemaps.stamen_map_attribution);
 				/* 	MAP PROVIDERS
 					Including Stamen Maps
 					http://maps.stamen.com/
 					Except otherwise noted, each of these map tile sets are © Stamen Design, under a Creative Commons Attribution (CC BY 3.0) license.
 				================================================== */
+				
+				var map_attribution = "";
+				
 				function mapProvider(name) {
 					if (name in VMM.ExternalAPI.googlemaps.map_providers) {
+						map_attribution = VMM.ExternalAPI.googlemaps.map_attribution[VMM.ExternalAPI.googlemaps.map_providers[name].attribution];
 						return VMM.ExternalAPI.googlemaps.map_providers[name];
 					} else {
 						throw 'No such provider: "' + name + '"';
@@ -1874,9 +1889,23 @@ if (typeof VMM == 'undefined') {
 				        mapTypeIds: [layer]
 				    }
 				}
-
-				var map = new google.maps.Map(document.getElementById(m.id), map_options);
+				
+				var unique_map_id = m.id.toString() + "_gmap";
+				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
+				/* ATTRIBUTION
+				================================================== */
+				//var map_attribution_html = "<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
+				//VMM.appendElement("#" + m.id, map_attribution_html);
+				
+				var map = new google.maps.Map(document.getElementById(unique_map_id), map_options);
 				map.mapTypes.set(layer, new google.maps.VeriteMapType(layer));
+				
+				/* ATTRIBUTION
+				================================================== */
+				var map_attribution_html = "<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
+				VMM.appendElement("#"+unique_map_id, map_attribution_html);
+				//.map-attribution
+				//.attribution-text 
 				
 				loadKML();
 				
