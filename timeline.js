@@ -333,6 +333,8 @@ if (typeof VMM == 'undefined') {
 								
 					}
 					xdr.send();
+				} else {
+					return jQuery.getJSON(url, data, callback);
 				}
 			} else {
 				//$.getJSON(url, data);
