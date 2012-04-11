@@ -2712,6 +2712,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 
 		}
+
+		function onKeypressNav(e) {
+			switch(e.keyCode) {
+				//right arrow
+				case 39:
+				 onNextClick(e);
+				break;
+
+				//left arrow
+				case 37:
+				onPrevClick(e);
+				break;
+			}
+		}
 		
 		function onTouchUpdate(e, b) {
 			if (slide_positions.length == 0) {
@@ -2948,6 +2962,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.bindEvent(".nav-next", onNextClick);
 			VMM.bindEvent(".nav-previous", onPrevClick);
+			VMM.bindEvent(window, onKeypressNav, 'keydown');
 		}
 		
 		/* BUILD
