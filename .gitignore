@@ -1,2 +1,15 @@
 
 .DS_Store
+
+source/.DS_Store
+
+source/js/.DS_Store
+
+dev_examples/
+
+*.tmproj
+
+*.tmproject
+
+tmtags
+source/gfx/.DS_Store

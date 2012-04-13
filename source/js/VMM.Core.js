@@ -2,132 +2,12 @@
 ================================================== */
 
 
-/* Sequence
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Sequence == 'undefined') {
-	
-
-	VMM.Sequence = Class.extend({
-		
-		initialize: function(length,index) {
-			trace('sequence init');
-			
-			// PUBLIC
-			this.increment = 1;
-			this.decrement = 1;
-			this.wrap = false;
-			
-			// PRIVATE
-			this.length = (length == null) ? 0 : length;
-			this.index = (index == null) ? ((length == 0) ? -1 : 0) : (index >= length) ? length-1 : index;
-			this.synced = [];
-		},
-		setLength: function(i) {
-			
-			this.length = i;
-			
-			this.setIndex(this.index);
-		},
-		
-		getLength: function() {
-			
-			return this.length;
-		}, 
-		
-		setIndex: function(i) {
-			
-			if(this.length <= 0) {
-				
-				this.index = -1;
-				
-				return;
-			}
-			
-			if(i < 0) i = (this.wrap) ? this.length - (i%this.length) : 0;
-			else if(i >= this.length) i = (this.wrap) ? (i%this.length) : this.length-1;
-			
-			var pi = this.index;
-			
-			this.index = i;
-			
-			if(pi != this.index) {
-			
-				// update sequences
-				for(var j=0; j<this.synced.length; j++) {
-				
-					var s = this.synced[j];
-				
-					if(s.getIndex() != this.index) s.setIndex(this.index);
-				}
-			}
-		},
-		
-		getIndex: function() {
-			
-			return this.index;
-		},
-		
-		next: function() {
-			
-			this.setIndex(this.index+this.increment);
-		},
-		
-		prev: function () {
-			
-			this.setIndex(this.index-this.decrement);
-		},
-		
-		sync: function(s,bothWays) {
-			
-			if(s instanceof NYTMM.Sequence && s != this) {
-				
-				this.synced.push(s);
-				
-				if(bothWays) s.sync(this);
-				
-				return true;
-			}
-			
-			return false;
-		},
-		
-		unsync: function(s,bothWays) {
-			
-			// update sequences
-			for(var i=0; i<this.synced.length; i++) {
-				
-				if(this.synced[i] == s) {
-					
-					this.synced.splice(i,1);
-					
-					if(bothWays) s.unsync(this);
-					
-					return true;
-				}
-			}
-			
-			return false;
-		}
-		
-	});
-	
-}
-
 /* Slider
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
 	VMM.Slider = function(parent, content_width, content_height, is_timeline) {
 		
-		/* DEVICE
-		================================================== */
-		/*
-		trace("VMM.Browser.OS");
-		trace(VMM.Browser.browser);
-		trace(VMM.Browser.version);
-		trace(VMM.Browser.OS);
-		trace(VMM.Browser.device);
-		*/
 		
 		/* PRIVATE VARS
 		================================================== */
@@ -354,6 +234,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 
 		}
+
+		function onKeypressNav(e) {
+			switch(e.keyCode) {
+				//right arrow
+				case 39:
+					onNextClick(e);
+				break;
+
+				//left arrow
+				case 37:
+					onPrevClick(e);
+				break;
+			}
+		}
 		
 		function onTouchUpdate(e, b) {
 			if (slide_positions.length == 0) {
@@ -409,7 +303,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				var _media;
 				
 				bw = VMM.createElement("div", d[i].content, "content");
+				
 				_slide = VMM.appendAndGetElement($slides_items, "<div>", "slider-item" , bw);
+				
 				slides.push(_slide);
 			}
 			
@@ -588,6 +484,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.bindEvent(".nav-next", onNextClick);
 			VMM.bindEvent(".nav-previous", onPrevClick);
+			VMM.bindEvent(window, onKeypressNav, 'keydown');
 		}
 		
 		/* BUILD

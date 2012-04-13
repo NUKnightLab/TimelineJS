@@ -5,16 +5,16 @@
 
 /* Colors
 ================================================== */
+@color-base:					#FFF;
+@color-line: 					#CCC;
+@color-line-hover: 				#666;
 
-@color-line: #CCC;
-@color-line-hover: #666;
-
-@color-dark:#000;
-@color-dark-second: #333;
-@color-dark-third: #666;
-@color-dark-fourth: #999;
-@color-dark-fifth: #E3E3E3;
-@color-dark-fifth: #E3E3E3;
+@color-dark:					#000;
+@color-dark-second: 			#333;
+@color-dark-third: 				#666;
+@color-dark-fourth: 			#999;
+@color-dark-fifth: 				#E3E3E3;
+@color-dark-fifth: 				#E3E3E3;
 
 
 /* COLOR SCHEME
@@ -37,38 +37,38 @@
 @color-theme-analog1:			spin(@color-theme, -22);
 @color-theme-analog2:			spin(@color-theme, 22);
 
-@color-background:				#FFF;
+@color-background:				@color-base;
 @color-background-dark:			#E9E9E9;
 
-@white:             			#FFF;
+@white:             			@color-base;
 
 
 /* CLEANUP IN PROGRESS
 ================================================== */
 
 //	Navigation
-@color-nav-date: #AAA; // 33%
-@color-nav-description: #999; // 40%
-@color-nav-title: #999;
+@color-nav-date: 				#AAA; // 33%
+@color-nav-description: 		@color-dark-fourth; // 40%
+@color-nav-title: 				@color-dark-fourth;
 
 //	Feature
-@color-feature-date: #666;
-@color-feature-description: #666;
-@color-feature-title: #000;
+@color-feature-date: 			@color-dark-third;
+@color-feature-description: 	@color-dark-third;
+@color-feature-title: 			@color-dark;
 
 
-@color-caption:#666;
-@color-credit:#999;
+@color-caption:					@color-dark-third;
+@color-credit:					@color-dark-fourth;
 
 // Navigation
-@color-navigation-time: #666; // 60%
-@color-navigation-major-time: #333; // 80%
-@color-navigation-time-strong: #000; // 100%
+@color-navigation-time: 		@color-dark-third; // 60%
+@color-navigation-major-time: 	@color-dark-second; // 80%
+@color-navigation-time-strong: 	@color-dark; // 100%
 
 
-@era-background: #E2E2E2; //#E3E3E3; // 11%
-@era-line:@color-line;
-@era-text:@color-feature-date;
+@era-background: 				#E2E2E2; //#E3E3E3; // 11%
+@era-line:						@color-line;
+@era-text:						@color-feature-date;
 /* Sizes
 ================================================== */
 

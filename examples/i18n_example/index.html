@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Timeline Google Spreadsheet Template</title>
+		<meta name="description" content="Template Description">
+
+		<style>
+			html, body {
+				height:100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			#timeline-embed{
+				margin:0px !important;
+				border:0px solid #CCC !important;
+				padding:0px !important;
+				-webkit-border-radius:0px !important;
+				-moz-border-radius:0px !important;
+				border-radius:0px !important;
+				-moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				-webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				box-shadow:0px 0px 0px rgba(0, 0, 0, 0.25) !important;
+			}
+			
+		</style>
+		
+	</head>
+
+	<body>
+		<!-- BEGIN Timeline Embed -->
+		<div id="timeline-embed"></div>
+		<script type="text/javascript">
+		    var config = {
+				width: "100%",
+				height: "100%",
+				source: 'https://docs.google.com/spreadsheet/pub?key=0AsTYTZtQh7kpdFhXamZFMEcxaXp0aGY5UE5PcUliU2c&output=html',
+				js: '../../timeline-min.js'
+
+				// uncomment next line for debugging
+				//js: ['../../source/js/date-format.js', '../../source/js/VMM.js', '../../source/js/VMM.Core.js', '../../source/js/VMM.Util.js', '../../source/js/VMM.LoadLib.js', '../../source/js/bootstrap-tooltip.js', '../../source/js/AES.js', '../../source/js/timeline.js']
+			}
+			
+			config.i18n = {
+				date: {
+					month: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+					month_abbr: ["Jän.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
+					day: ["Sonntag","Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
+					day_abbr: ["So.","Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."]
+				},
+				dateformats: {
+					year: "yyyy",
+					month_short: "mmm",
+					month: "mmmm yyyy",
+					full_short: "d. mmm",
+					full: "d. mmmm yyyy",
+					time_no_seconds_short: "HH:MM",
+					time_no_seconds_small_date: "HH:MM'<br/><small>'d. mmmm yyyy'</small>'",
+					full_long: "dddd',' d. mmm yyyy 'um' HH:MM",
+					full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'"
+				},
+				messages: {
+					loading_timeline: "Chronologie wird geladen...",
+					return_to_title: "Zurück zum Anfang",
+					expand_timeline: "Chronologie vergrößern",
+					contract_timeline: "Chronologie verkleinern"	,
+					unsupported_ie7: "Internet Explorer 7 wird von Timeline nicht unterstützt."
+				}
+			};		
+				
+		</script>
+		<script type="text/javascript" src="../../timeline-embed.js"></script>
+		<!-- END Timeline Embed -->
+	</body>
+</html>

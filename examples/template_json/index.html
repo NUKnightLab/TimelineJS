@@ -4,35 +4,45 @@
 		<meta charset="utf-8">
 		<title>Timeline JSON Template</title>
 		<meta name="description" content="Template Description">
-		<meta name="author" content="Zach Wise">
 		
-		<!-- Set the viewport for mobile devices -->
-		<!-- <meta name="viewport" content="width=device-width,maximum-scale=1.0" /> -->
-		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=no;"/>
-		<meta name="apple-mobile-web-app-capable" content="yes"/>
 		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-		<!-- CSS -->
-		<link href="../../timeline.css" rel="stylesheet">
+		<style>
+			html, body {
+				height:100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			#timeline-embed{
+				margin:0px !important;
+				border:0px solid #CCC !important;
+				padding:0px !important;
+				-webkit-border-radius:0px !important;
+				-moz-border-radius:0px !important;
+				border-radius:0px !important;
+				-moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				-webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				box-shadow:0px 0px 0px rgba(0, 0, 0, 0.25) !important;
+			}
+			
+		</style>
 		
-		<!-- JavaScript -->
-		<script type="text/javascript" src="../../jquery-min.js"></script>
-		<!-- <script type="text/javascript" src="jquery.mobile-1.0.min.js"></script> -->
-		<script type="text/javascript" src="../../timeline-min.js"></script>
-		<script>
-			$(document).ready(function() {
-				var timeline = new VMM.Timeline();
-				timeline.init("data.json");
-			});
-		</script>
-
-
 	</head>
 
 	<body>
-		<div id="timeline"></div>
+		<!-- BEGIN Timeline Embed -->
+		<div id="timeline-embed"></div>
+		<script type="text/javascript">
+		    var config = {
+				width: "100%",
+				height: "100%",
+				source: 'data.json'
+			}
+		</script>
+		<script type="text/javascript" src="http://veritetimeline.appspot.com/latest/timeline-embed.js"></script>
+		<!-- END Timeline Embed -->
 	</body>
 </html>

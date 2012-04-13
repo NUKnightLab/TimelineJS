@@ -123,6 +123,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		// VMM.Util.date.day[0];
 		// VMM.Util.date.get12HRTime(time, seconds_true);
 		date: {
+			month: VMM.master_config.i18n.date.month,
+			month_abbr: VMM.master_config.i18n.date.month_abbr,
+			day: VMM.master_config.i18n.date.day,
+			day_abbr: VMM.master_config.i18n.date.day_abbr,
+			
+			// not localized, localize through dateFormat's functioanlity.
+			hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
+			hour_suffix: ["am"],
+		
 			prettyDate: function(d, is_abbr, date_type) {
 				var _date = "";
 				if (type.of(d) == "date") {
@@ -224,25 +233,49 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		// VMM.Util.linkify();
 		linkify: function(text,targets,is_touch) {
 			
-			if(!text) return text;
-			
-			text = text.replace(/((https?\:\/\/|ftp\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi, function(url) {
+			// http://, https://, ftp://
+			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
 
-				var nice = url;
-				var _touch = "";
-				if(url.search('^https?:\/\/') < 0) url = 'http://'+url;
-				_touch = "onclick = 'void(0)'";
-				if(is_touch) {
-					_touch = "onclick = 'void(0)'";
-				}
-				
-				onclick = "void(0)";
-				if(targets === null || targets === "") return '<a href="'+ url + " " + _touch + '">'+ url +'</a>';
-				else return "<a href='"+ url + " " + _touch + " target='" +targets+"'>'" + url + "</a>" ;
-			});
+			// www. sans http:// or https://
+			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+			// Email addresses
+			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
 			
-			return text;
+
+			return text
+				.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
+				.replace(pseudoUrlPattern, "$1<a target='_blank' onclick='void(0)' href='http://$2'>$2</a>")
+				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>");
 		},
+		
+		linkify_with_twitter: function(text,targets,is_touch) {
+			
+			// http://, https://, ftp://
+			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+			var url_pattern = /(\()((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\))|(\[)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\])|(\{)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\})|(<|&(?:lt|#60|#x3c);)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(>|&(?:gt|#62|#x3e);)|((?:^|[^=\s'"\]])\s*['"]?|[^=\s]\s+)(\b(?:ht|f)tps?:\/\/[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]+(?:(?!&(?:gt|#0*62|#x0*3e);|&(?:amp|apos|quot|#0*3[49]|#x0*2[27]);[.!&',:?;]?(?:[^a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]|$))&[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]*)*[a-z0-9\-_~$()*+=\/#[\]@%])/img;
+			var url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14">$2$5$8$11$14</a>$3$6$9$12';
+			//return text.replace(url_pattern, url_replace);
+
+			// www. sans http:// or https://
+			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+			// Email addresses
+			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
+			
+			var twitterHandlePattern = /(@([\w]+))/g;
+			
+			var twitterSearchPattern = /(#([\w]+))/g;
+
+			return text
+				//.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
+				.replace(url_pattern, url_replace)
+				.replace(pseudoUrlPattern, "$1<a target='_blank' onclick='void(0)' href='http://$2'>$2</a>")
+				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>")
+				.replace(twitterHandlePattern, "<a href='http://twitter.com/$2' target='_blank' onclick='void(0)'>$1</a>")
+				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank' 'void(0)'>$1</a>");
+		},
+		
 		/* Turns plain text links into real links
 		================================================== */
 		// VMM.Util.unlinkify();
@@ -292,7 +325,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* Get URL Variables
 		================================================== */
 		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
-		getUrlVars: function(str) {
+		getUrlVars: function(string) {
+			
+			var str = string.toString();
+			
 			var vars = [], hash;
 			var hashes = str.slice(str.indexOf('?') + 1).split('&');
 			for(var i = 0; i < hashes.length; i++) {
@@ -300,10 +336,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				vars.push(hash[0]);
 				vars[hash[0]] = hash[1];
 			}
-			trace(vars);
+			
 			return vars;
 		},
-		
+
 		/* Cleans up strings to become real HTML
 		================================================== */
 		toHTML: function(text) {
@@ -432,6 +468,30 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		
 	}).init();
 	
-	
+	//'string'.linkify();
+	if(!String.linkify) {
+		String.prototype.linkify = function() {
+
+			// http://, https://, ftp://
+			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+			// www. sans http:// or https://
+			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+			// Email addresses
+			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
+			
+			var twitterHandlePattern = /(@([\w]+))/g;
+			
+			var twitterSearchPattern = /(#([\w]+))/g;
+
+			return this
+				.replace(urlPattern, '<a target="_blank" href="$&">$&</a>')
+				.replace(pseudoUrlPattern, '$1<a target="_blank" href="http://$2">$2</a>')
+				.replace(emailAddressPattern, '<a target="_blank" href="mailto:$1">$1</a>')
+				.replace(twitterHandlePattern, "<a href='http://twitter.com/$2' target='_blank'>$1</a>")
+				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank'>$1</a>");
+	    };
+	}
 	
 }
