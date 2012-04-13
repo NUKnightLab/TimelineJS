@@ -1270,6 +1270,9 @@ if (typeof VMM == 'undefined') {
 				} else if (m.type == "soundcloud") {
 					mediaElem = "<div class='thumbnail soundcloud'></div>";
 					return mediaElem;
+				} else if (m.type == "google-map-static") {
+					mediaElem = "<div class='thumbnail'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					return mediaElem;
 				} else if (m.type == "google-map") {
 					mediaElem = "<div class='thumbnail map'></div>";
 					return mediaElem;
@@ -1358,6 +1361,9 @@ if (typeof VMM == 'undefined') {
 					var soundcloud_id = "soundcloud_" + VMM.Util.unique_ID(5);
 					mediaElem = "<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
 					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id)
+				} else if (m.type == "google-map-static") {
+					var map_id = "googlemap_static_" + VMM.Util.unique_ID(7);
+					mediaElem = "<img src='" + m.id + "' width='" + m.width + "' height='" + m.height + "' alt=''>";
 				} else if (m.type == "google-map") {
 					//mediaElem = "<iframe class='media-frame map' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
 					var map_id = "googlemap_" + VMM.Util.unique_ID(7);
@@ -1440,6 +1446,20 @@ if (typeof VMM == 'undefined') {
 			media.type = "twitter";
 			media.id = twitter_id;
 			success = true;
+		} else if (d.match(/maps.(google|googleapis.com)\/maps\/api\/staticmap/)) {
+			//maps.google.com/maps/api/staticmap
+			//maps.googleapis.com/maps/api/staticmap
+			var dimensions = d.split('size=')[1].match(/(\d+)x(\d+)/);
+			if (dimensions.length === 3) {
+				media.width = dimensions[1];
+				media.height = dimensions[2];
+
+				media.type  = "google-map-static";
+		    	media.id    = d;
+			//trace("google map " + media.id);
+				success = true;
+			}
+
 		} else if (d.match("maps.google")) {
 			//maps.google.com
 			media.type  = "google-map";
