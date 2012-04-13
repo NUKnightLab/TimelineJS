@@ -35,6 +35,17 @@
                     "caption":""
                 }
             },
+            {
+                "startDate":"1981,7,21",
+                "headline":"Static Google Map",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://maps.googleapis.com/maps/api/staticmap?center=Bend,OR&zoom=12&size=600x400&maptype=roadmap&sensor=false",
+                    "credit":"",
+                    "caption":""
+                }
+            },
 			{
                 "startDate":"2000,1,18",
                 "headline":"Google Map",
