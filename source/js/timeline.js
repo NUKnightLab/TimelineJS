@@ -1,5 +1,5 @@
 /*!
-	Open Timeline 0.89
+	Timeline 0.90
 	Designed and built by Zach Wise digitalartwork.net
 	Date: April 8, 2012
 
@@ -49,8 +49,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.89";
-		trace("OPEN TIMELINE VERSION " + version);
+		var version = "0.90";
+		trace("TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
 		var $feedback;

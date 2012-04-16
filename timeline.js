@@ -1277,8 +1277,8 @@ if (typeof VMM == 'undefined') {
 					mediaElem = "";
 					return mediaElem;
 				} else if (m.type == "website") {
-					//mediaElem = "<div class='thumbnail website'></div>";
-					mediaElem = "<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem = "<div class='thumbnail website'></div>";
+					//mediaElem = "<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					
 					return mediaElem;
 				} else {
@@ -1367,8 +1367,8 @@ if (typeof VMM == 'undefined') {
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
 					mediaElem = VMM.Util.properQuotes(m.id); 
 				} else if (m.type == "website") { 
-					//mediaElem = "<iframe class='media-frame' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
-					mediaElem = "<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
+					mediaElem = "<iframe class='media-frame' frameborder='0' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
+					//mediaElem = "<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
 				} else {
 					trace("NO KNOWN MEDIA TYPE FOUND");
 					trace(m.type);
@@ -4453,7 +4453,7 @@ Utf8.decode = function(strUtf) {
 ***********************************************/ 
 
 /*!
-	Open Timeline 0.89
+	Timeline 0.90
 	Designed and built by Zach Wise digitalartwork.net
 	Date: April 8, 2012
 
@@ -4503,8 +4503,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.89";
-		trace("OPEN TIMELINE VERSION " + version);
+		var version = "0.90";
+		trace("TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
 		var $feedback;
