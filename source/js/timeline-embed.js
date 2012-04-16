@@ -153,6 +153,9 @@
 			if (jsReady && cssReady) {
 				if (!isReady) {
 					isReady = true;
+					if ( embed_config.i18n ) { 
+						VMM.master_config.i18n = embed_config.i18n;
+					}
 					timeline = new VMM.Timeline();
 					timeline.init(embed_config.source);
 				}
