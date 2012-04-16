@@ -4505,14 +4505,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.90";
-		trace("TIMELINE VERSION " + version);
+      var version = "0.90";
+      trace("OPEN TIMELINE VERSION " + version);
+
+      /* CHECK FOR IE7
+      ================================================== */
+      var ie7 = false;
+      if (VMM.Browser.browser == "MSIE") {
+          if ( parseInt(VMM.Browser.version, 10) == 7) {
+              ie7 = true;
+          }
+      }
 		
-		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
-		var $feedback;
-		var $messege;
-		
-		var html_string = VMM.getElement("#timeline");
+      // used by prepare
+      var $timeline, html_string, $feedback, $messege, slider, timenav, _private_var, events, data, _dates, config;
+
+      var prepare = function(){
+        $timeline = VMM.getElement("#timeline"); // expecting name only for parent
+        html_string = VMM.getElement("#timeline");
 		
 		/* CREATE DOM STRUCTURE
 		================================================== */
@@ -4527,21 +4537,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* CREATE COMPONENTS
 		================================================== */
 		// SLIDER
-		var slider = new VMM.Slider("div.slider", 720, 400, true);
+		slider = new VMM.Slider("div.slider", 720, 400, true);
 
 		// TIMENAV
-		var timenav = new VMM.Timeline.TimeNav("div.navigation", 720, 400, true);
+		timenav = new VMM.Timeline.TimeNav("div.navigation", 720, 400, true);
 		
 		/* PRIVATE VARS
 		================================================== */
-		var _private_var = 'private';
-		var events = {}; // CUSTOM EVENT HOLDER
-		var data = {}; // HOLDS DATA
-		var _dates = []; // HOLDES PROCESSED DATES
+		_private_var = 'private';
+		events = {}; // CUSTOM EVENT HOLDER
+		data = {}; // HOLDS DATA
+		_dates = []; // HOLDES PROCESSED DATES
 		
 		/* CONFIG
 		================================================== */
-		var config = VMM.Timeline.Config;
+		config = VMM.Timeline.Config;
 		VMM.master_config.Timeline = VMM.Timeline.Config;
 		
 		/* 	MAP TYPE
@@ -4603,15 +4613,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 		}
-		
-		/* CHECK FOR IE7
-		================================================== */
-		var ie7 = false;
-		if (VMM.Browser.browser == "MSIE") {
-			if ( parseInt(VMM.Browser.version, 10) == 7) {
-				ie7 = true;
-			}
-		}
+      }
 		
 		
 		/* ON EVENT
@@ -4671,6 +4673,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* PUBLIC FUNCTIONS
 		================================================== */
 		this.init = function(d) {
+            prepare();
 			
 			trace('init');
 			
@@ -4684,6 +4687,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			} else {
 				if (type.of(d) == "string") {
 					VMM.Timeline.DataObj.getData(d);
+                } else if (type.of(d) == 'object' && d.timeline && d.timeline.type == "default") {
+                    // we got a JSON object passed in, let's go!
+                     onDataReady(null, d);
 				} else {
 					VMM.Timeline.DataObj.getData(html_string);
 					//VMM.attachElement(element, content);
