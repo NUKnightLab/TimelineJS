@@ -2963,6 +2963,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		================================================== */
 		// VMM.Util.parseDate(str)
 		parseDate: function(d) {
+			if (typeof(d) == "object") { return d; }
+
 			var _date;
 			
 			if ( d.match(/,/gi) ) {
