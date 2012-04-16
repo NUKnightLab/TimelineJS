@@ -126,5 +126,5 @@ One thing missing in the original version is i18n support. Especially when it co
 
 For more information about the dateformats, you may refer to the documentation available at the following URL: http://blog.stevenlevithan.com/archives/date-time-format
 
-There is a sample using the i18n feature together with the new embed feature. See [examples/i18n_example/index.html](examples/i18n_example/index.html) for more information about it.
+There is a sample using the i18n feature together with the new embed feature. See [examples/i18n_example/index.html](tree/master/examples/i18n_example/index.html) for more information about it.
 
