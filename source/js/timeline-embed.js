@@ -155,8 +155,6 @@
 					isReady = true;
 					if ( embed_config.i18n ) { 
 						VMM.master_config.i18n = embed_config.i18n;
-						
-						console.log( VMM.master_config );
 					}
 					timeline = new VMM.Timeline();
 					timeline.init(embed_config.source);
