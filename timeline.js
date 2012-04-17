@@ -2804,11 +2804,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.stop($slider_container);
 				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos.left - config.content_padding)});
 			}
-			
-			if (firstrun) {
-				VMM.fireEvent(layout, "LOADED");
-			}
-			
+
 			/* SET Vertical Scoll
 			================================================== */
 			//opacitySlides(0.85);
@@ -4699,6 +4695,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		this.iframeLoaded = function() {
 			trace("iframeLoaded");
 		};
+		
+		this.setMarker = function() {
+			timenav.setMarker.apply(this, arguments);
+		}
 		
 		/* DATA 
 		================================================== */
