@@ -4700,6 +4700,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace("iframeLoaded");
 		};
 		
+		this.setMarker = function() {
+			timenav.setMarker.apply(this, arguments);
+		}
+		
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
