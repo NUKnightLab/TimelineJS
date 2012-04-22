@@ -1,7 +1,7 @@
-// @codekit-append "VMM.Timeline.js";
+// @codekit-prepend "VMM.Timeline.js";
 /* LANGUAGE 
 ================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
+if(typeof VMM != 'undefined') {
 	VMM.Language = {
 		date: {
 			month: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
