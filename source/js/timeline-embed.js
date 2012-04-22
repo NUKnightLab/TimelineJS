@@ -20,7 +20,7 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "lazyload.js";
+// @codekit-prepend "Embed.LoadLib.js";
 
 
 /* TIMELINE CDN LOADER
@@ -170,21 +170,3 @@
 	
 	
 })();
-
-
-/*
-	Thinking of ditching Lazy loader after some more testing.
-*/
-/*
-var stylesheet = document.createElement('link');
-stylesheet.href = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
-stylesheet.rel = 'stylesheet';
-stylesheet.type = 'text/css';
-document.getElementsByTagName('head')[0].appendChild(stylesheet);
-
-var tjs = document.createElement('script');
-tjs.type = 'text/javascript';
-tjs.async = true;
-tjs.url = '/inc/body/jquery/css/start/jquery-ui-1.8.10.custom.css';
-document.getElementsByTagName('head')[0].appendChild(tjs);
-*/
