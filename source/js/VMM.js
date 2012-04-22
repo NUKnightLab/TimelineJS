@@ -89,10 +89,18 @@ var global = (function () {
 ================================================== */
 if (typeof VMM == 'undefined') {
 	
+	/* ENSURE jQuery is available as $
+	================================================== */
+	var $;
+	if( typeof( jQuery ) != 'undefined' ){
+		$ = jQuery;
+	}
+	
 	/* Main Scope Container
 	================================================== */
 	//var VMM = {};
 	var VMM = Class.extend({});
+	
 	
 	/* Master Config
 	================================================== */
@@ -220,7 +228,7 @@ if (typeof VMM == 'undefined') {
 	VMM.getHTML = function(element) {
 		var e;
 		if( typeof( jQuery ) != 'undefined' ){
-			e = $(element).html();
+			e = jQuery(element).html();
 			return e;
 		}
 		
@@ -230,10 +238,10 @@ if (typeof VMM == 'undefined') {
 		var e;
 		if( typeof( jQuery ) != 'undefined' ){
 			if (p) {
-				e = $(element).parent().get(0);
+				e = jQuery(element).parent().get(0);
 				
 			} else {
-				e = $(element).get(0);
+				e = jQuery(element).get(0);
 			}
 			return e;
 		}
@@ -255,7 +263,7 @@ if (typeof VMM == 'undefined') {
 		}
 		
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).bind(_event_type, _event_data, the_handler);
+			jQuery(element).bind(_event_type, _event_data, the_handler);
 			
 			//return e;
 		}
@@ -272,7 +280,7 @@ if (typeof VMM == 'undefined') {
 		}
 		
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).unbind(_event_type, the_handler);
+			jQuery(element).unbind(_event_type, the_handler);
 			
 			//return e;
 		}
@@ -292,7 +300,7 @@ if (typeof VMM == 'undefined') {
 		}
 		
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).trigger(_event_type, _data);
+			jQuery(element).trigger(_event_type, _data);
 			
 			//return e;
 		}
@@ -347,7 +355,7 @@ if (typeof VMM == 'undefined') {
 	// VMM.parseJSON(the_json);
 	VMM.parseJSON = function(the_json) {
 		if( typeof( jQuery ) != 'undefined' ){
-			return $.parseJSON(the_json);
+			return jQuery.parseJSON(the_json);
 		}
 	}
 	// ADD ELEMENT AND RETURN IT
@@ -378,7 +386,7 @@ if (typeof VMM == 'undefined') {
 			e.addClass(_class);
 			e.html(_content);
 			
-			$(append_to_element).append(e);
+			jQuery(append_to_element).append(e);
 			
 			//$(e).appendTo(element);
 			
@@ -397,11 +405,11 @@ if (typeof VMM == 'undefined') {
 		hide: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).hide(duration);
+					jQuery(element).hide(duration);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).hide();
+					jQuery(element).hide();
 				}
 			}
 			
@@ -409,30 +417,30 @@ if (typeof VMM == 'undefined') {
 		// VMM.Element.remove(element);
 		remove: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).remove();
+				jQuery(element).remove();
 			}
 		},
 		// VMM.Element.detach(element);
 		detach: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).detach();
+				jQuery(element).detach();
 			}
 		},
 		// VMM.Element.append(element, value);
 		append: function(element, value) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).append(value);
+				jQuery(element).append(value);
 			}
 		},
 		// VMM.Element.show(element);
 		show: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).show(duration);
+					jQuery(element).show(duration);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).show();
+					jQuery(element).show();
 				}
 			}
 			
@@ -444,30 +452,30 @@ if (typeof VMM == 'undefined') {
 				_event_data = event_data;
 			}
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).load(_event_data, callback_function);
+				jQuery(element).load(_event_data, callback_function);
 			}
 		},
 		//VMM.Element.addClass(element, cName);
 		addClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).addClass(cName);
+				jQuery(element).addClass(cName);
 			}
 		},
 		//VMM.Element.removeClass(element, cName);
 		removeClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).removeClass(cName);
+				jQuery(element).removeClass(cName);
 			}
 		},
 		//VMM.Element.attr(element, aName, value);
 		attr: function(element, aName, value) {
 			if (value != null && value != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).attr(aName, value);
+					jQuery(element).attr(aName, value);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					return $(element).attr(aName);
+					return jQuery(element).attr(aName);
 				}
 			}
 		},
@@ -476,7 +484,7 @@ if (typeof VMM == 'undefined') {
 			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test($.fn.jquery)) {
 			    VMM.Element.attribute(element, aName, value);
 			} else {
-				$(element).prop(aName, value);
+				jQuery(element).prop(aName, value);
 			}
 		},
 		//VMM.Element.attribute(element, aName, value);
@@ -484,11 +492,11 @@ if (typeof VMM == 'undefined') {
 			
 			if (value != null && value != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).attr(aName, value);
+					jQuery(element).attr(aName, value);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					return $(element).attr(aName);
+					return jQuery(element).attr(aName);
 				}
 			}
 		},
@@ -499,14 +507,14 @@ if (typeof VMM == 'undefined') {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
 					if (show) {
-						$(element).show(0);
+						jQuery(element).show(0);
 					} else {
-						$(element).hide(0);
+						jQuery(element).hide(0);
 					}
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					if ( $(element).is(':visible')){
+					if ( jQuery(element).is(':visible')){
 						return true;
 					} else {
 						return false;
@@ -521,11 +529,11 @@ if (typeof VMM == 'undefined') {
 
 			if (value != null && value != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).css(prop, value);
+					jQuery(element).css(prop, value);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					return $(element).css(prop);
+					return jQuery(element).css(prop);
 				}
 			}
 		},
@@ -533,7 +541,7 @@ if (typeof VMM == 'undefined') {
 		cssmultiple: function(element, propval) {
 
 			if( typeof( jQuery ) != 'undefined' ){
-				return $(element).css(propval);
+				return jQuery(element).css(propval);
 			}
 		},
 		/* Gets offset
@@ -542,7 +550,7 @@ if (typeof VMM == 'undefined') {
 		offset: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
-				p = $(element).offset();
+				p = jQuery(element).offset();
 			}
 			return p;
 		},
@@ -552,7 +560,7 @@ if (typeof VMM == 'undefined') {
 		position: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
-				p = $(element).position();
+				p = jQuery(element).position();
 			}
 			return p;
 		},
@@ -562,11 +570,11 @@ if (typeof VMM == 'undefined') {
 		width: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).width(s);
+					jQuery(element).width(s);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					return $(element).width();
+					return jQuery(element).width();
 				}
 			}
 		},
@@ -575,11 +583,11 @@ if (typeof VMM == 'undefined') {
 		height: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).height(s);
+					jQuery(element).height(s);
 				}
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
-					return $(element).height();
+					return jQuery(element).height();
 				}
 			}
 		},
@@ -588,7 +596,7 @@ if (typeof VMM == 'undefined') {
 		// VMM.Element.toggleClass(element, cName);
 		toggleClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).toggleClass(cName);
+				jQuery(element).toggleClass(cName);
 			}
 		},
 		/* Each
@@ -596,7 +604,7 @@ if (typeof VMM == 'undefined') {
 		// VMM.Element.each(element, return_function);
 		each:function(element, return_function) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).each(return_function);
+				jQuery(element).each(return_function);
 			}
 			
 		},
@@ -606,18 +614,18 @@ if (typeof VMM == 'undefined') {
 		html: function(element, str) {
 			var e;
 			if( typeof( jQuery ) != 'undefined' ){
-				e = $(element).html();
+				e = jQuery(element).html();
 				return e;
 			}
 			
 			if (str != null && str != "") {
 				if( typeof( jQuery ) != 'undefined' ){
-					$(element).html(str);
+					jQuery(element).html(str);
 				}
 			} else {
 				var e;
 				if( typeof( jQuery ) != 'undefined' ){
-					e = $(element).html();
+					e = jQuery(element).html();
 					return e;
 				}
 			}
@@ -628,7 +636,7 @@ if (typeof VMM == 'undefined') {
 		// VMM.Element.find(element, selec);
 		find: function(element, selec) {
 			if( typeof( jQuery ) != 'undefined' ){
-				return $(element).find(selec);
+				return jQuery(element).find(selec);
 			}
 		},
 		/* Animate
@@ -636,7 +644,7 @@ if (typeof VMM == 'undefined') {
 		// VMM.Element.stop(element);
 		stop: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
-				$(element).stop();
+				jQuery(element).stop();
 			}
 		},
 		// VMM.Element.animate(element, duration, ease, att, callback_function);
@@ -691,9 +699,9 @@ if (typeof VMM == 'undefined') {
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
 					if (callback_function != null && callback_function != "") {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
 					} else {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
 					}
 				}
 			}
