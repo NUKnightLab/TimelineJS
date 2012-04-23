@@ -1975,7 +1975,19 @@ if (typeof VMM == 'undefined') {
 				var id = "flickr_" + flickr_id;
 				var flickr_large_id = id + "_large";
 				var flickr_thumb_id = id + "_thumb";
-				var flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				// FIND LARGE SIZE
+				var flickr_img_large;
+				var flickr_large_found = false;
+				for(var i = 0; i < d.sizes.size.length; i++) {
+					if (d.sizes.size[i].label == "Large") {
+						flickr_large_found = true;
+						flickr_img_large = d.sizes.size[i].source;
+					}
+				}
+				if (!flickr_large_found) {
+					flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				}
+				
 				var flickr_img_thumb = d.sizes.size[0].source;
 				VMM.Element.attr("#"+flickr_large_id, "src", flickr_img_large);
 				VMM.Element.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
