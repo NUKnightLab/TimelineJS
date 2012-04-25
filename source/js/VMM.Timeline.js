@@ -71,7 +71,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			contract_timeline: "Contract Timeline"
 		}
 	}
-}
+};
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
@@ -2033,27 +2033,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
 				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
 				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
-				/*
-				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 8 && window.XDomainRequest) {
-					// Use Microsoft XDR
-					// going to move this to VMM.getJSON
-					trace("it's ie");
-					var ie_xdr = new XDomainRequest();
-					var _url = "//spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-					
-					ie_xdr.open("get", _url);
-					ie_xdr.onload = function() {
-						var ie_j = {};
-						var ie_json = VMM.parseJSON(ie_xdr.responseText);
-						VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData(ie_json);
-						
-					}
-					ie_xdr.send();
-				} else {
-					trace("not ie");
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
-				}
-				*/
 				
 			},
 			

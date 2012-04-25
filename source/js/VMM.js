@@ -89,12 +89,7 @@ var global = (function () {
 ================================================== */
 if (typeof VMM == 'undefined') {
 	
-	/* ENSURE jQuery is available as $
-	================================================== */
-	var $;
-	if( typeof( jQuery ) != 'undefined' ){
-		$ = jQuery;
-	}
+
 	
 	/* Main Scope Container
 	================================================== */
@@ -313,13 +308,13 @@ if (typeof VMM == 'undefined') {
 			
 			/* CHECK FOR IE AND USE Use Microsoft XDR
 			================================================== */
-			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 8 && window.XDomainRequest) {
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
 				trace("it's ie");
 				var ie_url = url;
 
 				if (ie_url.match('^http://')){
 					trace("RUNNING GET JSON")
-				     //ie_url = ie_url.replace("http://","//");
+				     ie_url = ie_url.replace("http://","//");
 					return jQuery.getJSON(url, data, callback);
 				} else if (ie_url.match('^https://')) {
 					trace("RUNNING XDR");
@@ -333,11 +328,7 @@ if (typeof VMM == 'undefined') {
 							trace("IE JSON ERROR")
 						} else {
 							return data(ie_json)
-						}
-						
-								//.error(function() { trace("IE ERROR")})
-								//.success(function() { trace("IE SUCCESS")});
-								
+						}								
 								
 					}
 					xdr.send();
@@ -346,6 +337,7 @@ if (typeof VMM == 'undefined') {
 				}
 			} else {
 				//$.getJSON(url, data);
+				trace("getJSON");
 				return jQuery.getJSON(url, data, callback);
 				
 				
