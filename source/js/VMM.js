@@ -1403,12 +1403,15 @@ if (typeof VMM == 'undefined') {
 		    media.id    = d;
 		    success = true;
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
-			if (d.match('embed')) { 
-				youtube_id = d.split(/embed\//)[1].split('"')[0];
+			if (d.match('v=')) {
+				youtube_id = VMM.Util.getUrlVars(d)["v"];
+				//youtube_id = d.split(/embed\//)[1].split('"')[0];
 			} else { 
 				youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
 			}
 			//youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+			// http://www.youtube.com/watch?feature=player_embedded&v=0l-ivcnLrSc
+			//http://www.youtube.com/watch?v=0l-ivcnLrSc
 		    media.type  = "youtube";
 		    media.id    = youtube_id;
 		    success = true;
