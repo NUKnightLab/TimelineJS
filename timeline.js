@@ -1,15 +1,11 @@
 /* Verite
  * Verite JS Master
- * Version: 0.5
- * Date: April 5, 2012
+ * Version: 0.6
+ * Date: April 26, 2012
  * Copyright 2012 Verite unless part of Verite Timeline, 
  * if part of Timeline then it inherits Timeline's license.
  * Designed and built by Zach Wise digitalartwork.net
  * ----------------------------------------------------- */
-
-
-/* CodeKit Import
-================================================== */
 
 
 /* Simple JavaScript Inheritance
@@ -89,13 +85,10 @@ var global = (function () {
 ================================================== */
 if (typeof VMM == 'undefined') {
 	
-
-	
 	/* Main Scope Container
 	================================================== */
 	//var VMM = {};
 	var VMM = Class.extend({});
-	
 	
 	/* Master Config
 	================================================== */
@@ -131,8 +124,6 @@ if (typeof VMM == 'undefined') {
 		
 	}).init();
 	
-	/* Abstract out DOM element creation to make independent of library
-	================================================== */
 	//VMM.createElement(tag, value, cName, attrs, styles);
 	VMM.createElement = function(tag, value, cName, attrs, styles) {
 		
@@ -200,9 +191,106 @@ if (typeof VMM == 'undefined') {
 		
     };
 
+	// Hide URL Bar for iOS and Android by Scott Jehl
+	// https://gist.github.com/1183357
+
+	VMM.hideUrlBar = function () {
+		var win = window,
+			doc = win.document;
+
+		// If there's a hash, or addEventListener is undefined, stop here
+		if( !location.hash || !win.addEventListener ){
+
+			//scroll to 1
+			window.scrollTo( 0, 1 );
+			var scrollTop = 1,
+
+			//reset to 0 on bodyready, if needed
+			bodycheck = setInterval(function(){
+				if( doc.body ){
+					clearInterval( bodycheck );
+					scrollTop = "scrollTop" in doc.body ? doc.body.scrollTop : 1;
+					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
+				}	
+			}, 15 );
+
+			win.addEventListener( "load", function(){
+				setTimeout(function(){
+					//reset to hide addr bar at onload
+					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
+				}, 0);
+			}, false );
+		}
+	};
 	
-	/* LIBRARY ABSTRACTION
-	================================================== */
+
+}
+
+/* Trace (console.log)
+================================================== */
+function trace( msg ) {
+	if (window.console) {
+		console.log(msg);
+	} else if ( typeof( jsTrace ) != 'undefined' ) {
+		jsTrace.send( msg );
+	} else {
+		//alert(msg);
+	}
+}
+
+/* Extending Date to include Week
+================================================== */
+Date.prototype.getWeek = function() {
+	var onejan = new Date(this.getFullYear(),0,1);
+	return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
+}
+
+/* Extending Date to include Day of Year
+================================================== */
+Date.prototype.getDayOfYear = function() {
+	var onejan = new Date(this.getFullYear(),0,1);
+	return Math.ceil((this - onejan) / 86400000);
+}
+
+/* A MORE SPECIFIC TYPEOF();
+//	http://rolandog.com/archives/2007/01/18/typeof-a-more-specific-typeof/
+================================================== */
+// type.of()
+var is={
+	Null:function(a){return a===null;},
+	Undefined:function(a){return a===undefined;},
+	nt:function(a){return(a===null||a===undefined);},
+	Function:function(a){return(typeof(a)==="function")?a.constructor.toString().match(/Function/)!==null:false;},
+	String:function(a){return(typeof(a)==="string")?true:(typeof(a)==="object")?a.constructor.toString().match(/string/i)!==null:false;},
+	Array:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/array/i)!==null||a.length!==undefined:false;},
+	Boolean:function(a){return(typeof(a)==="boolean")?true:(typeof(a)==="object")?a.constructor.toString().match(/boolean/i)!==null:false;},
+	Date:function(a){return(typeof(a)==="date")?true:(typeof(a)==="object")?a.constructor.toString().match(/date/i)!==null:false;},
+	HTML:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/html/i)!==null:false;},
+	Number:function(a){return(typeof(a)==="number")?true:(typeof(a)==="object")?a.constructor.toString().match(/Number/)!==null:false;},
+	Object:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/object/i)!==null:false;},
+	RegExp:function(a){return(typeof(a)==="function")?a.constructor.toString().match(/regexp/i)!==null:false;}
+};
+var type={
+	of:function(a){
+		for(var i in is){
+			if(is[i](a)){
+				return i.toLowerCase();
+			}
+		}
+	}
+};
+
+
+
+
+
+/*********************************************** 
+     Begin VMM.Library.js 
+***********************************************/ 
+
+/* LIBRARY ABSTRACTION
+================================================== */
+if(typeof VMM != 'undefined') {
 	
 	//VMM.attachElement(element, content);
 	VMM.attachElement = function(element, content) {
@@ -712,377 +800,54 @@ if (typeof VMM == 'undefined') {
 		},
 		
 	}).init();
+}
+
+/*	jQuery Easing v1.3
+	http://gsgd.co.uk/sandbox/jquery/easing/
+================================================== */
+if( typeof( jQuery ) != 'undefined' ){
 	
-	/* TOUCH
-	================================================== */
-	// VMM.TouchSlider.createSlidePanel(touch_object, move_object, w, padding, vertical, h) ;
-	VMM.TouchSlider = {
-		createPanel: function(touch_object, move_object, w, padding, vertical, h) {
-			VMM.TouchSlider.vertical = false;
-			VMM.TouchSlider.vertical = vertical;
-			
-			var x = padding;
-			VMM.TouchSlider.width = w;
-			VMM.TouchSlider.height = h;
-			VMM.TouchSlider.makeTouchable(touch_object, move_object);
-			/*
-			if (sticky != null && sticky != "") {
-				VMM.TouchSlider.sticky = sticky;
-			} else {
-				VMM.TouchSlider.sticky = false;
-			}
-			*/
-			// VMM.TouchSlider.sticky = sticky;
-			
-		},
-		
-		removePanel: function(touch_object) {
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart");
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove");
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend");
-		},
-		
-		makeTouchable: function(touch_object, move_object) {
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart", {element: move_object});
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove", {element: move_object});
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend", {element: move_object});
-	    },
-		onTouchStart: function(e) {
-			VMM.TouchSlider.touchStart(e.data.element, e);
-			e.preventDefault();
-			e.stopPropagation();
-			return true;
-		},
-		onTouchEnd: function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-			
-			if (VMM.TouchSlider.sliding) {
-				VMM.TouchSlider.sliding = false;
-				VMM.TouchSlider.touchEnd(e.data.element, e);
-				return false;
-			} else {
-				return true;
-			}
-			
-		},
-		onTouchMove: function(e) {
-			VMM.TouchSlider.touchMove(e.data.element, e);
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		},
-		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
-		},
-		getTop: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'top').substring(0, VMM.Element.css(elem, 'top').length - 2), 10);
-		},
-	    touchStart: function(elem, e) {
-			
-			VMM.Element.css(elem, '-webkit-transition-duration', '0');
-			
-			VMM.TouchSlider.startX = e.originalEvent.touches[0].screenX;
-			VMM.TouchSlider.startY = e.originalEvent.touches[0].screenY;
-			
-			VMM.TouchSlider.startLeft = VMM.TouchSlider.getLeft(elem);
-			VMM.TouchSlider.startTop = VMM.TouchSlider.getTop(elem);
-			
-			VMM.TouchSlider.touchStartTime = new Date().getTime();
+	jQuery.easing['jswing'] = jQuery.easing['swing'];
 
-	    },
-		touchEnd: function(elem, e) {
-			if (VMM.TouchSlider.getLeft(elem) > 0) {
-				
-				//This means they dragged to the right past the first item
-				
-				if (VMM.TouchSlider.vertical) {
-					VMM.Element.animate(elem, 1000, "", {"top": 0});
-				} else {
-					VMM.Element.animate(elem, 1000, "", {"left": 0});
-				}
-				
-				VMM.TouchSlider.startX = null;
-				VMM.TouchSlider.startY = null;
-				
-				VMM.fireEvent(elem, "TOUCHUPDATE", [0]);
-				
-			} else {
-				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
-				VMM.TouchSlider.slideMomentum(elem, e);
-	         }
-	    },
-		slideMomentum: function(elem, e) {
-			var slideAdjust = (new Date().getTime() - VMM.TouchSlider.touchStartTime) * 10;
-			var timeAdjust = slideAdjust;
-			
-			var left = VMM.TouchSlider.getLeft(elem);
-			var top = VMM.TouchSlider.getTop(elem);
-			
-			var changeX = 6000 * (Math.abs(VMM.TouchSlider.startLeft) - Math.abs(left));
-			var changeY = 6000 * (Math.abs(VMM.TouchSlider.startTop) - Math.abs(top));
-			
-			slideAdjust = Math.round(changeX / slideAdjust);
-			slideAdjustY = Math.round(changeY / slideAdjust);
-
-			var newLeft = slideAdjust + left;
-			var newTop = slideAdjustY + top;
-			
-			var y = newTop % VMM.TouchSlider.height;
-			var t = newLeft % VMM.TouchSlider.width;
-			
-			
-			var _r_object = {
-				top: Math.min(0, newTop),
-				left: Math.min(0, newLeft),
-				time: timeAdjust
-			}
-			VMM.fireEvent(elem, "TOUCHUPDATE", [_r_object]);
-			/*
-			if (VMM.TouchSlider.sticky) {
-				trace("sticky");
-				if ((Math.abs(t)) > ((VMM.TouchSlider.width / 2))) {
-					//Show the next cell
-					newLeft -= (VMM.TouchSlider.width - Math.abs(t));
-				} else {
-		             //Stay on the current cell
-					newLeft -= t;
-				}
-				
-				VMM.fireEvent(elem, "TOUCHUPDATE", [Math.min(0, newLeft)]);
-				
-			} else {
-				trace("not sticky");
-				//VMM.TouchSlider.doSlide(elem, Math.min(0, newLeft), '0.5s');
-				VMM.Element.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
-			}
-			*/
-			
-			VMM.TouchSlider.startX = null;
-			VMM.TouchSlider.startY = null;
-			
-	    },
-		doSlide: function(elem, x, duration) {
-			VMM.Element.css(elem, '-webkit-transition-property', 'left');
-			VMM.Element.css(elem, '-webkit-transition-duration', duration);
-			VMM.Element.css(elem, 'left', x);
+	jQuery.extend( jQuery.easing, {
+		def: 'easeOutQuad',
+		swing: function (x, t, b, c, d) {
+			//alert(jQuery.easing.default);
+			return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
 		},
-		touchMove: function(elem, e) {
-			
-			if (!VMM.TouchSlider.sliding) {
-				//elem.parent().addClass('sliding');
-			}
-
-			VMM.TouchSlider.sliding = true;
-			
-			if (VMM.TouchSlider.vertical) {
-				
-				if (VMM.TouchSlider.startY > e.originalEvent.touches[0].screenY) {
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
-					VMM.TouchSlider.slidingTop = true;
-				} else {
-					var top = (e.originalEvent.touches[0].screenY - VMM.TouchSlider.startY + VMM.TouchSlider.startTop);
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
-					VMM.TouchSlider.slidingTop = false;
-				}
-				
-			} else {
-				
-				if (VMM.TouchSlider.startX > e.originalEvent.touches[0].screenX) {
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
-					VMM.TouchSlider.slidingLeft = true;
-				} else {
-					var left = (e.originalEvent.touches[0].screenX - VMM.TouchSlider.startX + VMM.TouchSlider.startLeft);
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
-					VMM.TouchSlider.slidingLeft = false;
-				}
-				
-			}
-			
-			
-		}
-	}
-	
-	// Hide URL Bar for iOS and Android by Scott Jehl
-	// https://gist.github.com/1183357
-
-	VMM.hideUrlBar = function () {
-		var win = window,
-			doc = win.document;
-
-		// If there's a hash, or addEventListener is undefined, stop here
-		if( !location.hash || !win.addEventListener ){
-
-			//scroll to 1
-			window.scrollTo( 0, 1 );
-			var scrollTop = 1,
-
-			//reset to 0 on bodyready, if needed
-			bodycheck = setInterval(function(){
-				if( doc.body ){
-					clearInterval( bodycheck );
-					scrollTop = "scrollTop" in doc.body ? doc.body.scrollTop : 1;
-					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-				}	
-			}, 15 );
-
-			win.addEventListener( "load", function(){
-				setTimeout(function(){
-					//reset to hide addr bar at onload
-					win.scrollTo( 0, scrollTop === 1 ? 0 : 1 );
-				}, 0);
-			}, false );
-		}
-	};
-	
-	/* DRAG
-	================================================== */
-	// VMM.DragSlider.createSlidePanel(drag_object, move_object, w, padding, sticky);
-	// VMM.DragSlider.cancelSlide();
-	VMM.DragSlider = {
-		createPanel: function(drag_object, move_object, w, padding, sticky) {
-			
-
-			
-			var x = padding;
-			VMM.DragSlider.width = w;
-			VMM.DragSlider.makeDraggable(drag_object, move_object);
-			VMM.DragSlider.drag_elem = drag_object;
-			/*
-			if (sticky != null && sticky != "") {
-				VMM.TouchSlider.sticky = sticky;
-			} else {
-				VMM.TouchSlider.sticky = false;
-			}
-			*/
-			VMM.DragSlider.sticky = sticky;
+		easeInExpo: function (x, t, b, c, d) {
+			return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
 		},
-		makeDraggable: function(drag_object, move_object) {
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragStart, "mousedown", {element: move_object, delement: drag_object});
-			//VMM.bindEvent(drag_object, VMM.DragSlider.onDragMove, "mousemove", {element: move_object});
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragEnd, "mouseup", {element: move_object, delement: drag_object});
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragLeave, "mouseleave", {element: move_object, delement: drag_object});
-	    },
-		cancelSlide: function(e) {
-			VMM.unbindEvent(VMM.DragSlider.drag_elem, VMM.DragSlider.onDragMove, "mousemove");
-			//VMM.DragSlider.drag_elem.preventDefault();
-			//VMM.DragSlider.drag_elem.stopPropagation();
-			return true;
+		easeOutExpo: function (x, t, b, c, d) {
+			return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
 		},
-		onDragLeave: function(e) {
+		easeInOutExpo: function (x, t, b, c, d) {
+			if (t==0) return b;
+			if (t==d) return b+c;
+			if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
+			return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+		},
+		easeInQuad: function (x, t, b, c, d) {
+			return c*(t/=d)*t + b;
+		},
+		easeOutQuad: function (x, t, b, c, d) {
+			return -c *(t/=d)*(t-2) + b;
+		},
+		easeInOutQuad: function (x, t, b, c, d) {
+			if ((t/=d/2) < 1) return c/2*t*t + b;
+			return -c/2 * ((--t)*(t-2) - 1) + b;
+		},
+	});
+}
 
-			VMM.unbindEvent(e.data.delement, VMM.DragSlider.onDragMove, "mousemove");
-			e.preventDefault();
-			e.stopPropagation();
-			return true;
-		},
-		onDragStart: function(e) {
-			VMM.DragSlider.dragStart(e.data.element, e.data.delement, e);
-			
-			e.preventDefault();
-			e.stopPropagation();
-			return true;
-		},
-		onDragEnd: function(e) {
-			e.preventDefault();
-			e.stopPropagation();
-			
-			if (VMM.DragSlider.sliding) {
-				VMM.DragSlider.sliding = false;
-				VMM.DragSlider.dragEnd(e.data.element, e.data.delement, e);
-				return false;
-			} else {
-				return true;
-			}
-			
-		},
-		onDragMove: function(e) {
-			VMM.DragSlider.dragMove(e.data.element, e);
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		},
-		dragStart: function(elem, delem, e) {
-			
-			VMM.DragSlider.startX = e.pageX;
-			
-			VMM.DragSlider.startLeft = VMM.DragSlider.getLeft(elem);
-			VMM.DragSlider.dragStartTime = new Date().getTime();
-			VMM.DragSlider.dragWidth = VMM.Element.width(delem);
-			
-			// CANCEL CURRENT ANIMATION IF ANIMATING
-			var _newx = Math.round(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft);
-			
-			VMM.Element.stop(elem);
-			VMM.bindEvent(delem, VMM.DragSlider.onDragMove, "mousemove", {element: elem});
 
-	    },
-		dragEnd: function(elem, delem, e) {
-			VMM.unbindEvent(delem, VMM.DragSlider.onDragMove, "mousemove");
-			//VMM.DragSlider.dragMomentum(elem, e);
-			if (VMM.DragSlider.getLeft(elem) > 0) {
-				//(VMM.DragSlider.dragWidth/2)
-				//This means they dragged to the right past the first item
-				//VMM.Element.animate(elem, 1000, "linear", {"left": 0});
-				
-				//VMM.fireEvent(elem, "DRAGUPDATE", [0]);
-			} else {
-				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
-				VMM.DragSlider.dragMomentum(elem, e);
-	         }
-		},
-		dragMove: function(elem, e) {
-			if (!VMM.DragSlider.sliding) {
-				//elem.parent().addClass('sliding');
-			}
-			
-			VMM.DragSlider.sliding = true;
-			if (VMM.DragSlider.startX > e.pageX) {
-				//Sliding to the left
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
-				VMM.DragSlider.slidingLeft = true;
-			} else {
-				//Sliding to the right
-				var left = (e.pageX - VMM.DragSlider.startX + VMM.DragSlider.startLeft);
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
-				VMM.DragSlider.slidingLeft = false;
-			}
-		},
-		dragMomentum: function(elem, e) {
-			var slideAdjust = (new Date().getTime() - VMM.DragSlider.dragStartTime) * 10;
-			var timeAdjust = slideAdjust;
-			var left = VMM.DragSlider.getLeft(elem);
+/*********************************************** 
+     Begin VMM.Browser.js 
+***********************************************/ 
 
-			var changeX = 6000 * (Math.abs(VMM.DragSlider.startLeft) - Math.abs(left));
-			//var changeX = 6000 * (VMM.DragSlider.startLeft - left);
-			slideAdjust = Math.round(changeX / slideAdjust);
-			
-			var newLeft = left + slideAdjust;
-			
-			var t = newLeft % VMM.DragSlider.width;
-			//left: Math.min(0, newLeft),
-			var _r_object = {
-				left: Math.min(newLeft),
-				time: timeAdjust
-			}
-			
-			VMM.fireEvent(elem, "DRAGUPDATE", [_r_object]);
-			var _ease = "easeOutExpo";
-			if (_r_object.time > 0) {
-				VMM.Element.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
-			};
-			
-			
-			//VMM.DragSlider.startX = null;
-		},
-		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
-		}
-	
-	}
-	
-	/* DEVICE
-	================================================== */
+/* DEVICE AND BROWSER DETECTION
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 	
 	VMM.Browser = {
 		init: function () {
@@ -1219,9 +984,16 @@ if (typeof VMM == 'undefined') {
 
 	}
 	VMM.Browser.init();
+}
+
+/*********************************************** 
+     Begin VMM.MediaElement.js 
+***********************************************/ 
+
+/* MediaElement
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 	
-	/* MEDIA TYPE
-	================================================== */
 	VMM.MediaElement = ({
 		
 		init: function() {
@@ -1392,9 +1164,19 @@ if (typeof VMM == 'undefined') {
 		},
 		
 	}).init();
+}
+
+/*********************************************** 
+     Begin VMM.MediaType.js 
+***********************************************/ 
+
+/* MediaType
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	
 	//VMM.mediaType.youtube(d); //should return a true or false
 	// VMM.MediaType(url); //returns an object with .type and .id
+	
 	VMM.MediaType = function(d) {
 		var success = false;
 		var media   = {};
@@ -1485,6 +1267,183 @@ if (typeof VMM == 'undefined') {
 		}
 		return false;
 	}
+}
+
+/*********************************************** 
+     Begin VMM.Media.js 
+***********************************************/ 
+
+/* Media
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Media == 'undefined') {
+	
+	// something = new VMM.Media(parent, w, h, {thedata});
+	VMM.Media = function(parent, w, h, thedata) {  
+		
+		/* PRIVATE VARS
+		================================================== */
+		var data = {}; // HOLDS DATA
+		
+		var _valid = false;
+		
+		var config = {
+			width: 720,
+			height: 400,
+			content_width: 720,
+			content_height: 400,
+			ease: "easeInOutExpo",
+			duration: 1000,
+			spacing: 15
+		};
+		/* ELEMENTS
+		================================================== */
+		var $media = "";
+		var $container = "";
+		var $mediacontainer  = "";
+		var $mediaelement = "";
+		var layout = parent; // expecting media div
+		
+		if (w != null && w != "") {config.width = w};
+		if (h != null && h != "") {config.height = h};
+		/*
+		if (typeof thedata != "undefined") {
+			data = thedata;
+			this.init(data);
+		}
+		*/
+		/* PUBLIC FUNCTIONS
+		================================================== */
+		this.init = function(d) {
+			if(typeof d != 'undefined') {
+				this.setData(d);
+			} else {
+				trace("WAITING ON DATA");
+			}
+		};
+		
+		var build = function(media, caption, credit) {
+			
+			$media = VMM.appendAndGetElement(layout, "<div>", "media");
+			$container = VMM.appendAndGetElement($media, "<div>", "container");
+			$mediacontainer = VMM.appendAndGetElement($container, "<div>", "media-container");
+			
+
+			if (data.media != null && data.media != "") {
+
+				_valid = true;
+				var m = {};
+				
+				m = VMM.MediaType(data.media); //returns an object with .type and .id
+				
+				if (m.type == "image") {
+					VMM.appendElement($mediacontainer, "<img src='" + m.id + "'>");  
+				} else if (m.type == "youtube") {
+					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
+				} else if (m.type == "vimeo") {
+					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
+				} else {
+					
+				}
+				
+				// CREDIT
+				if (data.credit != null && data.credit != "") {
+					VMM.appendElement($container, VMM.createElement("div", data.credit, "credit"));
+				}
+
+				// CAPTION
+				if (data.caption != null && data.caption != "") {
+					VMM.appendElement($container, VMM.createElement("div", data.caption, "caption"));
+				}
+
+			}
+	    };
+	
+		
+	
+		/* GETTERS AND SETTERS
+		================================================== */
+		
+		this.setData = function(d) {
+			if(typeof d != 'undefined') {
+				data = d;
+				build();
+			} else{
+				trace("NO DATA");
+			}
+		};
+		
+		/* RESIZE
+		================================================== */
+		
+		function reSize() {
+
+		}
+		
+
+
+	}
+	
+	// Less expensive to use prototype
+	
+	VMM.Media.prototype.height = function(h) {
+		if (h != null && h != "") {
+			config.height = h;
+			reSize();
+		} else {
+			return config.height;
+		}
+	};
+	
+	VMM.Media.prototype.width = function(w) {
+		if (w != null && w != "") {
+			config.width = w;
+			reSize();
+		} else {
+			return config.width;
+		}
+	};
+	
+	/* GETTERS AND SETTERS
+	================================================== */
+	
+	VMM.Media.prototype.getData = function() {
+		return data;
+	};
+	
+	VMM.Media.prototype.setConfig = function(d) {
+		if(typeof d != 'undefined') {
+			config = d;
+		} else{
+			trace("NO CONFIG DATA");
+		}
+	};
+	
+	VMM.Media.prototype.getConfig = function() {
+		return config;
+	};
+	
+	VMM.Media.prototype.setSize = function(w, h) {
+		if (w != null) {config.width = w};
+		if (h != null) {config.height = h};
+		if (_active) {
+			reSize();
+		}
+		
+	}
+	
+	VMM.Media.prototype.active = function() {
+		return _active;
+	};
+	
+}
+
+/*********************************************** 
+     Begin VMM.FileExtention.js 
+***********************************************/ 
+
+/* File Extention
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
 	//VMM.FileExtention.googleDocType(url);
 	VMM.FileExtention = {
 		googleDocType: function(url) {
@@ -1508,9 +1467,15 @@ if (typeof VMM == 'undefined') {
 
 		}
 	}
-	
-	
-	
+}
+
+/*********************************************** 
+     Begin VMM.ExternalAPI.js 
+***********************************************/ 
+
+/* Slider
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	
 	VMM.ExternalAPI = {
 		
@@ -2095,226 +2060,7 @@ if (typeof VMM == 'undefined') {
 		}
 	}
 	
-	
-	/* MEDIA
-	================================================== */
-	// something = new VMM.Media(parent, w, h, {thedata});
-	VMM.Media = function(parent, w, h, thedata) {  
-		
-		/* PRIVATE VARS
-		================================================== */
-		var data = {}; // HOLDS DATA
-		
-		var _valid = false;
-		
-		var config = {
-			width: 720,
-			height: 400,
-			content_width: 720,
-			content_height: 400,
-			ease: "easeInOutExpo",
-			duration: 1000,
-			spacing: 15
-		};
-		/* ELEMENTS
-		================================================== */
-		var $media = "";
-		var $container = "";
-		var $mediacontainer  = "";
-		var $mediaelement = "";
-		var layout = parent; // expecting media div
-		
-		if (w != null && w != "") {config.width = w};
-		if (h != null && h != "") {config.height = h};
-		/*
-		if (typeof thedata != "undefined") {
-			data = thedata;
-			this.init(data);
-		}
-		*/
-		/* PUBLIC FUNCTIONS
-		================================================== */
-		this.init = function(d) {
-			if(typeof d != 'undefined') {
-				this.setData(d);
-			} else {
-				trace("WAITING ON DATA");
-			}
-		};
-		
-		var build = function(media, caption, credit) {
-			
-			$media = VMM.appendAndGetElement(layout, "<div>", "media");
-			$container = VMM.appendAndGetElement($media, "<div>", "container");
-			$mediacontainer = VMM.appendAndGetElement($container, "<div>", "media-container");
-			
-
-			if (data.media != null && data.media != "") {
-
-				_valid = true;
-				var m = {};
-				
-				m = VMM.MediaType(data.media); //returns an object with .type and .id
-				
-				if (m.type == "image") {
-					VMM.appendElement($mediacontainer, "<img src='" + m.id + "'>");  
-				} else if (m.type == "youtube") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
-				} else if (m.type == "vimeo") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
-				} else {
-					
-				}
-				
-				// CREDIT
-				if (data.credit != null && data.credit != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.credit, "credit"));
-				}
-
-				// CAPTION
-				if (data.caption != null && data.caption != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.caption, "caption"));
-				}
-
-			}
-	    };
-	
-		
-	
-		/* GETTERS AND SETTERS
-		================================================== */
-		
-		this.setData = function(d) {
-			if(typeof d != 'undefined') {
-				data = d;
-				build();
-			} else{
-				trace("NO DATA");
-			}
-		};
-		
-		/* RESIZE
-		================================================== */
-		
-		function reSize() {
-
-		}
-		
-
-
-	}
-	
-	// Less expensive to use prototype
-	
-	VMM.Media.prototype.height = function(h) {
-		if (h != null && h != "") {
-			config.height = h;
-			reSize();
-		} else {
-			return config.height;
-		}
-	};
-	
-	VMM.Media.prototype.width = function(w) {
-		if (w != null && w != "") {
-			config.width = w;
-			reSize();
-		} else {
-			return config.width;
-		}
-	};
-	
-	/* GETTERS AND SETTERS
-	================================================== */
-	
-	VMM.Media.prototype.getData = function() {
-		return data;
-	};
-	
-	VMM.Media.prototype.setConfig = function(d) {
-		if(typeof d != 'undefined') {
-			config = d;
-		} else{
-			trace("NO CONFIG DATA");
-		}
-	};
-	
-	VMM.Media.prototype.getConfig = function() {
-		return config;
-	};
-	
-	VMM.Media.prototype.setSize = function(w, h) {
-		if (w != null) {config.width = w};
-		if (h != null) {config.height = h};
-		if (_active) {
-			reSize();
-		}
-		
-	}
-	
-	
-	VMM.Media.prototype.active = function() {
-		return _active;
-	};
-	
-	
 }
-
-
-
-/* Trace (console.log)
-================================================== */
-function trace( msg ) {
-	if (window.console) {
-		console.log(msg);
-	} else if ( typeof( jsTrace ) != 'undefined' ) {
-		jsTrace.send( msg );
-	} else {
-		//alert(msg);
-	}
-}
-
-/* Extending Date to include Week
-================================================== */
-Date.prototype.getWeek = function() {
-	var onejan = new Date(this.getFullYear(),0,1);
-	return Math.ceil((((this - onejan) / 86400000) + onejan.getDay()+1)/7);
-}
-
-/* Extending Date to include Day of Year
-================================================== */
-Date.prototype.getDayOfYear = function() {
-	var onejan = new Date(this.getFullYear(),0,1);
-	return Math.ceil((this - onejan) / 86400000);
-}
-
-/* A MORE SPECIFIC TYPEOF();
-//	http://rolandog.com/archives/2007/01/18/typeof-a-more-specific-typeof/
-================================================== */
-// type.of()
-var is={
-	Null:function(a){return a===null;},
-	Undefined:function(a){return a===undefined;},
-	nt:function(a){return(a===null||a===undefined);},
-	Function:function(a){return(typeof(a)==="function")?a.constructor.toString().match(/Function/)!==null:false;},
-	String:function(a){return(typeof(a)==="string")?true:(typeof(a)==="object")?a.constructor.toString().match(/string/i)!==null:false;},
-	Array:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/array/i)!==null||a.length!==undefined:false;},
-	Boolean:function(a){return(typeof(a)==="boolean")?true:(typeof(a)==="object")?a.constructor.toString().match(/boolean/i)!==null:false;},
-	Date:function(a){return(typeof(a)==="date")?true:(typeof(a)==="object")?a.constructor.toString().match(/date/i)!==null:false;},
-	HTML:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/html/i)!==null:false;},
-	Number:function(a){return(typeof(a)==="number")?true:(typeof(a)==="object")?a.constructor.toString().match(/Number/)!==null:false;},
-	Object:function(a){return(typeof(a)==="object")?a.constructor.toString().match(/object/i)!==null:false;},
-	RegExp:function(a){return(typeof(a)==="function")?a.constructor.toString().match(/regexp/i)!==null:false;}
-};
-var type={
-	of:function(a){
-		for(var i in is){
-			if(is[i](a)){
-				return i.toLowerCase();
-			}
-		}
-	}
-};
 
 /*  YOUTUBE API READY
 	Can't find a way to customize this callback and keep it in the VMM namespace
@@ -2325,55 +2071,358 @@ function onYouTubePlayerAPIReady() {
 	VMM.ExternalAPI.youtube.onAPIReady();
 }
 
-
-/*	jQuery Easing v1.3
-	http://gsgd.co.uk/sandbox/jquery/easing/
-================================================== */
-if( typeof( jQuery ) != 'undefined' ){
-	
-	jQuery.easing['jswing'] = jQuery.easing['swing'];
-
-	jQuery.extend( jQuery.easing, {
-		def: 'easeOutQuad',
-		swing: function (x, t, b, c, d) {
-			//alert(jQuery.easing.default);
-			return jQuery.easing[jQuery.easing.def](x, t, b, c, d);
-		},
-		easeInExpo: function (x, t, b, c, d) {
-			return (t==0) ? b : c * Math.pow(2, 10 * (t/d - 1)) + b;
-		},
-		easeOutExpo: function (x, t, b, c, d) {
-			return (t==d) ? b+c : c * (-Math.pow(2, -10 * t/d) + 1) + b;
-		},
-		easeInOutExpo: function (x, t, b, c, d) {
-			if (t==0) return b;
-			if (t==d) return b+c;
-			if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-			return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
-		},
-		easeInQuad: function (x, t, b, c, d) {
-			return c*(t/=d)*t + b;
-		},
-		easeOutQuad: function (x, t, b, c, d) {
-			return -c *(t/=d)*(t-2) + b;
-		},
-		easeInOutQuad: function (x, t, b, c, d) {
-			if ((t/=d/2) < 1) return c/2*t*t + b;
-			return -c/2 * ((--t)*(t-2) - 1) + b;
-		},
-	});
-}
-
-
-
-
 /*********************************************** 
-     Begin VMM.Core.js 
+     Begin VMM.TouchSlider.js 
 ***********************************************/ 
 
-/* Core
+/* TOUCH SLIDER
 ================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
+	
+	// VMM.TouchSlider.createSlidePanel(touch_object, move_object, w, padding, vertical, h) ;
+	VMM.TouchSlider = {
+		createPanel: function(touch_object, move_object, w, padding, vertical, h) {
+			VMM.TouchSlider.vertical = false;
+			VMM.TouchSlider.vertical = vertical;
+			
+			var x = padding;
+			VMM.TouchSlider.width = w;
+			VMM.TouchSlider.height = h;
+			VMM.TouchSlider.makeTouchable(touch_object, move_object);
+			/*
+			if (sticky != null && sticky != "") {
+				VMM.TouchSlider.sticky = sticky;
+			} else {
+				VMM.TouchSlider.sticky = false;
+			}
+			*/
+			// VMM.TouchSlider.sticky = sticky;
+			
+		},
+		
+		removePanel: function(touch_object) {
+			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart");
+			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove");
+			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend");
+		},
+		
+		makeTouchable: function(touch_object, move_object) {
+			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart", {element: move_object});
+			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove", {element: move_object});
+			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend", {element: move_object});
+	    },
+		onTouchStart: function(e) {
+			VMM.TouchSlider.touchStart(e.data.element, e);
+			e.preventDefault();
+			e.stopPropagation();
+			return true;
+		},
+		onTouchEnd: function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			if (VMM.TouchSlider.sliding) {
+				VMM.TouchSlider.sliding = false;
+				VMM.TouchSlider.touchEnd(e.data.element, e);
+				return false;
+			} else {
+				return true;
+			}
+			
+		},
+		onTouchMove: function(e) {
+			VMM.TouchSlider.touchMove(e.data.element, e);
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		},
+		getLeft: function(elem) {
+			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+		},
+		getTop: function(elem) {
+			return parseInt(VMM.Element.css(elem, 'top').substring(0, VMM.Element.css(elem, 'top').length - 2), 10);
+		},
+	    touchStart: function(elem, e) {
+			
+			VMM.Element.css(elem, '-webkit-transition-duration', '0');
+			
+			VMM.TouchSlider.startX = e.originalEvent.touches[0].screenX;
+			VMM.TouchSlider.startY = e.originalEvent.touches[0].screenY;
+			
+			VMM.TouchSlider.startLeft = VMM.TouchSlider.getLeft(elem);
+			VMM.TouchSlider.startTop = VMM.TouchSlider.getTop(elem);
+			
+			VMM.TouchSlider.touchStartTime = new Date().getTime();
 
+	    },
+		touchEnd: function(elem, e) {
+			if (VMM.TouchSlider.getLeft(elem) > 0) {
+				
+				//This means they dragged to the right past the first item
+				
+				if (VMM.TouchSlider.vertical) {
+					VMM.Element.animate(elem, 1000, "", {"top": 0});
+				} else {
+					VMM.Element.animate(elem, 1000, "", {"left": 0});
+				}
+				
+				VMM.TouchSlider.startX = null;
+				VMM.TouchSlider.startY = null;
+				
+				VMM.fireEvent(elem, "TOUCHUPDATE", [0]);
+				
+			} else {
+				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
+				VMM.TouchSlider.slideMomentum(elem, e);
+	         }
+	    },
+		slideMomentum: function(elem, e) {
+			var slideAdjust = (new Date().getTime() - VMM.TouchSlider.touchStartTime) * 10;
+			var timeAdjust = slideAdjust;
+			
+			var left = VMM.TouchSlider.getLeft(elem);
+			var top = VMM.TouchSlider.getTop(elem);
+			
+			var changeX = 6000 * (Math.abs(VMM.TouchSlider.startLeft) - Math.abs(left));
+			var changeY = 6000 * (Math.abs(VMM.TouchSlider.startTop) - Math.abs(top));
+			
+			slideAdjust = Math.round(changeX / slideAdjust);
+			slideAdjustY = Math.round(changeY / slideAdjust);
+
+			var newLeft = slideAdjust + left;
+			var newTop = slideAdjustY + top;
+			
+			var y = newTop % VMM.TouchSlider.height;
+			var t = newLeft % VMM.TouchSlider.width;
+			
+			
+			var _r_object = {
+				top: Math.min(0, newTop),
+				left: Math.min(0, newLeft),
+				time: timeAdjust
+			}
+			VMM.fireEvent(elem, "TOUCHUPDATE", [_r_object]);
+			/*
+			if (VMM.TouchSlider.sticky) {
+				trace("sticky");
+				if ((Math.abs(t)) > ((VMM.TouchSlider.width / 2))) {
+					//Show the next cell
+					newLeft -= (VMM.TouchSlider.width - Math.abs(t));
+				} else {
+		             //Stay on the current cell
+					newLeft -= t;
+				}
+				
+				VMM.fireEvent(elem, "TOUCHUPDATE", [Math.min(0, newLeft)]);
+				
+			} else {
+				trace("not sticky");
+				//VMM.TouchSlider.doSlide(elem, Math.min(0, newLeft), '0.5s');
+				VMM.Element.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
+			}
+			*/
+			
+			VMM.TouchSlider.startX = null;
+			VMM.TouchSlider.startY = null;
+			
+	    },
+		doSlide: function(elem, x, duration) {
+			VMM.Element.css(elem, '-webkit-transition-property', 'left');
+			VMM.Element.css(elem, '-webkit-transition-duration', duration);
+			VMM.Element.css(elem, 'left', x);
+		},
+		touchMove: function(elem, e) {
+			
+			if (!VMM.TouchSlider.sliding) {
+				//elem.parent().addClass('sliding');
+			}
+
+			VMM.TouchSlider.sliding = true;
+			
+			if (VMM.TouchSlider.vertical) {
+				
+				if (VMM.TouchSlider.startY > e.originalEvent.touches[0].screenY) {
+					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.TouchSlider.slidingTop = true;
+				} else {
+					var top = (e.originalEvent.touches[0].screenY - VMM.TouchSlider.startY + VMM.TouchSlider.startTop);
+					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.TouchSlider.slidingTop = false;
+				}
+				
+			} else {
+				
+				if (VMM.TouchSlider.startX > e.originalEvent.touches[0].screenX) {
+					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.TouchSlider.slidingLeft = true;
+				} else {
+					var left = (e.originalEvent.touches[0].screenX - VMM.TouchSlider.startX + VMM.TouchSlider.startLeft);
+					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.TouchSlider.slidingLeft = false;
+				}
+				
+			}
+			
+			
+		}
+	}
+}
+
+/*********************************************** 
+     Begin VMM.DragSlider.js 
+***********************************************/ 
+
+/* DRAG SLIDER
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
+	// VMM.DragSlider.createSlidePanel(drag_object, move_object, w, padding, sticky);
+	// VMM.DragSlider.cancelSlide();
+	VMM.DragSlider = {
+		createPanel: function(drag_object, move_object, w, padding, sticky) {
+			
+
+			
+			var x = padding;
+			VMM.DragSlider.width = w;
+			VMM.DragSlider.makeDraggable(drag_object, move_object);
+			VMM.DragSlider.drag_elem = drag_object;
+			/*
+			if (sticky != null && sticky != "") {
+				VMM.TouchSlider.sticky = sticky;
+			} else {
+				VMM.TouchSlider.sticky = false;
+			}
+			*/
+			VMM.DragSlider.sticky = sticky;
+		},
+		makeDraggable: function(drag_object, move_object) {
+			VMM.bindEvent(drag_object, VMM.DragSlider.onDragStart, "mousedown", {element: move_object, delement: drag_object});
+			//VMM.bindEvent(drag_object, VMM.DragSlider.onDragMove, "mousemove", {element: move_object});
+			VMM.bindEvent(drag_object, VMM.DragSlider.onDragEnd, "mouseup", {element: move_object, delement: drag_object});
+			VMM.bindEvent(drag_object, VMM.DragSlider.onDragLeave, "mouseleave", {element: move_object, delement: drag_object});
+	    },
+		cancelSlide: function(e) {
+			VMM.unbindEvent(VMM.DragSlider.drag_elem, VMM.DragSlider.onDragMove, "mousemove");
+			//VMM.DragSlider.drag_elem.preventDefault();
+			//VMM.DragSlider.drag_elem.stopPropagation();
+			return true;
+		},
+		onDragLeave: function(e) {
+
+			VMM.unbindEvent(e.data.delement, VMM.DragSlider.onDragMove, "mousemove");
+			e.preventDefault();
+			e.stopPropagation();
+			return true;
+		},
+		onDragStart: function(e) {
+			VMM.DragSlider.dragStart(e.data.element, e.data.delement, e);
+			
+			e.preventDefault();
+			e.stopPropagation();
+			return true;
+		},
+		onDragEnd: function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			if (VMM.DragSlider.sliding) {
+				VMM.DragSlider.sliding = false;
+				VMM.DragSlider.dragEnd(e.data.element, e.data.delement, e);
+				return false;
+			} else {
+				return true;
+			}
+			
+		},
+		onDragMove: function(e) {
+			VMM.DragSlider.dragMove(e.data.element, e);
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		},
+		dragStart: function(elem, delem, e) {
+			
+			VMM.DragSlider.startX = e.pageX;
+			
+			VMM.DragSlider.startLeft = VMM.DragSlider.getLeft(elem);
+			VMM.DragSlider.dragStartTime = new Date().getTime();
+			VMM.DragSlider.dragWidth = VMM.Element.width(delem);
+			
+			// CANCEL CURRENT ANIMATION IF ANIMATING
+			var _newx = Math.round(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft);
+			
+			VMM.Element.stop(elem);
+			VMM.bindEvent(delem, VMM.DragSlider.onDragMove, "mousemove", {element: elem});
+
+	    },
+		dragEnd: function(elem, delem, e) {
+			VMM.unbindEvent(delem, VMM.DragSlider.onDragMove, "mousemove");
+			//VMM.DragSlider.dragMomentum(elem, e);
+			if (VMM.DragSlider.getLeft(elem) > 0) {
+				//(VMM.DragSlider.dragWidth/2)
+				//This means they dragged to the right past the first item
+				//VMM.Element.animate(elem, 1000, "linear", {"left": 0});
+				
+				//VMM.fireEvent(elem, "DRAGUPDATE", [0]);
+			} else {
+				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
+				VMM.DragSlider.dragMomentum(elem, e);
+	         }
+		},
+		dragMove: function(elem, e) {
+			if (!VMM.DragSlider.sliding) {
+				//elem.parent().addClass('sliding');
+			}
+			
+			VMM.DragSlider.sliding = true;
+			if (VMM.DragSlider.startX > e.pageX) {
+				//Sliding to the left
+				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.DragSlider.slidingLeft = true;
+			} else {
+				//Sliding to the right
+				var left = (e.pageX - VMM.DragSlider.startX + VMM.DragSlider.startLeft);
+				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.DragSlider.slidingLeft = false;
+			}
+		},
+		dragMomentum: function(elem, e) {
+			var slideAdjust = (new Date().getTime() - VMM.DragSlider.dragStartTime) * 10;
+			var timeAdjust = slideAdjust;
+			var left = VMM.DragSlider.getLeft(elem);
+
+			var changeX = 6000 * (Math.abs(VMM.DragSlider.startLeft) - Math.abs(left));
+			//var changeX = 6000 * (VMM.DragSlider.startLeft - left);
+			slideAdjust = Math.round(changeX / slideAdjust);
+			
+			var newLeft = left + slideAdjust;
+			
+			var t = newLeft % VMM.DragSlider.width;
+			//left: Math.min(0, newLeft),
+			var _r_object = {
+				left: Math.min(newLeft),
+				time: timeAdjust
+			}
+			
+			VMM.fireEvent(elem, "DRAGUPDATE", [_r_object]);
+			var _ease = "easeOutExpo";
+			if (_r_object.time > 0) {
+				VMM.Element.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
+			};
+			
+			
+			//VMM.DragSlider.startX = null;
+		},
+		getLeft: function(elem) {
+			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+		}
+	
+	}
+}
+
+/*********************************************** 
+     Begin VMM.Slider.js 
+***********************************************/ 
 
 /* Slider
 ================================================== */
@@ -3571,259 +3620,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 }
 
 /*********************************************** 
-     Begin VMM.LoadLib.js 
-***********************************************/ 
-
-/*
-	LoadLib
-	Based on LazyLoad by Ryan Grove
-	https://github.com/rgrove/lazyload/ 
-	Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
-	All rights reserved.
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of
-	this software and associated documentation files (the 'Software'), to deal in
-	the Software without restriction, including without limitation the rights to
-	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-	the Software, and to permit persons to whom the Software is furnished to do so,
-	subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-================================================== */
-window.loadedJS = [];
-
-
-if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
-	//VMM.LoadLib.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
-	//VMM.LoadLib.css('http://someurl.css', onCSSLoaded);
-	
-	
-	
-	VMM.LoadLib = (function (doc) {
-		var env,
-		head,
-		pending = {},
-		pollCount = 0,
-		queue = {css: [], js: []},
-		styleSheets = doc.styleSheets;
-	
-		var loaded_Array = [];
-	
-		function isLoaded(url) {
-			var has_been_loaded = false;
-			for(var i=0; i<loaded_Array.length; i++) {
-				if (loaded_Array[i] == url) {
-					has_been_loaded = true;
-				}
-			}
-			if (!has_been_loaded) {
-				loaded_Array.push(url);
-			}
-			return has_been_loaded;
-		}
-
-		function createNode(name, attrs) {
-			var node = doc.createElement(name), attr;
-
-			for (attr in attrs) {
-				if (attrs.hasOwnProperty(attr)) {
-					node.setAttribute(attr, attrs[attr]);
-				}
-			}
-
-			return node;
-		}
-
-	  function finish(type) {
-	    var p = pending[type],
-	        callback,
-	        urls;
-
-	    if (p) {
-	      callback = p.callback;
-	      urls     = p.urls;
-	      urls.shift();
-	      pollCount = 0;
-	      if (!urls.length) {
-	        callback && callback.call(p.context, p.obj);
-	        pending[type] = null;
-	        queue[type].length && load(type);
-	      }
-	    }
-	  }
-
-	  function getEnv() {
-	    var ua = navigator.userAgent;
-
-	    env = {
-
-	      async: doc.createElement('script').async === true
-	    };
-
-	    (env.webkit = /AppleWebKit\//.test(ua))
-	      || (env.ie = /MSIE/.test(ua))
-	      || (env.opera = /Opera/.test(ua))
-	      || (env.gecko = /Gecko\//.test(ua))
-	      || (env.unknown = true);
-	  }
-
-	  function load(type, urls, callback, obj, context) {
-	    var _finish = function () { finish(type); },
-	        isCSS   = type === 'css',
-	        nodes   = [],
-	        i, len, node, p, pendingUrls, url;
-
-	    env || getEnv();
-
-	    if (urls) {
-
-	      urls = typeof urls === 'string' ? [urls] : urls.concat();
-
-	      if (isCSS || env.async || env.gecko || env.opera) {
-
-	        queue[type].push({
-	          urls    : urls,
-	          callback: callback,
-	          obj     : obj,
-	          context : context
-	        });
-	      } else {
-	        for (i = 0, len = urls.length; i < len; ++i) {
-	          queue[type].push({
-	            urls    : [urls[i]],
-	            callback: i === len - 1 ? callback : null,
-	            obj     : obj,
-	            context : context
-	          });
-	        }
-	      }
-	    }
-
-	    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
-	      return;
-	    }
-
-	    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
-	    pendingUrls = p.urls;
-
-	    for (i = 0, len = pendingUrls.length; i < len; ++i) {
-	      url = pendingUrls[i];
-
-	      if (isCSS) {
-	          node = env.gecko ? createNode('style') : createNode('link', {
-	            href: url,
-	            rel : 'stylesheet'
-	          });
-	      } else {
-	        node = createNode('script', {src: url});
-	        node.async = false;
-	      }
-
-	      node.className = 'lazyload';
-	      node.setAttribute('charset', 'utf-8');
-
-	      if (env.ie && !isCSS) {
-	        node.onreadystatechange = function () {
-	          if (/loaded|complete/.test(node.readyState)) {
-	            node.onreadystatechange = null;
-	            _finish();
-	          }
-	        };
-	      } else if (isCSS && (env.gecko || env.webkit)) {
-	        if (env.webkit) {
-	          p.urls[i] = node.href; 
-	          pollWebKit();
-	        } else {
-	          node.innerHTML = '@import "' + url + '";';
-	          pollGecko(node);
-	        }
-	      } else {
-	        node.onload = node.onerror = _finish;
-	      }
-
-	      nodes.push(node);
-	    }
-
-	    for (i = 0, len = nodes.length; i < len; ++i) {
-	      head.appendChild(nodes[i]);
-	    }
-	  }
-
-	  function pollGecko(node) {
-	    var hasRules;
-
-	    try {
-
-	      hasRules = !!node.sheet.cssRules;
-	    } catch (ex) {
-	      pollCount += 1;
-
-	      if (pollCount < 200) {
-	        setTimeout(function () { pollGecko(node); }, 50);
-	      } else {
-
-	        hasRules && finish('css');
-	      }
-
-	      return;
-	    }
-
-	    finish('css');
-	  }
-
-	  function pollWebKit() {
-	    var css = pending.css, i;
-
-	    if (css) {
-	      i = styleSheets.length;
-
-	      while (--i >= 0) {
-	        if (styleSheets[i].href === css.urls[0]) {
-	          finish('css');
-	          break;
-	        }
-	      }
-
-	      pollCount += 1;
-
-	      if (css) {
-	        if (pollCount < 200) {
-	          setTimeout(pollWebKit, 50);
-	        } else {
-
-	          finish('css');
-	        }
-	      }
-	    }
-	  }
-
-	  return {
-
-		css: function (urls, callback, obj, context) {
-			if (isLoaded(urls)) {
-				return callback;
-			} else {
-				load('css', urls, callback, obj, context);
-			}
-		},
-
-		js: function (urls, callback, obj, context) {
-			if (isLoaded(urls)) {
-				return callback;
-			} else {
-				load('js', urls, callback, obj, context);
-			}
-		}
-
-	  };
-	})(this.document);
-}
-
-
-
-/*********************************************** 
      Begin bootstrap-tooltip.js 
 ***********************************************/ 
 
@@ -4567,54 +4363,262 @@ Utf8.decode = function(strUtf) {
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
 /*********************************************** 
-     Begin VMM.Timeline.js 
+     Begin VMM.LoadLib.js 
 ***********************************************/ 
 
-/*!
-	Timeline 0.92
-	Designed and built by Zach Wise digitalartwork.net
-	Date: April 8, 2012
+/*
+	LoadLib
+	Based on LazyLoad by Ryan Grove
+	https://github.com/rgrove/lazyload/ 
+	Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
+	All rights reserved.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	Permission is hereby granted, free of charge, to any person obtaining a copy of
+	this software and associated documentation files (the 'Software'), to deal in
+	the Software without restriction, including without limitation the rights to
+	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+	the Software, and to permit persons to whom the Software is furnished to do so,
+	subject to the following conditions:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
 
-    http://www.gnu.org/licenses/
+================================================== */
+window.loadedJS = [];
 
-*/  
 
-/*!
-	TODO
-	-	
-	-	
-	FUTURE PLANS
-	-	Better iPhone usability
-	-	Support feeds from popular sources
-	-	Storify integration
-	-	Code optimization
-	-	Possible tagging of events (depends on usability factors)
+if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
+	//VMM.LoadLib.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
+	//VMM.LoadLib.css('http://someurl.css', onCSSLoaded);
 	
-*/
+	
+	
+	VMM.LoadLib = (function (doc) {
+		var env,
+		head,
+		pending = {},
+		pollCount = 0,
+		queue = {css: [], js: []},
+		styleSheets = doc.styleSheets;
+	
+		var loaded_Array = [];
+	
+		function isLoaded(url) {
+			var has_been_loaded = false;
+			for(var i=0; i<loaded_Array.length; i++) {
+				if (loaded_Array[i] == url) {
+					has_been_loaded = true;
+				}
+			}
+			if (!has_been_loaded) {
+				loaded_Array.push(url);
+			}
+			return has_been_loaded;
+		}
 
-/* 	CodeKit Import
-	http://incident57.com/codekit/
-================================================== */
+		function createNode(name, attrs) {
+			var node = doc.createElement(name), attr;
 
-// @codekit-prepend "VMM.js";
-// @codekit-prepend "VMM.Core.js";
-// @codekit-prepend "VMM.Util.js";
-// @codekit-prepend "VMM.LoadLib.js";
-// @codekit-prepend "bootstrap-tooltip.js";
-// @codekit-prepend "AES.js";
+			for (attr in attrs) {
+				if (attrs.hasOwnProperty(attr)) {
+					node.setAttribute(attr, attrs[attr]);
+				}
+			}
 
-/* Open Timeline Class contained in VMM (verite) namespace
-================================================== */
+			return node;
+		}
+
+	  function finish(type) {
+	    var p = pending[type],
+	        callback,
+	        urls;
+
+	    if (p) {
+	      callback = p.callback;
+	      urls     = p.urls;
+	      urls.shift();
+	      pollCount = 0;
+	      if (!urls.length) {
+	        callback && callback.call(p.context, p.obj);
+	        pending[type] = null;
+	        queue[type].length && load(type);
+	      }
+	    }
+	  }
+
+	  function getEnv() {
+	    var ua = navigator.userAgent;
+
+	    env = {
+
+	      async: doc.createElement('script').async === true
+	    };
+
+	    (env.webkit = /AppleWebKit\//.test(ua))
+	      || (env.ie = /MSIE/.test(ua))
+	      || (env.opera = /Opera/.test(ua))
+	      || (env.gecko = /Gecko\//.test(ua))
+	      || (env.unknown = true);
+	  }
+
+	  function load(type, urls, callback, obj, context) {
+	    var _finish = function () { finish(type); },
+	        isCSS   = type === 'css',
+	        nodes   = [],
+	        i, len, node, p, pendingUrls, url;
+
+	    env || getEnv();
+
+	    if (urls) {
+
+	      urls = typeof urls === 'string' ? [urls] : urls.concat();
+
+	      if (isCSS || env.async || env.gecko || env.opera) {
+
+	        queue[type].push({
+	          urls    : urls,
+	          callback: callback,
+	          obj     : obj,
+	          context : context
+	        });
+	      } else {
+	        for (i = 0, len = urls.length; i < len; ++i) {
+	          queue[type].push({
+	            urls    : [urls[i]],
+	            callback: i === len - 1 ? callback : null,
+	            obj     : obj,
+	            context : context
+	          });
+	        }
+	      }
+	    }
+
+	    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
+	      return;
+	    }
+
+	    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
+	    pendingUrls = p.urls;
+
+	    for (i = 0, len = pendingUrls.length; i < len; ++i) {
+	      url = pendingUrls[i];
+
+	      if (isCSS) {
+	          node = env.gecko ? createNode('style') : createNode('link', {
+	            href: url,
+	            rel : 'stylesheet'
+	          });
+	      } else {
+	        node = createNode('script', {src: url});
+	        node.async = false;
+	      }
+
+	      node.className = 'lazyload';
+	      node.setAttribute('charset', 'utf-8');
+
+	      if (env.ie && !isCSS) {
+	        node.onreadystatechange = function () {
+	          if (/loaded|complete/.test(node.readyState)) {
+	            node.onreadystatechange = null;
+	            _finish();
+	          }
+	        };
+	      } else if (isCSS && (env.gecko || env.webkit)) {
+	        if (env.webkit) {
+	          p.urls[i] = node.href; 
+	          pollWebKit();
+	        } else {
+	          node.innerHTML = '@import "' + url + '";';
+	          pollGecko(node);
+	        }
+	      } else {
+	        node.onload = node.onerror = _finish;
+	      }
+
+	      nodes.push(node);
+	    }
+
+	    for (i = 0, len = nodes.length; i < len; ++i) {
+	      head.appendChild(nodes[i]);
+	    }
+	  }
+
+	  function pollGecko(node) {
+	    var hasRules;
+
+	    try {
+
+	      hasRules = !!node.sheet.cssRules;
+	    } catch (ex) {
+	      pollCount += 1;
+
+	      if (pollCount < 200) {
+	        setTimeout(function () { pollGecko(node); }, 50);
+	      } else {
+
+	        hasRules && finish('css');
+	      }
+
+	      return;
+	    }
+
+	    finish('css');
+	  }
+
+	  function pollWebKit() {
+	    var css = pending.css, i;
+
+	    if (css) {
+	      i = styleSheets.length;
+
+	      while (--i >= 0) {
+	        if (styleSheets[i].href === css.urls[0]) {
+	          finish('css');
+	          break;
+	        }
+	      }
+
+	      pollCount += 1;
+
+	      if (css) {
+	        if (pollCount < 200) {
+	          setTimeout(pollWebKit, 50);
+	        } else {
+
+	          finish('css');
+	        }
+	      }
+	    }
+	  }
+
+	  return {
+
+		css: function (urls, callback, obj, context) {
+			if (isLoaded(urls)) {
+				return callback;
+			} else {
+				load('css', urls, callback, obj, context);
+			}
+		},
+
+		js: function (urls, callback, obj, context) {
+			if (isLoaded(urls)) {
+				return callback;
+			} else {
+				load('js', urls, callback, obj, context);
+			}
+		}
+
+	  };
+	})(this.document);
+}
+
+
+
+/*********************************************** 
+     Begin VMM.Language.js 
+***********************************************/ 
+
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
@@ -4645,12 +4649,60 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 	}
 };
 
+/*********************************************** 
+     Begin VMM.Timeline.js 
+***********************************************/ 
+
+/*!
+	Timeline 0.95
+	Designed and built by Zach Wise digitalartwork.net
+	Date: April 26, 2012
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    http://www.gnu.org/licenses/
+
+*/  
+
+/* 	CodeKit Import
+	http://incident57.com/codekit/
+================================================== */
+
+// @codekit-prepend "VMM.js";
+// @codekit-prepend "VMM.Library.js";
+// @codekit-prepend "VMM.Browser.js";
+// @codekit-prepend "VMM.MediaElement.js";
+// @codekit-prepend "VMM.MediaType.js";
+// @codekit-prepend "VMM.Media.js";
+// @codekit-prepend "VMM.FileExtention.js";
+// @codekit-prepend "VMM.ExternalAPI.js";
+// @codekit-prepend "VMM.TouchSlider.js";
+// @codekit-prepend "VMM.DragSlider.js";
+// @codekit-prepend "VMM.Slider.js";
+// @codekit-prepend "VMM.Util.js";
+// @codekit-prepend "VMM.LoadLib.js";
+// @codekit-prepend "VMM.Language.js";
+// @codekit-prepend "bootstrap-tooltip.js";
+// @codekit-prepend "AES.js";
+
+// @codekit-append "VMM.Timeline.TimeNav.js";
+// @codekit-append "VMM.Timeline.DataObj.js";
+
+/* Timeline
+================================================== */
+
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
-	
-	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.92";
+		var version = "0.95";
 		trace("TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
@@ -5184,7 +5236,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 	};
 
+	VMM.Timeline.Config = {};
+	
+};
 
+/*********************************************** 
+     Begin VMM.Timeline.TimeNav.js 
+***********************************************/ 
+
+/* 	TIMELINE NAVIGATION
+================================================== */
+
+if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefined') {
+	
 	VMM.Timeline.TimeNav = function(parent, content_width, content_height) {
 		trace("VMM.Timeline.TimeNav");
 		
@@ -6358,13 +6422,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 	};
 	
-	VMM.Timeline.Config = {};
+}
+
+/*********************************************** 
+     Begin VMM.Timeline.DataObj.js 
+***********************************************/ 
+
+/* 	TIMELINE SOURCE DATA PROCESSOR
+================================================== */
+
+if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
 	
-	
-	
-	
-	/* 	SOURCE DATA PROCESSOR
-	================================================== */
 	VMM.Timeline.DataObj = {
 		
 		data_obj: {},
@@ -6693,20 +6761,4 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 
 	};
-
-};
-
-
-
-
-/*
-$(document).ready(function() {
-
-	//Instantiate 
-	timeline = new VMM.Timeline(960, 550); // Pass in width and height or set it in your stylesheet;
-	
-	// Initialize
-	timeline.init("example.json"); // Pass in the data
-	
-});
-*/
+}
