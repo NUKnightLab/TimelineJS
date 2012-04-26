@@ -2745,8 +2745,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", config.height - 50 );
 			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", config.height - 150 );
 			
-
+			/* FIX FOR NON-WEBKIT BROWSERS
+			================================================== */
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", ((config.content_width/100) * 60) );
 			
+			/* SOUNDCLOUD
+			================================================== */
 			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
 
 			/* RESIZE IFRAME MEDIA ELEMENTS
@@ -2954,9 +2958,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 	};
 	
-	
-	
-
 }
 
 
