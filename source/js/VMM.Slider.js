@@ -2,8 +2,8 @@
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
-	VMM.Slider = function(parent, content_width, content_height, is_timeline) {
-		
+	//VMM.Slider = function(parent, content_width, content_height, is_timeline) {
+	VMM.Slider = function(parent, parent_config) {
 		
 		/* PRIVATE VARS
 		================================================== */
@@ -24,26 +24,59 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		};
 		var slide_positions = [];
 		
+		/* LOCAL CONFIG
+		================================================== */
 		var config = {
+			slider: {
+				width: 720,
+				height: 400,
+				content: {
+					width: 720,
+					height: 400,
+					padding: 130,
+				},
+				nav: {
+					width: 100,
+					height: 200
+				}
+			}
+		};
+		var _config = {
 			interval: 10,
 			something: 0,
 			width: 720,
 			height: 400,
-			content_width: 720,
-			content_height: 400,
-			content_padding: 130,
 			ease: "easeInOutExpo",
 			duration: 1000,
-			nav_width: 100,
-			nav_height: 200,
 			timeline: false,
 			spacing: 15,
 		};
 		
+		/* APPLY SUPPLIED CONFIG
+		================================================== */
+		
+		if (type.of(parent_config) == 'object') {
+		    var x;
+			for (x in parent_config) {
+				if (Object.prototype.hasOwnProperty.call(parent_config, x)) {
+					config[x] = parent_config[x];
+				}
+			}
+		} else if (type.of(_config) == 'object') {
+			var x;
+			for (x in _config) {
+				if (Object.prototype.hasOwnProperty.call(_config, x)) {
+					config[x] = _config[x];
+				}
+			}
+		}
 		
 		
 		var slider_width = 1000;
+		config.slider.width = config.width;
+		config.slider.height = config.height;
 		
+		/*
 		if (content_width != null && content_width != "") {
 			config.width = content_width;
 		} 
@@ -53,6 +86,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		if (is_timeline != null && is_timeline != "") {
 			config.timeline = is_timeline;
 		}
+		*/
 		
 		var content = "";
 		var _active = false;
@@ -91,19 +125,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		this.width = function(w) {
 			if (w != null && w != "") {
-				config.width = w;
+				config.slider.width = w;
 				reSize();
 			} else {
-				return config.width;
+				return config.slider.width;
 			}
 		}
 		
 		this.height = function(h) {
 			if (h != null && h != "") {
-				config.height = h;
+				config.slider.height = h;
 				reSize();
 			} else {
-				return config.height;
+				return config.slider.height;
 			}
 		}
 		/* GETTERS AND SETTERS
@@ -136,8 +170,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		};
 		
 		this.setSize = function(w, h) {
-			if (w != null) {config.width = w};
-			if (h != null) {config.height = h};
+			if (w != null) {config.slider.width = w};
+			if (h != null) {config.slider.height = h};
 			if (_active) {
 				reSize();
 			}
@@ -173,13 +207,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (go_to_slide != null) {_go_to_slide = go_to_slide};
 			if (from_start != null) {_from_start = from_start};
 			
-			current_width = config.width;
+			current_width = config.slider.width;
 			
-			config.nav_height = VMM.Element.height(navigation.prevBtnContainer);
+			config.slider.nav.height = VMM.Element.height(navigation.prevBtnContainer);
 			
-			config.content_width = current_width - (config.content_padding *2);
+			config.slider.content.width = current_width - (config.slider.content.padding *2);
 			
-			VMM.Element.width($slides_items, (slides.length * config.content_width));
+			VMM.Element.width($slides_items, (slides.length * config.slider.content.width));
 			
 			if (_from_start) {
 				var _pos = VMM.Element.position(slides[current_slide]);
@@ -191,14 +225,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			positionSlides();
 			
 			// Position Nav
-			VMM.Element.css(navigation.nextBtn, "left", (current_width - config.nav_width));
-			VMM.Element.height(navigation.prevBtn, config.height);
-			VMM.Element.height(navigation.nextBtn, config.height);
-			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.height/2) - (config.nav_height/2) ) );
-			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.height/2) - (config.nav_height/2) ) );
+			VMM.Element.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
+			VMM.Element.height(navigation.prevBtn, config.slider.height);
+			VMM.Element.height(navigation.nextBtn, config.slider.height);
+			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
+			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			
 			// Animate Changes
-			VMM.Element.height($slider_mask, config.height);
+			VMM.Element.height($slider_mask, config.slider.height);
 			VMM.Element.width($slider_mask, current_width);
 			
 			if (_go_to_slide) {
@@ -254,9 +288,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			if (typeof b.left == "number") {
 				var _pos = b.left;
-				if (_pos < -(VMM.Element.position(slides[current_slide]).left) - (config.width/3)) {
+				if (_pos < -(VMM.Element.position(slides[current_slide]).left) - (config.slider_width/3)) {
 					onNextClick();
-				} else if (_pos > -(VMM.Element.position(slides[current_slide]).left) + (config.width/3)) {
+				} else if (_pos > -(VMM.Element.position(slides[current_slide]).left) + (config.slider_width/3)) {
 					onPrevClick();
 				} else {
 					VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(VMM.Element.position(slides[current_slide]).left)});
@@ -314,14 +348,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* SIZE SLIDES
 			================================================== */
 			
-			VMM.Element.css(".slider-item", "width", config.content_width );
-			VMM.Element.height(".slider-item", config.height);
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", config.height - 50 );
-			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", config.height - 150 );
+			VMM.Element.css(".slider-item", "width", config.slider.content.width );
+			VMM.Element.height(".slider-item", config.slider.height);
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", config.slider.height - 50 );
+			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", config.slider.height - 150 );
 			
 			/* FIX FOR NON-WEBKIT BROWSERS
 			================================================== */
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", ((config.content_width/100) * 60) );
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", ((config.slider.content.width/100) * 60) );
 			
 			/* SOUNDCLOUD
 			================================================== */
@@ -330,34 +364,32 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* RESIZE IFRAME MEDIA ELEMENTS
 			================================================== */
 			//var _iframe_height = Math.round(config.height) - 60;
-			var _iframe_height_full = Math.round(config.height) - 160;
+			var _iframe_height_full = Math.round(config.slider.height) - 160;
 			//var _iframe_width = Math.round((_iframe_height / 9) * 16);
 			var _iframe_width_full = Math.round((_iframe_height_full / 9) * 16);
 			
-			var _iframe_width =  (config.content_width/100)*60 ;
+			var _iframe_width =  (config.slider.content.width/100)*60 ;
 			var _iframe_height = Math.round((_iframe_width / 16) * 9) + 25;
 
 
 			// NORMAL
 			VMM.Element.height(".slider-item .media .media-container .media-frame", _iframe_height);
 			VMM.Element.width(".slider-item .media .media-container .media-frame", _iframe_width);
-			//VMM.Element.width(".slider-item .media .media-container .media-frame", _iframe_width);
-			//VMM.Element.css(".slider-item .media .media-container .media-frame", "max-width", config.content_width );
 			
 			// IFRAME FULL SIZE VIDEO
 			VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", _iframe_height_full);
 			VMM.Element.width(".slider-item .layout-media .media .media-container .media-frame", _iframe_width_full);
 
 			// IFRAME FULL SIZE NON VIDEO
-			VMM.Element.height(".slider-item .layout-media .media .media-container .soundcloud", config.height - 150);
-			VMM.Element.width(".slider-item .layout-media .media .media-container .soundcloud", config.content_width);
+			VMM.Element.height(".slider-item .layout-media .media .media-container .soundcloud", config.slider.height - 150);
+			VMM.Element.width(".slider-item .layout-media .media .media-container .soundcloud", config.slider.content.width);
 			VMM.Element.width(".slider-item .layout-text-media .media .media-container .soundcloud", _iframe_width);
 			
 			// MAPS
 			VMM.Element.height(".slider-item .media .media-container .map", _iframe_height_full);
 			
 			// MAX WIDTH
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.content_width );
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );
 			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
 			//VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-height", _iframe_height );
 			
@@ -365,7 +397,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			================================================== */
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
-				pos = i * (config.width+config.spacing);
+				pos = i * (config.slider.width+config.spacing);
 				VMM.Element.css(slides[i], "left", pos);
 			}
 			
@@ -423,7 +455,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.visible(navigation.prevBtn, false);
 			} else {
 				VMM.Element.visible(navigation.prevBtn, true);
-				if (config.timeline) {
+				if (config.type == "timeline") {
 					VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
 				}
 				VMM.attachElement(navigation.prevTitle, VMM.Util.unlinkify(data[current_slide - 1].title));
@@ -432,7 +464,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.visible(navigation.nextBtn, false);
 			} else {
 				VMM.Element.visible(navigation.nextBtn, true);
-				if (config.timeline) {
+				if (config.type == "timeline") {
 					VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
 				}
 				VMM.attachElement(navigation.nextTitle,  VMM.Util.unlinkify(data[current_slide + 1].title) );
@@ -441,10 +473,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* ANIMATE SLIDE
 			================================================== */
 			if (fast) {
-				VMM.Element.css($slider_container, "left", -(_pos.left - config.content_padding));	
+				VMM.Element.css($slider_container, "left", -(_pos.left - config.slider.content.padding));	
 			} else{
 				VMM.Element.stop($slider_container);
-				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos.left - config.content_padding)});
+				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos.left - config.slider.content.padding)});
 			}
 			
 			if (firstrun) {
@@ -454,7 +486,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* SET Vertical Scoll
 			================================================== */
 			//opacitySlides(0.85);
-			if (VMM.Element.height(slides[current_slide]) > config.height) {
+			if (VMM.Element.height(slides[current_slide]) > config.slider_height) {
 				VMM.Element.css(".slider", "overflow-y", "scroll" );
 			} else {
 				VMM.Element.css(layout, "overflow-y", "hidden" );
@@ -475,7 +507,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			navigation.prevBtn = VMM.appendAndGetElement($slider, "<div>", "nav-previous");
 			navigation.nextBtnContainer = VMM.appendAndGetElement(navigation.nextBtn, "<div>", "nav-container", temp_icon);
 			navigation.prevBtnContainer = VMM.appendAndGetElement(navigation.prevBtn, "<div>", "nav-container", temp_icon);
-			if (config.timeline) {
+			if (config.type == "timeline") {
 				navigation.nextDate = VMM.appendAndGetElement(navigation.nextBtnContainer, "<div>", "date", "1957");
 				navigation.prevDate = VMM.appendAndGetElement(navigation.prevBtnContainer, "<div>", "date", "1957");
 			}

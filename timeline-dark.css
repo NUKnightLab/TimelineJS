@@ -1315,6 +1315,12 @@
   font-size: 14px;
   line-height: 16px;
 }
+#timeline h2.date {
+  font-size: 16px;
+  line-height: 18px;
+  margin-bottom: 0px;
+  color: #aaaaaa;
+}
 #timeline h3,
 #timeline h4,
 #timeline h5,
@@ -1328,8 +1334,8 @@
   color: #0bd4e3;
 }
 #timeline h3 {
-  font-size: 24px;
-  line-height: 26px;
+  font-size: 28px;
+  line-height: 30px;
 }
 #timeline h3 small {
   font-size: 14px;

@@ -66,13 +66,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		//VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
 		
 		
-		/* CREATE COMPONENTS
-		================================================== */
-		// SLIDER
-		var slider = new VMM.Slider("div.slider", 720, 400, true);
-
-		// TIMENAV
-		var timenav = new VMM.Timeline.TimeNav("div.navigation", 720, 400, true);
+		
 		
 		/* PRIVATE VARS
 		================================================== */
@@ -83,24 +77,48 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* CONFIG
 		================================================== */
-		var config = VMM.Timeline.Config;
-		VMM.master_config.Timeline = VMM.Timeline.Config;
 		
-		/* 	MAP TYPE
-			options include 
-			Stamen Maps		"toner", "watercolor", "sterrain", "toner-lines", "toner-labels" 
-			Apple			"apple" 
-			Google			"HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"
-		================================================== */
-		config.maptype = "toner";
-		config.interval = 10;
-		config.something = 0;
-		config.width = 960;
-		config.height = 540;
-		config.spacing = 15;
-		config.loaded = {slider: false, timenav: false, percentloaded:0};
-		config.ease = "easeInOutExpo";
-		config.duration = 1000;
+		var config = {
+			type: "timeline",
+			maptype: "toner",
+			interval: 10,
+			something: 0,
+			width: 960,
+			height: 540,
+			spacing: 15,
+			loaded: {
+				slider: false, 
+				timenav: false, 
+				percentloaded:0
+			},
+			nav: {
+				width: 960,
+				height: 200
+			},
+			feature: {
+				width: 960,
+				height: 540
+			},
+			slider: {
+				width: 720,
+				height: 400,
+				content: {
+					width: 720,
+					height: 400,
+					padding: 130,
+				},
+				nav: {
+					width: 100,
+					height: 200
+				}
+			},
+			ease: "easeInOutExpo",
+			duration: 1000,
+			language: VMM.Language
+		};
+		
+		VMM.Timeline.Config = config;
+		VMM.master_config.Timeline = VMM.Timeline.Config;
 		
 		if (w != null && w != "") {
 			config.width = w;
@@ -116,14 +134,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.height = VMM.Element.height($timeline);
 		}
 		
-		config.nav_width = config.width;
-		config.nav_height = 200;
-		config.feature_width = config.width;
+		config.nav = {
+			width: config.width,
+			height: 200
+		};
+		config.feature = {
+			width: config.width,
+			height: config.height - config.nav.height
+		}
 		
 		if (VMM.Browser.device == "mobile") {
-			config.feature_height = config.height;
+			config.feature.height = config.height;
 		} else {
-			config.feature_height = config.height - config.nav_height;
+			//config.feature.height = config.height - config.nav.height;
 		}
 		
 		/* APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
@@ -146,11 +169,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 		}
 		
-		// SET THE LANGUAGE OBJECT
-		config.language = VMM.Language;
-		VMM.master_config.language = config.language;
-		
-		
 		/* CHECK FOR IE7
 		================================================== */
 		var ie7 = false;
@@ -160,6 +178,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 		}
 		
+		/* CREATE COMPONENTS
+		================================================== */
+		// SLIDER
+		//var slider = new VMM.Slider("div.slider", 720, 400, true);
+		var slider = new VMM.Slider("div.slider", config);
+
+		// TIMENAV
+		var timenav = new VMM.Timeline.TimeNav("div.navigation", 720, 400, true);
 		
 		/* ON EVENT
 		================================================== */
@@ -184,7 +210,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function reSize() {
 			updateSize();
-			slider.setSize(config.feature_width, config.feature_height);
+			slider.setSize(config.feature.width, config.feature.height);
 			timenav.setSize(config.width, config.height);
 			resizeSlides();
 		};
@@ -220,7 +246,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		this.init = function(d) {
 			
 			trace('TIMELINE INIT');
-			
+			trace(VMM.Timeline.Config.language);
 			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
 			
 			VMM.bindEvent(global, onDataReady, "DATAREADY");
@@ -359,7 +385,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					
 					if (d.asset.media != null && d.asset.media != "") {
 						_hasmedia = true;
-						c._media = VMM.MediaElement.create("", d.asset, true, config.feature_width, config.feature_height);
+						c._media = VMM.MediaElement.create("", d.asset, true, config.feature.width, config.feature.height);
 					}
 					
 				}
@@ -391,13 +417,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.width = VMM.Element.width($timeline);
 			config.height = VMM.Element.height($timeline);
 			
-			config.nav_width = config.width;
-			config.feature_width = config.width;
+			config.nav.width = config.width;
+			config.feature.width = config.width;
 			
 			if (VMM.Browser.device == "mobile") {
-				config.feature_height = config.height;
+				config.feature.height = config.height;
 			} else {
-				config.feature_height = config.height - config.nav_height - 3;
+				config.feature.height = config.height - config.nav.height - 3;
 			}
 		};
 		
@@ -418,7 +444,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Element.show("div.navigation");
 				VMM.Element.show("div.nav-next");
 				VMM.Element.show("div.nav-previous");
-				VMM.Element.height(".slider-container-mask", config.feature_height);
+				VMM.Element.height(".slider-container-mask", config.feature.height);
 			}
 			/* CHECK FOR TABLET
 			================================================== */
