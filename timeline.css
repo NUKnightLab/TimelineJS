@@ -1,8 +1,9 @@
-/* Timeline
- * Default
- * Copyright 2012 Zach Wise
- * Designed and built by Zach Wise digitalartwork.net
- * ----------------------------------------------------- */
+/*	
+	Timeline
+	Theme:	Default
+	Copyright 2012 Zach Wise
+	Designed and built by Zach Wise digitalartwork.net
+----------------------------------------------------- */
 /* Reset.less
  * Props to Eric Meyer (meyerweb.com) for his CSS reset file. We're using an adapted version here	that cuts out some of the reset HTML elements we will never need here (i.e., dfn, samp, etc).
  * ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -162,10 +163,33 @@
   overflow: auto;
   vertical-align: top;
 }
-/* Variables.less
- * Variables to customize the look and feel
- * ----------------------------------------------------- */
-/* Colors
+/*
+	FONT
+	Default
+------------------------------------------------------------------------------------------- */
+#timeline {
+  font-family: "Georgia", Times New Roman, Times, serif;
+}
+#timeline .twitter,
+#timeline .messege,
+#timeline .credit,
+#timeline .caption,
+#timeline h1.date,
+#timeline h2.date,
+#timeline h3.date,
+#timeline h4.date,
+#timeline h5.date,
+#timeline h6.date {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+#timeline p,
+#timeline blockquote,
+#timeline .twitter blockquote p {
+  font-family: "Georgia", Times New Roman, Times, serif;
+}
+/*	VARIABLES
+----------------------------------------------------- */
+/* COLORS
 ================================================== */
 /* COLOR SCHEME
 ================================================== */
@@ -176,11 +200,12 @@
 /* Mixins.less
  * Snippets of reusable CSS to develop faster and keep code readable
  * ----------------------------------------------------------------- */
-/* Icons.less
- * Base64 Icons
- * ----------------------------------------------------------------- */
 /*
- * Structure
+	GFX
+	Base64 Icons etc
+----------------------------------------------------------------- */
+/*
+ * VMM Timeline Core
  * Basic and global styles for generating structural layout
  * ------------------------------------------------------------------------------------------- */
 /* TIMELINE EMBED
@@ -211,12 +236,28 @@
   z-index: 100;
   clear: both;
   overflow: hidden;
+  /* FEATURE
+	================================================== */
+
   /* FEEDBACK
 	================================================== */
 
   /* Container
 	================================================== */
 
+}
+#timeline .feature {
+  width: 100%;
+}
+#timeline .feature .slider {
+  width: 100%;
+  float: left;
+  position: relative;
+  z-index: 10;
+  padding-top: 15px;
+  -webkit-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
 }
 #timeline .feedback {
   position: absolute;
@@ -234,7 +275,6 @@
   display: table-cell;
   vertical-align: middle;
   font-size: 28px;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
   text-transform: uppercase;
   line-height: 36px;
@@ -276,7 +316,6 @@
 }
 #timeline .twitter {
   text-align: left;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background-color: #ffffff;
   margin-left: auto;
   margin-right: auto;
@@ -294,7 +333,6 @@
   margin-bottom: 6px;
   padding-top: 10px;
   background-color: #ffffff;
-  font-family: "Georgia", Times New Roman, Times, serif;
   color: #000000;
 }
 #timeline .twitter blockquote .quote-mark {
@@ -416,52 +454,8 @@
 #timeline .zFront {
   z-index: 500;
 }
-/*
- * Feature
- * 
- * ------------------------------------------------------------------------------------------- */
-#timeline {
-  /* Feature
-	================================================== */
-
-}
-#timeline .feature {
-  width: 100%;
-}
-#timeline .feature .slider {
-  width: 100%;
-  float: left;
-  position: relative;
-  z-index: 10;
-  padding-top: 15px;
-  -webkit-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
-  -moz-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
-  box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
-  /* BLOCKQUOTES
-			================================================== */
-
-}
-#timeline .feature .slider h2.date {
-  line-height: 24px;
-}
-#timeline .feature .slider .date a,
-#timeline .feature .slider .title a {
-  color: #999999;
-}
-#timeline .feature .slider blockquote {
-  font-size: 28px;
-  text-align: left;
-  line-height: 36px;
-  margin-bottom: 6px;
-  padding-top: 10px;
-  background-color: #ffffff;
-  font-family: "Georgia", Times New Roman, Times, serif;
-  color: #000000;
-}
-/*
- * Slider
- * 
- * ------------------------------------------------------------------------------------------- */
+/*	Slider
+------------------------------------------------------------------------------------------- */
 /* SLIDER CONTAINERS 
 ================================================== */
 .slider {
@@ -605,9 +599,6 @@
 .slider .slider-item .content {
   display: table-cell;
   vertical-align: middle;
-  /* Layouts
-			================================================== */
-
   /* All Slides
 			================================================== */
 
@@ -688,10 +679,6 @@
 .slider .slider-item .content .content-container .media .media-wrapper .media-container .map .map-attribution .attribution-text a {
   color: #ffffff !important;
 }
-.slider .slider-item .content .content-container .media .media-wrapper .credit,
-.slider .slider-item .content .content-container .media .media-wrapper .caption {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
 .slider .slider-item .content .content-container .media .media-wrapper .credit {
   color: #999999;
   text-align: right;
@@ -762,9 +749,9 @@
   padding: 0px;
 }
 /*
- * Navigation
- * UI for Navigation
- * ------------------------------------------------------------------------------------------- */
+	Navigation
+	UI for Navigation
+------------------------------------------------------------------------------------------- */
 #timeline .navigation {
   clear: both;
   cursor: move;
@@ -1190,45 +1177,15 @@
  * Headings, body text, lists, etc
  * ---------------------------------------------------------------------------------------- */
 #timeline {
-  font-family: "Georgia", Times New Roman, Times, serif;
+  font-size: 15px;
+  font-weight: normal;
+  line-height: 20px;
   -webkit-font-smoothing: antialiased;
   /* Fix for webkit rendering */
 
   -webkit-text-size-adjust: 100%;
-  font-size: 15px;
-  font-weight: normal;
-  line-height: 20px;
-  /*
-	blockquote {
-		border-top: 1px solid @color-dark-fifth;
-		border-bottom: 1px solid @color-dark-fifth;
-		padding-top:@base-space;
-		padding-bottom:@base-space;
-		margin-left:@base-space;
-		margin-right:@base-space;
-//border-style: none/hidden/dotted/dashed/solid/double/groove/ridge/inset/outset;
-		font-size: @base-font*2;
-		line-height: @base-line;
-		font-family: @font-sansserif;
-		color:@color-feature-description;
-		p:first-child {
-			margin-top:0px;
-		}
-		p {
-			
-			font-size: @base-font;
-			line-height: @base-line;
-			margin-bottom: 6px;
-			padding-top: 10px;
-			margin-left:@base-space;
-			margin-right:@base-space;
-			font-family: @font-serif;
-			color:@color-feature-title;
-			font-style: italic;
-
-		}
-	}
-	*/
+  /* BLOCKQUOTES
+	================================================== */
 
   /* Caption and Credits
 	================================================== */
@@ -1258,6 +1215,10 @@
 }
 #timeline .feature p {
   color: #666666;
+}
+#timeline .date a,
+#timeline .title a {
+  color: #999999;
 }
 #timeline h1,
 #timeline h2,
@@ -1291,7 +1252,6 @@
 #timeline h4.date,
 #timeline h5.date,
 #timeline h6.date {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: bold;
 }
 #timeline h2.start {
@@ -1318,7 +1278,7 @@
 #timeline h2.date {
   font-size: 16px;
   line-height: 18px;
-  margin-bottom: 0px;
+  margin-bottom: 3.75px;
   color: #999999;
 }
 #timeline h3,
@@ -1363,9 +1323,14 @@
   quotes: '„' '“';
   font-style: italic;
 }
-#timeline .credit,
-#timeline .caption {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+#timeline blockquote {
+  font-size: 28px;
+  text-align: left;
+  line-height: 36px;
+  margin-bottom: 6px;
+  padding-top: 10px;
+  background-color: #ffffff;
+  color: #000000;
 }
 #timeline .credit {
   color: #999999;
@@ -1384,9 +1349,6 @@
   line-height: 14px;
   clear: both;
 }
-/* Elements.less
- * UI Elements etc
- * ---------------------------------------------------------------------------------------- */
 /*
  * TOOLTIP
  * Styles for tooltip
@@ -1480,20 +1442,6 @@
 /* BELOW 600px
 ================================================== */
 @media (max-width: 600px) {
-  .slider .slider-item .content {
-    /* Layouts
-  				================================================== */
-  
-    /* All Slides
-  				================================================== */
-  
-    /* Text Only Slides
-  				================================================== */
-  
-    /* Media Only Slides
-  				================================================== */
-  
-  }
   .slider .slider-item .content .content-container {
     display: block;
   }

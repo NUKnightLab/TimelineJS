@@ -1,0 +1,100 @@
+/* Variables.less
+ * Variables to customize the look and feel
+ * ----------------------------------------------------- */
+
+
+/* Colors
+================================================== */
+@color-base:					#1A1A1A;
+@color-line: 					#333; //#414141;
+@color-line-hover: 				#666;
+
+@color-dark:					#FFF;
+@color-dark-second: 			#AAA;
+@color-dark-third: 				#AAA;
+@color-dark-fourth: 			#999;
+@color-dark-fifth: 				#E3E3E3;
+@color-dark-fifth: 				#E3E3E3;
+
+//262626
+/* COLOR SCHEME
+================================================== */
+
+@color-theme:					#0BD4E3;	//#FF3712; //#FF0000;
+@color-theme-dark:				darken(@color-theme, 15);
+@color-theme-complement:		spin(@color-theme, 180);
+@color-theme-complement-dark:	darken(@color-theme-complement, 15);
+
+@color-theme-split1:			spin(@color-theme, -158);
+@color-theme-split2:			spin(@color-theme, 158);
+
+@color-theme-triad1:			spin(@color-theme, -135);
+@color-theme-triad2:			spin(@color-theme, 135);
+
+@color-theme-tetra1:			spin(@color-theme, -90);
+@color-theme-tetra2:			spin(@color-theme, 90);
+
+@color-theme-analog1:			spin(@color-theme, -22);
+@color-theme-analog2:			spin(@color-theme, 22);
+
+@color-background:				@color-base;
+@color-background-dark:			#262626;
+
+@white:             			@color-base;
+
+
+/* CLEANUP IN PROGRESS
+================================================== */
+
+//	Navigation
+@color-nav-date: 				#AAA; // 33%
+@color-nav-description: 		@color-dark-fourth; // 40%
+@color-nav-title: 				@color-dark-fourth;
+
+//	Feature
+@color-feature-date: 			@color-dark-third;
+@color-feature-description: 	@color-dark-third;
+@color-feature-title: 			@color-dark;
+
+
+@color-caption:					@color-dark-third;
+@color-credit:					@color-dark-fourth;
+
+// Navigation
+@color-navigation-time: 		@color-dark-third; // 60%
+@color-navigation-major-time: 	@color-dark-second; // 80%
+@color-navigation-time-strong: 	@color-dark; // 100%
+
+
+@era-background: 				#E2E2E2; //#E3E3E3; // 11%
+@era-line:						@color-line;
+@era-text:						@color-feature-date;
+/* Sizes
+================================================== */
+
+// Baseline grid
+@base-font: 15px;
+@base-line: 20px;
+@base-space: 15px;
+@base-font-small: 11px;
+
+// Feature Element Sizes
+@feature-content-text: 200px;
+@feature-content-width: 720px;
+@feature-content-height: 400px;
+
+// Feature Navigation
+@feature-nav-width: 100px;
+@feature-nav-height: 200px;
+
+// Navigation
+@navigation-height: 200px;
+@navigation-time-height: 50px;
+@navigation-content-height: @navigation-height - @navigation-time-height;
+
+//	Marker
+@navigation-marker-height:6px;
+
+@font-sansserif: "Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-serif: "Georgia", Times New Roman, Times, serif;
+

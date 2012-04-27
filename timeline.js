@@ -2782,7 +2782,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* FIX FOR NON-WEBKIT BROWSERS
 			================================================== */
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", ((config.slider.content.width/100) * 60) );
-			
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-width", 32 );
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-height", 32 );
 			/* SOUNDCLOUD
 			================================================== */
 			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
@@ -2812,7 +2813,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.width(".slider-item .layout-text-media .media .media-container .soundcloud", _iframe_width);
 			
 			// MAPS
-			VMM.Element.height(".slider-item .media .media-container .map", _iframe_height_full);
+			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full+60);
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _iframe_height_full+120);
 			
 			// MAX WIDTH
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );

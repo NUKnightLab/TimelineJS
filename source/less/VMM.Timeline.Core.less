@@ -1,0 +1,250 @@
+/*
+ * VMM Timeline Core
+ * Basic and global styles for generating structural layout
+ * ------------------------------------------------------------------------------------------- */
+
+/* TIMELINE EMBED
+================================================== */
+#timeline-embed {
+	background-color: @color-background;
+	margin-bottom:20px;
+	border: 1px solid @color-line;
+	padding-top:20px;
+	padding-bottom:20px;
+	clear:both;
+	-webkit-border-radius: 10px;
+     -moz-border-radius: 10px;
+          border-radius: 10px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+		-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
+		box-shadow: 1px 2px 6px rgba(0,0,0,.25);
+		
+} 
+
+/* TIMELINE
+================================================== */
+#timeline {
+	width: 100%;
+	height:100%;
+	//border: 1px solid @color-line;
+	padding:0px;
+	margin:0px;
+	background-color:@color-background;
+	position: absolute;
+	//border: 1px solid @color-line;
+	
+	z-index:100;
+	clear:both;
+	overflow:hidden;
+	
+	
+	/* FEATURE
+	================================================== */
+	.feature {
+		width: 100%;
+		.slider {
+			width: 100%;
+			float: left;
+			position: relative;
+			z-index:10;
+			padding-top:@base-space;
+			.box-shadow();
+			
+		}
+	}
+	
+	/* FEEDBACK
+	================================================== */
+	.feedback {
+		position: absolute;
+		display:table;
+		overflow:hidden;
+		top:0px;
+		left:0px;
+		z-index:2000;
+		width: 100%;
+		height:100%;
+		background-color:@color-background-dark;
+		border: 1px solid @color-line;
+		//.opacity(80);
+		.messege {
+			display:table-cell;
+			vertical-align:middle;
+			font-size: 28px;
+			font-weight: bold;
+			text-transform: uppercase;
+			line-height: 36px;
+			width:75%;
+			margin-left:auto;
+			margin-right:auto;
+			margin-top:auto;
+			margin-bottom:auto;
+			text-align: center;
+			
+		}
+	}
+	
+	/* Container
+	================================================== */
+	.container.main {
+		//margin-bottom:@base-space;
+		//margin-top:@base-space;
+		position: absolute;
+		top:0px:
+		left:0px;
+		padding-bottom:3px;
+		//margin-top:@base-space;
+		width: auto;
+		height: auto;
+		margin:0px;
+		clear:both;
+	}
+	img, embed, object, video, iframe {
+		max-width: 100%;
+	}
+	iframe {
+		//margin-bottom:5px;
+	}
+	
+	
+	img {
+		max-height:100%;
+		//border: 1px solid @color-line;
+		border: 1px solid @color-credit;
+	}
+	a {
+		color:@color-theme;
+		text-decoration: none;
+	}
+	a:hover {
+		color:@color-theme-dark;
+		text-decoration: underline;
+	}
+	.twitter {
+		text-align:left;
+		background-color:@white;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom:@base-space;
+		clear:both;
+		blockquote {
+			font-size: @base-font;
+			line-height: @base-line;
+			color:@color-feature-description;
+			p {
+				font-size: 28px;
+				line-height: 36px;
+				margin-bottom: 6px;
+				padding-top: 10px;
+				background-color:@white;
+				color:@color-feature-title;
+				//margin-left:10px;
+			}
+			.quote-mark {
+				color:@color-dark-third;
+			}
+		}
+		.created-at {
+			.icon-twitter();
+			width:24px;
+			height:24px;
+			overflow:hidden;
+			margin-left:@base-space;
+			display:inline-block;
+			float:right;
+			.opacity(25);
+		}
+		.created-at:hover {
+			.opacity(100);
+		}
+		.vcard {
+			float:right;
+			margin-bottom:@base-space;
+			//position: relative;
+			a {
+				color: @color-dark-second;
+			}
+			a:hover {
+				text-decoration: none;
+				.fn {
+					text-decoration: underline;
+				}
+			}
+			.fn, .nickname {
+				
+				padding-left: 42px;
+			}
+			.fn {
+				display:block;
+				//display:inline;
+				font-weight: bold;
+
+			}
+			.nickname {
+				margin-top:3px;
+				display:block;
+				color: @color-dark-third;
+			}
+			
+			.avatar {
+				float:left;
+				//position: absolute;
+				display: block;
+				width: 32px;
+				height: 32px;
+				img {
+					//border: 0px solid #999;
+					-moz-border-radius: 5px;
+					-webkit-border-radius: 5px;
+					border-radius: 5px;
+				}
+			}
+		}
+		
+
+	}
+	
+	.layout-media {
+		.twitter {
+			max-width:70%;
+		}
+	}
+	
+	.thumbnail {
+		width:24px;
+		height:24px;
+		overflow:hidden;
+		float:left;
+		margin-right:5px;
+		border: 1px solid @color-line;
+	}
+	.thumbnail.twitter {
+		.icon-twitter();
+	}
+	.thumbnail.vimeo {
+		.icon-vimeo();
+	}
+	.thumbnail.youtube {
+		.icon-youtube();
+	}
+	.thumbnail.soundcloud {
+		.icon-soundcloud();
+	}
+	.thumbnail.map {
+		.icon-map();
+		//.icon-map-pin();
+	}
+	.thumbnail.website {
+		.icon-website();
+	}
+	
+	.zFront {
+		z-index:500;
+	}
+	
+}
+
+
+
+
+

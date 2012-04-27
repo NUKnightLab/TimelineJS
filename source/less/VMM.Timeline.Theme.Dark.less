@@ -1,0 +1,92 @@
+/*	
+	Timeline
+	Theme:	Dark
+	Copyright 2012 Zach Wise
+	Designed and built by Zach Wise digitalartwork.net
+----------------------------------------------------- */
+
+// CSS Reset
+@import "Reset.less";
+
+// Core variables and mixins
+@import "Font.Default.less";
+@import "Variables.less";
+@import "Mixins.less";
+@import "GFX.less";
+
+// Grid system and page structure
+@import "VMM.Timeline.Core.less";
+@import "VMM.Slider.less";
+@import "VMM.Timeline.TimeNav.less";
+
+// Typography
+@import "Typography.less";
+
+
+// Grid system and page structure
+@import "VMM.Timeline.Tooltip.less";
+
+/* MEDIA QUERIES
+================================================== */
+
+/* Mobile and iPhone
+================================================== */
+@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+	
+}
+
+/* BELOW 600px
+================================================== */
+
+@media (max-width: 600px) {
+	.slider {
+		.slider-item {
+			.content {
+				.content-container {
+					display:block;
+					.text {
+						width:100%;
+						max-width:100%;
+						min-width:120px;
+						display:block;
+						.container {
+							display:block;
+						}
+					}
+					.media {
+						width:100%;
+						min-width:50%;
+						float: none;
+						.media-wrapper {
+							margin-left:0px;
+							margin-right:0px;
+							width:100%;
+							display:block;
+							.media-container {
+								img, iframe {
+									width:100%;
+									//max-height:350px;
+								}
+							}
+						}
+					}
+					.media.text-media {
+						.media-wrapper {
+							.media-container {
+								border: none;
+								background-color: @white;
+							}
+						}
+					}
+				}
+				.content-container.layout-text {
+					
+				}
+				.content-container.layout-media {
+					
+				}
+			}
+		}
+	}
+	
+}
