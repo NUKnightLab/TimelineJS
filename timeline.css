@@ -246,6 +246,13 @@
 	================================================== */
 
 }
+#timeline .hyphenate {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  display: inline-block;
+  height: 20px;
+}
 #timeline .feature {
   width: 100%;
 }
@@ -265,7 +272,7 @@
   overflow: hidden;
   top: 0px;
   left: 0px;
-  z-index: 2000;
+  z-index: 205;
   width: 100%;
   height: 100%;
   background-color: #e9e9e9;
@@ -452,7 +459,7 @@
   height: 24px;
 }
 #timeline .zFront {
-  z-index: 500;
+  z-index: 204;
 }
 /*	Slider
 ------------------------------------------------------------------------------------------- */
@@ -642,7 +649,7 @@
 .slider .slider-item .content .content-container .media .media-wrapper .media-container .map {
   line-height: normal;
   border: 1px solid #cccccc;
-  z-index: 500;
+  z-index: 200;
   text-align: left;
   background-color: #ffffff;
 }
@@ -656,7 +663,7 @@
 }
 .slider .slider-item .content .content-container .media .media-wrapper .media-container .map .map-attribution {
   position: absolute;
-  z-index: 1000003;
+  z-index: 201;
   bottom: 0px;
   width: 100%;
   overflow: hidden;
@@ -764,7 +771,7 @@
   position: absolute;
   top: 45px;
   left: 0px;
-  z-index: 1000;
+  z-index: 202;
   background-color: #ffffff;
   border: 1px solid #cccccc;
   -webkit-box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
@@ -779,7 +786,7 @@
   font-weight: normal;
   line-height: 20px;
   top: 0px;
-  z-index: 1000;
+  z-index: 202;
   width: 18px;
   height: 18px;
   color: #333333;
@@ -863,7 +870,7 @@
   width: 3px;
   height: 150px;
   background: #0088cc;
-  z-index: 500;
+  z-index: 201;
   -webkit-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
   box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.3);
@@ -922,7 +929,7 @@
   color: #999999;
 }
 #timeline .navigation .timenav .content .marker:hover .line {
-  z-index: 500;
+  z-index: 201;
   background: #999999;
 }
 #timeline .navigation .timenav .content .marker {
@@ -1355,7 +1362,7 @@
  * ------------------------------------------------------------------------------------------- */
 .tooltip {
   position: absolute;
-  z-index: 1020;
+  z-index: 205;
   display: block;
   visibility: visible;
   padding: 5px;
