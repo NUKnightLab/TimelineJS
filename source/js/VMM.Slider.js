@@ -390,6 +390,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full+60);
 			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _iframe_height_full+120);
 			
+			// MAPS
+			VMM.Element.height(".slider-item .layout-media .media .media-container .doc", _iframe_height_full+60);
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _iframe_height_full+120);
+			
 			// MAX WIDTH
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );
 			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
