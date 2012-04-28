@@ -107,6 +107,9 @@
 #timeline audio:not([controls]) {
   display: none;
 }
+#timeline div {
+  max-width: none;
+}
 #timeline sub,
 #timeline sup {
   font-size: 75%;
@@ -718,7 +721,7 @@
   vertical-align: middle;
   text-align: left;
   padding: 0px;
-  width: 60%;
+  width: 90%;
   text-align: left;
   margin-left: auto;
   margin-right: auto;
@@ -1094,6 +1097,7 @@
   background-color: #ffffff;
 }
 #timeline .navigation .timenav .time .time-interval-minor {
+  max-width: none;
   height: 6px;
   white-space: nowrap;
   position: absolute;
@@ -1206,7 +1210,8 @@
   color: #666666;
 }
 #timeline p small {
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 17px;
 }
 #timeline p:first-child {
   margin-top: 20px;
