@@ -23,7 +23,7 @@ Include these lines in the `<head>` of your site.
 	<link href="timeline.css" rel="stylesheet">
 
 	<!-- JavaScript -->
-	<script type="text/javascript" src="jquery-min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="timeline-min.js"></script>`
 
 ### Step 2
