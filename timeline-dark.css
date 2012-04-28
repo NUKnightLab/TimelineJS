@@ -182,7 +182,15 @@
 #timeline h3.date,
 #timeline h4.date,
 #timeline h5.date,
-#timeline h6.date {
+#timeline h6.date,
+#timeline .era h3,
+#timeline .flag-content h3,
+#timeline .flag-content h4,
+#timeline .time-interval div,
+#timeline .time-interval-major div,
+#timeline .zoom-in,
+#timeline .zoom-out,
+#timeline .back-home {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #timeline p,
@@ -784,9 +792,8 @@
 #timeline .navigation .toolbar .zoom-in,
 #timeline .navigation .toolbar .zoom-out,
 #timeline .navigation .toolbar .back-home {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px;
   font-weight: normal;
+  font-size: 10px;
   line-height: 20px;
   top: 0px;
   z-index: 202;
@@ -999,9 +1006,8 @@
   height: 33px;
 }
 #timeline .navigation .timenav .content .marker .flag .flag-content h3 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
   font-weight: bold;
+  font-size: 15px;
   line-height: 20px;
   font-size: 11px;
   line-height: 11px;
@@ -1013,9 +1019,8 @@
 }
 #timeline .navigation .timenav .content .marker .flag .flag-content h4 {
   display: none;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
   font-weight: normal;
+  font-size: 15px;
   line-height: 20px;
   font-size: 10px;
   line-height: 10px;
@@ -1080,9 +1085,8 @@
   z-index: -10;
 }
 #timeline .navigation .timenav .content .era h3 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px;
   font-weight: bold;
+  font-size: 10px;
   line-height: 10px;
   color: #ffffff;
   position: absolute;
@@ -1133,9 +1137,8 @@
   height: 3px;
   left: 0px;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 10px;
   font-weight: normal;
+  font-size: 10px;
   line-height: 20px;
   text-transform: uppercase;
   text-align: left;
@@ -1166,9 +1169,8 @@
   height: 15px;
   left: 0px;
   display: block;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 12px;
   font-weight: bold;
+  font-size: 12px;
   line-height: 20px;
   text-transform: uppercase;
   text-align: left;

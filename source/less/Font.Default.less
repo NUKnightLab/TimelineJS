@@ -3,19 +3,27 @@
 	Default
 ------------------------------------------------------------------------------------------- */
 
-@font-sansserif: "Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-serif: "Georgia", Times New Roman, Times, serif;
-//@font-serif: 'Merriweather', serif;
-//@font-sansserif: 'News Cycle', sans-serif;
+@font-sansserif:	"Helvetica Neue", Helvetica, Arial, sans-serif;
+@font-serif:		"Georgia", Times New Roman, Times, serif;
 
 #timeline {
+	
 	font-family: @font-serif;
-	.twitter, .messege, .credit, .caption, h1.date, h2.date, h3.date, h4.date, h5.date, h6.date  {
+	
+	.twitter, .messege, .credit, .caption, 
+	h1.date, h2.date, h3.date, h4.date, h5.date, h6.date,
+	.era h3, .flag-content h3, .flag-content h4,
+	.time-interval div, .time-interval-major div, 
+	.zoom-in, .zoom-out, .back-home  {
+		
 		font-family: @font-sansserif;
 		
 	}
+	
 	p, blockquote, .twitter blockquote p {
+		
 		font-family: @font-serif;
 		
 	}
+	
 }

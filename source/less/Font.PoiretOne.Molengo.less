@@ -4,7 +4,27 @@
 	http://www.google.com/webfonts#UsePlace:use/Collection:News+Cycle:400,700|Merriweather:400,700,900
 ------------------------------------------------------------------------------------------- */
 
-@import url(http://fonts.googleapis.com/css?family=Poiret+One|Molengo);
+//@import url(http://fonts.googleapis.com/css?family=Poiret+One|Molengo);
 
-@font-serif: 'Poiret One', serif;
-@font-sansserif: 'Molengo', sans-serif;
+@font-serif:		'Poiret One', serif;
+@font-sansserif:	'Molengo', sans-serif;
+
+#timeline {
+	
+	font-family: @font-serif;
+	
+	.twitter, .messege, .credit, .caption, 
+	h1.date, h2.date, h3.date, h4.date, h5.date, h6.date,
+	.era h3, .flag-content h3, .flag-content h4,
+	.time-interval div, .time-interval-major div, 
+	.zoom-in, .zoom-out, .back-home  {
+		font-family: @font-sansserif;
+		
+	}
+	
+	p, blockquote, .twitter blockquote p {
+		font-family: @font-serif;
+		
+	}
+	
+}

@@ -44,6 +44,8 @@
 <!-- End Embed Code -->
 */
 
+  
+
 
 (function() {
 	
@@ -53,6 +55,7 @@
 		width: 800,
 		height: 600,
 		source: 'taylor/data.json',
+		font: 'default',
 		css: 'http://veritetimeline.appspot.com/latest/timeline.css',
 		js: 'http://veritetimeline.appspot.com/latest/timeline-min.js'
 	}
@@ -79,6 +82,10 @@
 	================================================== */
 	var jsReady = false;
 	var cssReady = false;
+	var fontCSSReady = false;
+	var fontJSReady = false;
+	var font_css_url = "http://veritetimeline.appspot.com/latest/font/"
+	var font_js_url = "http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
 	var isReady = false;
 	var preload_checks = 0;
 	var timeout;
@@ -108,6 +115,41 @@
 	/* Load CSS
 	================================================== */
 	LazyLoad.css(embed_config.css, cssComplete);
+	
+	
+	/* Load Font 
+	================================================== */
+	
+	if (embed_config.font != "default") {
+		
+		fontJSReady = true;
+		fontCSSReady = true;
+		
+	} else {
+		
+		/* Load Font CSS
+		================================================== */
+
+		if (embed_config.font.match("http://")) {
+			font_css_url = embed_config.font;
+		} else {
+			font_css_url = font_css_url + embed_config.font + ".css";
+		}
+
+		LazyLoad.css(font_css_url, fontCSSComplete);
+		
+		/* Load Font JS
+		================================================== */
+		
+		WebFontConfig = {
+			google: { families: [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] }
+		};
+		
+		LazyLoad.js(font_js_url, onFontJSLoaded);
+		
+	}
+	
+	
 	
 	/* Check for jQuery
 	================================================== */
@@ -141,6 +183,16 @@
 		checkLoad();
 	}
 	
+	function fontCSSComplete() {
+		fontCSSReady = true;
+		checkLoad();
+	}
+	
+	function onFontJSLoaded() {
+		fontJSReady = true;
+		checkLoad();
+	}
+	
 	/* Check to see if everything is loaded.
 	================================================== */
 	function checkLoad() {
@@ -150,7 +202,7 @@
 		} else {
 			preload_checks++;
 			
-			if (jsReady && cssReady) {
+			if (jsReady && cssReady && fontCSSReady && fontJSReady) {
 				if (!isReady) {
 					isReady = true;
 					timeline = new VMM.Timeline();

@@ -31,8 +31,14 @@
 			//.box-shadow();	
 			.box-shadow(1px 1px 0px rgba(0,0,0,.20));
 			
+			
 			.zoom-in, .zoom-out, .back-home {
-				#font > .navigation(normal,10px);
+
+				
+				font-weight: normal;
+				font-size: 10px;
+				line-height: 20px;
+				
 				//line-height:5px;
 				//position:absolute;
 				//display:inline-block;
@@ -263,14 +269,18 @@
 						//border: 1px solid @color-line;
 						//.border-radius(5px);
 						//.box-shadow(0px 1px 0px @color-line);
+						
 						.flag-content {
 							padding: 5px 7px 2px 5px;
 							overflow:hidden;
 							height:33px;
 
 							h3 {
-								#font > .navigation(bold,@base-font,@base-line);
-								//font-weight: bold;
+								
+								font-weight: bold;
+								font-size: @base-font;
+								line-height: @base-line;
+								
 								font-size: 11px;
 								line-height:11px;
 								//color:@color-nav-date;
@@ -282,7 +292,12 @@
 							}
 							h4 {
 								display:none;
-								#font > .navigation(normal,@base-font,@base-line);
+								
+								font-weight: normal;
+								font-size: @base-font;
+								line-height: @base-line;
+								
+
 								font-size: 10px;
 								line-height:10px;
 								//color:@color-nav-title;
@@ -363,8 +378,12 @@
 						
 						
 					z-index:-10;
-					h3 {
-						#font > .navigation(bold,10px,10px);
+					h3 {						
+						
+						font-weight: bold;
+						font-size: 10px;
+						line-height: 10px;
+						
 						color:@white;
 						position:absolute;
 						top:-1px;
@@ -374,6 +393,7 @@
 				}
 				
 			}
+			
 
 			.time {
 				position:absolute;
@@ -410,6 +430,7 @@
 					
 				}
 				
+				
 				.time-interval {
 					white-space:nowrap;	
 					position:absolute;
@@ -427,7 +448,12 @@
 						left:0px;
 						display:block;
 						//width:150px;
-						#font > .navigation(normal,10px,@base-line);
+						
+						
+						font-weight: normal;
+						font-size: 10px;
+						line-height: @base-line;
+						
 						text-transform: uppercase;
 						text-align:left;
 						text-indent: 0px;
@@ -446,6 +472,7 @@
 
 				}
 				
+				
 				.time-interval-major {
 					white-space:nowrap;	
 					position:absolute;
@@ -463,7 +490,12 @@
 						left:0px;
 						display:block;
 						//width:150px;
-						#font > .navigation(bold,12px,@base-line);
+
+						
+						font-weight: bold;
+						font-size: 12px;
+						line-height: @base-line;
+						
 						text-transform: uppercase;
 						text-align:left;
 						text-indent: 0px;
