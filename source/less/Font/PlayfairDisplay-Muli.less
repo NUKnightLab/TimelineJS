@@ -1,20 +1,22 @@
 /*
 	FONT
-	Default
+	Playfair Display and Muli
 ------------------------------------------------------------------------------------------- */
 
-@font-sans:			"Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-serif:		"Georgia", Times New Roman, Times, serif;
+@font-serif:	'Playfair Display', serif;
+@font-sans:		'Muli', sans-serif;
 
 #timeline {
-	font-family: @font-serif;
+	font-family: @font-sans;
 	/*	HEADERS
 	------------------------------------------------------------------------------------------- */
 	.twitter, .messege, .credit, .caption, .zoom-in, .zoom-out, .back-home, .time-interval div, .time-interval-major div {
 		font-family: @font-sans !important;
 	}
-	h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
-		font-family: @font-sans !important;
+	.feature {
+		h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
+			font-family: @font-sans !important;
+		}
 	}
 	.timenav, .flag-content, .era {
 		h1, h2, h3, h4, h5, h6 {
@@ -24,11 +26,11 @@
 	/*	CONTENT
 	------------------------------------------------------------------------------------------- */
 	p, blockquote, blockquote p, .twitter blockquote p {
-		font-family: @font-serif !important;
+		font-family: @font-sans !important;
 	}
 	.feature {
 		h1, h2, h3, h4, h5, h6 {
-			font-family: @font-serif !important;
+			font-family: @font-serif;
 		}
 	}
 }

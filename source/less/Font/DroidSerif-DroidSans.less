@@ -1,10 +1,11 @@
 /*
 	FONT
-	Default
+	Droid Serif, Droid Sans
+	http://www.google.com/webfonts#UsePlace:use/Collection:Droid+Sans:400,700|Droid+Serif:400,700,400italic
 ------------------------------------------------------------------------------------------- */
 
-@font-sans:			"Helvetica Neue", Helvetica, Arial, sans-serif;
-@font-serif:		"Georgia", Times New Roman, Times, serif;
+@font-sans:		'Droid Sans', sans-serif;
+@font-serif:	'Droid Serif', serif;
 
 #timeline {
 	font-family: @font-serif;
@@ -13,8 +14,10 @@
 	.twitter, .messege, .credit, .caption, .zoom-in, .zoom-out, .back-home, .time-interval div, .time-interval-major div {
 		font-family: @font-sans !important;
 	}
-	h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
-		font-family: @font-sans !important;
+	.feature {
+		h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
+			font-family: @font-sans !important;
+		}
 	}
 	.timenav, .flag-content, .era {
 		h1, h2, h3, h4, h5, h6 {
@@ -28,7 +31,7 @@
 	}
 	.feature {
 		h1, h2, h3, h4, h5, h6 {
-			font-family: @font-serif !important;
+			font-family: @font-serif;
 		}
 	}
 }

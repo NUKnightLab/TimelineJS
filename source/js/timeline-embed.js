@@ -1,7 +1,7 @@
 /*!
-	Verite Timeline Loader 0.1
+	Verite Timeline Loader 0.3
 	Designed and built by Zach Wise digitalartwork.net
-	Date: March 30, 2012
+	Date: April 28, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,6 +36,8 @@
 		width: 900,
 		height: 700,
 		source: 'https://docs.google.com/a/digitalartwork.net/spreadsheet/ccc?hl=en_US&key=0Agl_Dv6iEbDadGRwZjJSRTR4RHJpanE2U3lkb0lyYUE&rm=full#gid=0',
+		maptype:'toner',
+		font: 'default'
 		css: '../timeline.css',
 		js: '../timeline.js'
 	}
@@ -44,7 +46,22 @@
 <!-- End Embed Code -->
 */
 
-  
+/* FONT OPTIONS
+	Arvo-PTSans
+	Merriweather-NewsCycle
+	PoiretOne-Molengo
+	PTSerif-PTSans
+	DroidSerif-DroidSans
+	Lekton-Molengo
+	NixieOne-Ledger
+	AbrilFatface-Average
+	PlayfairDisplay-Muli
+	Rancho-Gudea
+	Bevan-PotanoSans
+	BreeSerif-OpenSans
+	SansitaOne-Kameron
+	Pacifico-Arimo
+================================================== */
 
 
 (function() {
@@ -86,6 +103,7 @@
 	var fontJSReady = false;
 	var font_css_url = "http://veritetimeline.appspot.com/latest/font/"
 	var font_js_url = "http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
+	var font_google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
 	var isReady = false;
 	var preload_checks = 0;
 	var timeout;
@@ -120,7 +138,7 @@
 	/* Load Font 
 	================================================== */
 	
-	if (embed_config.font != "default") {
+	if (embed_config.font == "default") {
 		
 		fontJSReady = true;
 		fontCSSReady = true;
@@ -141,9 +159,54 @@
 		/* Load Font JS
 		================================================== */
 		
-		WebFontConfig = {
-			google: { families: [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] }
-		};
+		switch (embed_config.font) {
+			case "Merriweather-NewsCycle":
+				font_google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
+				break;
+			case "PoiretOne-Molengo":
+				font_google = [ 'Poiret+One::latin', 'Molengo::latin' ];
+				break;
+			case "Arvo-PTSans":
+				font_google = [ 'Arvo:400,700,400italic:latin', 'PT+Sans:400,700,400italic:latin' ];
+				break;
+			case "PTSerif-PTSans":
+				font_google = [ 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ];
+				break;
+			case "DroidSerif-DroidSans":
+				font_google = [ 'Droid+Sans:400,700:latin', 'Droid+Serif:400,700,400italic:latin' ] ;
+				break;
+			case "Lekton-Molengo":
+				font_google = [ 'Lekton:400,700,400italic:latin', 'Molengo::latin' ];
+				break;
+			case "NixieOne-Ledger":
+				font_google = [ 'Nixie+One::latin', 'Ledger::latin' ];
+				break;
+			case "AbrilFatface-Average":
+				font_google = [ 'Average::latin', 'Abril+Fatface::latin' ];
+				break;
+			case "PlayfairDisplay-Muli":
+				font_google = [ 'Playfair+Display:400,400italic:latin', 'Muli:300,400,300italic,400italic:latin' ];
+				break;
+			case "Rancho-Gudea":
+				font_google = [ 'Rancho::latin', 'Gudea:400,700,400italic:latin' ];
+				break;
+			case "Bevan-PotanoSans":
+				font_google = [ 'Bevan::latin', 'Pontano+Sans::latin' ];
+				break;
+			case "BreeSerif-OpenSans":
+				font_google = [ 'Bree+Serif::latin', 'Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800:latin' ];
+				break;
+			case "SansitaOne-Kameron":
+				font_google = [ 'Sansita+One::latin', 'Kameron:400,700:latin' ];
+				break;
+			case "Pacifico-Arimo":
+				font_google = [ 'Pacifico::latin', 'Arimo:400,700,400italic,700italic:latin' ];
+				break;
+			default:
+				font_google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
+		}
+		
+		WebFontConfig = {google: { families: font_google }};
 		
 		LazyLoad.js(font_js_url, onFontJSLoaded);
 		
