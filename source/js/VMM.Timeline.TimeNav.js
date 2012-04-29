@@ -67,6 +67,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			multiplier: 100
 		};
 		
+		var interval_macro = {
+			type: "year",
+			number: 10,
+			first: 1970,
+			last: 2011,
+			multiplier: 100
+		};
+		
 		var interval_calc = {
 			day: {} ,
 			month: {},
@@ -89,13 +97,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		config.timeline = false;
 		config.marker_width = 150;
 		config.marker_height = 48;
-		config.density = 2;
+		config.density = 1;
 		config.timeline_width = 900;
 		config.interval_width = 200;
 		config.rows = [1, 1, 1];
 		config.multiplier = 6;
 		config.max_multiplier = 16;
-		config.min_multiplier = 1;
+		config.min_multiplier = .1;
 		config.has_start_page = false;
 		
 		config.rows = [config.marker_height, config.marker_height*2, 1];
@@ -206,21 +214,21 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onZoomIn() {
-			trace("CLICK");
 			VMM.DragSlider.cancelSlide();
 			if (config.multiplier > config.min_multiplier) {
-				config.multiplier = config.multiplier - 1;
-				if (config.multiplier < 0) {
+				if (config.multiplier <= 1) {
+					config.multiplier = config.multiplier - .25;
+				} else {
+					config.multiplier = config.multiplier - 1;
+				}
+				if (config.multiplier <= 0) {
 					config.multiplier = config.min_multiplier;
 				}
 				refreshTimeline();
 			}
 		}
 		
-
-		
 		function onZoomOut() {
-			trace("CLICK");
 			VMM.DragSlider.cancelSlide();
 			if (config.multiplier < config.max_multiplier) {
 				config.multiplier = config.multiplier + 1;
@@ -363,7 +371,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				era_markers.push(era);
 			}
 			
-			positionMarkers();
+			
+			
 		}
 		
 		
@@ -415,6 +424,66 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			return pos = {begin:_pos ,end:_pos_end};
 			
+		}
+		
+		var averageMarkerPositionDistance = function() {
+			
+			var last_pos = 0;
+			var pos = 0;
+			var pos_dif = 0;
+			var mp_diff = [];
+			
+			for(var i = 0; i < markers.length; i++) {
+				if (data[i].type == "start") {
+					
+				} else {
+					var _pos = positionOnTimeline(interval, data[i].startdate, data[i].enddate);
+					last_pos = pos;
+					pos = _pos.begin;
+					pos_dif = pos - last_pos;
+					mp_diff.push(pos_dif);
+				}
+				
+			}
+			
+			return VMM.Util.average(mp_diff).mean;
+			
+		}
+		
+		var averageDateDistance = function() {
+			var last_dd = 0;
+			var dd = 0;
+			var date_dif = 0;
+			var date_diffs = [];
+			var is_first_date = true;
+			for(var i = 0; i < data.length; i++) {
+				if (data[i].type == "start") {
+					trace("DATA DATE IS START")
+				} else {
+					var _dd = data[i].startdate;
+					last_dd = dd;
+					dd = _dd;
+					date_dif = dd - last_dd;
+					date_diffs.push(date_dif);
+				}
+				
+			}
+			
+			return VMM.Util.average(date_diffs);
+			
+		}
+		
+
+		
+		var calculateMultiplier = function() {
+			var temp_multiplier = config.multiplier;
+			for(var i = 0; i < temp_multiplier; i++) {
+				if (averageMarkerPositionDistance() < 75) {
+					if (config.multiplier > 1) {
+						config.multiplier = config.multiplier - 1;
+					}
+				}
+			}
 		}
 
 		var positionMarkers = function(is_animated) {
@@ -694,7 +763,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			interval_major.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
-			
+			interval_macro.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			//interval.date_major_start = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			//interval.date_major_end = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			
@@ -948,7 +1017,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 			
 
-			VMM.Element.css($timeintervalminor_minor, "left", _major_first_pos - _minor_pos_offset);
+			//VMM.Element.css($timeintervalminor_minor, "left", _major_first_pos - _minor_pos_offset);
 			
 			config.timeline_width = VMM.Element.width($timeinterval);
 			
@@ -960,80 +1029,62 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			/* CALCULATE INTERVAL
 			================================================== */
 			timespan = getDateFractions((data[data.length - 1].enddate) - (data[0].startdate), true);
+			//timespan = getDateFractions(	averageDateDistance().mean	);
+			trace(timespan);
 			calculateInterval();
 			
 			/* DETERMINE DEFAULT INTERVAL TYPE
 			================================================== */
-			
+
 			if (timespan.milleniums > data.length / config.density) {
 				interval = interval_calc.millenium;
-				//interval_major = interval_calc.millenium;
+				interval_major = interval_calc.millenium;
+				interval_macro = interval_calc.millenium;
 			} else if (timespan.centuries > data.length / config.density) {
 				interval = Math.ceil(interval_calc.century);
-				//interval_major = interval_calc.millenium;
+				interval_major = interval_calc.millenium;
+				interval_macro = interval_calc.decade;
 			} else if (timespan.decades > data.length / config.density) {
 				interval = interval_calc.decade;
-				//interval_major = Math.ceil(interval_calc.century);
+				interval_major = Math.ceil(interval_calc.century);
+				interval_macro = interval_calc.year;
 			} else if (timespan.years > data.length / config.density) {	
 				interval = interval_calc.year;
-				//interval_major = interval_calc.decade;
+				interval_major = interval_calc.decade;
+				interval_macro = interval_calc.month;
 			} else if (timespan.months > data.length / config.density) {
 				interval = interval_calc.month;
-				//interval_major = interval_calc.year;
-			//} else if (timespan.weeks > data.length / config.density) {
-				//interval = interval_calc.week;
-				//interval = interval_calc.month;
-				//interval_major = interval_calc.month;
+				interval_major = interval_calc.year;
+				interval_macro = interval_calc.day;
 			} else if (timespan.days > data.length / config.density) {
 				interval = interval_calc.day;
-				//interval_major = interval_calc.month;
+				interval_major = interval_calc.month;
+				interval_macro = interval_calc.hour;
 			} else if (timespan.hours > data.length / config.density) {
 				interval = interval_calc.hour;
-				//interval_major = interval_calc.day;
+				interval_major = interval_calc.day;
+				interval_macro = interval_calc.minute;
 			} else if (timespan.minutes > data.length / config.density) {
 				interval = interval_calc.minute;
-				//interval_major = interval_calc.hour;
+				interval_major = interval_calc.hour;
+				interval_macro = interval_calc.second;
 			} else if (timespan.seconds > data.length / config.density) {
 				interval = interval_calc.second;
-				//interval_major = interval_calc.minute;
+				interval_major = interval_calc.minute;
+				interval_macro = interval_calc.second;
 			} else {
 				trace("NO IDEA WHAT THE TYPE SHOULD BE");
-				interval.type = "unknown";
-			}
-			
-			/* DETERMINE MAJOR TYPE
-			================================================== */
-			
-			if (timespan.milleniums >= 1) {
-				interval_major = interval_calc.millenium;
-			} else if (timespan.centuries >= 1) {
-				interval_major = interval_calc.century;
-			} else if (timespan.decades >= 1) {
-				interval_major = interval_calc.decade;
-			} else if (timespan.years >= 1) {	
-				interval_major = interval_calc.year;
-			} else if (timespan.months > 1) {
+				//interval.type = "unknown";
+				//interval_major.type = "unknown";
+				interval = interval_calc.day;
 				interval_major = interval_calc.month;
-			} else if (timespan.weeks > 1) {
-				interval_major = interval_calc.month;
-			} else if (timespan.days > 1) {
-				interval_major = interval_calc.day;
-			} else if (timespan.hours > 1) {
-				interval_major = interval_calc.hour;
-			} else if (timespan.minutes > 1) {
-				interval_major = interval_calc.minute;
-			} else if (timespan.seconds > 1) {
-				interval_major = interval_calc.minute;
-			} else {
-				trace("NO IDEA WHAT THE TYPE SHOULD BE");
-				interval_major.type = "unknown";
+				interval_macro = interval_calc.hour;
 			}
-			
-			//trace(interval_major.type);
-			
+			trace(interval.type)
+			trace(interval_major.type)
+			trace()
 			$timeintervalminor_minor = VMM.appendAndGetElement($timeintervalminor, "<div>", "minor");
 			
-			positionInterval();
 			
 		}
 		
@@ -1118,6 +1169,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			buildInterval();
 			buildMarkers();
+			
+			calculateMultiplier();
+			
+			positionMarkers();
+			positionInterval();
+			
 			reSize(true);
 			VMM.fireEvent(layout, "LOADED");
 			
@@ -1167,8 +1224,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		var refreshTimeline = function() {
-			positionInterval();
 			positionMarkers(true);
+			positionInterval();
+			//positionMarkers(true);
 			//reSize();
 		};
 		

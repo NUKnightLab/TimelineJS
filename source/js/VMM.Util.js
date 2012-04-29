@@ -14,6 +14,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		randomBetween: function(min, max) {
 			return Math.floor(Math.random() * (max - min + 1) + min);
 		},
+		
+		/* AVERAGE
+			http://jsfromhell.com/array/average
+			var x = VMM.Util.average([2, 3, 4]);
+			VMM.Util.average([2, 3, 4]).mean
+		================================================== */
+		average: function(a) {
+		    var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
+		    for(var m, s = 0, l = t; l--; s += a[l]);
+		    for(m = r.mean = s / t, l = t, s = 0; l--; s += Math.pow(a[l] - m, 2));
+		    return r.deviation = Math.sqrt(r.variance = s / t), r;
+		},
+		
 		/* CUSTOM SORT
 		================================================== */
 		
