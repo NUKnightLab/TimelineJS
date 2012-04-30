@@ -3526,6 +3526,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// IMAGES
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", _media_height );
+			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", _media_height - 60 );
 			
 			/* FIX FOR NON-WEBKIT BROWSERS
 			================================================== */
