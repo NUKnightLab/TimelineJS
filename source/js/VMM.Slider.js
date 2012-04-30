@@ -350,18 +350,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.Element.css(".slider-item", "width", config.slider.content.width );
 			VMM.Element.height(".slider-item", config.slider.height);
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", config.slider.height - 50 );
-			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", config.slider.height - 150 );
 			
-			/* FIX FOR NON-WEBKIT BROWSERS
-			================================================== */
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", ((config.slider.content.width/100) * 60) );
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-width", 32 );
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-height", 32 );
-			/* SOUNDCLOUD
-			================================================== */
-			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
-
 			/* RESIZE IFRAME MEDIA ELEMENTS
 			================================================== */
 			//var _iframe_height = Math.round(config.height) - 60;
@@ -371,8 +360,69 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			var _iframe_width =  (config.slider.content.width/100)*60 ;
 			var _iframe_height = Math.round((_iframe_width / 16) * 9) + 25;
+			
+			/* MEDIA HEIGHT
+			================================================== */
+			var _media_height = Math.round(config.slider.height) - 160;
+			//var _text_height = config.slider.height;
+			var _media_width_with_text = ((config.slider.content.width/100) * 60);
+			
+			/* FIX FOR NON-WEBKIT BROWSERS
+			================================================== */
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-width", 32 );
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-height", 32 );
+			
+			/* SOUNDCLOUD
+			================================================== */
+			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
+			
+			/* HANDLE SMALLER SIZES
+			================================================== */
+			if (config.width <= 650) {
+				_media_height = ((config.slider.height/100) * 40 ) - 40;
+				//_text_height = (config.slider.height/100) * 60;
+				_iframe_width =  config.slider.content.width;
+				_media_width_with_text = config.slider.content.width;
+				
+				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
+				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
+				
+				VMM.Element.css(".slider-item .layout-text-media .media", "float", "none" );
+				//VMM.Element.css(".slider-item .layout-text-media .media", "width", "100%" );
+				
+				VMM.Element.css(".slider-item .media blockquote p", "line-height", "18px" );
+				VMM.Element.css(".slider-item .media blockquote p", "font-size", "16px" );
 
-
+				VMM.Element.css(".slider-item .layout-text-media", "height", config.slider.height );
+				VMM.Element.css(".slider-item .layout-text-media", "overflow", "auto" );
+				VMM.Element.css(".slider-item .layout-text-media", "display", "block" );
+				
+			} else {
+				_media_height = config.slider.height - 40;
+				//_text_height = config.slider.height;
+				_iframe_width =  (config.slider.content.width/100)*60 ;
+				_media_width_with_text = ((config.slider.content.width/100) * 60);
+				
+				VMM.Element.css(".slider-item .layout-text-media .text", "width", "40%" );
+				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
+				
+				VMM.Element.css(".slider-item .layout-text-media .media", "float", "left" );
+				//VMM.Element.css(".slider-item .layout-text-media .media", "width", "60%" );
+				VMM.Element.css(".slider-item .layout-text-media", "display", "table" );
+			}
+			
+			// TEXT
+			//VMM.Element.css(".slider-item .layout-text-media .text", "max-height", _text_height );
+			//VMM.Element.css(".slider-item .layout-text-media .text", "overflow", "auto" );
+			
+			// IMAGES
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", _media_height );
+			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", _media_height - 100 );
+			
+			/* FIX FOR NON-WEBKIT BROWSERS
+			================================================== */
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", _media_width_with_text );
+			
 			// NORMAL
 			VMM.Element.height(".slider-item .media .media-container .media-frame", _iframe_height);
 			VMM.Element.width(".slider-item .media .media-container .media-frame", _iframe_width);
@@ -387,12 +437,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.width(".slider-item .layout-text-media .media .media-container .soundcloud", _iframe_width);
 			
 			// MAPS
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _media_height);
 			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full+60);
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _iframe_height_full+120);
-			
-			// MAPS
+
+			// DOCS
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _media_height);
 			VMM.Element.height(".slider-item .layout-media .media .media-container .doc", _iframe_height_full+60);
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _iframe_height_full+120);
 			
 			// MAX WIDTH
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );

@@ -222,7 +222,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function onComponentLoaded(e) {
 			config.loaded.percentloaded = config.loaded.percentloaded + 25;
-			showMessege("Loading Timeline " + config.loaded.percentloaded);
+			
 			if (config.loaded.slider && config.loaded.timenav) {
 				hideMessege();
 			}
@@ -250,6 +250,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
 			
 			VMM.bindEvent(global, onDataReady, "DATAREADY");
+			VMM.bindEvent(global, showMessege, "MESSEGE");
 			
 			/* GET DATA
 			================================================== */
@@ -285,18 +286,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* MESSEGES 
 		================================================== */
-		var showMessege = function(msg) {
-			//VMM.Element.append($timeline, $feedback);
-			//VMM.attachElement($messege, msg);
-			
-			//VMM.Element.animate($feedback, config.duration, config.ease, {"opacity": 1});
+		
+		var showMessege = function(e, msg) {
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", msg);
 			
 		};
-		//VMM.Element.animate(element, duration, ease, att, callback_function);
+		
 		var hideMessege = function() {
-			
 			VMM.Element.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
-			
 		};
 		
 		var detachMessege = function() {
@@ -446,48 +443,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Element.show("div.nav-previous");
 				VMM.Element.height(".slider-container-mask", config.feature.height);
 			}
-			/* CHECK FOR TABLET
-			================================================== */
-			if (config.width < 820) {
-				// TABLET OR MOBILE
-				//VMM.Element.width(".slider-item .media", "100%");
-				//VMM.Element.width(".slider-item .text", "100%");
-				//VMM.Element.css(".slider-item .container", "max-width", "100%");
-				//VMM.Element.width(".slider-item .media .media-container .media-frame", (config.feature_width - config.spacing) );
-				//VMM.Element.css(".slider-item .media .media-container", "margin-bottom", 5);
-				
-				if (config.width < 500) {
-					// MOBILE
-					//VMM.Element.height(".slider-item .media", Math.round(config.height/1.5));
-					//VMM.Element.css(".slider-item .media .media-container", "max-height", Math.round(config.height/1.5) - 50);
-					//VMM.Element.height(".slider-item .media .media-container .media-frame", Math.round(config.height/1.5) - 60);
-					
-				} else {
-					// TABLET
-					//VMM.Element.height(".slider-item .media", Math.round(config.feature_height/1.5));
-					//VMM.Element.css(".slider-item .media .media-container", "max-height", Math.round(config.feature_height/1.5) - 50);
-					//VMM.Element.height(".slider-item .media .media-container .media-frame", Math.round(config.feature_height/1.5) - 60);
-				}
-				
-			} else {
-				// DESKTOP
-				//VMM.Element.width(".slider-item .layout-media .media", "100%");
-				
-				//VMM.Element.width(".slider-item .layout-text-media .media", "75%");
-				//VMM.Element.width(".slider-item .layout-text-media .text", "25%");
-				
-				//VMM.Element.width(".slider-item .layout-text .text", "100%");
-				
-				//VMM.Element.css(".slider-item .layout-text-media .container", "max-width", 200);
-				
-				//VMM.Element.height(".slider-item .media", config.feature_height);
-				//VMM.Element.height(".slider-item .layout-text-media .media .media-container .media-frame", config.feature_height - 60);
-				//VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", config.feature_height - 160);
-				//VMM.Element.width(".slider-item .media .media-container .media-frame", Math.round(((config.feature_width/4) * 3) - config.spacing) );
-
-				//VMM.Element.css(".slider-item .media .media-container", "max-height", config.feature_height- 50);
-				//VMM.Element.css(".slider-item .media .media-container", "margin-bottom", 5);
-			}
 			
 		};
 		
@@ -495,19 +450,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var buildDates = function() {
 			
 			updateSize();
+			//$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Building Dates");
+			
+			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
+			/*
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
 				var _date = {};
 				if (data.type == "google spreadsheet") {
-					trace("google spreadsheet startpage date" + data.startDate);
+					trace("google spreadsheet startpage date " + data.startDate);
 					_date.startdate = new Date(Date.parse(data.startDate));
-					trace(_date.startdate);
 				} else {
 					_date.startdate = VMM.Util.parseDate(data.startDate);
 				}
+				
 				_date.uniqueid = VMM.Util.unique_ID(5);
 				_date.enddate = _date.startdate;
 				_date.title = data.headline;
@@ -518,10 +477,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.asset = data.asset;
 				_date.fulldate = _date.startdate.getTime();
 				_date.content = buildSlide(_date, _date.startdate);
-				if (_date.content != null && _date.content != "") {
+				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
 					_dates.push(_date);
 				}
 			}
+			*/
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -583,25 +543,74 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* CUSTOM SORT
 			================================================== */
-			//VMM.Util.customSort(a,b);
-			/*
-			for(var j = 0; j < _dates.length; j++) {
-				trace(_dates[j].startdate);
-			}
-			trace("============================");
-			*/
-			//_dates.reverse(VMM.Util.customSort(_dates.fulldate,_dates.fulldate));
 			_dates.sort(function(a, b){
 				return a.fulldate - b.fulldate
 			});
-			//_dates.reverse()
-			/*
-			for(var k = 0; k < _dates.length; k++) {
-				trace(_dates[k].startdate);
-			}
-			*/
 			
-
+			/* CREATE START PAGE IF AVAILABLE
+			================================================== */
+			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
+				trace("HAS STARTPAGE");
+				var _date = {};
+				if (data.type == "google spreadsheet") {
+					trace("google spreadsheet startpage date " + data.startDate);
+					//_date.startdate = new Date(Date.parse(data.startDate));
+				} else {
+					_date.startdate = VMM.Util.parseDate(data.startDate);
+				}
+				
+				_date.startdate = new Date(_dates[0].startdate);
+				
+				var td = _dates[0].startdate;
+				var td_num = 0;
+				/*
+				if (_dates[0].startdate.getDate() > 1) {
+					_date.startdate.setDate(td.getDate() - 1);
+				} else if (_dates[0].startdate.getHours() > 0) {
+					_date.startdate.setHours(td.getHours() - 1);
+				}
+				*/
+				trace(td);
+				
+				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
+					// trace("YEAR ONLY");
+					
+					_date.startdate.setFullYear(td.getFullYear() - 1);
+				} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
+					// trace("YEAR MONTH");
+					_date.startdate.setMonth(td.getMonth() - 1);
+				} else if (td.getHours() === 0 && td.getMinutes() === 0) {
+					// trace("YEAR MONTH DAY");
+					_date.startdate.setDate(td.getDate() - 1);
+				} else  if (td.getMinutes() === 0) {
+					// trace("YEAR MONTH DAY HOUR");
+					_date.startdate.setHours(td.getHours() - 1);
+				} else {
+					// trace("YEAR MONTH DAY HOUR MINUTE");
+					_date.startdate.setMinutes(td.getMinutes() - 1);
+				}
+				trace(td);
+				_date.uniqueid = VMM.Util.unique_ID(5);
+				_date.enddate = _date.startdate;
+				_date.title = data.headline;
+				_date.headline = data.headline;
+				_date.text = data.text;
+				_date.type = "start";
+				_date.date = VMM.Util.date.prettyDate(data.startDate);
+				_date.asset = data.asset;
+				_date.fulldate = _date.startdate.getTime();
+				_date.content = buildSlide(_date, _date.startdate);
+				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
+					_dates.push(_date);
+				}
+			}
+			
+			/* CUSTOM SORT
+			================================================== */
+			_dates.sort(function(a, b){
+				return a.fulldate - b.fulldate
+			});
+			
 			onDatesProcessed();
 		}
 		

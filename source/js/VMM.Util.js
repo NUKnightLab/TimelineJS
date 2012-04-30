@@ -143,8 +143,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				month: "mmmm yyyy",
 				full_short: "mmm d",
 				full: "mmmm d',' yyyy",
-				time_no_seconds_short: "hh:MM TT",
-				time_no_seconds_small_date: "hh:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+				time_no_seconds_short: "h:MM TT",
+				time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
 				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
 			},
@@ -203,7 +203,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						} else {
 							// trace("YEAR MONTH DAY HOUR MINUTE");
 							if (is_abbr){
-								_date = dateFormat(d, VMM.Util.date.dateformats.full_long);   
+								_date = dateFormat(d, VMM.Util.date.dateformats.time_no_seconds_short);   
 							} else {
 								_date = dateFormat(d, VMM.Util.date.dateformats.full_long);
 							}
