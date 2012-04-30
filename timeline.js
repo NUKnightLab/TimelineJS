@@ -2225,7 +2225,7 @@ if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
      Begin VMM.ExternalAPI.js 
 ***********************************************/ 
 
-/* Slider
+/* External API
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	
@@ -2412,32 +2412,26 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a53ad1e3365113a32&msa=0&output=kml
 				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a21354b1a2f188082&msa=0&ll=38.719738,-9.142599&spn=0.04172,0.087976&iwloc=0004a214c0e99e2da91e0
 				http://maps.google.com/maps?q=Bavaria&hl=en&ll=47.597829,9.398804&spn=1.010316,2.709503&sll=37.0625,-95.677068&sspn=73.579623,173.408203&hnear=Bavaria,+Germany&t=m&z=10&output=embed
+				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
 			*/
 			getMap: function(url, id) {
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
 				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + Aes.Ctr.decrypt(VMM.master_config.keys.google, VMM.master_config.vp, 256) + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
-				var map = {
-					url: url,
-					vars: map_vars,
-					id: id
-				}
+				var map = {url: url, vars: map_vars, id: id}
 				
 				if (VMM.master_config.googlemaps.active) {
 					VMM.master_config.googlemaps.createMap(map);
 				} else {
-					
 					VMM.master_config.googlemaps.que.push(map);
 					
 					if (VMM.master_config.googlemaps.api_loaded) {
 						
 					} else {
-						
 						VMM.LoadLib.js(map_url, function() {
 							trace("Google Maps API Library Loaded");
 						});
 					}
-					
 				}
 				
 
@@ -2449,10 +2443,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.googlemaps.places_active = true;
 				VMM.ExternalAPI.googlemaps.onAPIReady();
 			},
+			
 			onPlacesAPIReady: function() {
 				VMM.master_config.googlemaps.places_active = true;
 				VMM.ExternalAPI.googlemaps.onAPIReady();
 			},
+			
 			onAPIReady: function() {
 				if (!VMM.master_config.googlemaps.active) {
 					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
@@ -2464,11 +2460,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 			},
 			
-
-			
-			
 			map_subdomains: ["", "a.", "b.", "c.", "d."],
-			
 			
 			map_attribution: {
 				"stamen": "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
@@ -2583,10 +2575,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
 					
 				} else if (type.of(VMM.Util.getUrlVars(m.url)["sll"]) == "string") {
+					/*
 					has_location = true;
 					latlong = VMM.Util.getUrlVars(m.url)["sll"].split(",");
 					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
-					
+					*/
 				} 
 				
 				if (type.of(VMM.Util.getUrlVars(m.url)["z"]) == "string") {
@@ -2612,10 +2605,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var unique_map_id = m.id.toString() + "_gmap";
 				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
-				/* ATTRIBUTION
-				================================================== */
-				//var map_attribution_html = "<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
-				//VMM.appendElement("#" + m.id, map_attribution_html);
 				
 				var map = new google.maps.Map(document.getElementById(unique_map_id), map_options);
 				map.mapTypes.set(layer, new google.maps.VeriteMapType(layer));
@@ -2624,8 +2613,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				================================================== */
 				var map_attribution_html = "<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
 				VMM.appendElement("#"+unique_map_id, map_attribution_html);
-				//.map-attribution
-				//.attribution-text 
 				
 				loadKML();
 				
@@ -2635,14 +2622,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					var kml_url = m.url + "&output=kml";
 					kml_url = kml_url.replace("&output=embed", "");
 					
-					var kml_layer = new google.maps.KmlLayer(kml_url, {preserveViewport:true});
+					var kml_layer = new google.maps.KmlLayer(kml_url, {preserveViewport:has_location});
 					kml_layer.setMap(map);
 					
 					var infowindow = new google.maps.InfoWindow();
 
 					google.maps.event.addListenerOnce(kml_layer, "defaultviewport_changed", function() {
-						
-						
 						
 						if (has_location) {
 							map.panTo(location);
@@ -2653,7 +2638,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						} else {
 							map.fitBounds(kml_layer.getDefaultViewport() );
 						}
-						
 						
 					});
 
