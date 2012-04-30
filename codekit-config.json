@@ -2,877 +2,14 @@
   "CodeKitInfo" : "This is a CodeKit project configuration file. It is designed to sync project settings across multiple machines. Modifying the contents of this file can be a poor life decision if you don't know what you're doing. This file is not useful unless accompanied by the project that created it in CodeKit. For more information, see: http:\/\/incident57.com\/codekit",
   "creatorBuild" : "6166",
   "files" : {
-    "\/source\/js\/VMM.DragSlider.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.DragSlider.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.DragSlider-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/VMM.Util.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Util.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Util-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/power-plants\/fisk_swanksalot.jpg" : {
+    "\/dev_examples\/archive\/index_backup.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_swanksalot.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_swanksalot.jpg",
-      "initialSize" : 119914,
-      "fileType" : 9
-    },
-    "\/dev_examples\/taylor\/born.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/born.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/born.jpg",
-      "initialSize" : 50360,
-      "fileType" : 9
-    },
-    "\/source\/less\/variables.less" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/variables.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/variables.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/timeline.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/timeline.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/VMM.Media.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Media.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Media-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/VMM.Timeline.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "outputStyle" : 0,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png",
-      "initialSize" : 144,
-      "fileType" : 10
-    },
-    "\/source\/js\/locale\/en.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/en.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/en.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/taylor\/velvet.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
-      "initialSize" : 77001,
-      "fileType" : 9
-    },
-    "\/source\/less\/Variables.Dark.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Variables.Dark.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/Variables.Dark.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png",
-      "initialSize" : 270,
-      "fileType" : 10
-    },
-    "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png",
-      "initialSize" : 677,
-      "fileType" : 10
-    },
-    "\/timeline-texture.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/timeline-texture.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/timeline-texture.png",
-      "initialSize" : 42976,
-      "fileType" : 10
-    },
-    "\/source\/js\/lib\/bootstrap-tooltip.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/lib\/bootstrap-tooltip.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/lib\/bootstrap-tooltip-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/taylor\/fortensky.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/fortensky.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/fortensky.jpg",
-      "initialSize" : 99172,
-      "fileType" : 9
-    },
-    "\/dev_examples\/template_json\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/template_json\/index.html",
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/index_backup.html",
       "outputAbbreviatedPath" : "No Output Path Set",
       "fileType" : 8
-    },
-    "\/dev_examples\/taylor\/butterfield.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/butterfield.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/butterfield.jpg",
-      "initialSize" : 70444,
-      "fileType" : 9
-    },
-    "\/dev_examples\/houston\/whChild.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whChild.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whChild.jpg",
-      "initialSize" : 87009,
-      "fileType" : 9
-    },
-    "\/dev_examples\/taylor\/warner.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/warner.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/warner.jpg",
-      "initialSize" : 110210,
-      "fileType" : 9
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-music.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-music.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-music.png",
-      "initialSize" : 372,
-      "fileType" : 10
-    },
-    "\/source\/js\/VMM.Browser.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Browser.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Browser-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/taylor\/retire.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/retire.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/retire.jpg",
-      "initialSize" : 88811,
-      "fileType" : 9
-    },
-    "\/dev_examples\/houston\/eyesclosedftm_10001.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/eyesclosedftm_10001.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/eyesclosedftm_10001.jpg",
-      "initialSize" : 90398,
-      "fileType" : 9
-    },
-    "\/source\/js\/VMM.Timeline.TimeNav.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.TimeNav.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.TimeNav-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/timeline-embed.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/timeline-embed.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline-embed.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/timeline.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/timeline.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/timeline.png",
-      "initialSize" : 10566,
-      "fileType" : 10
-    },
-    "\/locale\/it.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/it.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/it-min.js",
-      "fileType" : 5
-    },
-    "\/locale\/fr.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/fr.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/fr-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/locale\/zh-tw.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/zh-tw.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/zh-tw.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/VMM.Timeline.DataObj.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.DataObj.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.DataObj-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png",
-      "initialSize" : 724,
-      "fileType" : 10
-    },
-    "\/dev_examples\/houston\/whlead.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
-      "initialSize" : 97988,
-      "fileType" : 9
-    },
-    "\/locale\/pt-br.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/pt-br.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/pt-br-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/index_html.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/index_html.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png",
-      "initialSize" : 334,
-      "fileType" : 10
-    },
-    "\/source\/less\/VMM.Timeline.Core.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Core.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/VMM.Timeline.Core.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/source\/js\/locale\/es.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/es.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/es.js",
-      "fileType" : 5
-    },
-    "\/source\/less\/Font.Merriweather.NewsCycle.less" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/less\/Font.Merriweather.NewsCycle.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/font\/Font.Merriweather.NewsCycle.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/dev_examples\/taylor\/burton-2.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/burton-2.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/burton-2.jpg",
-      "initialSize" : 74788,
-      "fileType" : 9
-    },
-    "\/dev_examples\/taylor\/sun.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "initialSize" : 47058,
-      "fileType" : 9
-    },
-    "\/source\/gfx\/timeline.png.backup.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/timeline.png.backup.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/timeline.png.backup.png",
-      "initialSize" : 10547,
-      "fileType" : 10
-    },
-    "\/source\/less\/GFX.Dark.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/GFX.Dark.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/GFX.Dark.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/examples\/kitchen-sink\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/kitchen-sink\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/locale\/nl.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/nl.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/nl-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png",
-      "initialSize" : 3038,
-      "fileType" : 10
-    },
-    "\/examples\/template_json\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/template_json\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/dev_examples\/taylor\/final.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/final.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/final.jpg",
-      "initialSize" : 56926,
-      "fileType" : 9
-    },
-    "\/source\/js\/VMM.TImeline.Min.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.TImeline.Min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/middle-east\/MohamedBouazizi.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/middle-east\/MohamedBouazizi.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/middle-east\/MohamedBouazizi.jpg",
-      "initialSize" : 79732,
-      "fileType" : 9
-    },
-    "\/source\/less\/Font.Arvo.PTSans.less" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/less\/Font.Arvo.PTSans.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/font\/Font.Arvo.PTSans.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/examples\/embed.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/embed.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/dev_examples\/taylor\/aids.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/aids.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/aids.jpg",
-      "initialSize" : 75647,
-      "fileType" : 9
-    },
-    "\/source\/js\/VMM.FileExtention.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.FileExtention.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.FileExtention-min.js",
-      "fileType" : 5
-    },
-    "\/locale\/zh-ch.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/zh-ch.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/zh-ch-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/power-plants\/fisk_vxla.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_vxla.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_vxla.jpg",
-      "initialSize" : 95680,
-      "fileType" : 9
-    },
-    "\/source\/js\/locale\/de.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/de.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/de.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/houston\/wh1.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/wh1.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/wh1.jpg",
-      "initialSize" : 452169,
-      "fileType" : 9
-    },
-    "\/dev_examples\/template_googlespreadsheet\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/template_googlespreadsheet\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/less\/Typography.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Typography.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/Typography.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/source\/js\/lib\/jQuery\/easing.js" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/lib\/jQuery\/easing.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/lib\/jQuery\/easing-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/index2.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/index2.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/less\/VMM.Timeline.Theme.Dark.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Theme.Dark.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/timeline-dark.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/dev_examples\/taylor\/broadway.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
-      "initialSize" : 111700,
-      "fileType" : 9
-    },
-    "\/dev_examples\/taylor\/kennedy.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/kennedy.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/kennedy.jpg",
-      "initialSize" : 84946,
-      "fileType" : 9
-    },
-    "\/source\/js\/locale\/it.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/it.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/it.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/embed-dark.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/embed-dark.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png",
-      "initialSize" : 663,
-      "fileType" : 10
-    },
-    "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png",
-      "initialSize" : 376,
-      "fileType" : 10
-    },
-    "\/timeline-embed.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/timeline-embed.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline-embed-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png",
-      "initialSize" : 533,
-      "fileType" : 10
-    },
-    "\/source\/gfx\/Sprites\/sprites\/chevron-next.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-next.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-next.png",
-      "initialSize" : 352,
-      "fileType" : 10
-    },
-    "\/dev_examples\/taylor\/hilton.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/hilton.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/hilton.jpg",
-      "initialSize" : 72463,
-      "fileType" : 9
-    },
-    "\/timeline-min.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/timeline-min.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/timeline-min-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png",
-      "initialSize" : 233,
-      "fileType" : 10
-    },
-    "\/locale\/es.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/es.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/es-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/houston\/wh3.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/wh3.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/wh3.jpg",
-      "initialSize" : 89432,
-      "fileType" : 9
-    },
-    "\/locale\/de.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/de.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/de-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png",
-      "initialSize" : 3131,
-      "fileType" : 10
     },
     "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt.png" : {
       "ignoreWasSetByUser" : 0,
@@ -885,172 +22,35 @@
       "initialSize" : 279,
       "fileType" : 10
     },
-    "\/dev_examples\/houston\/index.html" : {
+    "\/examples\/template_html\/index.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/index.html",
+      "inputAbbreviatedPath" : "\/examples\/template_html\/index.html",
       "outputAbbreviatedPath" : "No Output Path Set",
       "fileType" : 8
     },
-    "\/source\/js\/locale\/fr.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/fr.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/fr.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png" : {
+    "\/source\/gfx\/Sprites\/sprites\/chevron-next.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png",
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-next.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png",
-      "initialSize" : 286,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-next.png",
+      "initialSize" : 352,
       "fileType" : 10
     },
-    "\/examples\/template_googlespreadsheet\/index.html" : {
+    "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/template_googlespreadsheet\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zoom-in.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in.png",
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in.png",
-      "initialSize" : 467,
-      "fileType" : 10
-    },
-    "\/dev_examples\/taylor\/oscar.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/oscar.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/oscar.jpg",
-      "initialSize" : 107669,
-      "fileType" : 9
-    },
-    "\/source\/js\/VMM.TouchSlider.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.TouchSlider.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.TouchSlider-min.js",
-      "fileType" : 5
-    },
-    "\/locale\/zh-tw.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/zh-tw.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/zh-tw-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/houston\/young.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/young.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/young.jpg",
-      "initialSize" : 71002,
-      "fileType" : 9
-    },
-    "\/dev_examples\/middle-east\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/middle-east\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/examples\/language-example.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/language-example.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/js\/VMM.Library.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Library.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Library-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/locale\/nl.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/nl.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/nl.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/zoom-out.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out.png",
-      "initialSize" : 449,
-      "fileType" : 10
-    },
-    "\/source\/js\/VMM.MediaElement.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.MediaElement.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.MediaElement-min.js",
-      "fileType" : 5
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-map.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map.png",
-      "initialSize" : 3229,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-16.png",
+      "initialSize" : 270,
       "fileType" : 10
     },
     "\/dev_examples\/power-plants\/fisk_ryanryanryan.jpg" : {
@@ -1064,56 +64,300 @@
       "initialSize" : 196798,
       "fileType" : 9
     },
-    "\/dev_examples\/taylor\/todd.jpg" : {
+    "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/todd.jpg",
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/todd.jpg",
-      "initialSize" : 103878,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmallActive.png",
+      "initialSize" : 677,
+      "fileType" : 10
+    },
+    "\/locale\/de.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/de.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/de-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/taylor\/butterfield.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/butterfield.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/butterfield.jpg",
+      "initialSize" : 70444,
       "fileType" : 9
     },
-    "\/locale\/is.js" : {
+    "\/source\/js\/locale\/en.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/en.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/en.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/power-plants\/fisk_swanksalot.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_swanksalot.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_swanksalot.jpg",
+      "initialSize" : 119914,
+      "fileType" : 9
+    },
+    "\/timeline.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/timeline.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/timeline-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/houston\/wh3.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/wh3.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/wh3.jpg",
+      "initialSize" : 89432,
+      "fileType" : 9
+    },
+    "\/examples\/template_json\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/template_json\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/timeline-texture.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/timeline-texture.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/timeline-texture.png",
+      "initialSize" : 42976,
+      "fileType" : 10
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png",
+      "initialSize" : 366,
+      "fileType" : 10
+    },
+    "\/source\/js\/locale\/pt-br.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/pt-br.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/pt-br.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png",
+      "initialSize" : 2979,
+      "fileType" : 10
+    },
+    "\/source\/js\/locale\/it.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/it.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/it.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png",
+      "initialSize" : 455,
+      "fileType" : 10
+    },
+    "\/source\/gfx\/timeline-dark.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/timeline-dark.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/timeline-dark.png",
+      "initialSize" : 10864,
+      "fileType" : 10
+    },
+    "\/dev_examples\/index2.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/index2.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/locale\/fr.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/fr.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/fr-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/houston\/young.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/young.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/young.jpg",
+      "initialSize" : 71002,
+      "fileType" : 9
+    },
+    "\/source\/js\/VMM.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/template_googlespreadsheet2\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/template_googlespreadsheet2\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/less\/VMM.Timeline.Core.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Core.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/VMM.Timeline.Core.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/less\/Font\/PTSerif-PTSans.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/PTSerif-PTSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/PTSerif-PTSans.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.Language.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Language.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Language-min.js",
+      "fileType" : 5
+    },
+    "\/source\/js\/locale\/nl.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/nl.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/nl.js",
+      "fileType" : 5
+    },
+    "\/source\/js\/VMM.Slider.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Slider.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Slider-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font.Default.less" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/is.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/is-min.js",
-      "fileType" : 5
+      "inputAbbreviatedPath" : "\/source\/less\/Font.Default.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/Font.Default.css",
+      "strictImports" : 0,
+      "fileType" : 0
     },
-    "\/source\/js\/lib\/AES.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/lib\/AES.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/lib\/AES-min.js",
-      "fileType" : 5
-    },
-    "\/examples\/template_html\/index.html" : {
-      "ignoreWasSetByUser" : 0,
+    "\/source\/less\/Font\/Arvo-PTSans.less" : {
+      "ignoreWasSetByUser" : 1,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/template_html\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/dev_examples\/kitchen-sink\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/kitchen-sink\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Arvo-PTSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Arvo-PTSans.css",
+      "strictImports" : 0,
+      "fileType" : 0
     },
     "\/source\/js\/VMM.MediaType.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1126,66 +370,123 @@
       "outputAbbreviatedPath" : "\/source\/js\/VMM.MediaType-min.js",
       "fileType" : 5
     },
-    "\/dev_examples\/template_html\/index.html" : {
+    "\/dev_examples\/embed.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/template_html\/index.html",
+      "inputAbbreviatedPath" : "\/dev_examples\/embed.html",
       "outputAbbreviatedPath" : "No Output Path Set",
       "fileType" : 8
     },
-    "\/source\/gfx\/Sprites\/sprites\/time-interval.png" : {
+    "\/dev_examples\/taylor\/woolfe.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval.png",
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/woolfe.jpg",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval.png",
-      "initialSize" : 144,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/woolfe.jpg",
+      "initialSize" : 113102,
+      "fileType" : 9
+    },
+    "\/source\/less\/Font\/SansitaOne-Kameron.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/SansitaOne-Kameron.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/SansitaOne-Kameron.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/taylor\/warner.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/warner.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/warner.jpg",
+      "initialSize" : 110210,
+      "fileType" : 9
+    },
+    "\/examples\/kitchen-sink\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/kitchen-sink\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/gfx\/timeline.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/timeline.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/timeline.png",
+      "initialSize" : 10566,
       "fileType" : 10
     },
-    "\/dev_examples\/archive\/index_backup.html" : {
+    "\/dev_examples\/taylor\/born.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/index_backup.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/born.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/born.jpg",
+      "initialSize" : 50360,
+      "fileType" : 9
     },
-    "\/locale\/kr.js" : {
+    "\/source\/less\/GFX.Dark.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/kr.js",
+      "inputAbbreviatedPath" : "\/source\/less\/GFX.Dark.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/GFX.Dark.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.FileExtention.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.FileExtention.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/kr-min.js",
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.FileExtention-min.js",
       "fileType" : 5
     },
-    "\/locale\/en.js" : {
+    "\/timeline-min.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/locale\/en.js",
+      "inputAbbreviatedPath" : "\/timeline-min.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/en-min.js",
+      "outputAbbreviatedPath" : "\/timeline-min-min.js",
       "fileType" : 5
     },
-    "\/source\/js\/VMM.LoadLib.js" : {
-      "ignoreWasSetByUser" : 0,
+    "\/source\/js\/lib\/jQuery\/easing.js" : {
+      "ignoreWasSetByUser" : 1,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.LoadLib.js",
+      "inputAbbreviatedPath" : "\/source\/js\/lib\/jQuery\/easing.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.LoadLib-min.js",
+      "outputAbbreviatedPath" : "\/source\/js\/lib\/jQuery\/easing-min.js",
       "fileType" : 5
     },
     "\/source\/less\/VMM.Timeline.TimeNav.less" : {
@@ -1200,6 +501,312 @@
       "strictImports" : 0,
       "fileType" : 0
     },
+    "\/source\/js\/VMM.TImeline.Min.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.TImeline.Min.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/timeline-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font\/Lekton-Molengo.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Lekton-Molengo.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Lekton-Molengo.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/embed-dark.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/embed-dark.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/js\/VMM.Browser.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Browser.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Browser-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font\/AbrilFatface-Average.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/AbrilFatface-Average.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/AbrilFatface-Average.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/shit-people-say\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/shit-people-say\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/less\/Variables.Dark.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Variables.Dark.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/Variables.Dark.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/taylor\/final.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/final.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/final.jpg",
+      "initialSize" : 56926,
+      "fileType" : 9
+    },
+    "\/source\/less\/VMM.Slider.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/VMM.Slider.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/VMM.Slider.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.LoadLib.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.LoadLib.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.LoadLib-min.js",
+      "fileType" : 5
+    },
+    "\/source\/js\/VMM.Timeline.DataObj.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.DataObj.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.DataObj-min.js",
+      "fileType" : 5
+    },
+    "\/locale\/pt-br.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/pt-br.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/pt-br-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/middle-east\/MohamedBouazizi.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/middle-east\/MohamedBouazizi.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/middle-east\/MohamedBouazizi.jpg",
+      "initialSize" : 79732,
+      "fileType" : 9
+    },
+    "\/dev_examples\/taylor\/retire.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/retire.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/retire.jpg",
+      "initialSize" : 88811,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png",
+      "initialSize" : 339,
+      "fileType" : 10
+    },
+    "\/dev_examples\/houston\/whChild.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whChild.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whChild.jpg",
+      "initialSize" : 87009,
+      "fileType" : 9
+    },
+    "\/dev_examples\/template_googlespreadsheet\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/template_googlespreadsheet\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/dev_examples\/taylor\/todd.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/todd.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/todd.jpg",
+      "initialSize" : 103878,
+      "fileType" : 9
+    },
+    "\/examples\/template_googlespreadsheet\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/template_googlespreadsheet\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/dev_examples\/taylor\/giant.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/giant.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/giant.jpg",
+      "initialSize" : 94410,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/timeline.png.backup.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/timeline.png.backup.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/timeline.png.backup.png",
+      "initialSize" : 10547,
+      "fileType" : 10
+    },
+    "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval-bg.png",
+      "initialSize" : 144,
+      "fileType" : 10
+    },
+    "\/source\/less\/gfx.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/gfx.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/gfx.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.Media.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Media.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Media-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font\/Bevan-PotanoSans.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Bevan-PotanoSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Bevan-PotanoSans.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in-24.png",
+      "initialSize" : 724,
+      "fileType" : 10
+    },
+    "\/source\/js\/VMM.Timeline.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
+      "outputStyle" : 0,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/timeline.js",
+      "fileType" : 5
+    },
+    "\/locale\/es.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/es.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/es-min.js",
+      "fileType" : 5
+    },
     "\/timeline-dark.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1211,15 +818,94 @@
       "initialSize" : 10864,
       "fileType" : 10
     },
-    "\/dev_examples\/taylor\/woolfe.jpg" : {
+    "\/source\/less\/Variables.less" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Variables.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/Variables.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/lib\/bootstrap-tooltip.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/lib\/bootstrap-tooltip.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/lib\/bootstrap-tooltip-min.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/woolfe.jpg",
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/woolfe.jpg",
-      "initialSize" : 113102,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/chevron-prev.png",
+      "initialSize" : 334,
+      "fileType" : 10
+    },
+    "\/source\/js\/locale\/kr.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/kr.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/kr.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font\/Merriweather-NewsCycle.less" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Merriweather-NewsCycle.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Merriweather-NewsCycle.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.ExternalAPI.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.ExternalAPI.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.ExternalAPI-min.js",
+      "fileType" : 5
+    },
+    "\/source\/js\/VMM.DragSlider.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.DragSlider.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.DragSlider-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/taylor\/sun.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "initialSize" : 47058,
       "fileType" : 9
     },
     "\/source\/less\/VMM.Timeline.less" : {
@@ -1234,124 +920,84 @@
       "strictImports" : 0,
       "fileType" : 0
     },
-    "\/dev_examples\/taylor\/burton.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/burton.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/burton.jpg",
-      "initialSize" : 85307,
-      "fileType" : 9
-    },
-    "\/source\/js\/locale\/is.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/is.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/is.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/republican\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/republican\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-youtube_alt2.png",
-      "initialSize" : 455,
-      "fileType" : 10
-    },
-    "\/dev_examples\/taylor\/giant.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/giant.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/giant.jpg",
-      "initialSize" : 94410,
-      "fileType" : 9
-    },
-    "\/dev_examples\/template_googlespreadsheet2\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/template_googlespreadsheet2\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/less\/Font.PoiretOne.Molengo.less" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/less\/Font.PoiretOne.Molengo.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/font\/Font.PoiretOne.Molengo.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/source\/less\/VMM.Timeline.Tooltip.less" : {
+    "\/locale\/it.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Tooltip.less",
+      "inputAbbreviatedPath" : "\/locale\/it.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/it-min.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/zoom-in.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-in.png",
+      "initialSize" : 467,
+      "fileType" : 10
+    },
+    "\/source\/less\/Font\/NixieOne-Ledger.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/NixieOne-Ledger.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/NixieOne-Ledger.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/locale\/zh-ch.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/zh-ch.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/zh-ch.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg",
+      "initialSize" : 77211,
+      "fileType" : 9
+    },
+    "\/source\/js\/locale\/de.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/de.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/de.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Typography.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Typography.less",
       "outputStyle" : 0,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/VMM.Timeline.Tooltip.css",
+      "outputAbbreviatedPath" : "\/source\/css\/Typography.css",
       "strictImports" : 0,
       "fileType" : 0
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-vimeo.png",
-      "initialSize" : 366,
-      "fileType" : 10
-    },
-    "\/source\/js\/VMM.Slider.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Slider.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Slider-min.js",
-      "fileType" : 5
-    },
-    "\/dev_examples\/taylor\/dame.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/dame.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/dame.jpg",
-      "initialSize" : 108781,
-      "fileType" : 9
     },
     "\/source\/less\/reset.less" : {
       "ignoreWasSetByUser" : 0,
@@ -1365,80 +1011,225 @@
       "strictImports" : 0,
       "fileType" : 0
     },
-    "\/dev_examples\/power-plants\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/js\/VMM.js" : {
+    "\/source\/js\/VMM.MediaElement.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.js",
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.MediaElement.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM-min.js",
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.MediaElement-min.js",
       "fileType" : 5
     },
-    "\/source\/less\/VMM.Slider.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/VMM.Slider.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/VMM.Slider.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/dev_examples\/taylor\/index.html" : {
+    "\/dev_examples\/taylor\/burton.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/index.html",
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/burton.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/burton.jpg",
+      "initialSize" : 85307,
+      "fileType" : 9
+    },
+    "\/dev_examples\/taylor\/oscar.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/oscar.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/oscar.jpg",
+      "initialSize" : 107669,
+      "fileType" : 9
+    },
+    "\/dev_examples\/middle-east\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/middle-east\/index.html",
       "outputAbbreviatedPath" : "No Output Path Set",
       "fileType" : 8
     },
-    "\/source\/less\/mixins.less" : {
+    "\/source\/gfx\/Sprites\/sprites\/icon-music.png" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/mixins.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/mixins.css",
-      "strictImports" : 0,
-      "fileType" : 0
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-music.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-music.png",
+      "initialSize" : 372,
+      "fileType" : 10
     },
-    "\/source\/js\/locale\/pt-br.js" : {
+    "\/dev_examples\/houston\/wh1.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/wh1.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/wh1.jpg",
+      "initialSize" : 452169,
+      "fileType" : 9
+    },
+    "\/dev_examples\/taylor\/dame.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/dame.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/dame.jpg",
+      "initialSize" : 108781,
+      "fileType" : 9
+    },
+    "\/source\/js\/locale\/es.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/pt-br.js",
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/es.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/pt-br.js",
+      "outputAbbreviatedPath" : "\/locale\/es.js",
       "fileType" : 5
     },
-    "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg" : {
+    "\/dev_examples\/republican\/index.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg",
+      "inputAbbreviatedPath" : "\/dev_examples\/republican\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/dev_examples\/taylor\/hilton.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/hilton.jpg",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg",
-      "initialSize" : 219541,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/hilton.jpg",
+      "initialSize" : 72463,
       "fileType" : 9
+    },
+    "\/dev_examples\/houston\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/locale\/is.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/is.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/is-min.js",
+      "fileType" : 5
+    },
+    "\/examples\/embed.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/embed.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/locale\/zh-ch.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/zh-ch.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/zh-ch-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/taylor\/burton-2.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/burton-2.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/burton-2.jpg",
+      "initialSize" : 74788,
+      "fileType" : 9
+    },
+    "\/source\/js\/VMM.TouchSlider.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.TouchSlider.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.TouchSlider-min.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-soundcloud.png",
+      "initialSize" : 286,
+      "fileType" : 10
+    },
+    "\/dev_examples\/template_json\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/template_json\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/less\/Font\/Rancho-Gudea.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Rancho-Gudea.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Rancho-Gudea.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/taylor\/fortensky.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/fortensky.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/fortensky.jpg",
+      "initialSize" : 99172,
+      "fileType" : 9
+    },
+    "\/dev_examples\/kitchen-sink\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/kitchen-sink\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
     },
     "\/timeline.png" : {
       "ignoreWasSetByUser" : 0,
@@ -1451,27 +1242,302 @@
       "initialSize" : 10547,
       "fileType" : 10
     },
-    "\/source\/js\/VMM.ExternalAPI.js" : {
+    "\/dev_examples\/taylor\/kennedy.jpg" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.ExternalAPI.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.ExternalAPI-min.js",
-      "fileType" : 5
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/kennedy.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/kennedy.jpg",
+      "initialSize" : 84946,
+      "fileType" : 9
     },
-    "\/source\/js\/locale\/kr.js" : {
+    "\/source\/less\/Font\/PlayfairDisplay-Muli.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/kr.js",
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/PlayfairDisplay-Muli.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/PlayfairDisplay-Muli.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/locale\/zh-tw.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/zh-tw.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/kr.js",
+      "outputAbbreviatedPath" : "\/locale\/zh-tw.js",
       "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-speaker.png",
+      "initialSize" : 533,
+      "fileType" : 10
+    },
+    "\/source\/js\/locale\/is.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/is.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/is.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/taylor\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/dev_examples\/taylor\/broadway.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
+      "initialSize" : 111700,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/Sprites\/sprites\/zoom-out.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out.png",
+      "initialSize" : 449,
+      "fileType" : 10
+    },
+    "\/dev_examples\/houston\/whlead.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
+      "initialSize" : 97988,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-map.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map.png",
+      "initialSize" : 3229,
+      "fileType" : 10
+    },
+    "\/dev_examples\/template_html\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/template_html\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/locale\/kr.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/kr.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/kr-min.js",
+      "fileType" : 5
+    },
+    "\/source\/js\/VMM.Util.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Util.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Util-min.js",
+      "fileType" : 5
+    },
+    "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zback-to-begin-24.png",
+      "initialSize" : 233,
+      "fileType" : 10
+    },
+    "\/source\/less\/Font\/Pacifico-Arimo.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/Pacifico-Arimo.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/Pacifico-Arimo.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/less\/Font\/DroidSerif-DroidSans.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/DroidSerif-DroidSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/DroidSerif-DroidSans.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/js\/VMM.Timeline.TimeNav.js" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.TimeNav.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.TimeNav-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/index_html.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/index_html.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/zoom-out-24.png",
+      "initialSize" : 663,
+      "fileType" : 10
+    },
+    "\/source\/less\/VMM.Timeline.Tooltip.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Tooltip.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/VMM.Timeline.Tooltip.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/source\/less\/Font\/BreeSerif-OpenSans.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/BreeSerif-OpenSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/BreeSerif-OpenSans.css",
+      "strictImports" : 0,
+      "fileType" : 0
+    },
+    "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg",
+      "initialSize" : 219541,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-map-pin.png",
+      "initialSize" : 3131,
+      "fileType" : 10
+    },
+    "\/dev_examples\/taylor\/velvet.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
+      "initialSize" : 77001,
+      "fileType" : 9
+    },
+    "\/source\/js\/locale\/fr.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/fr.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/fr.js",
+      "fileType" : 5
+    },
+    "\/locale\/zh-tw.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/zh-tw.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/zh-tw-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Mixins.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Mixins.less",
+      "outputStyle" : 0,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/css\/Mixins.css",
+      "strictImports" : 0,
+      "fileType" : 0
     },
     "\/jquery-min.js" : {
       "ignoreWasSetByUser" : 1,
@@ -1495,28 +1561,6 @@
       "initialSize" : 257,
       "fileType" : 10
     },
-    "\/source\/js\/VMM.Language.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.Language.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/VMM.Language-min.js",
-      "fileType" : 5
-    },
-    "\/source\/js\/locale\/zh-ch.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/locale\/zh-ch.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/locale\/zh-ch.js",
-      "fileType" : 5
-    },
     "\/dev_examples\/houston\/wh2.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1527,40 +1571,6 @@
       "outputAbbreviatedPath" : "\/dev_examples\/houston\/wh2.jpg",
       "initialSize" : 35669,
       "fileType" : 9
-    },
-    "\/source\/less\/Font.Default.less" : {
-      "ignoreWasSetByUser" : 1,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Font.Default.less",
-      "outputStyle" : 0,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/Font.Default.css",
-      "strictImports" : 0,
-      "fileType" : 0
-    },
-    "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-facebook.png",
-      "initialSize" : 339,
-      "fileType" : 10
-    },
-    "\/source\/gfx\/timeline-dark.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/timeline-dark.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/timeline-dark.png",
-      "initialSize" : 10864,
-      "fileType" : 10
     },
     "\/dev_examples\/taylor\/fisher.jpg" : {
       "ignoreWasSetByUser" : 0,
@@ -1573,36 +1583,59 @@
       "initialSize" : 93019,
       "fileType" : 9
     },
-    "\/dev_examples\/embed.html" : {
+    "\/dev_examples\/embed_wide.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/embed.html",
+      "inputAbbreviatedPath" : "\/dev_examples\/embed_wide.html",
       "outputAbbreviatedPath" : "No Output Path Set",
       "fileType" : 8
     },
-    "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg" : {
+    "\/dev_examples\/power-plants\/fisk_vxla.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg",
+      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_vxla.jpg",
       "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_greenpeaceusa2012.jpg",
-      "initialSize" : 77211,
+      "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_vxla.jpg",
+      "initialSize" : 95680,
       "fileType" : 9
     },
-    "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png" : {
+    "\/locale\/en.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-microphone.png",
-      "initialSize" : 2979,
-      "fileType" : 10
+      "inputAbbreviatedPath" : "\/locale\/en.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/en-min.js",
+      "fileType" : 5
+    },
+    "\/locale\/nl.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/locale\/nl.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/nl-min.js",
+      "fileType" : 5
+    },
+    "\/source\/less\/Font\/PoiretOne-Molengo.less" : {
+      "ignoreWasSetByUser" : 1,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/Font\/PoiretOne-Molengo.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/font\/PoiretOne-Molengo.css",
+      "strictImports" : 0,
+      "fileType" : 0
     },
     "\/source\/js\/lib\/Embed.LoadLib.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1615,26 +1648,134 @@
       "outputAbbreviatedPath" : "\/source\/js\/lib\/Embed.LoadLib-min.js",
       "fileType" : 5
     },
-    "\/dev_examples\/shit-people-say\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/shit-people-say\/index.html",
-      "outputAbbreviatedPath" : "No Output Path Set",
-      "fileType" : 8
-    },
-    "\/source\/less\/gfx.less" : {
+    "\/source\/js\/VMM.Library.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/gfx.less",
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.Library.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/VMM.Library-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/houston\/eyesclosedftm_10001.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/eyesclosedftm_10001.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/eyesclosedftm_10001.jpg",
+      "initialSize" : 90398,
+      "fileType" : 9
+    },
+    "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/TimeFlagSmall.png",
+      "initialSize" : 376,
+      "fileType" : 10
+    },
+    "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/icon-twitter.png",
+      "initialSize" : 3038,
+      "fileType" : 10
+    },
+    "\/source\/less\/VMM.Timeline.Theme.Dark.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/less\/VMM.Timeline.Theme.Dark.less",
       "outputStyle" : 0,
       "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/css\/gfx.css",
+      "outputAbbreviatedPath" : "\/timeline-dark.css",
       "strictImports" : 0,
       "fileType" : 0
+    },
+    "\/source\/js\/timeline-embed.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/timeline-embed.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/timeline-embed.js",
+      "fileType" : 5
+    },
+    "\/timeline-embed.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/timeline-embed.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/timeline-embed-min.js",
+      "fileType" : 5
+    },
+    "\/dev_examples\/power-plants\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/power-plants\/index.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/examples\/language-example.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/language-example.html",
+      "outputAbbreviatedPath" : "No Output Path Set",
+      "fileType" : 8
+    },
+    "\/source\/gfx\/Sprites\/sprites\/time-interval.png" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/source\/gfx\/Sprites\/sprites\/time-interval.png",
+      "initialSize" : 144,
+      "fileType" : 10
+    },
+    "\/dev_examples\/taylor\/aids.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/aids.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/aids.jpg",
+      "initialSize" : 75647,
+      "fileType" : 9
+    },
+    "\/source\/js\/lib\/AES.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/lib\/AES.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/lib\/AES-min.js",
+      "fileType" : 5
     }
   },
   "manualImportLinks" : [
@@ -1642,7 +1783,28 @@
       "type" : 0,
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/pt-br.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/de.js",
+      "followForSyntaxChecking" : 1
+    },
+    {
+      "type" : 0,
+      "position" : 0,
+      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/kr.js",
+      "followForSyntaxChecking" : 1
+    },
+    {
+      "type" : 0,
+      "position" : 0,
+      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/zh-tw.js",
+      "followForSyntaxChecking" : 1
+    },
+    {
+      "type" : 0,
+      "position" : 0,
+      "linkedFileAbbreviatedPath" : "\/source\/js\/lib\/Embed.LoadLib.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/timeline-embed.js",
       "followForSyntaxChecking" : 1
     },
     {
@@ -1656,7 +1818,7 @@
       "type" : 0,
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/de.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/pt-br.js",
       "followForSyntaxChecking" : 1
     },
     {
@@ -1670,14 +1832,7 @@
       "type" : 0,
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/it.js",
-      "followForSyntaxChecking" : 1
-    },
-    {
-      "type" : 0,
-      "position" : 0,
-      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/zh-tw.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/fr.js",
       "followForSyntaxChecking" : 1
     },
     {
@@ -1711,22 +1866,15 @@
     {
       "type" : 0,
       "position" : 0,
-      "linkedFileAbbreviatedPath" : "\/source\/js\/lib\/Embed.LoadLib.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/timeline-embed.js",
+      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/en.js",
       "followForSyntaxChecking" : 1
     },
     {
       "type" : 0,
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/fr.js",
-      "followForSyntaxChecking" : 1
-    },
-    {
-      "type" : 0,
-      "position" : 0,
-      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/is.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/it.js",
       "followForSyntaxChecking" : 1
     },
     {
@@ -1740,14 +1888,7 @@
       "type" : 0,
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/en.js",
-      "followForSyntaxChecking" : 1
-    },
-    {
-      "type" : 0,
-      "position" : 0,
-      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
-      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/kr.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/is.js",
       "followForSyntaxChecking" : 1
     }
   ],
