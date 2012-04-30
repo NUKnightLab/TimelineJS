@@ -4708,8 +4708,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 
 /*!
 	Timeline 0.98
-	Designed and built by Zach Wise digitalartwork.net
-	Date: April 26, 2012
+	Designed and built by Zach Wise at VeriteCo
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
