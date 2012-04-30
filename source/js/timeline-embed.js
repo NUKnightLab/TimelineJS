@@ -101,7 +101,7 @@
 	var cssReady = false;
 	var fontCSSReady = false;
 	var fontJSReady = false;
-	var font_css_url = "http://veritetimeline.appspot.com/latest/font/"
+	var font_css_url = "http://veritetimeline.appspot.com/latest/themes/font/"
 	var font_js_url = "http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
 	var font_google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
 	var isReady = false;

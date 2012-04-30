@@ -16,47 +16,47 @@
 
 */
 
-/*	THEME DEFAULT
+/*	THEME DARK
 ----------------------------------------------------- */
 	//GFX
 	.base-sprite() {
-		background-image: url(timeline.png);
+		background-image: url(themes/timeline-dark.png);
 	}
 	// COLORS
-	@color-base:					#FFF;
-	@color-line: 					#CCC;
+	@color-base:					#1A1A1A;
+	@color-line: 					#333; //#414141;
 	@color-line-hover: 				#666;
-	@color-dark:					#000;
-	@color-dark-second: 			#333;
-	@color-dark-third: 				#666;
+	@color-dark:					#FFF;
+	@color-dark-second: 			#AAA;
+	@color-dark-third: 				#AAA;
 	@color-dark-fourth: 			#999;
 	@color-dark-fifth: 				#E3E3E3;
-	@color-background-dark:			#E9E9E9;
+	@color-background-dark:			#262626;
 	// COLOR THEME
-	@color-theme:					#08C;	//#FF3712; //#FF0000;
+	@color-theme:					#0BD4E3;
 	
 /*	BASE
 ----------------------------------------------------- */
 
 // CSS Reset
-@import "Reset.less";
+@import "../Reset.less";
 
 // Core variables and mixins
-@import "Font.Default.less";
-@import "Variables.less";
-@import "Mixins.less"; 
-@import "GFX.less";
+@import "../Font.Default.less";
+@import "../Variables.less";
+@import "../Mixins.less"; 
+@import "../GFX.less";
 
 // Grid system and page structure
-@import "VMM.Timeline.Core.less";
-@import "VMM.Slider.less";
-@import "VMM.Timeline.TimeNav.less";
+@import "../VMM.Timeline.Core.less";
+@import "../VMM.Slider.less";
+@import "../VMM.Timeline.TimeNav.less";
 
 // Typography
-@import "Typography.less";
+@import "../Typography.less";
 
 // Grid system and page structure
-@import "VMM.Timeline.Tooltip.less";
+@import "../VMM.Timeline.Tooltip.less";
 
 
 /* MEDIA QUERIES
