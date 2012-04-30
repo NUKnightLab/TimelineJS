@@ -10,7 +10,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 				|| "an unknown version";
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
-			
+			this.orientation = this.searchOrientation(window.orientation);
+		},
+		searchOrientation: function(orientation) {
+			if ( orientation == 0  || orientation == 180) {  
+				return "portrait";
+			} else if ( orientation == 90 || orientation == -90) {  
+				return "landscape";
+			} else {
+				return "normal";
+			}
 		},
 		searchDevice: function(d) {
 			if (d.match(/Android/i) || d.match(/iPhone|iPod/i)) {
