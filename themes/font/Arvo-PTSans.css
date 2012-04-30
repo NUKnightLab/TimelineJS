@@ -1,5 +1,6 @@
-#timeline{font-family:'Arvo',serif;}#timeline .twitter,#timeline .messege,#timeline .credit,#timeline .caption,#timeline .zoom-in,#timeline .zoom-out,#timeline .back-home,#timeline .time-interval div,#timeline .time-interval-major div{font-family:'PT Sans',sans-serif !important;}
+#timeline{font-family:'Arvo',serif;}#timeline .twitter,#timeline .messege,#timeline .credit,#timeline .caption,#timeline .zoom-in,#timeline .zoom-out,#timeline .back-home,#timeline .time-interval div,#timeline .time-interval-major div,#timeline .nav-container{font-family:'PT Sans',sans-serif !important;}
 #timeline .feature h1.date,#timeline .feature h2.date,#timeline .feature h3.date,#timeline .feature h4.date,#timeline .feature h5.date,#timeline .feature h6.date{font-family:'PT Sans',sans-serif !important;}
 #timeline .timenav h1,#timeline .flag-content h1,#timeline .era h1,#timeline .timenav h2,#timeline .flag-content h2,#timeline .era h2,#timeline .timenav h3,#timeline .flag-content h3,#timeline .era h3,#timeline .timenav h4,#timeline .flag-content h4,#timeline .era h4,#timeline .timenav h5,#timeline .flag-content h5,#timeline .era h5,#timeline .timenav h6,#timeline .flag-content h6,#timeline .era h6{font-family:'PT Sans',sans-serif !important;}
 #timeline p,#timeline blockquote,#timeline blockquote p,#timeline .twitter blockquote p{font-family:'Arvo',serif !important;}
 #timeline .feature h1,#timeline .feature h2,#timeline .feature h3,#timeline .feature h4,#timeline .feature h5,#timeline .feature h6{font-family:'Arvo',serif;}
+.tooltip{font-family:'PT Sans',sans-serif;}
