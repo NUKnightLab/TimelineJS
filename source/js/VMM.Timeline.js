@@ -428,7 +428,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* CHECK FOR MOBILE 
 			================================================== */
-			if (config.width < 500) {
+			if (config.width <= 480) {
 				// MOBILE
 				VMM.Element.hide("div.navigation");
 				VMM.Element.hide("div.nav-next");
