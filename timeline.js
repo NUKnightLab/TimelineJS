@@ -769,9 +769,9 @@ if(typeof VMM != 'undefined') {
 				/*
 				if( typeof( jQuery ) != 'undefined' ){
 					if (callback_function != null && callback_function != "") {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:"ease", complete:callback_function} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
 					} else {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:"ease"} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
 					}
 				}
 				*/
@@ -857,7 +857,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 				|| "an unknown version";
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
-			
+			this.orientation = this.searchOrientation(window.orientation);
+		},
+		searchOrientation: function(orientation) {
+			if ( orientation == 0  || orientation == 180) {  
+				return "portrait";
+			} else if ( orientation == 90 || orientation == -90) {  
+				return "landscape";
+			} else {
+				return "normal";
+			}
 		},
 		searchDevice: function(d) {
 			if (d.match(/Android/i) || d.match(/iPhone|iPod/i)) {
@@ -2428,55 +2437,31 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
-	//VMM.Slider = function(parent, content_width, content_height, is_timeline) {
 	VMM.Slider = function(parent, parent_config) {
 		
 		/* PRIVATE VARS
 		================================================== */
-		var _private_var = "private";
-		var events = {}; // CUSTOM EVENT HOLDER
-		var data = []; // HOLDS SLIDE DATA
+		var events = {};
+		// ARRAYS
+		var data = [], slides = [], medias = [], slide_positions = [];
 		var slides_content = "";
-		var slides = [];
-		var medias = [];
 		var current_slide = 0;
 		var current_width = 960;
-		var touch = {
-			move: false,
-			x: 10,
-			y:0,
-			off: 0,
-			dampen: 48
-		};
-		var slide_positions = [];
+		var touch = {move: false, x: 10, y:0, off: 0, dampen: 48};
+		var content = "";
+		var _active = false;
+		var layout = parent;
+		// ELEMENTS
+		var $slider, $slider_mask, $slider_container, $slides_items;
+		// CONFIG
+		var config = {slider: {width: 720, height: 400, content: {width: 720, height: 400, padding: 130}, nav: {width: 100, height: 200} } };
+		var _config = {interval: 10, something: 0, width: 720, height: 400, ease: "easeInOutExpo", duration: 1000, timeline: false, spacing: 15};
+		// NAVIGATION
+		var navigation = {nextBtn:"", prevBtn:"", nextDate:"", prevDate:"", nextTitle:"", prevTitle:""};
 		
-		/* LOCAL CONFIG
+		/* PUBLIC VARS
 		================================================== */
-		var config = {
-			slider: {
-				width: 720,
-				height: 400,
-				content: {
-					width: 720,
-					height: 400,
-					padding: 130,
-				},
-				nav: {
-					width: 100,
-					height: 200
-				}
-			}
-		};
-		var _config = {
-			interval: 10,
-			something: 0,
-			width: 720,
-			height: 400,
-			ease: "easeInOutExpo",
-			duration: 1000,
-			timeline: false,
-			spacing: 15,
-		};
+		this.ver = "0.6";
 		
 		/* APPLY SUPPLIED CONFIG
 		================================================== */
@@ -2497,46 +2482,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		}
 		
-		
-		var slider_width = 1000;
 		config.slider.width = config.width;
 		config.slider.height = config.height;
-		
-		/*
-		if (content_width != null && content_width != "") {
-			config.width = content_width;
-		} 
-		if (content_height != null && content_height != "") {
-			config.height = content_height;
-		} 
-		if (is_timeline != null && is_timeline != "") {
-			config.timeline = is_timeline;
-		}
-		*/
-		
-		var content = "";
-		var _active = false;
-		
-		/* ELEMENTS
-		================================================== */
-		var $slider = "";
-		var $slider_mask = "";
-		var $slider_container = "";
-		var $slides_items = "";
-		//var $slide = "";
-		var navigation = {};
-		// Nav Items
-		navigation.nextBtn;
-		navigation.prevBtn;
-		navigation.nextDate;
-		navigation.prevDate;
-		navigation.nextTitle;
-		navigation.prevTitle;
-		
-		/* PUBLIC VARS
-		================================================== */
-		this.ver = "0.1";
-		var layout = parent; // expecting slider div
 		
 		
 		/* PUBLIC FUNCTIONS
@@ -2566,6 +2513,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				return config.slider.height;
 			}
 		}
+		
 		/* GETTERS AND SETTERS
 		================================================== */
 		this.setData = function(d) {
@@ -2615,15 +2563,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		this.setSlide = function(n) {
 			goToSlide(n);
 		};
-
 		
 		/* ON EVENT
 		================================================== */
-		
 		function onConfigSet() {
 			trace("onConfigSet");
 		};
-		
 		
 		function reSize(go_to_slide, from_start) {
 			
@@ -2646,11 +2591,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.css($slider_container, "left", _pos.left);
 			}
 			
+			// RESIZE SLIDES
+			sizeSlides();
 			
-			// Position slides
+			// POSITION SLIDES
 			positionSlides();
 			
-			// Position Nav
+			// POSITION NAV
 			VMM.Element.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
 			VMM.Element.height(navigation.prevBtn, config.slider.height);
 			VMM.Element.height(navigation.nextBtn, config.slider.height);
@@ -2671,6 +2618,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 		}
 		
+		/* NAVIGATION
+		================================================== */
 		function onNextClick(e) {
 			if (current_slide == slides.length - 1) {
 				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(VMM.Element.position(slides[current_slide]).left)});
@@ -2678,7 +2627,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				goToSlide(current_slide+1);
 				upDate();
 			}
-			
 		}
 		
 		function onPrevClick(e) {
@@ -2688,20 +2636,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				goToSlide(current_slide-1);
 				upDate();
 			}
-
 		}
 
 		function onKeypressNav(e) {
 			switch(e.keyCode) {
-				//right arrow
 				case 39:
+					// RIGHT ARROW
 					onNextClick(e);
-				break;
-
-				//left arrow
+					break;
 				case 37:
+					// LEFT ARROW
 					onPrevClick(e);
-				break;
+					break;
 			}
 		}
 		
@@ -2735,19 +2681,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		};
 		
+		/* UPDATE
+		================================================== */
 		function upDate() {
 			VMM.fireEvent(layout, "UPDATE");
 		};
-		/* PRIVATE FUNCTIONS
-		================================================== */
 		
+		/* GET DATA
+		================================================== */
 		var getData = function(d) {
 			data = d;
 		};
 		
-		/* SLIDES
+		/* BUILD SLIDES
 		================================================== */
-		// BUILD SLIDES
 		var buildSlides = function(d) {
 			
 			// Clear out existing content
@@ -2768,20 +2715,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 		}
 		
-		// POSITION SLIDES AND SIZE THEM
-		var positionSlides = function() {
-			
-			/* SIZE SLIDES
-			================================================== */
+		/* SIZE SLIDES
+		================================================== */
+		var sizeSlides = function() {
 			
 			VMM.Element.css(".slider-item", "width", config.slider.content.width );
 			VMM.Element.height(".slider-item", config.slider.height);
 			
 			/* RESIZE IFRAME MEDIA ELEMENTS
 			================================================== */
-			//var _iframe_height = Math.round(config.height) - 60;
 			var _iframe_height_full = Math.round(config.slider.height) - 160;
-			//var _iframe_width = Math.round((_iframe_height / 9) * 16);
 			var _iframe_width_full = Math.round((_iframe_height_full / 9) * 16);
 			
 			var _iframe_width =  (config.slider.content.width/100)*60 ;
@@ -2790,42 +2733,41 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* MEDIA HEIGHT
 			================================================== */
 			var _media_height = Math.round(config.slider.height) - 160;
-			//var _text_height = config.slider.height;
 			var _media_width_with_text = ((config.slider.content.width/100) * 60);
-			
-			/* FIX FOR NON-WEBKIT BROWSERS
-			================================================== */
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-width", 32 );
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .twitter .avatar img", "max-height", 32 );
-			
-			/* SOUNDCLOUD
-			================================================== */
-			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
 			
 			/* HANDLE SMALLER SIZES
 			================================================== */
-			if (config.width <= 650) {
+			var is_skinny = false;
+			
+			if (current_width <= 650) {
+				is_skinny = true;
+			} else if (VMM.Browser.device == "mobile" && VMM.Browser.orientation == "portrait") {
+				is_skinny = true;
+			} else if (VMM.Browser.device == "tablet" && VMM.Browser.orientation == "portrait") {
+				is_skinny = true;
+			}
+			
+			if (is_skinny) {
 				_media_height = ((config.slider.height/100) * 40 ) - 40;
-				//_text_height = (config.slider.height/100) * 60;
 				_iframe_width =  config.slider.content.width;
+				_iframe_height_full = Math.round((_iframe_width / 16) * 9);
+				
 				_media_width_with_text = config.slider.content.width;
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
 				
 				VMM.Element.css(".slider-item .layout-text-media .media", "float", "none" );
-				//VMM.Element.css(".slider-item .layout-text-media .media", "width", "100%" );
 				
 				VMM.Element.css(".slider-item .media blockquote p", "line-height", "18px" );
 				VMM.Element.css(".slider-item .media blockquote p", "font-size", "16px" );
-
-				VMM.Element.css(".slider-item .layout-text-media", "height", config.slider.height );
-				VMM.Element.css(".slider-item .layout-text-media", "overflow", "auto" );
-				VMM.Element.css(".slider-item .layout-text-media", "display", "block" );
+				
+				VMM.Element.css(".slider-item .content", "height", config.slider.height );
+				VMM.Element.css(".slider-item", "display", "block" );
+				VMM.Element.css(".slider-item", "overflow-y", "auto" );
 				
 			} else {
 				_media_height = config.slider.height - 40;
-				//_text_height = config.slider.height;
 				_iframe_width =  (config.slider.content.width/100)*60 ;
 				_media_width_with_text = ((config.slider.content.width/100) * 60);
 				
@@ -2833,21 +2775,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
 				
 				VMM.Element.css(".slider-item .layout-text-media .media", "float", "left" );
-				//VMM.Element.css(".slider-item .layout-text-media .media", "width", "60%" );
 				VMM.Element.css(".slider-item .layout-text-media", "display", "table" );
+				
+				VMM.Element.css(".slider-item", "display", "table" );
+				VMM.Element.css(".slider-item", "overflow-y", "auto" );
 			}
-			
-			// TEXT
-			//VMM.Element.css(".slider-item .layout-text-media .text", "max-height", _text_height );
-			//VMM.Element.css(".slider-item .layout-text-media .text", "overflow", "auto" );
 			
 			// IMAGES
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", _media_height );
-			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", _media_height - 100 );
 			
 			/* FIX FOR NON-WEBKIT BROWSERS
 			================================================== */
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", _media_width_with_text );
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", _media_width_with_text );
+			VMM.Element.css(".slider-item .media .media-container .twitter .avatar img", "max-width", 32 );
+			VMM.Element.css(".slider-item .media .media-container .twitter .avatar img", "max-height", 32 );
 			
 			// NORMAL
 			VMM.Element.height(".slider-item .media .media-container .media-frame", _iframe_height);
@@ -2857,14 +2799,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", _iframe_height_full);
 			VMM.Element.width(".slider-item .layout-media .media .media-container .media-frame", _iframe_width_full);
 
-			// IFRAME FULL SIZE NON VIDEO
+			// SOUNDCLOUD
 			VMM.Element.height(".slider-item .layout-media .media .media-container .soundcloud", config.slider.height - 150);
 			VMM.Element.width(".slider-item .layout-media .media .media-container .soundcloud", config.slider.content.width);
 			VMM.Element.width(".slider-item .layout-text-media .media .media-container .soundcloud", _iframe_width);
+			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
 			
 			// MAPS
 			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _media_height);
 			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full+60);
+			VMM.Element.width(".slider-item .layout-media .media .media-container .map", _iframe_width);
 
 			// DOCS
 			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _media_height);
@@ -2875,16 +2819,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
 			//VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-height", _iframe_height );
 			
-			/* POSITION SLIDES
-			================================================== */
+		}
+		
+		/* POSITION SLIDES
+		================================================== */
+		var positionSlides = function() {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
 				VMM.Element.css(slides[i], "left", pos);
 			}
-			
 		}
 		
+		/* OPACITY SLIDES
+		================================================== */
 		var opacitySlides = function(n) {
 			var _ease = "linear";
 			for(var i = 0; i < slides.length; i++) {
@@ -2897,12 +2845,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				} else {
 					VMM.Element.css(slides[i], "opacity", n);	
 				}
-				
 			}
 		}
 		
-		// Go to slide
-		//goToSlide(n, ease, duration);
+		/* GO TO SLIDE
+			goToSlide(n, ease, duration);
+		================================================== */
 		var goToSlide = function(n, ease, duration, fast, firstrun) {
 			
 			/* STOP ANY VIDEO PLAYERS ACTIVE
@@ -2979,7 +2927,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 		}
 
-		/* NAVIGATION
+		/* BUILD NAVIGATION
 		================================================== */
 		var buildNavigation = function() {
 			
@@ -5085,7 +5033,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* RESIZE EVENT LISTENERS
 			================================================== */
 			VMM.bindEvent(global, reSize, "resize");
-			VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			
 		};
 		
@@ -5212,35 +5160,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			//$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Building Dates");
 			
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
-			
-			/* CREATE START PAGE IF AVAILABLE
-			================================================== */
-			/*
-			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
-				trace("HAS STARTPAGE");
-				var _date = {};
-				if (data.type == "google spreadsheet") {
-					trace("google spreadsheet startpage date " + data.startDate);
-					_date.startdate = new Date(Date.parse(data.startDate));
-				} else {
-					_date.startdate = VMM.Util.parseDate(data.startDate);
-				}
-				
-				_date.uniqueid = VMM.Util.unique_ID(5);
-				_date.enddate = _date.startdate;
-				_date.title = data.headline;
-				_date.headline = data.headline;
-				_date.text = data.text;
-				_date.type = "start";
-				_date.date = VMM.Util.date.prettyDate(data.startDate);
-				_date.asset = data.asset;
-				_date.fulldate = _date.startdate.getTime();
-				_date.content = buildSlide(_date, _date.startdate);
-				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
-					_dates.push(_date);
-				}
-			}
-			*/
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -6734,13 +6653,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
 				VMM.Element.css($toolbar, "top", 27);
+				VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Element.attribute($backhome, "rel", "tooltip");
 				
 			}
 			$zoomin = VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
-			VMM.Element.attribute($backhome, "rel", "tooltip");
+			
 			
 			VMM.Element.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
 			VMM.Element.attribute($zoomin, "rel", "tooltip");

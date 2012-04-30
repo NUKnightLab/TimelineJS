@@ -479,9 +479,9 @@ if(typeof VMM != 'undefined') {
 				/*
 				if( typeof( jQuery ) != 'undefined' ){
 					if (callback_function != null && callback_function != "") {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:"ease", complete:callback_function} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
 					} else {
-						$(element).animate(_att, {queue:false, duration:_duration, easing:"ease"} );
+						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
 					}
 				}
 				*/

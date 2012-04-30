@@ -326,7 +326,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* RESIZE EVENT LISTENERS
 			================================================== */
 			VMM.bindEvent(global, reSize, "resize");
-			VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			
 		};
 		
@@ -453,35 +453,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			//$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Building Dates");
 			
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
-			
-			/* CREATE START PAGE IF AVAILABLE
-			================================================== */
-			/*
-			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
-				trace("HAS STARTPAGE");
-				var _date = {};
-				if (data.type == "google spreadsheet") {
-					trace("google spreadsheet startpage date " + data.startDate);
-					_date.startdate = new Date(Date.parse(data.startDate));
-				} else {
-					_date.startdate = VMM.Util.parseDate(data.startDate);
-				}
-				
-				_date.uniqueid = VMM.Util.unique_ID(5);
-				_date.enddate = _date.startdate;
-				_date.title = data.headline;
-				_date.headline = data.headline;
-				_date.text = data.text;
-				_date.type = "start";
-				_date.date = VMM.Util.date.prettyDate(data.startDate);
-				_date.asset = data.asset;
-				_date.fulldate = _date.startdate.getTime();
-				_date.content = buildSlide(_date, _date.startdate);
-				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
-					_dates.push(_date);
-				}
-			}
-			*/
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
