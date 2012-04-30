@@ -4706,7 +4706,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 ***********************************************/ 
 
 /*!
-	Timeline 0.95
+	Timeline 0.98
 	Designed and built by Zach Wise digitalartwork.net
 	Date: April 26, 2012
 
@@ -4754,7 +4754,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	VMM.Timeline = function(w, h, conf) {
-		var version = "0.95";
+		var version = "0.98";
 		trace("TIMELINE VERSION " + version);
 		
 		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
