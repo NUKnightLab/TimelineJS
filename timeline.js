@@ -5270,88 +5270,20 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 	VMM.Timeline.TimeNav = function(parent, content_width, content_height) {
 		trace("VMM.Timeline.TimeNav");
 		
-		var events = {}; // CUSTOM EVENT HOLDER
-		var data = []; // HOLDS DATA
-		var eras;
-		var era_markers = [];
-		var markers = []; // HOLDS MARKER DOM OBJECTS
-		var interval_array = [];
-		var interval_major_array = [];
-		var timespan = {};
-		var current_marker = 0; // CURRENT MARKER
+		var events = {}, timespan = {}, navigation = {}, layout = parent;
+		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content;
+		var current_marker = 0;
 		var _active = false;
+		var timelookup = 			{day: 24, month: 12, year: 10, hour: 60, minute: 60, second: 1000, decade: 10, century: 100, millenium: 1000, week: 4.34812141, days_in_month: 30.4368499, days_in_week: 7, weeks_in_month:4.34812141, weeks_in_year:52.177457, days_in_year: 365.242199, hours_in_day: 24 };
+		var dateFractionBrowser = 	{day: 86400000, week: 7, month: 30.4166666667, year: 12, hour: 24, minute: 1440, second: 86400, decade: 10, century: 100, millenium: 1000 };
+		var interval = 				{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
+		var interval_major = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
+		var interval_macro = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
+		var interval_calc = 		{day: {},month: {},year: {},hour: {},minute: {}, second: {},decade: {},century: {},millenium: {},week: {}};
 		
-		var timelookup = {
-			day: 24 ,
-			month: 12,
-			year: 10,
-			hour: 60,
-			minute: 60, 
-			second: 1000,
-			decade: 10,
-			century: 100,
-			millenium: 1000,
-			week: 4.34812141,
-			days_in_month: 30.4368499,
-			days_in_week: 7,
-			weeks_in_month:4.34812141,
-			weeks_in_year:52.177457,
-			days_in_year: 365.242199,
-			hours_in_day: 24
-		};
-		
-		var dateFractionBrowser = {
-			day: 86400000 ,
-			week: 7,
-			month: 30.4166666667,
-			year: 12,
-			hour: 24,
-			minute: 1440, 
-			second: 86400,
-			decade: 10,
-			century: 100,
-			millenium: 1000
-		}
-		
-		// somestring = VMM.Util.date.month[2]; // Returns March
-		// somestring = VMM.Util.date.month_abbrev[1]; // Returns Feb.
-		
-		var interval = {
-			type: "year",
-			number: 10,
-			first: 1970,
-			last: 2011,
-			multiplier: 100
-		};
-		
-		var interval_major = {
-			type: "year",
-			number: 10,
-			first: 1970,
-			last: 2011,
-			multiplier: 100
-		};
-		
-		var interval_macro = {
-			type: "year",
-			number: 10,
-			first: 1970,
-			last: 2011,
-			multiplier: 100
-		};
-		
-		var interval_calc = {
-			day: {} ,
-			month: {},
-			year: {},
-			hour: {},
-			minute: {}, 
-			second: {},
-			decade: {},
-			century: {},
-			millenium: {},
-			week: {}
-		};
+		/* ELEMENTS
+		================================================== */
+		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, $timeintervalbackground, $timenavline, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
 		
 		/* ADD to Config
 		================================================== */
@@ -5367,7 +5299,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		config.interval_width = 200;
 		config.rows = [1, 1, 1];
 		config.multiplier = 6;
-		config.max_multiplier = 16;
+		config.max_multiplier = 50;
 		config.min_multiplier = .1;
 		config.has_start_page = false;
 		
@@ -5380,29 +5312,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			config.height = content_height;
 		} 
 		
-		var content = "";
-		var _active = false;
-		
-		/* ELEMENTS
-		================================================== */
-		var $timenav = "";
-		//var $timenav_container_mask = "";
-		//var $timenav_container = "";
-		
-		var $content = "";
-		var $time = "";
-		var $timeintervalminor = "";
-		var $timeinterval = "";
-		var $timeintervalmajor = "";
-		var $timebackground = "";
-		var $timeintervalbackground = "";
-		var $timenavline = "";
-		var $timeintervalminor_minor = "";
-		var $toolbar = "";
-		var $zoomin = "";
-		var $zoomout = "";
-		
-		var navigation = {};
 		// Nav Items
 		navigation.nextBtn;
 		navigation.prevBtn;
@@ -5414,8 +5323,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		/* PUBLIC VARS
 		================================================== */
 		this.ver = "0.1";
-		var layout = parent; // expecting slider div
-		
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -5485,7 +5392,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					config.multiplier = config.multiplier - .25;
 				} else {
 					if (config.multiplier > 5) {
-						config.multiplier = Math.round(config.multiplier - 4);
+						if (config.multiplier > 16) {
+							config.multiplier = Math.round(config.multiplier - 10);
+						} else {
+							config.multiplier = Math.round(config.multiplier - 4);
+						}
 					} else {
 						config.multiplier = Math.round(config.multiplier - 1);
 					}
@@ -5502,7 +5413,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			VMM.DragSlider.cancelSlide();
 			if (config.multiplier < config.max_multiplier) {
 				if (config.multiplier > 4) {
-					config.multiplier = Math.round(config.multiplier + 4);
+					if (config.multiplier > 16) {
+						config.multiplier = Math.round(config.multiplier + 10);
+					} else {
+						config.multiplier = Math.round(config.multiplier + 4);
+					}
 				} else {
 					config.multiplier = Math.round(config.multiplier + 1);
 				}
@@ -6075,7 +5990,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.second.minor 				= 10;
 		}
 		
-		var rePositionInterval = function(the_intervals, is_animated) {
+		var rePositionInterval = function(the_intervals, is_animated, is_minor) {
 			
 			var _type = interval.type;
 			var _multiplier = interval.multiplier;
@@ -6103,23 +6018,26 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				//VMM.Element.css(_interval, "display", "block");
 				var is_visible = true;
 				 
-				if ((pos - last_position) < 65 ) {
-					if ((pos - last_position) < 35 ) {
-						if (i%4 == 0) {
-							if (pos == 0) {
+				if (config.multiplier > 16 && is_minor) {
+					is_visible = false;
+				} else {
+					if ((pos - last_position) < 65 ) {
+						if ((pos - last_position) < 35 ) {
+							if (i%4 == 0) {
+								if (pos == 0) {
+									is_visible = false;
+								}
+							} else {
 								is_visible = false;
 							}
 						} else {
-							is_visible = false;
-						}
-					} else {
-						if (!VMM.Util.isEven(i)) {
-							is_visible = false;
+							if (!VMM.Util.isEven(i)) {
+								is_visible = false;
+							}
 						}
 					}
-				} 
+				}
 				
-
 				
 				if (_interval_visible) {
 					if (!is_visible) {
@@ -6132,8 +6050,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 						the_intervals[i].interval_visible = true;
 					}
 				}
-				
-				
 				
 				last_position = pos;
 				
@@ -6656,7 +6572,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		var refreshTimeline = function() {
 			trace("config.multiplier " + config.multiplier);
 			positionMarkers(true);
-			rePositionInterval(interval_array, true);
+			rePositionInterval(interval_array, true, true);
 			rePositionInterval(interval_major_array, true);
 		};
 		
