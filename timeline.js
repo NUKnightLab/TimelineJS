@@ -3596,7 +3596,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (current_slide == 0) {
 				is_first = true;
 			}
-			if (current_slide +1 == slides.length) {
+			if (current_slide +1 >= slides.length) {
 				is_last = true
 			}
 			
@@ -4741,34 +4741,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var version = "0.98";
 		trace("TIMELINE VERSION " + version);
 		
-		var $timeline = VMM.getElement("#timeline"); // expecting name only for parent
-		var $feedback;
-		var $messege;
+		var $timeline, $feedback, $messege, html_string;
 		
-		var html_string = VMM.getElement("#timeline");
-		
-		/* CREATE DOM STRUCTURE
-		================================================== */
-		//VMM.attachElement($timeline, "");
-		
+		$timeline = VMM.getElement("#timeline");
+		html_string = VMM.getElement("#timeline");
 		$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 		$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "#Timeline");
 		
-		//VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
-		
-		
-		
-		
 		/* PRIVATE VARS
 		================================================== */
-		var _private_var = 'private';
-		var events = {}; // CUSTOM EVENT HOLDER
-		var data = {}; // HOLDS DATA
-		var _dates = []; // HOLDES PROCESSED DATES
+		var events = {}, data = {}, _dates = [];
 		
 		/* CONFIG
 		================================================== */
-		
 		var config = {
 			type: "timeline",
 			maptype: "toner",
@@ -4980,7 +4965,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var showMessege = function(e, msg) {
 			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", msg);
-			
 		};
 		
 		var hideMessege = function() {
@@ -5121,18 +5105,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (config.width <= 480) {
 				// MOBILE
-				VMM.Element.hide("div.navigation");
-				VMM.Element.hide("div.nav-next");
-				VMM.Element.hide("div.nav-previous");
-				//VMM.Element.css(".slider-item .content", "max-width", "100%");
-				//VMM.Element.width(".slider-item .content", "90%");
-				VMM.Element.height(".slider-container-mask", config.height);
+				//VMM.Element.hide("div.navigation");
+				//VMM.Element.height(".slider-container-mask", config.height);
 			} else {
 				// DESKTOP OR TABLET
-				VMM.Element.show("div.navigation");
-				VMM.Element.show("div.nav-next");
-				VMM.Element.show("div.nav-previous");
-				VMM.Element.height(".slider-container-mask", config.feature.height);
+				//VMM.Element.show("div.navigation");
+				//VMM.Element.height(".slider-container-mask", config.feature.height);
 			}
 			
 		};

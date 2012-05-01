@@ -434,7 +434,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (current_slide == 0) {
 				is_first = true;
 			}
-			if (current_slide +1 == slides.length) {
+			if (current_slide +1 >= slides.length) {
 				is_last = true
 			}
 			
