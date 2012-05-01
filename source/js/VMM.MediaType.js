@@ -53,7 +53,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "twitter";
 			media.id = twitter_id;
 			success = true;
-		} else if (d.match("maps.google")) {
+		} else if (d.match("maps.google") && !d.match("staticmap")) {
 			//maps.google.com
 			media.type  = "google-map";
 		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
@@ -68,7 +68,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			//media.id = media.id.split("/")[1];
 			//trace("FLICKR " + media.id);
 			success = true;
-		} else if (d.match(/jpg|jpeg|png|gif/i)) {
+		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap")) {
 			media.type  = "image";
 			media.id    = d;
 			success = true;
