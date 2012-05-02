@@ -65,38 +65,53 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* CONFIG
 		================================================== */
 		config = {
-			id: timeline_id,
-			type: "timeline",
-			maptype: "toner",
-			interval: 10,
-			something: 0,
-			width: 960,
-			height: 540,
-			spacing: 15,
+			id: 					timeline_id,
+			type: 					"timeline",
+			maptype: 				"toner",
+			start_page: 			false,
+			interval: 				10,
+			something: 				0,
+			width: 					960,
+			height: 				540,
+			spacing: 				15,
 			loaded: {
-				slider: false, 
-				timenav: false, 
-				percentloaded:0
+				slider: 			false, 
+				timenav: 			false, 
+				percentloaded: 		0
 			},
 			nav: {
-				width: 960,
-				height: 200
+				start_page: 		false,
+				interval_width: 	200,
+				density: 			4,
+				minor_width: 		0,
+				multiplier: {
+					current: 		6,
+					min: 			.1,
+					max: 			50
+				},
+				rows: 				[1, 1, 1],
+				width: 				960,
+				height: 			200,
+				marker: {
+					width: 			150,
+					height: 		48
+				}
 			},
 			feature: {
-				width: 960,
-				height: 540
+				width: 				960,
+				height: 			540
 			},
 			slider: {
-				width: 720,
-				height: 400,
+				width: 				720,
+				height: 			400,
 				content: {
-					width: 720,
-					height: 400,
-					padding: 130,
+					width: 			720,
+					height: 		400,
+					padding: 		130,
 				},
 				nav: {
-					width: 100,
-					height: 200
+					width: 			100,
+					height: 		200
 				}
 			},
 			ease: "easeInOutExpo",
@@ -117,16 +132,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* CREATE CONFIG
 		================================================== */
 		var createConfig = function(conf) {
-			VMM.Timeline.Config = 			config;
-			VMM.master_config.Timeline = 	VMM.Timeline.Config;
+
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
 			if (typeof timeline_config == 'object') {
 				trace("HAS TIMELINE CONFIG");
 			    var x;
-				for (x in _timeline_config) {
-					if (Object.prototype.hasOwnProperty.call(_timeline_config, x)) {
-						config[x] = _timeline_config[x];
+				for (x in timeline_config) {
+					if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
+						config[x] = timeline_config[x];
 					}
 				}
 			} else if (typeof conf == 'object') {
@@ -138,14 +152,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			config.nav = 			{width: config.width, height: 200};
-			config.feature = 		{width: config.width, height: config.height - config.nav.height};
+			config.nav.width = 				config.width;
+			config.nav.height = 			200;
+			config.feature.width = 			config.width;
+			config.feature.height = 		config.height - config.nav.height;
 			
-			if (VMM.Browser.device == "mobile") {
-				//config.feature.height = config.height;
-			} else {
-				//config.feature.height = config.height - config.nav.height;
-			}
+			VMM.Timeline.Config = 			config;
+			VMM.master_config.Timeline = 	VMM.Timeline.Config;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -158,7 +171,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
 			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
-			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation", 720, 400, true);
+			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
 			if (!has_width) {
 				config.width = VMM.Element.width($timeline);
@@ -172,9 +185,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Element.height($timeline, config.height);
 			}
 			
-
 		}
-		
 		
 		/* ON EVENT
 		================================================== */
@@ -201,7 +212,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			updateSize();
 			slider.setSize(config.feature.width, config.feature.height);
 			timenav.setSize(config.width, config.height);
-			resizeSlides();
 		};
 		
 		function onSliderLoaded(e) {
@@ -331,28 +341,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		// BUILD SLIDE CONTENT	pass in json object
 		var buildSlide = function(dd, d_date) {
-			updateSize();
 			var d = dd;
 			var slide = "";
-			
-			var c = {};
-			c._text = "";
-			c._media = "";
-			
 			var _valid = false;
 			var _hasmedia = false;
 			var _hastext = false;
-			// NEEDS DATE IN ORDER TO USE
-			// TEXT
-			//if (d_date != null && d_date != "") {
+			var c = {};
+			
+			c._text = "";
+			c._media = "";
+			
+			updateSize();
+			
 			if (type.of(d_date) == "date") {
 				_valid = true;
-				if (dd.type == "start") {
-					
-				} else {
+				
+				if (dd.type != "start") {
 					c._text += VMM.createElement("h2", VMM.Util.date.prettyDate(d_date), "date");
 				}
-				//c._text += VMM.createElement("h2", d.strDate, "date");
 				
 				if (d.headline != null && d.headline != "") {
 					if (d.type == "tweets") {
@@ -363,6 +369,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						c._text += VMM.createElement("h3", VMM.Util.linkify_with_twitter(d.headline, "_blank"));
 					}
 				}
+				
 				if (d.text != null && d.text != "") {
 					_hastext = true;
 					c._text += VMM.createElement("p", VMM.Util.linkify_with_twitter(d.text, "_blank"));
@@ -371,46 +378,38 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				c._text = VMM.createElement("div", c._text, "container");
 				c._text = VMM.createElement("div", c._text, "text");
 				
-				//trace(c._text);
 			}
 			
-			// MEDIA
 			if (_valid) {
 				
+				var _layout_class = "content-container layout";
+				
 				if (d.asset != null && d.asset != "") {
-					
 					if (d.asset.media != null && d.asset.media != "") {
 						_hasmedia = true;
 						c._media = VMM.MediaElement.create("", d.asset, true, config.feature.width, config.feature.height);
 					}
-					
 				}
-				
-			}
-			
-			if (_valid) {
-				var _layout_class = "content-container layout";
 				
 				if (_hastext) {
 					_layout_class += "-text"
 				}
 				if (_hasmedia) {
 					_layout_class += "-media";
-				} 
-				//c._media = VMM.createElement("div", c._media, "media-wrapper");
+				}
 				
 				slide = VMM.createElement("div", c._text + c._media, _layout_class);
 				
+				return slide;
 				
-				
-				//trace(slide);
-
 			}
+			
 			return slide;
+			
 		}
 		
 		var updateSize = function() {
-			trace("UPDATE SIZE")
+			trace("UPDATE SIZE");
 			config.width = VMM.Element.width($timeline);
 			config.height = VMM.Element.height($timeline);
 			
@@ -425,27 +424,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.height = config.height - config.nav.height - 3;
 		};
 		
-		var resizeSlides = function() {
-			
-			/* CHECK FOR MOBILE 
-			================================================== */
-			if (config.width <= 480) {
-				// MOBILE
-				//VMM.Element.hide("div.navigation");
-				//VMM.Element.height(".slider-container-mask", config.height);
-			} else {
-				// DESKTOP OR TABLET
-				//VMM.Element.show("div.navigation");
-				//VMM.Element.height(".slider-container-mask", config.feature.height);
-			}
-			
-		};
-		
 		// BUILD DATE OBJECTS
 		var buildDates = function() {
 			
 			updateSize();
-			//$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Building Dates");
 			
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
@@ -454,8 +436,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				if (data.date[i].startDate != null && data.date[i].startDate != "") {
 					
 					var _date = {};
-					// START DATE
 					
+					// START DATE
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else if (data.date[i].type == "google spreadsheet") {
@@ -481,22 +463,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					// TITLE
 					_date.title = data.date[i].headline;
 					_date.type = data.date[i].type;
-					
-					// DATE
 					_date.date = VMM.Util.date.prettyDate(_date.startdate);
-					
-					// ASSET
 					_date.asset = data.date[i].asset;
-					
-					/* NEED FULL FRACTIONAL DATE
-					================================================== */
-
 					_date.fulldate = _date.startdate.getTime();
+					
 					// BUILD SLIDE CONTENT
-					// Won't be added unless there is content
 					_date.content = buildSlide(data.date[i], _date.startdate);
 					
 					if (_date.content != null && _date.content != "") {
@@ -505,7 +478,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					
 				}
 				
-					
 			};
 			
 			/* CUSTOM SORT
@@ -537,11 +509,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate.setHours(td.getHours() - 1);
 				}
 				*/
-				trace(td);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
-					
 					_date.startdate.setFullYear(td.getFullYear() - 1);
 				} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
 					// trace("YEAR MONTH");
@@ -556,7 +526,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					// trace("YEAR MONTH DAY HOUR MINUTE");
 					_date.startdate.setMinutes(td.getMinutes() - 1);
 				}
-				trace(td);
+				
 				_date.uniqueid = VMM.Util.unique_ID(5);
 				_date.enddate = _date.startdate;
 				_date.title = data.headline;
