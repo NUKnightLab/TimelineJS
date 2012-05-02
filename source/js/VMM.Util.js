@@ -66,58 +66,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 			return word_count;
 		},
-		/* Parse Date
-		================================================== */
-		// VMM.Util.parseDate(str)
-		parseDate: function(d) {
-			var _date;
-			
-			if ( d.match(/,/gi) ) {
-				
-
-				var _d_array = d.split(",");
-				
-				
-				for(var i = 0; i < _d_array.length; i++) {
-					_d_array[i] = parseInt(_d_array[i]);
-					
-				}
-				
-				_date = new Date();
-				if (_d_array[0]			) {	_date.setFullYear(_d_array[0]);			}
-				if (_d_array[1]	> 1		) {	_date.setMonth(_d_array[1] - 1);		}	else {		_date.setMonth(0);				}
-				if (_d_array[2]	> 1		) {	_date.setDate(_d_array[2]);				}	else {		_date.setDate(1);				}
-				if (_d_array[3]	> 1		) {	_date.setHours(_d_array[3]);			}	else {		_date.setHours(0);				}
-				if (_d_array[4]	> 1		) {	_date.setMinutes(_d_array[4]);			}	else {		_date.setMinutes(0);			}
-				if (_d_array[5]	> 1		) {	_date.setSeconds(_d_array[5]);			}	else {		_date.setSeconds(0);			}
-				if (_d_array[6]	> 1		) {	_date.setMilliseconds(_d_array[6]);		}	else {		_date.setMilliseconds(0);		}
-			} else if (d.match("/")) {
-				_date = new Date(d);
-			} else if (d.length < 5) {
-				_date = new Date();
-				_date.setFullYear(parseInt(d));
-				_date.setMonth(0);
-				_date.setDate(1);
-				_date.setHours(0);
-				_date.setMinutes(0);
-				_date.setSeconds(0);
-				_date.setMilliseconds(0);
-			}else {
-				_date = new Date(
-					parseInt(d.slice(0,4)), 
-					parseInt(d.slice(4,6)) - 1, 
-					parseInt(d.slice(6,8)), 
-					parseInt(d.slice(8,10)), 
-					parseInt(d.slice(10,12))
-				);
-			}
-			
-			return _date;
-		},
-		/* Get the corresponding ratio number
-		================================================== */
-		// VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
+		
 		ratio: {
+			/* Get the corresponding ratio number
+			================================================== */
+			// VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
 			r16_9: function(w,h) {
 				if (w !== null && w !== "") {
 					return Math.round((h / 16) * 9);
@@ -133,8 +86,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				}
 			}
 		},
-		// VMM.Util.date.day[0];
-		// VMM.Util.date.get12HRTime(time, seconds_true);
 		
 		date: {
 			dateformats: {
@@ -166,7 +117,64 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				dateFormat.i18n.monthNames	=	lang.date.month_abbr.concat(lang.date.month);
 			},
 			
-
+			parse: function(d) {
+				if (type.of(d) == "date") {
+					return d;
+				} else {
+					var _date = new Date(0, 0, 1, 0, 0, 0, 0);
+					var _d_array; // DATE ARRAY
+					var _t_array; // TIME ARRAY
+					if ( d.match(/,/gi) ) {
+						_d_array = d.split(",");
+						for(var i = 0; i < _d_array.length; i++) {
+							_d_array[i] = parseInt(_d_array[i]);
+						}
+						if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
+						if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
+						if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
+						if (	_d_array[3]	> 1		) {	_date.setHours(			_d_array[3]);			}
+						if (	_d_array[4]	> 1		) {	_date.setMinutes(		_d_array[4]);			}
+						if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
+						if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
+					} else if (d.match("/")) {
+						var _time_parse;
+						var _times;
+						if (d.match(" ")) {
+							_time_parse = d.split(" ");
+							if (d.match(":")) {
+								_t_array = _time_parse[1].split(":");
+								if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
+								if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
+								if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
+								if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+							}
+							_d_array = _time_parse[0].split("/");
+						} else {
+							_d_array = d.split("/");
+						}
+						if (	_d_array[2]			) {	_date.setFullYear(		_d_array[2]);			}
+						if (	_d_array[0]	> 1		) {	_date.setMonth(			_d_array[0] - 1);		}
+						if (	_d_array[1]	> 1		) {	_date.setDate(			_d_array[1]);			}
+					} else if (d.length < 5) {
+						_date.setFullYear(parseInt(d));
+						_date.setMonth(0);
+						_date.setDate(1);
+						_date.setHours(0);
+						_date.setMinutes(0);
+						_date.setSeconds(0);
+						_date.setMilliseconds(0);
+					}else {
+						_date = new Date(
+							parseInt(d.slice(0,4)), 
+							parseInt(d.slice(4,6)) - 1, 
+							parseInt(d.slice(6,8)), 
+							parseInt(d.slice(8,10)), 
+							parseInt(d.slice(10,12))
+						);
+					}
+					return _date;
+				}
+			},
 			
 			//VMM.Util.date.prettyDate(d, is_abbr)
 			prettyDate: function(d, is_abbr, date_type) {
@@ -218,6 +226,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				
 				return _date;
 			},
+			
 		},
 		
 		// VMM.Util.doubledigit(number).
