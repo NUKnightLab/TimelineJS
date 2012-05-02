@@ -90,6 +90,10 @@ if (typeof VMM == 'undefined') {
 	//var VMM = {};
 	var VMM = Class.extend({});
 	
+	/* Debug
+	================================================== */
+	VMM.debug = true;
+	
 	/* Master Config
 	================================================== */
 	
@@ -229,12 +233,14 @@ if (typeof VMM == 'undefined') {
 /* Trace (console.log)
 ================================================== */
 function trace( msg ) {
-	if (window.console) {
-		console.log(msg);
-	} else if ( typeof( jsTrace ) != 'undefined' ) {
-		jsTrace.send( msg );
-	} else {
-		//alert(msg);
+	if (VMM.debug) {
+		if (window.console) {
+			console.log(msg);
+		} else if ( typeof( jsTrace ) != 'undefined' ) {
+			jsTrace.send( msg );
+		} else {
+			//alert(msg);
+		}
 	}
 }
 
@@ -3327,6 +3333,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			
+			
 			// Animate Changes
 			VMM.Element.height($slider_mask, config.slider.height);
 			VMM.Element.width($slider_mask, current_width);
@@ -3659,7 +3666,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 			}
 			
-			
+			//VMM.Element.css(navigation.nextBtnContainer, "left", ( VMM.Element.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
 		/* BUILD NAVIGATION
@@ -4773,38 +4780,53 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* CONFIG
 		================================================== */
 		config = {
-			id: timeline_id,
-			type: "timeline",
-			maptype: "toner",
-			interval: 10,
-			something: 0,
-			width: 960,
-			height: 540,
-			spacing: 15,
+			id: 					timeline_id,
+			type: 					"timeline",
+			maptype: 				"toner",
+			start_page: 			false,
+			interval: 				10,
+			something: 				0,
+			width: 					960,
+			height: 				540,
+			spacing: 				15,
 			loaded: {
-				slider: false, 
-				timenav: false, 
-				percentloaded:0
+				slider: 			false, 
+				timenav: 			false, 
+				percentloaded: 		0
 			},
 			nav: {
-				width: 960,
-				height: 200
+				start_page: 		false,
+				interval_width: 	200,
+				density: 			4,
+				minor_width: 		0,
+				multiplier: {
+					current: 		6,
+					min: 			.1,
+					max: 			50
+				},
+				rows: 				[1, 1, 1],
+				width: 				960,
+				height: 			200,
+				marker: {
+					width: 			150,
+					height: 		48
+				}
 			},
 			feature: {
-				width: 960,
-				height: 540
+				width: 				960,
+				height: 			540
 			},
 			slider: {
-				width: 720,
-				height: 400,
+				width: 				720,
+				height: 			400,
 				content: {
-					width: 720,
-					height: 400,
-					padding: 130,
+					width: 			720,
+					height: 		400,
+					padding: 		130,
 				},
 				nav: {
-					width: 100,
-					height: 200
+					width: 			100,
+					height: 		200
 				}
 			},
 			ease: "easeInOutExpo",
@@ -4825,16 +4847,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* CREATE CONFIG
 		================================================== */
 		var createConfig = function(conf) {
-			VMM.Timeline.Config = 			config;
-			VMM.master_config.Timeline = 	VMM.Timeline.Config;
+
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
 			if (typeof timeline_config == 'object') {
 				trace("HAS TIMELINE CONFIG");
 			    var x;
-				for (x in _timeline_config) {
-					if (Object.prototype.hasOwnProperty.call(_timeline_config, x)) {
-						config[x] = _timeline_config[x];
+				for (x in timeline_config) {
+					if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
+						config[x] = timeline_config[x];
 					}
 				}
 			} else if (typeof conf == 'object') {
@@ -4846,14 +4867,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			config.nav = 			{width: config.width, height: 200};
-			config.feature = 		{width: config.width, height: config.height - config.nav.height};
+			config.nav.width = 				config.width;
+			config.nav.height = 			200;
+			config.feature.width = 			config.width;
+			config.feature.height = 		config.height - config.nav.height;
 			
-			if (VMM.Browser.device == "mobile") {
-				//config.feature.height = config.height;
-			} else {
-				//config.feature.height = config.height - config.nav.height;
-			}
+			VMM.Timeline.Config = 			config;
+			VMM.master_config.Timeline = 	VMM.Timeline.Config;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -4866,7 +4886,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
 			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
-			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation", 720, 400, true);
+			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
 			if (!has_width) {
 				config.width = VMM.Element.width($timeline);
@@ -4880,9 +4900,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Element.height($timeline, config.height);
 			}
 			
-
 		}
-		
 		
 		/* ON EVENT
 		================================================== */
@@ -4909,7 +4927,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			updateSize();
 			slider.setSize(config.feature.width, config.feature.height);
 			timenav.setSize(config.width, config.height);
-			resizeSlides();
 		};
 		
 		function onSliderLoaded(e) {
@@ -5039,28 +5056,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		// BUILD SLIDE CONTENT	pass in json object
 		var buildSlide = function(dd, d_date) {
-			updateSize();
 			var d = dd;
 			var slide = "";
-			
-			var c = {};
-			c._text = "";
-			c._media = "";
-			
 			var _valid = false;
 			var _hasmedia = false;
 			var _hastext = false;
-			// NEEDS DATE IN ORDER TO USE
-			// TEXT
-			//if (d_date != null && d_date != "") {
+			var c = {};
+			
+			c._text = "";
+			c._media = "";
+			
+			updateSize();
+			
 			if (type.of(d_date) == "date") {
 				_valid = true;
-				if (dd.type == "start") {
-					
-				} else {
+				
+				if (dd.type != "start") {
 					c._text += VMM.createElement("h2", VMM.Util.date.prettyDate(d_date), "date");
 				}
-				//c._text += VMM.createElement("h2", d.strDate, "date");
 				
 				if (d.headline != null && d.headline != "") {
 					if (d.type == "tweets") {
@@ -5071,6 +5084,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						c._text += VMM.createElement("h3", VMM.Util.linkify_with_twitter(d.headline, "_blank"));
 					}
 				}
+				
 				if (d.text != null && d.text != "") {
 					_hastext = true;
 					c._text += VMM.createElement("p", VMM.Util.linkify_with_twitter(d.text, "_blank"));
@@ -5079,46 +5093,38 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				c._text = VMM.createElement("div", c._text, "container");
 				c._text = VMM.createElement("div", c._text, "text");
 				
-				//trace(c._text);
 			}
 			
-			// MEDIA
 			if (_valid) {
 				
+				var _layout_class = "content-container layout";
+				
 				if (d.asset != null && d.asset != "") {
-					
 					if (d.asset.media != null && d.asset.media != "") {
 						_hasmedia = true;
 						c._media = VMM.MediaElement.create("", d.asset, true, config.feature.width, config.feature.height);
 					}
-					
 				}
-				
-			}
-			
-			if (_valid) {
-				var _layout_class = "content-container layout";
 				
 				if (_hastext) {
 					_layout_class += "-text"
 				}
 				if (_hasmedia) {
 					_layout_class += "-media";
-				} 
-				//c._media = VMM.createElement("div", c._media, "media-wrapper");
+				}
 				
 				slide = VMM.createElement("div", c._text + c._media, _layout_class);
 				
+				return slide;
 				
-				
-				//trace(slide);
-
 			}
+			
 			return slide;
+			
 		}
 		
 		var updateSize = function() {
-			trace("UPDATE SIZE")
+			trace("UPDATE SIZE");
 			config.width = VMM.Element.width($timeline);
 			config.height = VMM.Element.height($timeline);
 			
@@ -5133,27 +5139,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.height = config.height - config.nav.height - 3;
 		};
 		
-		var resizeSlides = function() {
-			
-			/* CHECK FOR MOBILE 
-			================================================== */
-			if (config.width <= 480) {
-				// MOBILE
-				//VMM.Element.hide("div.navigation");
-				//VMM.Element.height(".slider-container-mask", config.height);
-			} else {
-				// DESKTOP OR TABLET
-				//VMM.Element.show("div.navigation");
-				//VMM.Element.height(".slider-container-mask", config.feature.height);
-			}
-			
-		};
-		
 		// BUILD DATE OBJECTS
 		var buildDates = function() {
 			
 			updateSize();
-			//$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Building Dates");
 			
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
@@ -5162,8 +5151,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				if (data.date[i].startDate != null && data.date[i].startDate != "") {
 					
 					var _date = {};
-					// START DATE
 					
+					// START DATE
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else if (data.date[i].type == "google spreadsheet") {
@@ -5189,22 +5178,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					// TITLE
 					_date.title = data.date[i].headline;
 					_date.type = data.date[i].type;
-					
-					// DATE
 					_date.date = VMM.Util.date.prettyDate(_date.startdate);
-					
-					// ASSET
 					_date.asset = data.date[i].asset;
-					
-					/* NEED FULL FRACTIONAL DATE
-					================================================== */
-
 					_date.fulldate = _date.startdate.getTime();
+					
 					// BUILD SLIDE CONTENT
-					// Won't be added unless there is content
 					_date.content = buildSlide(data.date[i], _date.startdate);
 					
 					if (_date.content != null && _date.content != "") {
@@ -5213,7 +5193,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					
 				}
 				
-					
 			};
 			
 			/* CUSTOM SORT
@@ -5245,11 +5224,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate.setHours(td.getHours() - 1);
 				}
 				*/
-				trace(td);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
-					
 					_date.startdate.setFullYear(td.getFullYear() - 1);
 				} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
 					// trace("YEAR MONTH");
@@ -5264,7 +5241,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					// trace("YEAR MONTH DAY HOUR MINUTE");
 					_date.startdate.setMinutes(td.getMinutes() - 1);
 				}
-				trace(td);
+				
 				_date.uniqueid = VMM.Util.unique_ID(5);
 				_date.enddate = _date.startdate;
 				_date.title = data.headline;
@@ -5307,15 +5284,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 	VMM.Timeline.TimeNav = function(parent, content_width, content_height) {
 		trace("VMM.Timeline.TimeNav");
 		
-		var events = {}, timespan = {}, navigation = {}, layout = parent;
+		var events = {}, timespan = {}, layout = parent;
 		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content;
-		var current_marker = 0;
-		var _active = false;
+		var current_marker = 		0;
+		var _active = 				false;
 		var timelookup = 			{day: 24, month: 12, year: 10, hour: 60, minute: 60, second: 1000, decade: 10, century: 100, millenium: 1000, week: 4.34812141, days_in_month: 30.4368499, days_in_week: 7, weeks_in_month:4.34812141, weeks_in_year:52.177457, days_in_year: 365.242199, hours_in_day: 24 };
 		var dateFractionBrowser = 	{day: 86400000, week: 7, month: 30.4166666667, year: 12, hour: 24, minute: 1440, second: 86400, decade: 10, century: 100, millenium: 1000 };
-		var interval = 				{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
-		var interval_major = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
-		var interval_macro = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100};
+		var interval = 				{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"_idd", interval_type:"interval"};
+		var interval_major = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"major", interval_type:"interval major"};
+		var interval_macro = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:""};
 		var interval_calc = 		{day: {},month: {},year: {},hour: {},minute: {}, second: {},decade: {},century: {},millenium: {},week: {}};
 		
 		/* ELEMENTS
@@ -5324,44 +5301,26 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* ADD to Config
 		================================================== */
-		var config = VMM.Timeline.Config;
-		config.something = 0;
-		config.nav_width = 100;
-		config.nav_height = 200;
-		config.timeline = false;
-		config.marker_width = 150;
-		config.marker_height = 48;
-		config.density = 1;
-		config.timeline_width = 900;
-		config.interval_width = 200;
-		config.rows = [1, 1, 1];
-		config.multiplier = 6;
-		config.max_multiplier = 50;
-		config.min_multiplier = .1;
-		config.has_start_page = false;
-		
-		config.rows = [config.marker_height, config.marker_height*2, 1];
+		var config = 				VMM.Timeline.Config;
+		config.nav.rows = 			[config.nav.marker.height, config.nav.marker.height*2, 1];
 		
 		if (content_width != null && content_width != "") {
-			config.width = content_width;
+			config.nav.width = 		content_width;
 		} 
 		if (content_height != null && content_height != "") {
-			config.height = content_height;
-		} 
+			config.nav.height = 	content_height;
+		}
 		
-		// Nav Items
-		navigation.nextBtn;
-		navigation.prevBtn;
-		navigation.nextDate;
-		navigation.prevDate;
-		navigation.nextTitle;
-		navigation.prevTitle;
+		/*
+		config.nav.density = 		2;
+		config.nav.multiplier = {
+			current: 				6,
+			min: 					.1,
+			max: 					50
+		};
+		*/
 		
-		/* PUBLIC VARS
-		================================================== */
-		this.ver = "0.1";
-		
-		/* PUBLIC FUNCTIONS
+		/* INIT
 		================================================== */
 		this.init = function(d,e) {
 			trace('VMM.Timeline.TimeNav init');
@@ -5413,8 +5372,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function reSize(firstrun) {
 			VMM.Element.css($timenavline, "left", Math.round(config.width/2)+2);
-			//VMM.Element.css($toolbar, "left", Math.round(config.width/2)-19);
-			
 			goToMarker(current_marker, config.ease, config.duration, true, firstrun);
 		};
 		
@@ -5424,23 +5381,23 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function onZoomIn() {
 			VMM.DragSlider.cancelSlide();
-			if (config.multiplier > config.min_multiplier) {
-				if (config.multiplier <= 1) {
-					config.multiplier = config.multiplier - .25;
+			if (config.nav.multiplier.current > config.nav.multiplier.min) {
+				if (config.nav.multiplier.current <= 1) {
+					config.nav.multiplier.current = config.nav.multiplier.current - .25;
 				} else {
-					if (config.multiplier > 5) {
-						if (config.multiplier > 16) {
-							config.multiplier = Math.round(config.multiplier - 10);
+					if (config.nav.multiplier.current > 5) {
+						if (config.nav.multiplier.current > 16) {
+							config.nav.multiplier.current = Math.round(config.nav.multiplier.current - 10);
 						} else {
-							config.multiplier = Math.round(config.multiplier - 4);
+							config.nav.multiplier.current = Math.round(config.nav.multiplier.current - 4);
 						}
 					} else {
-						config.multiplier = Math.round(config.multiplier - 1);
+						config.nav.multiplier.current = Math.round(config.nav.multiplier.current - 1);
 					}
 					
 				}
-				if (config.multiplier <= 0) {
-					config.multiplier = config.min_multiplier;
+				if (config.nav.multiplier.current <= 0) {
+					config.nav.multiplier.current = config.nav.multiplier.min;
 				}
 				refreshTimeline();
 			}
@@ -5448,30 +5405,37 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function onZoomOut() {
 			VMM.DragSlider.cancelSlide();
-			if (config.multiplier < config.max_multiplier) {
-				if (config.multiplier > 4) {
-					if (config.multiplier > 16) {
-						config.multiplier = Math.round(config.multiplier + 10);
+			if (config.nav.multiplier.current < config.nav.multiplier.max) {
+				if (config.nav.multiplier.current > 4) {
+					if (config.nav.multiplier.current > 16) {
+						config.nav.multiplier.current = Math.round(config.nav.multiplier.current + 10);
 					} else {
-						config.multiplier = Math.round(config.multiplier + 4);
+						config.nav.multiplier.current = Math.round(config.nav.multiplier.current + 4);
 					}
 				} else {
-					config.multiplier = Math.round(config.multiplier + 1);
+					config.nav.multiplier.current = Math.round(config.nav.multiplier.current + 1);
 				}
 				
-				if (config.multiplier >= config.max_multiplier) {
-					config.multiplier = config.max_multiplier;
+				if (config.nav.multiplier.current >= config.nav.multiplier.max) {
+					config.nav.multiplier.current = config.nav.multiplier.max;
 				}
 				refreshTimeline();
 			}
 		}
-		
 		
 		function onBackHome(e) {
 			VMM.DragSlider.cancelSlide();
 			goToMarker(0);
 			upDate();
 		}
+		
+		var refreshTimeline = function() {
+			trace("config.nav.multiplier " + config.nav.multiplier.current);
+			positionMarkers(true);
+			positionInterval(interval_array, true, true);
+			positionInterval(interval_major_array, true);
+		};
+		
 		/* MARKER EVENTS
 		================================================== */
 		function onMarkerClick(e) {
@@ -5482,227 +5446,57 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function onMarkerHover(e) {
 			VMM.Element.toggleClass(e.data.elem, "zFront");
-			
 		};
+		
+		var goToMarker = function(n, ease, duration, fast, firstrun) {
+			
+			current_marker = 	n;
+			var _ease = 		config.ease;
+			var _duration = 	config.duration;
+			var is_last = 		false;
+			var is_first = 		false;
+			var _pos = 			VMM.Element.position(markers[current_marker].marker);
+			
+			if (current_marker == 0) {
+				is_first = true;
+			}
+			if (current_marker +1 == markers.length) {
+				is_last = true
+			}
+			if (ease != null && ease != "") {_ease = ease};
+			if (duration != null && duration != "") {_duration = duration};
+			
+			// set marker style
+			for(var i = 0; i < markers.length; i++) {
+				VMM.Element.removeClass(markers[i].marker, "active");
+			}
+			
+			if (config.start_page && markers[current_marker].type == "start") {
+				VMM.Element.visible(markers[current_marker].marker, false);
+				VMM.Element.addClass(markers[current_marker].marker, "start");
+			}
+			
+			VMM.Element.addClass(markers[current_marker].marker, "active");
+			
+			// ANIMATE MARKER
+			VMM.Element.stop($timenav);
+			VMM.Element.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
+			
+		}
 		
 		/* TOUCH EVENTS
 		================================================== */
 		function onTouchUpdate(e, b) {
 			VMM.Element.animate($timenav, b.time/2, config.ease, {"left": b.left});
-			
-			
 		};
 		
-		/* NAVIGATION
+		/* CALCULATIONS
 		================================================== */
-		var buildMarkers = function() {
-			
-			var row = 2; //row
-			var lpos = 0; // last marker pos;
-			var row_depth = 0;
-			
-			for(var i = 0; i < data.length; i++) {
-				
-				var bw = "";
-				var _marker;
-				var _marker_flag;
-				var _marker_content;
-				
-				var _marker_dot;
-				var _marker_line;
-				var _marker_line_event;
-				
-				/* CREATE ELEMENTS
-				================================================== */
-				_marker = VMM.appendAndGetElement($content, "<div>", "marker");
-				_marker_flag = VMM.appendAndGetElement(_marker, "<div>", "flag");
-				_marker_content = VMM.appendAndGetElement(_marker_flag, "<div>", "flag-content");
-				_marker_dot = VMM.appendAndGetElement(_marker, "<div>", "dot");
-				_marker_line = VMM.appendAndGetElement(_marker, "<div>", "line");
-				_marker_line_event = VMM.appendAndGetElement(_marker_line, "<div>", "event-line");
-				
-				
-				/* CREATE THUMBNAIL
-				================================================== */
-				if (data[i].asset != null && data[i].asset != "") {
-					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 32, 32));
-				}
-				
-				/* ADD DATE AND TITLE
-				================================================== */
-				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
-				
-				/* ADD ID
-				================================================== */
-				VMM.Element.attr(_marker, "id", (data[i].uniqueid).toString());
-				
-				/* MARKER CLICK
-				================================================== */
-				VMM.bindEvent(_marker_flag, onMarkerClick, "", {number: i});
-				VMM.bindEvent(_marker_flag, onMarkerHover, "mouseenter mouseleave", {number: i, elem:_marker_flag});
-
-				
-
-				/* ADD MARKER OBJ TO ARRAY FOR RETRIEVAL LATER
-				================================================== */
-				var _marker_obj = {
-					marker: _marker,
-					flag:_marker_flag,
-					lineevent: _marker_line_event,
-					type: "marker"
-				};
-				
-				
-				if (data[i].type == "start") {
-					trace("BUILD MARKER HAS START PAGE")
-					config.has_start_page = true;
-					_marker_obj.type = "start";
-				}
-				
-				markers.push(_marker_obj);
-				
-				
-				
-			}
-			
-			/* CREATE ERAS
-			================================================== */
-			for(var j = 0; j < eras.length; j++) {
-				
-				var bw = "";
-				var era = {
-					content:"",
-					startdate:"",
-					enddate:"",
-					headline:"",
-					uniqueid:"",
-					color:""
-				};
-				
-				era.title = eras[j].headline;
-				era.uniqueid = VMM.Util.unique_ID(4);
-				era.color = eras[j].color;
-				/* CREATE ELEMENTS
-				================================================== */
-				era.content = VMM.appendAndGetElement($content, "<div>", "era");
-				VMM.Element.attr(era.content, "id", era.uniqueid);
-				VMM.Element.css(era.content, "background", era.color);
-				/* ADD DATE AND TITLE
-				================================================== */
-				VMM.appendElement(era.content, "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>");
-				
-				
-				era.startdate = VMM.Util.parseDate(eras[j].startDate);
-				era.enddate = VMM.Util.parseDate(eras[j].endDate);
-				
-				era_markers.push(era);
-			}
-			
-			
-			
-		}
-		
-		var positionOnTimeline = function(the_interval, first, last) {
-			
-			var _type = the_interval.type;
-			var _multiplier = the_interval.multiplier;
-			
-			var _first = getDateFractions(first);
-			var _last;
-			
-			var tsd;
-			var ted;
-			
-			/* CALCULATE POSITION ON TIMELINE
-			================================================== */
-			tsd = first.months;
-			
-			if (type.of(last) == "date") {
-				
-				/* LAST
-				================================================== */
-				_last = getDateFractions(last);
-				ted = last.months;
-				
-				if (_type == "millenium") {
-					tsd = first.milleniums;
-					ted = last.milleniums;
-				} else if (_type == "century") {
-					tsd = _first.centuries;
-					ted = _last.centuries;
-				} else if (_type == "decade") {
-					tsd = _first.decades;
-					ted = _last.decades;
-				} else if (_type == "year") {
-					tsd = _first.years;
-					ted = _last.years;
-				} else if (_type == "month") {
-					tsd = _first.months;
-					ted = _last.months;
-				} else if (_type == "week") {
-					tsd = _first.weeks;
-					ted = _last.weeks;
-				} else if (_type == "day") {
-					tsd = _first.days;
-					ted = _last.days;
-				} else if (_type == "hour") {
-					tsd = _first.hours;
-					ted = _last.hours;
-				} else if (_type == "minute") {
-					tsd = _first.minutes;
-					ted = _last.minutes;
-				}
-				
-				_pos = 		( tsd	 - 	interval.base	 ) * (config.interval_width		/	 config.multiplier);
-				_pos_end = 	( ted	 - 	interval.base	 ) * (config.interval_width		/	 config.multiplier);
-				
-			} else {
-				
-				if (_type == "millenium") {
-					tsd = first.milleniums;
-					ted = first.milleniums;
-				} else if (_type == "century") {
-					tsd = _first.centuries;
-					ted = _first.centuries;
-				} else if (_type == "decade") {
-					tsd = _first.decades;
-					ted = _first.decades;
-				} else if (_type == "year") {
-					tsd = _first.years;
-					ted = _first.years;
-				} else if (_type == "month") {
-					tsd = _first.months;
-					ted = _first.months;
-				} else if (_type == "week") {
-					tsd = _first.weeks;
-					ted = _first.weeks;
-				} else if (_type == "day") {
-					tsd = _first.days;
-					ted = _first.days;
-				} else if (_type == "hour") {
-					tsd = _first.hours;
-					ted = _first.hours;
-				} else if (_type == "minute") {
-					tsd = _first.minutes;
-					ted = _first.minutes;
-				}
-				
-				_pos = 		( tsd	 - 	interval.base	 ) * (config.interval_width		/	 config.multiplier);
-				_pos_end = 	_pos;
-				
-			}
-			
-			
-			return pos = {begin:_pos ,end:_pos_end};
-			
-		}
-		
 		var averageMarkerPositionDistance = function() {
-			
-			var last_pos = 0;
-			var pos = 0;
-			var pos_dif = 0;
-			var mp_diff = [];
+			var last_pos = 		0;
+			var pos = 			0;
+			var pos_dif = 		0;
+			var mp_diff = 		[];
 			
 			for(var i = 0; i < markers.length; i++) {
 				if (data[i].type == "start") {
@@ -5714,208 +5508,47 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					pos_dif = pos - last_pos;
 					mp_diff.push(pos_dif);
 				}
-				
 			}
-			
 			return VMM.Util.average(mp_diff).mean;
-			
 		}
 		
 		var averageDateDistance = function() {
-			var last_dd = 0;
-			var dd = 0;
-			var date_dif = 0;
-			var date_diffs = [];
-			var is_first_date = true;
+			var last_dd = 			0;
+			var dd = 				0;
+			var date_dif = 			0;
+			var date_diffs = 		[];
+			var is_first_date = 	true;
+			
 			for(var i = 0; i < data.length; i++) {
 				if (data[i].type == "start") {
 					trace("DATA DATE IS START")
 				} else {
-					var _dd = data[i].startdate;
-					last_dd = dd;
-					dd = _dd;
-					date_dif = dd - last_dd;
+					var _dd = 		data[i].startdate;
+					last_dd = 		dd;
+					dd = 			_dd;
+					date_dif = 		dd - last_dd;
+					
 					date_diffs.push(date_dif);
 				}
-				
 			}
-			
 			return VMM.Util.average(date_diffs);
-			
 		}
 		
 		var calculateMultiplier = function() {
-			var temp_multiplier = config.multiplier;
+			var temp_multiplier = config.nav.multiplier.current;
 			for(var i = 0; i < temp_multiplier; i++) {
 				if (averageMarkerPositionDistance() < 75) {
-					if (config.multiplier > 1) {
-						config.multiplier = config.multiplier - 1;
+					if (config.nav.multiplier.current > 1) {
+						config.nav.multiplier.current = config.nav.multiplier.current - 1;
 					}
 				}
 			}
-		}
-
-		var positionMarkers = function(is_animated) {
-			
-			var _type = interval.type;
-			var _multiplier = interval.multiplier;
-			
-			// ROWS
-			var row = 2; //row
-			var lpos = 0; // last marker pos;
-			var row_depth = 0;
-			var _line_last_height_pos = 150;
-			var _line_height = 6;
-			
-			var cur_mark = 0;
-			
-			VMM.Element.removeClass(".flag", "row1");
-			VMM.Element.removeClass(".flag", "row2");
-			VMM.Element.removeClass(".flag", "row3");
-			
-			for(var i = 0; i < markers.length; i++) {
-				
-				//var pos; // X POSITION OF BEGINNING OF EVENT
-				var _line; // EVENT LENGTH
-				//var _pos_end; // X POSITION OF END OF EVENT
-				
-				var _marker = markers[i].marker;
-				var _marker_flag = markers[i].flag;
-				var _marker_line_event = markers[i].lineevent;
-				
-				
-				
-				var _pos = positionOnTimeline(interval, data[i].startdate, data[i].enddate);
-				
-				
-				pos = _pos.begin;
-				_pos_end = _pos.end;
-				
-				/* COMPENSATE FOR DATES BEING POITIONED IN THE MIDDLE
-				================================================== */
-				var _pos_offset = -2;
-				pos = Math.round(pos +  _pos_offset);
-				_pos_end = Math.round(_pos_end + _pos_offset);
-				_line = Math.round(_pos_end - pos);
-				
-				/* APPLY POSITION TO MARKER
-				================================================== */
-				if (is_animated) {
-					VMM.Element.stop(_marker);
-					VMM.Element.animate(_marker, config.duration/2, config.ease, {"left": pos});
-				} else {
-					VMM.Element.css(_marker, "left", pos);
-				}
-				if (i == current_marker) {
-					cur_mark = pos;
-					//trace("=========================== cur_mark " + cur_mark)
-				}
-				
-				/* EVENT LENGTH LINE
-				================================================== */
-				if (_line > 5) {
-					VMM.Element.css(_marker_line_event, "height", _line_height);
-					VMM.Element.css(_marker_line_event, "width", _line);
-					VMM.Element.css(_marker_line_event, "top", _line_last_height_pos);
-					//_line_last_height_pos = _line_last_height_pos - _line_height;
-				}
-				
-				/* CONTROL ROW POSITION
-				================================================== */
-				if (pos - lpos < (config.marker_width + config.spacing)) {
-					if (row < config.rows.length - 1) {
-						row ++;
-						
-					} else {
-						row = 0;
-						row_depth ++;
-					}
-				} else {
-					row_depth = 0;
-					row = 0;
-				}
-				
-				/* SET LAST MARKER POSITION
-				================================================== */
-				lpos = pos;
-				
-				if (is_animated) {
-					VMM.Element.stop(_marker_flag);
-					VMM.Element.animate(_marker_flag, config.duration, config.ease, {"top": config.rows[row]});
-				} else {
-					VMM.Element.css(_marker_flag, "top", config.rows[row]);
-				}
-				
-				/* IS THE MARKER A REPRESENTATION OF A START SCREEN?
-				================================================== */
-				if (config.has_start_page && markers[i].type == "start") {
-					VMM.Element.visible(_marker, false);
-				}
-				
-				
-				
-			}
-			
-			for(var j = 0; j < era_markers.length; j++) {
-				//var pos; // X POSITION OF BEGINNING OF EVENT
-				var _line; // EVENT LENGTH
-				//var _pos_end; // X POSITION OF END OF EVENT
-				
-				var era = era_markers[j];
-				var era_elem = era.content;
-				var pos = positionOnTimeline(interval, era.startdate, era.enddate);
-				var era_length = pos.end - pos.begin;
-				var era_height = 25;
-				
-				/* APPLY POSITION TO MARKER
-				================================================== */
-				VMM.Element.css(era_elem, "left", pos.begin);
-				VMM.Element.css(era_elem, "width", era_length);
-			}
-			
-			
-			/* ANIMATE THE TIMELINE TO ADJUST TO CHANGES
-			================================================== */
-			if (is_animated) {
-				VMM.Element.stop($timenav);
-				VMM.Element.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
-			}
-
-		
-		}
-		
-		var getDateFractions = function(the_date, is_utc) {
-			
-			var _time = {};
-			_time.days			= 		the_date / dateFractionBrowser.day;
-			_time.weeks 		= 		_time.days / dateFractionBrowser.week;
-			_time.months 		= 		_time.days / dateFractionBrowser.month;
-			_time.years 		= 		_time.months / dateFractionBrowser.year;
-			_time.hours 		= 		_time.days * dateFractionBrowser.hour;
-			_time.minutes 		= 		_time.days * dateFractionBrowser.minute;
-			_time.seconds 		= 		_time.days * dateFractionBrowser.second;
-			_time.decades 		= 		_time.years / dateFractionBrowser.decade;
-			_time.centuries 	= 		_time.years / dateFractionBrowser.century;
-			_time.milleniums 	= 		_time.years / dateFractionBrowser.millenium;
-			/*
-			trace("MILLENIUMS "	 + 		_time.milleniums);
-			trace("CENTURIES "	 + 		_time.centuries);
-			trace("DECADES "	 + 		_time.decades);
-			trace("YEARS "		 + 		_time.years);
-			trace("MONTHS "		 + 		_time.months);
-			trace("WEEKS "		 + 		_time.weeks);
-			trace("DAYS "		 + 		_time.days);
-			trace("HOURS "		 + 		_time.hours);
-			trace("MINUTES "	 + 		_time.minutes);
-			trace("SECONDS "	 + 		_time.seconds);
-			*/
-			return _time;
 		}
 		
 		var calculateInterval = function() {
 			
-			var _first = getDateFractions(data[0].startdate);
-			var _last = getDateFractions(data[data.length - 1].enddate);
+			var _first = 							getDateFractions(data[0].startdate);
+			var _last = 							getDateFractions(data[data.length - 1].enddate);
 			
 			/* MILLENIUM
 			================================================== */
@@ -6027,7 +5660,237 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.second.minor 				= 10;
 		}
 		
-		var rePositionInterval = function(the_intervals, is_animated, is_minor) {
+		var getDateFractions = function(the_date, is_utc) {
+			
+			var _time = {};
+			_time.days			= 		the_date / dateFractionBrowser.day;
+			_time.weeks 		= 		_time.days / dateFractionBrowser.week;
+			_time.months 		= 		_time.days / dateFractionBrowser.month;
+			_time.years 		= 		_time.months / dateFractionBrowser.year;
+			_time.hours 		= 		_time.days * dateFractionBrowser.hour;
+			_time.minutes 		= 		_time.days * dateFractionBrowser.minute;
+			_time.seconds 		= 		_time.days * dateFractionBrowser.second;
+			_time.decades 		= 		_time.years / dateFractionBrowser.decade;
+			_time.centuries 	= 		_time.years / dateFractionBrowser.century;
+			_time.milleniums 	= 		_time.years / dateFractionBrowser.millenium;
+			/*
+			trace("MILLENIUMS "	 + 		_time.milleniums);
+			trace("CENTURIES "	 + 		_time.centuries);
+			trace("DECADES "	 + 		_time.decades);
+			trace("YEARS "		 + 		_time.years);
+			trace("MONTHS "		 + 		_time.months);
+			trace("WEEKS "		 + 		_time.weeks);
+			trace("DAYS "		 + 		_time.days);
+			trace("HOURS "		 + 		_time.hours);
+			trace("MINUTES "	 + 		_time.minutes);
+			trace("SECONDS "	 + 		_time.seconds);
+			*/
+			return _time;
+		}
+		
+		/* POSITION
+		================================================== */
+		var positionOnTimeline = function(the_interval, first, last) {
+			
+			var _type = the_interval.type;
+			var _multiplier = the_interval.multiplier;
+			
+			var _first = getDateFractions(first);
+			var _last;
+			
+			var tsd;
+			var ted;
+			
+			/* CALCULATE POSITION ON TIMELINE
+			================================================== */
+			tsd = first.months;
+			
+			if (type.of(last) == "date") {
+				
+				/* LAST
+				================================================== */
+				_last = getDateFractions(last);
+				ted = last.months;
+				
+				if (_type == "millenium") {
+					tsd = first.milleniums;
+					ted = last.milleniums;
+				} else if (_type == "century") {
+					tsd = _first.centuries;
+					ted = _last.centuries;
+				} else if (_type == "decade") {
+					tsd = _first.decades;
+					ted = _last.decades;
+				} else if (_type == "year") {
+					tsd = _first.years;
+					ted = _last.years;
+				} else if (_type == "month") {
+					tsd = _first.months;
+					ted = _last.months;
+				} else if (_type == "week") {
+					tsd = _first.weeks;
+					ted = _last.weeks;
+				} else if (_type == "day") {
+					tsd = _first.days;
+					ted = _last.days;
+				} else if (_type == "hour") {
+					tsd = _first.hours;
+					ted = _last.hours;
+				} else if (_type == "minute") {
+					tsd = _first.minutes;
+					ted = _last.minutes;
+				}
+				
+				_pos = 		( tsd	 - 	interval.base	 ) * (config.nav.interval_width		/	 config.nav.multiplier.current);
+				_pos_end = 	( ted	 - 	interval.base	 ) * (config.nav.interval_width		/	 config.nav.multiplier.current);
+				
+			} else {
+				
+				if (_type == "millenium") {
+					tsd = first.milleniums;
+					ted = first.milleniums;
+				} else if (_type == "century") {
+					tsd = _first.centuries;
+					ted = _first.centuries;
+				} else if (_type == "decade") {
+					tsd = _first.decades;
+					ted = _first.decades;
+				} else if (_type == "year") {
+					tsd = _first.years;
+					ted = _first.years;
+				} else if (_type == "month") {
+					tsd = _first.months;
+					ted = _first.months;
+				} else if (_type == "week") {
+					tsd = _first.weeks;
+					ted = _first.weeks;
+				} else if (_type == "day") {
+					tsd = _first.days;
+					ted = _first.days;
+				} else if (_type == "hour") {
+					tsd = _first.hours;
+					ted = _first.hours;
+				} else if (_type == "minute") {
+					tsd = _first.minutes;
+					ted = _first.minutes;
+				}
+				
+				_pos = 		( tsd	 - 	interval.base	 ) * (config.nav.interval_width		/	 config.nav.multiplier.current);
+				_pos_end = 	_pos;
+				
+			}
+			
+			
+			return pos = {begin:_pos ,end:_pos_end};
+			
+		}
+		
+		var positionMarkers = function(is_animated) {
+			
+			var _type = interval.type;
+			var _multiplier = interval.multiplier;
+			
+			// ROWS
+			var row = 						2; //row
+			var lpos = 						0; // last marker pos;
+			var row_depth = 				0;
+			var _line_last_height_pos = 	150;
+			var _line_height = 				6;
+			var cur_mark = 					0;
+			
+			VMM.Element.removeClass(".flag", "row1");
+			VMM.Element.removeClass(".flag", "row2");
+			VMM.Element.removeClass(".flag", "row3");
+			
+			for(var i = 0; i < markers.length; i++) {
+				
+				var _line; // EVENT LENGTH
+				var _marker = 				markers[i].marker;
+				var _marker_flag = 			markers[i].flag;
+				var _marker_line_event = 	markers[i].lineevent;
+				var _pos = 					positionOnTimeline(interval, data[i].startdate, data[i].enddate);
+				var _pos_offset = 			-2;
+				
+				pos = 						_pos.begin;
+				_pos_end = 					_pos.end;
+				
+				// COMPENSATE FOR DATES BEING POITIONED IN THE MIDDLE
+				pos = 						Math.round(pos +  _pos_offset);
+				_pos_end = 					Math.round(_pos_end + _pos_offset);
+				_line = 					Math.round(_pos_end - pos);
+				
+				// APPLY POSITION TO MARKER
+				if (is_animated) {
+					VMM.Element.stop(_marker);
+					VMM.Element.animate(_marker, config.duration/2, config.ease, {"left": pos});
+				} else {
+					VMM.Element.css(_marker, "left", pos);
+				}
+				
+				if (i == current_marker) {
+					cur_mark = pos;
+				}
+				
+				// EVENT LENGTH LINE
+				if (_line > 5) {
+					VMM.Element.css(_marker_line_event, "height", _line_height);
+					VMM.Element.css(_marker_line_event, "width", _line);
+					VMM.Element.css(_marker_line_event, "top", _line_last_height_pos);
+				}
+				
+				// CONTROL ROW POSITION
+				if (pos - lpos < (config.nav.marker.width + config.spacing)) {
+					if (row < config.nav.rows.length - 1) {
+						row ++;
+						
+					} else {
+						row = 0;
+						row_depth ++;
+					}
+				} else {
+					row_depth = 0;
+					row = 0;
+				}
+				
+				// SET LAST MARKER POSITION
+				lpos = pos;
+				
+				if (is_animated) {
+					VMM.Element.stop(_marker_flag);
+					VMM.Element.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
+				} else {
+					VMM.Element.css(_marker_flag, "top", config.nav.rows[row]);
+				}
+				
+				// IS THE MARKER A REPRESENTATION OF A START SCREEN?
+				if (config.start_page && markers[i].type == "start") {
+					VMM.Element.visible(_marker, false);
+				}
+				
+			}
+			
+			for(var j = 0; j < era_markers.length; j++) {
+				var _line;
+				var era = 				era_markers[j];
+				var era_elem = 			era.content;
+				var pos = 				positionOnTimeline(interval, era.startdate, era.enddate);
+				var era_length = 		pos.end - pos.begin;
+				var era_height = 		25;
+				
+				// APPLY POSITION TO MARKER
+				VMM.Element.css(era_elem, "left", pos.begin);
+				VMM.Element.css(era_elem, "width", era_length);
+			}
+			
+			
+			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
+			VMM.Element.stop($timenav);
+			VMM.Element.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+
+		
+		}
+		
+		var positionInterval = function(the_intervals, is_animated, is_minor) {
 			
 			var _type = interval.type;
 			var _multiplier = interval.multiplier;
@@ -6040,22 +5903,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				var _interval_visible = the_intervals[i].interval_visible;
 				var _pos = positionOnTimeline(interval, _interval_date);
 				var pos = _pos.begin;
+				var is_visible = true;
+				var pos_offset = 50;
 				
-				/* APPLY POSITION TO MARKER
-				================================================== */
+				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					//VMM.Element.stop(_interval);
 					VMM.Element.animate(_interval, config.duration/2, config.ease, {"left": pos});
 				} else {
 					VMM.Element.css(_interval, "left", pos);
 				}
 				
-				/* CONDENSE WHAT IS DISPLAYED
-				================================================== */
-				//VMM.Element.css(_interval, "display", "block");
-				var is_visible = true;
-				 
-				if (config.multiplier > 16 && is_minor) {
+				// CONDENSE WHAT IS DISPLAYED
+				if (config.nav.multiplier.current > 16 && is_minor) {
 					is_visible = false;
 				} else {
 					if ((pos - last_position) < 65 ) {
@@ -6075,336 +5934,221 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					}
 				}
 				
-				
 				if (_interval_visible) {
 					if (!is_visible) {
-						VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
+						if (is_animated) {
+							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
+						} else {
+							VMM.Element.css(_interval, "opacity", 0);
+						}
 						the_intervals[i].interval_visible = false;
 					}
 				} else {
 					if (is_visible) {
-						VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
+						if (is_animated) {
+							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
+						} else {
+							VMM.Element.css(_interval, "opacity", 100);
+						}
 						the_intervals[i].interval_visible = true;
 					}
 				}
 				
 				last_position = pos;
 				
+				if (pos > config.nav.minor_width) {
+					config.nav.minor_width = pos;
+				}
+				
 			}
 			
-			var pos_offset = 50;
-			var interval_width = (last_position)+(pos_offset*6);
-			VMM.Element.width($timeintervalminor_minor, interval_width);
+			VMM.Element.css($timeintervalminor_minor, "left", -(config.width/2));
+			VMM.Element.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) );
 		}
 		
-		var positionInterval = function() {
-			
-			VMM.attachElement($timeinterval, "");
-			VMM.attachElement($timeintervalmajor, "");
-			
-			interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
-			interval_major.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
-			interval_macro.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
-			//interval.date_major_start = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
-			//interval.date_major_end = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
+		var createIntervalElements = function(_interval, _array, _element_parent) {
 			
 			var inc_time = 0;
-			var inc_time_major = 0;
 			var _first_run = true;
-			var _normal_first_pos = 0;
 			var _last_pos = 0;
-			var _last_pos_major = 0;
+			var _largest_pos = 0;
 			
-			for(var i = 0; i < interval.number + 1; i++) {
-				
+			VMM.attachElement(_element_parent, "");
+			
+			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
+			
+			for(var i = 0; i < Math.ceil(_interval.number) + 1; i++) {
 				var _idd;
-				if (interval.type == "century") {
+				var _pos;
+				var pos;
+				var _element = VMM.appendAndGetElement(_element_parent, "<div>", _interval.classname);
+				var _date;
+				var _visible = false;
+				
+				if (_interval.type == "millenium") {
 					if (_first_run) {
-						interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100) * 100		);
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 1000) * 1000	);
 					}
-					interval.date.setFullYear(interval.date.getFullYear() + (inc_time * 100));
-					//_idd = Math.floor(interval.date.getFullYear() / 100) * 100;
-				} else if (interval.type == "decade") {
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 1000));
+				}
+				
+				if (_interval.type == "century") {
 					if (_first_run) {
-						interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10) * 10		);
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100) * 100		);
 					}
-					interval.date.setFullYear(interval.date.getFullYear() + (inc_time * 10));
-					//_idd = Math.floor(interval.date.getFullYear() / 10) * 10;
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 100));
+				} else if (_interval.type == "decade") {
+					if (_first_run) {
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10) * 10		);
+					}
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 10));
 				} else if (interval.type == "year") {
 					if (_first_run) {
 						
 					}
-					interval.date.setFullYear(interval.date.getFullYear() + inc_time);
-					//_idd = interval.date.getFullYear();
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
-				} else if (interval.type == "month") {
+					_interval.date.setFullYear(_interval.date.getFullYear() + inc_time);
+				} else if (_interval.type == "month") {
 					if (_first_run) {
-						interval.date.setMonth(data[0].startdate.getMonth());
+						_interval.date.setMonth(data[0].startdate.getMonth());
 					}
-					interval.date.setMonth(interval.date.getMonth() + inc_time);
-					//_idd = VMM.Util.date.month[interval.date.getMonth()] + ", " + interval.date.getFullYear() ;
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
-				} else if (interval.type == "week") {
+					_interval.date.setMonth(_interval.date.getMonth() + inc_time);
+				} else if (_interval.type == "week") {
 					if (_first_run) {
-						interval.date.setMonth(		data[0].startdate.getMonth()		);
-						interval.date.setDate(		Math.floor(data[0].startdate.getDate() *7)			);
+						_interval.date.setMonth(		data[0].startdate.getMonth()		);
+						_interval.date.setDate(		Math.floor(data[0].startdate.getDate() *7)			);
 					}
-					interval.date.setDate(interval.date.getDate() + (inc_time * 7) );
-					//_idd = VMM.Util.date.day_abbr[interval.date.getDay()] + " " + VMM.Util.date.month_abbr[interval.date.getMonth()] + " " + interval.date.getDate();
-				} else if (interval.type == "day") {
+					_interval.date.setDate(_interval.date.getDate() + (inc_time * 7) );
+				} else if (_interval.type == "day") {
 					if (_first_run) {
-						interval.date.setMonth(		data[0].startdate.getMonth()			);
-						interval.date.setDate(		data[0].startdate.getDate()				);
+						_interval.date.setMonth(		data[0].startdate.getMonth()			);
+						_interval.date.setDate(		data[0].startdate.getDate()				);
 					}
-					interval.date.setDate(interval.date.getDate() + inc_time);
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
-					//_idd = VMM.Util.date.day_abbr[interval.date.getDay()] + " " +VMM.Util.date.month[interval.date.getMonth()] + " " + interval.date.getDate();
-				} else if (interval.type == "hour") {
+					_interval.date.setDate(_interval.date.getDate() + inc_time);
+				} else if (_interval.type == "hour") {
 					if (_first_run) {
-						interval.date.setMonth(		data[0].startdate.getMonth()			);
-						interval.date.setDate(		data[0].startdate.getDate()				);
-						interval.date.setHours(		data[0].startdate.getHours()			);
+						_interval.date.setMonth(		data[0].startdate.getMonth()			);
+						_interval.date.setDate(		data[0].startdate.getDate()				);
+						_interval.date.setHours(		data[0].startdate.getHours()			);
 					}
-					interval.date.setHours(interval.date.getHours() + inc_time);
-					//_idd = VMM.Util.date.get12HRTime(interval.date, false); //interval.date.getHours() + ":00";
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
-				} else if (interval.type == "minute") {
+					_interval.date.setHours(_interval.date.getHours() + inc_time);
+				} else if (_interval.type == "minute") {
 					if (_first_run) {
-						interval.date.setMonth(		data[0].startdate.getMonth()			);
-						interval.date.setDate(		data[0].startdate.getDate()				);
-						interval.date.setHours(		data[0].startdate.getHours()			);
-						interval.date.setMinutes(	data[0].startdate.getMinutes()			);
+						_interval.date.setMonth(		data[0].startdate.getMonth()			);
+						_interval.date.setDate(		data[0].startdate.getDate()				);
+						_interval.date.setHours(		data[0].startdate.getHours()			);
+						_interval.date.setMinutes(	data[0].startdate.getMinutes()			);
 					}
-					interval.date.setMinutes(interval.date.getMinutes() + inc_time);
-					//_idd = interval.date.getHours() + ":" + VMM.Util.doubledigit(interval.date.getMinutes());
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
-				} else if (interval.type == "second") {
+					_interval.date.setMinutes(_interval.date.getMinutes() + inc_time);
+				} else if (_interval.type == "second") {
 					if (_first_run) {
-						interval.date.setMonth(		data[0].startdate.getMonth()			);
-						interval.date.setDate(		data[0].startdate.getDate()				);
-						interval.date.setHours(		data[0].startdate.getHours()			);
-						interval.date.setMinutes(	data[0].startdate.getMinutes()			);
-						interval.date.setSeconds(	data[0].startdate.getSeconds()			);
+						_interval.date.setMonth(		data[0].startdate.getMonth()			);
+						_interval.date.setDate(		data[0].startdate.getDate()				);
+						_interval.date.setHours(		data[0].startdate.getHours()			);
+						_interval.date.setMinutes(	data[0].startdate.getMinutes()			);
+						_interval.date.setSeconds(	data[0].startdate.getSeconds()			);
 					}
-					interval.date.setSeconds(interval.date.getSeconds() + inc_time);
-					//_idd = interval.date.getHours() + ":" + VMM.Util.doubledigit(interval.date.getMinutes()) + ":" + VMM.Util.doubledigit(interval.date.getSeconds());
-					//_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
+					_interval.date.setSeconds(_interval.date.getSeconds() + inc_time);
 				}
-				_idd = VMM.Util.date.prettyDate(interval.date, true, interval.type);
+				
+				_idd = VMM.Util.date.prettyDate(_interval.date, true, _interval.type);
+				
 				inc_time = 1;
 				
-				if (_first_run) {
-					_normal_first_pos = pos; 
-				}
 				_first_run = false;
 				
-				var _pos = positionOnTimeline(interval, interval.date);
-				var pos = _pos.begin;
+				_pos = positionOnTimeline(_interval, _interval.date);
+				pos = _pos.begin;
 				
-				//$interval_date = VMM.appendAndGetElement($timeinterval, "<div>", "_idd");
+				VMM.appendElement(_element, _idd);
 				
-				var _interval_element = VMM.appendAndGetElement($timeinterval, "<div>", "_idd");
-				var _interval_visible = false;
-				VMM.appendElement(_interval_element, _idd);
-				
-				//VMM.Element.css(_interval_element, "left", pos);
-				VMM.Element.css(_interval_element, "text-indent", -(VMM.Element.width(_interval_element)/2));
-				VMM.Element.css(_interval_element, "opacity", "0");
-				/*
-				if ((pos - _last_pos) < 65 ) {
-					if ((pos - _last_pos) < 35 ) {
-						if (i%4 == 0) {
-							if (pos == 0) {
-								VMM.Element.css(_interval_element, "display", "none");
-								_interval_visible = false;
-							} else {
-								VMM.Element.css(_interval_element, "display", "");
-							}
-							
-						} else {
-							VMM.Element.css(_interval_element, "display", "none");
-							_interval_visible = false;
-						}
-					} else {
-						if (VMM.Util.isEven(i)) {
-							VMM.Element.css(_interval_element, "display", "none");
-							_interval_visible = false;
-						} else {
-							VMM.Element.css(_interval_element, "display", "");
-						}
-					}
-					
-				} else {
-					VMM.Element.css(_interval_element, "display", "");
-				}
-				*/
+				VMM.Element.css(_element, "text-indent", -(VMM.Element.width(_element)/2));
+				VMM.Element.css(_element, "opacity", "0");
+
 				_last_pos = pos;
 				
-				/* ADD INTERVAL OBJ TO ARRAY FOR RETRIEVAL LATER
-				================================================== */
+				if (pos > _largest_pos) {
+					_largest_pos = pos;
+				}
 				
-				var _interval_date = new Date(interval.date);
+				_date = new Date(_interval.date);
 				
-				var _interval_obj = {
-					interval_element: 	_interval_element,
-					interval_date: 		_interval_date,
-					interval_visible: 	_interval_visible, 
-					type: "interval"
+				var _obj = {
+					interval_element: 	_element,
+					interval_date: 		_date,
+					interval_visible: 	_visible, 
+					type: 				_interval.interval_type
 				};
 				
-				interval_array.push(_interval_obj);
+				_array.push(_obj);
 				
 			}
 			
-			_first_run = true;
-			_major_first_pos = 0;
-			_major_last_pos = 0;
+			VMM.Element.width($timeintervalminor_minor, _largest_pos);
 			
-			for(var i = 0; i < Math.ceil(interval_major.number) + 1; i++) {
-				var _idd;
-				
-				if (interval_major.type == "century") {
-					if (_first_run) {
-						interval_major.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100) * 100		);
-					}
-					interval_major.date.setFullYear(interval_major.date.getFullYear() + (inc_time_major * 100));
-					//_idd = Math.floor(interval_major.date.getFullYear() / 100) * 100;
-				} else if (interval_major.type == "decade") {
-					if (_first_run) {
-						interval_major.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10) * 10		);
-					}
-					interval_major.date.setFullYear(interval_major.date.getFullYear() + (inc_time_major * 10));
-					//_idd = Math.floor(interval_major.date.getFullYear() / 10) * 10;
-				} else if (interval_major.type == "year") {
-					if (_first_run) {
-
-					}
-					interval_major.date.setFullYear(interval_major.date.getFullYear() + inc_time_major);
-					//_idd = interval_major.date.getFullYear();
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				} else if (interval_major.type == "month") {
-					if (_first_run) {
-						interval_major.date.setMonth(data[0].startdate.getMonth());
-					}
-					interval_major.date.setMonth(interval_major.date.getMonth() + inc_time_major);
-					//_idd = VMM.Util.date.month[interval_major.date.getMonth()] + " " + interval_major.date.getFullYear();
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				} else if (interval_major.type == "week") {
-					if (_first_run) {
-						interval_major.date.setMonth(		data[0].startdate.getMonth()		);
-						interval_major.date.setDate(		Math.floor(data[0].startdate.getDate() *7)			);
-					}
-					interval_major.date.setDate(interval_major.date.getDate() + (inc_time_major * 7) );
-					//_idd = VMM.Util.date.day_abbr[interval_major.date.getDay()] + " " + VMM.Util.date.month_abbr[interval_major.date.getMonth()] + " " + interval_major.date.getDate();
-				} else if (interval_major.type == "day") {
-					if (_first_run) {
-						interval_major.date.setMonth(		data[0].startdate.getMonth()			);
-						interval_major.date.setDate(		data[0].startdate.getDate()				);
-					}
-					interval_major.date.setDate(interval_major.date.getDate() + inc_time_major);
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-					//_idd = VMM.Util.date.day[interval_major.date.getDay()] + " " + VMM.Util.date.month_abbr[interval_major.date.getMonth()] + " " + interval_major.date.getDate();
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				} else if (interval_major.type == "hour") {
-					if (_first_run) {
-						interval_major.date.setMonth(		data[0].startdate.getMonth()			);
-						interval_major.date.setDate(		data[0].startdate.getDate()				);
-						interval_major.date.setHours(		data[0].startdate.getHours()			);
-					}
-					interval_major.date.setHours(interval_major.date.getHours() + inc_time_major);
-					//_idd = VMM.Util.date.get12HRTime(interval_major.date, false); //interval_major.date.getHours() + ":00";
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				} else if (interval_major.type == "minute") {
-					if (_first_run) {
-						interval_major.date.setMonth(		data[0].startdate.getMonth()			);
-						interval_major.date.setDate(		data[0].startdate.getDate()				);
-						interval_major.date.setHours(		data[0].startdate.getHours()			);
-						interval_major.date.setMinutes(		data[0].startdate.getMinutes()			);
-					}
-					interval_major.date.setMinutes(interval_major.date.getMinutes() + inc_time_major);
-					//_idd = interval_major.date.getHours() + ":" + VMM.Util.doubledigit(interval_major.date.getMinutes());
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				} else if (interval_major.type == "second") {
-					if (_first_run) {
-						interval_major.date.setMonth(		data[0].startdate.getMonth()			);
-						interval_major.date.setDate(		data[0].startdate.getDate()				);
-						interval_major.date.setHours(		data[0].startdate.getHours()			);
-						interval_major.date.setMinutes(		data[0].startdate.getMinutes()			);
-						interval_major.date.setSeconds(		data[0].startdate.getSeconds()			);
-					}
-					interval_major.date.setSeconds(interval_major.date.getSeconds() + inc_time_major);
-					//_idd = interval_major.date.getHours() + ":" + VMM.Util.doubledigit(interval_major.date.getMinutes()) + ":" + VMM.Util.doubledigit(interval_major.date.getSeconds());
-					//_idd = VMM.Util.date.prettyDate(interval_major.date, true, interval_major.type);
-				}
-				trace("interval_major.type " + interval_major.type);
-				_idd = VMM.Util.date.prettyDate(interval_major.date, false, interval_major.type);
-				
-				inc_time_major = 1;
-				
-				
-				
-				/* 	BUILD DATE USING SAME METHODOLOGY AS MARKER POSITON
-					CREATE A DATE
-				//================================================== */
-				
-				var _pos = positionOnTimeline(interval, interval_major.date);
-				var pos = _pos.begin;
-				
-				//$interval_date = VMM.appendAndGetElement($timeintervalmajor, "<div>", "major");
-				_interval_major_element = VMM.appendAndGetElement($timeintervalmajor, "<div>", "major");
-				VMM.appendElement(_interval_major_element, _idd);
-				
-				//VMM.Element.css(_interval_major_element, "left", pos);
-				VMM.Element.css(_interval_major_element, "text-indent", -(VMM.Element.width(_interval_major_element)/2));
-				
-				if (_first_run) {
-					_major_first_pos = pos; 
-				}
-				_first_run = false;
-				
-				_last_pos_major = pos;
-				_major_last_pos = pos;
-				
-				/* ADD INTERVAL MAJOR OBJ TO ARRAY FOR RETRIEVAL LATER
-				================================================== */
-				
-				var _interval_major_date = new Date(interval_major.date);
-				
-				var _interval_major_obj = {
-					interval_element: 	_interval_major_element,
-					interval_date: 		_interval_major_date,
-					interval_visible: 	true,
-					type: "interval major"
-				};
-				
-				interval_major_array.push(_interval_major_obj);
-				
-			}
-			
-			VMM.Element.width($content, interval.number * (config.interval_width / config.multiplier) );
-			
-			//VMM.Element.width($timeintervalminor_minor, (interval.number * (config.interval_width / config.multiplier)) + 200 );
-			_minor_pos_offset = 50;
-			var _minor_width = (_major_last_pos - _major_first_pos)+(_minor_pos_offset*6);
-			var _normal_width = (_last_pos)+(_minor_pos_offset*6);
-			
-			if (_minor_width < _normal_width) {
-				VMM.Element.width($timeintervalminor_minor, _normal_width);
-			} else {
-				VMM.Element.width($timeintervalminor_minor, _minor_width);
-			}
-			
-			rePositionInterval(interval_array, true);
-			rePositionInterval(interval_major_array, true);
-			
-			//VMM.Element.css($timeintervalminor_minor, "left", _major_first_pos - _minor_pos_offset);
-			
-			config.timeline_width = VMM.Element.width($timeinterval);
-			
-			
+			positionInterval(_array);
 			
 			
 		}
+		
+		/* BUILD
+		================================================== */
+		var build = function() {
+			
+			VMM.attachElement(layout, "");
+			
+			$timenav = 					VMM.appendAndGetElement(layout, "<div>", "timenav");
+			$content = 					VMM.appendAndGetElement($timenav, "<div>", "content");
+			$time = 					VMM.appendAndGetElement($timenav, "<div>", "time");
+			$timeintervalminor = 		VMM.appendAndGetElement($time, "<div>", "time-interval-minor");
+			$timeintervalminor_minor = 	VMM.appendAndGetElement($timeintervalminor, "<div>", "minor");
+			$timeintervalmajor = 		VMM.appendAndGetElement($time, "<div>", "time-interval-major");
+			$timeinterval = 			VMM.appendAndGetElement($time, "<div>", "time-interval");
+			$timebackground = 			VMM.appendAndGetElement(layout, "<div>", "timenav-background");
+			$timenavline = 				VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
+			$timeintervalbackground = 	VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
+			$toolbar = 					VMM.appendAndGetElement(layout, "<div>", "toolbar");
+			
+			buildInterval();
+			buildMarkers();
+			calculateMultiplier();
+			positionMarkers();
+			positionInterval(interval_array, false, true);
+			positionInterval(interval_major_array);
+			reSize(true);
+			
+			if (config.start_page) {
+				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
+				VMM.bindEvent(".back-home", onBackHome, "click");
+				VMM.Element.css($toolbar, "top", 27);
+				VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Element.attribute($backhome, "rel", "tooltip");
+				
+			}
+			
+			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
+			
+			VMM.Element.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
+			VMM.Element.attribute($zoomin, "rel", "tooltip");
+			VMM.Element.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
+			VMM.Element.attribute($zoomout, "rel", "tooltip");
+
+			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
+			
+			// MAKE TIMELINE TOUCHABLE
+			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+				VMM.TouchSlider.createPanel($timebackground, $timenav, config.width, config.spacing, false);
+				VMM.bindEvent($timenav, onTouchUpdate, "TOUCHUPDATE");
+			} else {
+				VMM.DragSlider.createPanel(layout, $timenav, config.width, config.spacing, false);
+			}
+			
+			VMM.bindEvent(".zoom-in", onZoomIn, "click");
+			VMM.bindEvent(".zoom-out", onZoomOut, "click");
+			VMM.fireEvent(layout, "LOADED");
+			_active = true;
+			
+		};
 		
 		var buildInterval = function() {
 			
@@ -6414,206 +6158,138 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			//timespan = getDateFractions(	averageDateDistance().mean	);
 			trace(timespan);
 			calculateInterval();
+			//trace("averageDateDistance " + averageDateDistance().mean);
+			//trace(getDateFractions(	averageDateDistance().mean	)); 
+			//trace(timespan);
 			
 			/* DETERMINE DEFAULT INTERVAL TYPE
 			================================================== */
 
-			if (timespan.milleniums > data.length / config.density) {
-				interval = interval_calc.millenium;
-				interval_major = interval_calc.millenium;
-				interval_macro = interval_calc.millenium;
-			} else if (timespan.centuries > data.length / config.density) {
-				interval = Math.ceil(interval_calc.century);
-				interval_major = interval_calc.millenium;
-				interval_macro = interval_calc.decade;
-			} else if (timespan.decades > data.length / config.density) {
-				interval = interval_calc.decade;
-				interval_major = Math.ceil(interval_calc.century);
-				interval_macro = interval_calc.year;
-			} else if (timespan.years > data.length / config.density) {	
-				interval = interval_calc.year;
-				interval_major = interval_calc.decade;
-				interval_macro = interval_calc.month;
-			} else if (timespan.months > data.length / config.density) {
-				interval = interval_calc.month;
-				interval_major = interval_calc.year;
-				interval_macro = interval_calc.day;
-			} else if (timespan.days > data.length / config.density) {
-				interval = interval_calc.day;
-				interval_major = interval_calc.month;
-				interval_macro = interval_calc.hour;
-			} else if (timespan.hours > data.length / config.density) {
-				interval = interval_calc.hour;
-				interval_major = interval_calc.day;
-				interval_macro = interval_calc.minute;
-			} else if (timespan.minutes > data.length / config.density) {
-				interval = interval_calc.minute;
-				interval_major = interval_calc.hour;
-				interval_macro = interval_calc.second;
-			} else if (timespan.seconds > data.length / config.density) {
-				interval = interval_calc.second;
-				interval_major = interval_calc.minute;
-				interval_macro = interval_calc.second;
+			if (timespan.milleniums > data.length / config.nav.density) {
+				interval = 			interval_calc.millenium;
+				interval_major = 	interval_calc.millenium;
+				interval_macro = 	interval_calc.millenium;
+			} else if (timespan.centuries > data.length / config.nav.density) {
+				interval = 			interval_calc.century;
+				interval_major = 	interval_calc.millenium;
+				interval_macro = 	interval_calc.decade;
+			} else if (timespan.decades > data.length / config.nav.density) {
+				interval = 			interval_calc.decade;
+				interval_major = 	interval_calc.century;
+				interval_macro = 	interval_calc.year;
+			} else if (timespan.years > data.length / config.nav.density) {	
+				interval = 			interval_calc.year;
+				interval_major = 	interval_calc.decade;
+				interval_macro = 	interval_calc.month;
+			} else if (timespan.months > data.length / config.nav.density) {
+				interval = 			interval_calc.month;
+				interval_major = 	interval_calc.year;
+				interval_macro = 	interval_calc.day;
+			} else if (timespan.days > data.length / config.nav.density) {
+				interval = 			interval_calc.day;
+				interval_major = 	interval_calc.month;
+				interval_macro = 	interval_calc.hour;
+			} else if (timespan.hours > data.length / config.nav.density) {
+				interval = 			interval_calc.hour;
+				interval_major = 	interval_calc.day;
+				interval_macro = 	interval_calc.minute;
+			} else if (timespan.minutes > data.length / config.nav.density) {
+				interval = 			interval_calc.minute;
+				interval_major = 	interval_calc.hour;
+				interval_macro = 	interval_calc.second;
+			} else if (timespan.seconds > data.length / config.nav.density) {
+				interval = 			interval_calc.second;
+				interval_major = 	interval_calc.minute;
+				interval_macro = 	interval_calc.second;
 			} else {
 				trace("NO IDEA WHAT THE TYPE SHOULD BE");
-				//interval.type = "unknown";
-				//interval_major.type = "unknown";
-				interval = interval_calc.day;
-				interval_major = interval_calc.month;
-				interval_macro = interval_calc.hour;
+				interval = 			interval_calc.day;
+				interval_major = 	interval_calc.month;
+				interval_macro = 	interval_calc.hour;
 			}
-			trace(interval.type)
-			trace(interval_major.type)
-			trace()
-			$timeintervalminor_minor = VMM.appendAndGetElement($timeintervalminor, "<div>", "minor");
 			
+			trace("INTERVAL TYPE: " + interval.type);
+			trace("INTERVAL MAJOR TYPE: " + interval_major.type);
+			
+			createIntervalElements(interval, interval_array, $timeinterval);
+			createIntervalElements(interval_major, interval_major_array, $timeintervalmajor);
 			
 		}
 		
-		/* GO TO TIME MARKER
-		================================================== */
-		var goToMarker = function(n, ease, duration, fast, firstrun) {
+		var buildMarkers = function() {
 			
-			// Set current slide
-			current_marker = n;
+			var row = 					2; //row
+			var lpos = 					0; // last marker pos;
+			var row_depth = 			0;
 			
-			var _ease = config.ease;
-			var _duration = config.duration;
-			var is_last = false;
-			var is_first = false;
-			
-			if (current_marker == 0) {
-				is_first = true;
+			for(var i = 0; i < data.length; i++) {
+				
+				var _marker, _marker_flag, _marker_content, _marker_dot, _marker_line, _marker_line_event;
+				
+				_marker = 				VMM.appendAndGetElement($content, "<div>", "marker");
+				_marker_flag = 			VMM.appendAndGetElement(_marker, "<div>", "flag");
+				_marker_content = 		VMM.appendAndGetElement(_marker_flag, "<div>", "flag-content");
+				_marker_dot = 			VMM.appendAndGetElement(_marker, "<div>", "dot");
+				_marker_line = 			VMM.appendAndGetElement(_marker, "<div>", "line");
+				_marker_line_event = 	VMM.appendAndGetElement(_marker_line, "<div>", "event-line");
+				
+				
+				// THUMBNAIL
+				if (data[i].asset != null && data[i].asset != "") {
+					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 32, 32));
+				}
+				
+				// ADD DATE AND TITLE
+				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
+				
+				// ADD ID
+				VMM.Element.attr(_marker, "id", (data[i].uniqueid).toString());
+				
+				// MARKER CLICK
+				VMM.bindEvent(_marker_flag, onMarkerClick, "", {number: i});
+				VMM.bindEvent(_marker_flag, onMarkerHover, "mouseenter mouseleave", {number: i, elem:_marker_flag});
+				
+				var _marker_obj = {
+					marker: 			_marker,
+					flag: 				_marker_flag,
+					lineevent: 			_marker_line_event,
+					type: 				"marker"
+				};
+				
+				
+				if (data[i].type == "start") {
+					trace("BUILD MARKER HAS START PAGE")
+					config.start_page = true;
+					_marker_obj.type = "start";
+				}
+				
+				markers.push(_marker_obj);
+				
+				
+				
 			}
-			if (current_marker +1 == markers.length) {
-				is_last = true
+			
+			// CREATE ERAS
+			for(var j = 0; j < eras.length; j++) {
+				
+				var era = {
+					content: 			VMM.appendAndGetElement($content, "<div>", "era"),
+					startdate: 			VMM.Util.parseDate(eras[j].startDate),
+					enddate: 			VMM.Util.parseDate(eras[j].endDate),
+					title: 				eras[j].headline,
+					uniqueid: 			VMM.Util.unique_ID(4),
+					color: 				eras[j].color
+				};
+				
+				VMM.Element.attr(era.content, "id", era.uniqueid);
+				VMM.Element.css(era.content, "background", era.color);
+				VMM.appendElement(era.content, "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>");
+				
+				era_markers.push(era);
+				
 			}
-			if (ease != null && ease != "") {_ease = ease};
-			if (duration != null && duration != "") {_duration = duration};
-			
-			/* get marker position
-			================================================== */
-			var _pos = VMM.Element.position(markers[current_marker].marker);
-			
-			/* set marker style
-			================================================== */
-			for(var i = 0; i < markers.length; i++) {
-				VMM.Element.removeClass(markers[i].marker, "active");
-			}
-			
-			if (config.has_start_page && markers[current_marker].type == "start") {
-				VMM.Element.visible(markers[current_marker].marker, false);
-				VMM.Element.addClass(markers[current_marker].marker, "start");
-			}
-			
-			VMM.Element.addClass(markers[current_marker].marker, "active");
-			
-			/* set proper nav titles and dates etc.
-			================================================== */
-			if (is_first) {
-				//VMM.Element.visible(navigation.prevBtn, false);
-			} else {
-				//VMM.Element.visible(navigation.prevBtn, true);
-			}
-			if (is_last) {
-				//VMM.Element.visible(navigation.nextBtn, false);
-			} else {
-				//VMM.Element.visible(navigation.nextBtn, true);
-			}
-			
-			/* ANIMATE MARKER
-			================================================== */
-			VMM.Element.stop($timenav);
-			VMM.Element.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
-			
 			
 		}
-		
-		
-		/* BUILD
-		================================================== */
-		var build = function() {
-			// Clear out existing content
-			
-			VMM.attachElement(layout, "");
-			
-			$timenav = VMM.appendAndGetElement(layout, "<div>", "timenav");
-
-			
-			$content = VMM.appendAndGetElement($timenav, "<div>", "content");
-			$time = VMM.appendAndGetElement($timenav, "<div>", "time");
-			$timeintervalminor = VMM.appendAndGetElement($time, "<div>", "time-interval-minor");
-			$timeintervalmajor = VMM.appendAndGetElement($time, "<div>", "time-interval-major");
-			$timeinterval = VMM.appendAndGetElement($time, "<div>", "time-interval");
-			$timebackground = VMM.appendAndGetElement(layout, "<div>", "timenav-background");
-			$timenavline = VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
-			$timeintervalbackground = VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
-			
-			buildInterval();
-			buildMarkers();
-			
-			calculateMultiplier();
-			
-			positionMarkers();
-			positionInterval();
-			
-			reSize(true);
-			VMM.fireEvent(layout, "LOADED");
-			
-			$toolbar = VMM.appendAndGetElement(layout, "<div>", "toolbar");
-			
-			if (config.has_start_page) {
-				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
-				VMM.bindEvent(".back-home", onBackHome, "click");
-				VMM.Element.css($toolbar, "top", 27);
-				VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
-				VMM.Element.attribute($backhome, "rel", "tooltip");
-				
-			}
-			$zoomin = VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout = VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
-			
-			
-			
-			VMM.Element.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
-			VMM.Element.attribute($zoomin, "rel", "tooltip");
-			
-			VMM.Element.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
-			VMM.Element.attribute($zoomout, "rel", "tooltip");
-			
-			VMM.bindEvent(".zoom-in", onZoomIn, "click");
-			VMM.bindEvent(".zoom-out", onZoomOut, "click");
-			
-
-			$toolbar.tooltip({
-				selector: "div[rel=tooltip]",
-				placement: "right"
-			})
-			/* MAKE TIMELINE TOUCHABLE
-			================================================== */
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				VMM.TouchSlider.createPanel($timebackground, $timenav, config.width, config.spacing, false);
-				VMM.bindEvent($timenav, onTouchUpdate, "TOUCHUPDATE");
-			} else {
-				
-				VMM.DragSlider.createPanel(layout, $timenav, config.width, config.spacing, false);
-				//VMM.bindEvent($timenav, onDragUpdate, "DRAGUPDATE");
-			}
-			
-			
-			
-			_active = true;
-			
-		};
-		
-		var refreshTimeline = function() {
-			trace("config.multiplier " + config.multiplier);
-			positionMarkers(true);
-			rePositionInterval(interval_array, true, true);
-			rePositionInterval(interval_major_array, true);
-		};
-		
-		
 		
 	};
 	
