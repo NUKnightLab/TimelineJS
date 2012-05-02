@@ -45,24 +45,27 @@
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
-	VMM.Timeline = function(w, h, conf) {
-		var version = "0.98";
+	VMM.Timeline = function(w, h, conf, _timeline_id) {
+		
+		var $timeline, $feedback, $messege, slider, timenav, version, timeline_id;
+		var events = {}, data = {}, _dates = [], config = {};
+		var has_width = false, has_height = false, ie7 = false;
+		
+		
+		if (type.of(_timeline_id) == "string") {
+			timeline_id = _timeline_id;
+		} else {
+			timeline_id = "#timeline";
+		}
+		
+		version = 			"0.98.1";
+		
 		trace("TIMELINE VERSION " + version);
-		
-		var $timeline, $feedback, $messege, html_string;
-		
-		$timeline = VMM.getElement("#timeline");
-		html_string = VMM.getElement("#timeline");
-		$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-		$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "#Timeline");
-		
-		/* PRIVATE VARS
-		================================================== */
-		var events = {}, data = {}, _dates = [];
 		
 		/* CONFIG
 		================================================== */
-		var config = {
+		config = {
+			id: timeline_id,
 			type: "timeline",
 			maptype: "toner",
 			interval: 10,
@@ -101,75 +104,77 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			language: VMM.Language
 		};
 		
-		VMM.Timeline.Config = config;
-		VMM.master_config.Timeline = VMM.Timeline.Config;
-		
-		if (w != null && w != "") {
+		if ( w != null && w != "") {
 			config.width = w;
-			VMM.Element.width($timeline, w);
-		} else {
-			config.width = VMM.Element.width($timeline);
-		}
-		
-		if (h != null && h != "") {
-			config.height = h;
-			VMM.Element.height($timeline, h);
-		} else {
-			config.height = VMM.Element.height($timeline);
-		}
-		
-		config.nav = {
-			width: config.width,
-			height: 200
-		};
-		config.feature = {
-			width: config.width,
-			height: config.height - config.nav.height
-		}
-		
-		if (VMM.Browser.device == "mobile") {
-			config.feature.height = config.height;
-		} else {
-			//config.feature.height = config.height - config.nav.height;
-		}
-		
-		/* APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
-		================================================== */
-		
-		if (typeof timeline_config == 'object') {
-			trace("HAS TIMELINE CONFIG");
-		    var x;
-			for (x in timeline_config) {
-				if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
-					config[x] = timeline_config[x];
-				}
-			}
-		} else if (typeof conf == 'object') {
-			var x;
-			for (x in conf) {
-				if (Object.prototype.hasOwnProperty.call(conf, x)) {
-					config[x] = conf[x];
-				}
-			}
-		}
-		
-		/* CHECK FOR IE7
-		================================================== */
-		var ie7 = false;
-		if (VMM.Browser.browser == "MSIE") {
-			if ( parseInt(VMM.Browser.version, 10) == 7) {
-				ie7 = true;
-			}
-		}
-		
-		/* CREATE COMPONENTS
-		================================================== */
-		// SLIDER
-		//var slider = new VMM.Slider("div.slider", 720, 400, true);
-		var slider = new VMM.Slider("div.slider", config);
+			has_width = true;
+		} 
 
-		// TIMENAV
-		var timenav = new VMM.Timeline.TimeNav("div.navigation", 720, 400, true);
+		if ( h != null && h != "") {
+			config.height = h;
+			has_height = true;
+		}
+		
+		/* CREATE CONFIG
+		================================================== */
+		var createConfig = function(conf) {
+			VMM.Timeline.Config = 			config;
+			VMM.master_config.Timeline = 	VMM.Timeline.Config;
+			
+			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
+			if (typeof timeline_config == 'object') {
+				trace("HAS TIMELINE CONFIG");
+			    var x;
+				for (x in _timeline_config) {
+					if (Object.prototype.hasOwnProperty.call(_timeline_config, x)) {
+						config[x] = _timeline_config[x];
+					}
+				}
+			} else if (typeof conf == 'object') {
+				var x;
+				for (x in conf) {
+					if (Object.prototype.hasOwnProperty.call(conf, x)) {
+						config[x] = conf[x];
+					}
+				}
+			}
+			
+			config.nav = 			{width: config.width, height: 200};
+			config.feature = 		{width: config.width, height: config.height - config.nav.height};
+			
+			if (VMM.Browser.device == "mobile") {
+				//config.feature.height = config.height;
+			} else {
+				//config.feature.height = config.height - config.nav.height;
+			}
+		}
+		
+		/* CREATE TIMELINE STRUCTURE
+		================================================== */
+		var createStructure = function(w, h) {
+			$timeline = 			VMM.getElement(timeline_id);
+			
+			VMM.Element.addClass(timeline_id, "vmm-timeline");
+			
+			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
+			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
+			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation", 720, 400, true);
+			
+			if (!has_width) {
+				config.width = VMM.Element.width($timeline);
+			} else {
+				VMM.Element.width($timeline, config.width);
+			}
+
+			if (!has_height) {
+				config.height = VMM.Element.height($timeline);
+			} else {
+				VMM.Element.height($timeline, config.height);
+			}
+			
+
+		}
+		
 		
 		/* ON EVENT
 		================================================== */
@@ -227,31 +232,41 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
-		this.init = function(d) {
+		this.init = function(_data, _timeline_id, conf) {
+			
+			if (type.of(_timeline_id) == "string") {
+				if (_timeline_id.match("#")) {
+					timeline_id = _timeline_id;
+				} else {
+					timeline_id = "#" + _timeline_id;
+				}
+			}
+			
+			createConfig(conf);
+			createStructure(w,h);
 			
 			trace('TIMELINE INIT');
-			trace(VMM.Timeline.Config.language);
 			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			
+			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
 			
 			VMM.bindEvent(global, onDataReady, "DATAREADY");
 			VMM.bindEvent(global, showMessege, "MESSEGE");
 			
 			/* GET DATA
 			================================================== */
-			if (ie7) {
-				$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-				$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", "Internet Explorer 7 is not supported by #Timeline.");
-			} else {
-				if (type.of(d) == "string") {
-					VMM.Timeline.DataObj.getData(d);
-				} else {
-					VMM.Timeline.DataObj.getData(html_string);
-				}
-
-				$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-				$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
-			}
 			
+			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
+				ie7 = true;
+				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
+			} else {
+				if (type.of(_data) == "string" || type.of(_data) == "object") {
+					VMM.Timeline.DataObj.getData(_data);
+				} else {
+					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
+				}
+			}
 			
 		};
 		
@@ -272,7 +287,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		
 		var showMessege = function(e, msg) {
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", msg);
+			trace("showMessege " + msg);
+			VMM.attachElement($messege, msg);
 		};
 		
 		var hideMessege = function() {
@@ -394,6 +410,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		var updateSize = function() {
+			trace("UPDATE SIZE")
 			config.width = VMM.Element.width($timeline);
 			config.height = VMM.Element.height($timeline);
 			
@@ -401,10 +418,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.width = config.width;
 			
 			if (VMM.Browser.device == "mobile") {
-				config.feature.height = config.height;
+				//config.feature.height = config.height;
 			} else {
-				config.feature.height = config.height - config.nav.height - 3;
+				//config.feature.height = config.height - config.nav.height - 3;
 			}
+			config.feature.height = config.height - config.nav.height - 3;
 		};
 		
 		var resizeSlides = function() {
@@ -441,10 +459,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else if (data.date[i].type == "google spreadsheet") {
-						_date.startdate = new Date(Date.parse(data.date[i].startDate));
-						trace(_date.startdate);
+						//_date.startdate = new Date(Date.parse(data.date[i].startDate));
+						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					} else {
-						_date.startdate = VMM.Util.parseDate(data.date[i].startDate);
+						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					}
 					
 					_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
@@ -454,9 +472,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						if (data.date[i].type == "tweets") {
 							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
 						} else if (data.date[i].type == "google spreadsheet") {
-							_date.enddate = new Date(Date.parse(data.date[i].endDate));
+							//_date.enddate = new Date(Date.parse(data.date[i].endDate));
+							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						} else {
-							_date.enddate = VMM.Util.parseDate(data.date[i].endDate);
+							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						}
 					} else {
 						_date.enddate = _date.startdate;
@@ -504,7 +523,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					trace("google spreadsheet startpage date " + data.startDate);
 					//_date.startdate = new Date(Date.parse(data.startDate));
 				} else {
-					_date.startdate = VMM.Util.parseDate(data.startDate);
+					_date.startdate = VMM.Util.date.parse(data.startDate);
 				}
 				
 				_date.startdate = new Date(_dates[0].startdate);
