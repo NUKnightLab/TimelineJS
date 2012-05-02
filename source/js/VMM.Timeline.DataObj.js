@@ -13,39 +13,36 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 			data = VMM.Timeline.DataObj.data_obj;
 
-			
-			if (type.of(raw_data) != "string") {
-				
-				trace("DATA SOURCE: NOT JSON");
-				trace("TRYING HTML PARSE");
-				VMM.Timeline.DataObj.parseHTML(raw_data);
-				
-			} else {
-				
+			if (type.of(raw_data) == "object") {
+				trace("DATA SOURCE: JSON OBJECT");
+				VMM.Timeline.DataObj.parseJSON(raw_data);
+			} else if (type.of(raw_data) == "string") {
 				if (raw_data.match("%23")) {
-					
 					trace("DATA SOURCE: TWITTER SEARCH");
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet")	) {
-					
+					VMM.fireEvent(global, "MESSEGE", "Loading Data");
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
 				} else {
-					
+					VMM.fireEvent(global, "MESSEGE", "Loading Data");
 					trace("DATA SOURCE: JSON");
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
-					
 				}
-				
+			} else if (type.of(raw_data) == "html") {
+				trace("DATA SOURCE: HTML");
+				VMM.Timeline.DataObj.parseHTML(raw_data);
+			} else {
+				trace("DATA SOURCE: UNKNOWN");
 			}
 			
 		},
 		
 		parseHTML: function(d) {
 			trace("parseHTML");
-			
+			trace("WARNING: THIS IS STILL ALPHA AND WILL NOT WORK WITH ID's other than #timeline");
 			var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 			
 			/*	Timeline start slide
@@ -143,26 +140,22 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		},
 		
 		parseJSON: function(d) {
-			
 			if (d.timeline.type == "default") {
 				
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
-				
 				VMM.fireEvent(global, "DATAREADY", d);
-				//return _data_obj.timeline;
 				
 			} else if (d.timeline.type == "twitter") {
 				
 				trace("DATA SOURCE: JSON TWEETS");
-				
 				VMM.Timeline.DataObj.model_Tweets.buildData(d);
 				
-				
 			} else {
-				trace("DATA SOURCE: NO IDEA");
+				
+				trace("DATA SOURCE: UNKNOWN JSON");
 				trace(type.of(d.timeline));
+				
 			};
-			
 		},
 		
 		/*	MODEL OBJECTS 
@@ -174,21 +167,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			type: "twitter",
 			
 			buildData: function(raw_data) {
-				
 				VMM.bindEvent(global, VMM.Timeline.DataObj.model_Tweets.onTwitterDataReady, "TWEETSLOADED");
 				VMM.ExternalAPI.twitter.getTweets(raw_data.timeline.tweets);
-				
 			},
 			
 			getData: function(raw_data) {
-				
 				VMM.bindEvent(global, VMM.Timeline.DataObj.model_Tweets.onTwitterDataReady, "TWEETSLOADED");
 				VMM.ExternalAPI.twitter.getTweetSearch(raw_data);
-				
 			},
 			
 			onTwitterDataReady: function(e, d) {
-				
 				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 				for(var i = 0; i < d.tweetdata.length; i++) {
@@ -211,13 +199,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					
 					//var twit_date = VMM.ExternalAPI.twitter.parseTwitterDate(d.tweetdata[i].raw.created_at);
 					//trace(twit_date);
+					
 					_date.startDate = d.tweetdata[i].raw.created_at;
 					
 					if (type.of(d.tweetdata[i].raw.from_user_name)) {
 						_date.headline = d.tweetdata[i].raw.from_user_name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.from_user + "'>" + "@" + d.tweetdata[i].raw.from_user + "</a>)" ;						
 					} else {
 						_date.headline = d.tweetdata[i].raw.user.name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.user.screen_name + "'>" + "@" + d.tweetdata[i].raw.user.screen_name + "</a>)" ;
-						
 					}
 					
 					_date.asset.media = d.tweetdata[i].content;
@@ -226,72 +214,52 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				};
 				
 				VMM.fireEvent(global, "DATAREADY", _data_obj);
-				
 			}
 		},
 		
 		model_GoogleSpreadsheet: {
-			
-			/*
-				TEMPLATE CAN BE FOUND HERE
-				https://docs.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public
-				
-			*/
+			//	TEMPLATE CAN BE FOUND HERE
+			//	https://docs.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public
 			type: "google spreadsheet",
 			
 			getData: function(raw_data) {
+				
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
 				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
 				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
-				
 			},
 			
 			buildData: function(d) {
+				VMM.fireEvent(global, "MESSEGE", "Parsing Data");
 				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 				for(var i = 0; i < d.feed.entry.length; i++) {
-					
-					
 					var dd = d.feed.entry[i];
 					
 					if (dd.gsx$titleslide.$t.match("start")) {
-						_data_obj.timeline.startDate = dd.gsx$startdate.$t;
-						_data_obj.timeline.headline = dd.gsx$headline.$t;
-						_data_obj.timeline.asset.media = dd.gsx$media.$t;
-						_data_obj.timeline.asset.caption = dd.gsx$mediacaption.$t;
-						_data_obj.timeline.asset.credit = dd.gsx$mediacredit.$t;
-						_data_obj.timeline.text = dd.gsx$text.$t;
-						_data_obj.timeline.type = "google spreadsheet";
+						_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
+						_data_obj.timeline.headline = 			dd.gsx$headline.$t;
+						_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
+						_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
+						_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
+						_data_obj.timeline.text = 				dd.gsx$text.$t;
+						_data_obj.timeline.type = 				"google spreadsheet";
 					} else {
 						var _date = {
-							"type":"google spreadsheet",
-							"startDate":"",
-							"endDate":"",
-				            "headline":"",
-				            "text":"",
-							"type":"google spreadsheet",
-				            "asset":
-				            {
-				                "media":"",
-				                "credit":"",
-				                "caption":""
-				            },
-				            "tags":"Optional"
+							"type": 							"google spreadsheet",
+							"startDate": 						dd.gsx$startdate.$t,
+							"endDate": 							dd.gsx$enddate.$t,
+				            "headline": 						dd.gsx$headline.$t,
+				            "text": 							dd.gsx$text.$t,
+				            "asset": {
+								"media": 						dd.gsx$media.$t, 
+								"credit": 						dd.gsx$mediacredit.$t, 
+								"caption": 						dd.gsx$mediacaption.$t 
+							},
+				            "tags": 							"Optional"
 						};
-
-						_date.endDate = dd.gsx$enddate.$t;
-						_date.startDate = dd.gsx$startdate.$t;
-						_date.headline = dd.gsx$headline.$t;
-						_date.asset.media = dd.gsx$media.$t;
-						_date.asset.caption = dd.gsx$mediacaption.$t;
-						_date.asset.credit = dd.gsx$mediacredit.$t;
-						_date.text = dd.gsx$text.$t;
-
 						_data_obj.timeline.date.push(_date);
 					}
-					
-					
-					
 				};
 				
 				VMM.fireEvent(global, "DATAREADY", _data_obj);
@@ -300,35 +268,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 		},
 		
-		
 		/*	TEMPLATE OBJECTS
 		================================================== */
-		
-		data_template_obj: {
-			"timeline": {
-		        "headline":"",
-		        "description":"",
-				"asset": {
-					"media":"",
-					"credit":"",
-					"caption":""
-				},
-		        "date": []
-		    }
-		},
-		
-		date_obj: {
-			"startDate":"2012,2,2,11,30",
-            "headline":"",
-            "text":"",
-            "asset":
-            {
-                "media":"http://youtu.be/vjVfu8-Wp6s",
-                "credit":"",
-                "caption":""
-            },
-            "tags":"Optional"
-		}
-
+		data_template_obj: {  "timeline": { "headline":"", "description":"", "asset": { "media":"", "credit":"", "caption":"" }, "date": [] } },
+		date_obj: {"startDate":"2012,2,2,11,30", "headline":"", "text":"", "asset": {"media":"http://youtu.be/vjVfu8-Wp6s", "credit":"", "caption":"" }, "tags":"Optional"}
+	
 	};
+	
 }
