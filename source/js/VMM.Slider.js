@@ -169,6 +169,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			
+			
 			// Animate Changes
 			VMM.Element.height($slider_mask, config.slider.height);
 			VMM.Element.width($slider_mask, current_width);
@@ -501,7 +502,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 			}
 			
-			
+			//VMM.Element.css(navigation.nextBtnContainer, "left", ( VMM.Element.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
 		/* BUILD NAVIGATION
