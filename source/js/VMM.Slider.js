@@ -289,16 +289,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* RESIZE IFRAME MEDIA ELEMENTS
 			================================================== */
-			var _iframe_height_full = Math.round(config.slider.height) - 160;
-			var _iframe_width_full = Math.round((_iframe_height_full / 9) * 16);
+			var _iframe_height_full = 			Math.round(config.slider.height) - 160;
+			var _iframe_width_full = 			Math.round(config.slider.content.width);
+			var _iframe_height_full_video = 	Math.round((_iframe_width_full / 16) * 9) + 25;
 			
-			var _iframe_width =  (config.slider.content.width/100)*60 ;
-			var _iframe_height = Math.round((_iframe_width / 16) * 9) + 25;
+			var _iframe_width =  				(config.slider.content.width/100)*60 ;
+			var _iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
 			
 			/* MEDIA HEIGHT
 			================================================== */
-			var _media_height = Math.round(config.slider.height) - 160;
-			var _media_width_with_text = ((config.slider.content.width/100) * 60);
+			var _media_height = 				Math.round(config.slider.height) - 160;
+			var _media_width_with_text = 		((config.slider.content.width/100) * 60);
 			
 			/* HANDLE SMALLER SIZES
 			================================================== */
@@ -313,11 +314,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			if (is_skinny) {
-				_media_height = ((config.slider.height/100) * 80 ) - 40;
-				_iframe_width =  config.slider.content.width;
-				_iframe_height_full = Math.round((_iframe_width / 16) * 9);
+				_media_height = 				((config.slider.height/100) * 80 ) - 40;
+				_iframe_width =  				config.slider.content.width;
+				_iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
+				_iframe_height_full = 			Math.round((_iframe_width / 16) * 9) + 25;
 				
-				_media_width_with_text = config.slider.content.width;
+				_media_width_with_text = 		config.slider.content.width;
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
@@ -334,9 +336,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.css(".slider-item", "overflow-y", "auto" );
 				
 			} else {
-				_media_height = config.slider.height - 40;
-				_iframe_width =  (config.slider.content.width/100)*60 ;
-				_media_width_with_text = ((config.slider.content.width/100) * 60);
+				_media_height = 				config.slider.height - 40;
+				_iframe_width =  				(config.slider.content.width/100)*60 ;
+				_iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
+				_media_width_with_text = 		((config.slider.content.width/100) * 60);
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "40%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
@@ -352,6 +355,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.css(".slider-item", "display", "table" );
 				VMM.Element.css(".slider-item", "overflow-y", "auto" );
 			}
+			
+			// MEDIA FRAME
+			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );
+			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
+			//VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-height", _iframe_height );
 			
 			// IMAGES
 			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", _media_height );
@@ -369,7 +377,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.width(".slider-item .media .media-container .media-frame", _iframe_width);
 			
 			// IFRAME FULL SIZE VIDEO
-			VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", _iframe_height_full);
+			VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", _iframe_height_full_video);
 			VMM.Element.width(".slider-item .layout-media .media .media-container .media-frame", _iframe_width_full);
 
 			// SOUNDCLOUD
@@ -379,18 +387,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
 			
 			// MAPS
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _media_height);
-			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full+60);
-			VMM.Element.width(".slider-item .layout-media .media .media-container .map", _iframe_width);
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _iframe_height);
+			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full_video);
+			VMM.Element.width(".slider-item .layout-media .media .media-container .map", _iframe_width_full);
 
 			// DOCS
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _media_height);
+			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _iframe_height);
 			VMM.Element.height(".slider-item .layout-media .media .media-container .doc", _iframe_height_full+60);
 			
-			// MAX WIDTH
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );
-			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
-			//VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-height", _iframe_height );
 			
 		}
 		
