@@ -1,5 +1,5 @@
 /*!
-	Timeline 0.98
+	Timeline
 	Designed and built by Zach Wise at VeriteCo
 
     This program is free software: you can redistribute it and/or modify
@@ -58,7 +58,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = "#timeline";
 		}
 		
-		version = 			"0.98.1";
+		version = 			"0.98.2";
 		
 		trace("TIMELINE VERSION " + version);
 		
