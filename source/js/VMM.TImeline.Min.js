@@ -6,3 +6,5 @@
 ================================================== */
 
 // @codekit-prepend "VMM.Timeline.js";
+
+VMM.debug = false;

@@ -2,6 +2,7 @@
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
+	VMM.debug = false;
 	VMM.Language = {
 		date: {
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
