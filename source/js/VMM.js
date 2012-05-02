@@ -90,6 +90,10 @@ if (typeof VMM == 'undefined') {
 	//var VMM = {};
 	var VMM = Class.extend({});
 	
+	/* Debug
+	================================================== */
+	VMM.debug = true;
+	
 	/* Master Config
 	================================================== */
 	
@@ -229,12 +233,14 @@ if (typeof VMM == 'undefined') {
 /* Trace (console.log)
 ================================================== */
 function trace( msg ) {
-	if (window.console) {
-		console.log(msg);
-	} else if ( typeof( jsTrace ) != 'undefined' ) {
-		jsTrace.send( msg );
-	} else {
-		//alert(msg);
+	if (VMM.debug) {
+		if (window.console) {
+			console.log(msg);
+		} else if ( typeof( jsTrace ) != 'undefined' ) {
+			jsTrace.send( msg );
+		} else {
+			//alert(msg);
+		}
 	}
 }
 
