@@ -36,12 +36,10 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 	    },
 		onTouchStart: function(e) {
 			VMM.TouchSlider.touchStart(e.data.element, e);
-			e.preventDefault();
 			e.stopPropagation();
 			return true;
 		},
 		onTouchEnd: function(e) {
-			e.preventDefault();
 			e.stopPropagation();
 			
 			if (VMM.TouchSlider.sliding) {
