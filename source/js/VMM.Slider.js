@@ -309,11 +309,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			} else if (VMM.Browser.device == "mobile" && VMM.Browser.orientation == "portrait") {
 				is_skinny = true;
 			} else if (VMM.Browser.device == "tablet" && VMM.Browser.orientation == "portrait") {
-				is_skinny = true;
+				//is_skinny = true;
 			}
 			
 			if (is_skinny) {
-				_media_height = ((config.slider.height/100) * 40 ) - 40;
+				_media_height = ((config.slider.height/100) * 80 ) - 40;
 				_iframe_width =  config.slider.content.width;
 				_iframe_height_full = Math.round((_iframe_width / 16) * 9);
 				
@@ -321,6 +321,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
+				VMM.Element.css(".slider-item .layout-text-media .text .container", "display", "block" );
+				VMM.Element.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
 				
 				VMM.Element.css(".slider-item .layout-text-media .media", "float", "none" );
 				
@@ -338,9 +340,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "40%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
+				VMM.Element.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
+				VMM.Element.css(".slider-item .layout-text-media .text .container", "width", "auto" );
 				
 				VMM.Element.css(".slider-item .layout-text-media .media", "float", "left" );
 				VMM.Element.css(".slider-item .layout-text-media", "display", "table" );
+				
+				VMM.Element.css(".slider-item .media blockquote p", "line-height", "36px" );
+				VMM.Element.css(".slider-item .media blockquote p", "font-size", "28px" );
 				
 				VMM.Element.css(".slider-item", "display", "table" );
 				VMM.Element.css(".slider-item", "overflow-y", "auto" );
