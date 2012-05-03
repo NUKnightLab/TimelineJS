@@ -15,32 +15,57 @@ JSON.
 
 ## Add it to your site
 
-### Step 1
+Place the embed code where you want the timeline to show in the `<body>` of your site.
+`	<!-- BEGIN Timeline Embed -->
+	<div id="timeline-embed"></div>
+	<script type="text/javascript">
+	    var timeline_config = {
+			width: 		"100%",
+			height: 	"100%",
+			source: 	'path_to_json/or_link_to_googlespreadsheet',
+			font: 		'Bevan-PotanoSans',			//OPTIONAL
+			maptype: 	'Bevan-PotanoSans',			//OPTIONAL
+			css: 		'path_to_css/timeline.css',	//OPTIONAL
+			js: 		'path_to_js/timeline.js'	//OPTIONAL
+		}
+	</script>
+	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
+	<!-- END Timeline Embed -->`
+	
+## Options
 
-Include these lines in the `<head>` of your site.
 
-	`<!-- CSS -->
-	<link href="timeline.css" rel="stylesheet">
+* Map Style Types `maptype:`
 
-	<!-- JavaScript -->
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="timeline-min.js"></script>`
+	* [Stamen Maps ](maps.stamen.com)
+		* `toner`
+		* `toner-lines`
+		* `toner-labels`
+		* `watercolor`
+		* `sterrain`
+		
+	* Google Maps
+		* `ROADMAP`
+		* `TERRAIN`
+		* `HYBRID`
+		* `SATELLITE`
 
-### Step 2
-
-Add a `<div>` with an id called “timeline” in the `<body>` of your site.
-
-`<div id="timeline"></div>`
-
-### Step 3
-
-Initialize the data source in either the `<head>` or the `<body>`
-`	<script>
-		$(document).ready(function() {
-			timeline = new VMM.Timeline();
-			timeline.init("your_data.json");
-		});
-	</script>`
+* Font Options `font:`
+	* `Arvo-PTSans`
+	* `Merriweather-NewsCycle`
+	* `PoiretOne-Molengo`
+	* `PTSerif-PTSans`
+	* `DroidSerif-DroidSans`
+	* `Lekton-Molengo`
+	* `NixieOne-Ledger`
+	* `AbrilFatface-Average`
+	* `PlayfairDisplay-Muli`
+	* `Rancho-Gudea`
+	* `Bevan-PotanoSans`
+	* `BreeSerif-OpenSans`
+	* `SansitaOne-Kameron`
+	* `Pacifico-Arimo`
+	* Or make your own 
 
 ## File Formats
 
@@ -59,44 +84,44 @@ If you don’t want to mess with JSON, fire up Google Docs and build your
 timeline in a spreadsheet. It’s as simple as dropping a date, text, and links
 into the appropriate columns in Timeline’s template.
 
-You can find the template here: [https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public](https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
+You can find the template here: [Timeline Google Spreadsheet Template](https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
 
 There are only four things you need to know in order to create a timeline
 using Google Docs:
 
   1. Make the spreadsheet public:   
-Google Docs are automatically set to private but the spreadsheet must be
-public.
+	Google Docs are automatically set to private but the spreadsheet must be
+	public.
 
   
-Click the blue “Share” button on the top right-hand corner. In the “Share
-settings” window, you’ll see the private setting of the spreadsheet: click
-“Change...”. In the Visibility options window, choose “Public on the Web” and
-save.
+	Click the blue “Share” button on the top right-hand corner. In the “Share
+	settings” window, you’ll see the private setting of the spreadsheet: click
+	“Change...”. In the Visibility options window, choose “Public on the Web” and
+	save.
 
   2. Publish to the Web  
-Under the File menu, select “Publish to the Web.”
+	Under the File menu, select “Publish to the Web.”
 
   
-In the next window, check the box next to “Automatically republish when
-changes are made.” Uncheck all other boxes. Click “start publishing.” This
-will give you the URL to embed in your HTML file.
+	In the next window, check the box next to “Automatically republish when
+	changes are made.” Uncheck all other boxes. Click “start publishing.” This
+	will give you the URL to embed in your HTML file.
 
   3. Copy/paste the Web URL into your Timeline HTML file  
-After you publish the spreadsheet, Google Docs will generate a link to the
-file. Copy the link for the Web Page option (as opposed to PDF, HTML, XLS,
-etc.), then paste it into the timeline’s HTML file:
+	After you publish the spreadsheet, Google Docs will generate a link to the
+	file. Copy the link for the Web Page option (as opposed to PDF, HTML, XLS,
+	etc.), then paste it into the timeline’s HTML file:
 
   
-`timeline.init(“URL goes here”)`
+	`timeline.init(“URL goes here”)`
 
   4. Designate the “start” slide  
-This indicates which event is the title slide, the one that begins the
-timeline.
+	This indicates which event is the title slide, the one that begins the
+	timeline.
 
   
-Only one should be labeled "start" (generally, the first one). The title slide
-must have a start date, headline and text to appear properly.
+	Only one should be labeled "start" (generally, the first one). The title slide
+	must have a start date, headline and text to appear properly.
 
 ## Media
 
