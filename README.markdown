@@ -25,7 +25,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			height: 	"100%",
 			source: 	'path_to_json/or_link_to_googlespreadsheet',
 			font: 		'Bevan-PotanoSans',			//OPTIONAL
-			maptype: 	'Bevan-PotanoSans',			//OPTIONAL
+			maptype: 	'watercolor',				//OPTIONAL
 			css: 		'path_to_css/timeline.css',	//OPTIONAL
 			js: 		'path_to_js/timeline.js'	//OPTIONAL
 		}
