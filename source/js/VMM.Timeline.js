@@ -51,14 +51,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var events = {}, data = {}, _dates = [], config = {};
 		var has_width = false, has_height = false, ie7 = false;
 		
-		
 		if (type.of(_timeline_id) == "string") {
-			timeline_id = _timeline_id;
+			timeline_id = 			_timeline_id;
 		} else {
-			timeline_id = "#timeline";
+			timeline_id = 			"#timeline";
 		}
 		
-		version = 			"0.98.3";
+		version = 					"0.98.3";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -114,9 +113,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					height: 		200
 				}
 			},
-			ease: "easeInOutExpo",
-			duration: 1000,
-			language: VMM.Language
+			ease: 					"easeInOutExpo",
+			duration: 				1000,
+			language: 				VMM.Language
 		};
 		
 		if ( w != null && w != "") {

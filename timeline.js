@@ -3888,6 +3888,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
 			hour_suffix: ["am"],
 			
+			//B.C.
+			bc_format: {
+				year: "yyyy",
+				month_short: "mmm",
+				month: "mmmm yyyy",
+				full_short: "mmm d",
+				full: "mmmm d',' yyyy",
+				time_no_seconds_short: "h:MM TT",
+				time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
+				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+			},
+			
 			setLanguage: function(lang) {
 				trace("SET DATE LANGUAGE");
 				VMM.Util.date.dateformats	=	lang.dateformats;	
@@ -3960,7 +3973,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 			//VMM.Util.date.prettyDate(d, is_abbr)
 			prettyDate: function(d, is_abbr, date_type) {
-				var _date = "";
+				var _date;
+				var bc_check;
 				
 				if (type.of(d) == "date") {
 					if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
@@ -3999,12 +4013,27 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 							}
 						}
 						
-					}					
+					}
+					
+					bc_check = _date.split(" ");
+				
+					for(var i = 0; i < bc_check.length; i++) {
+						if ( parseInt(bc_check[i]) < 0 ) {
+							trace("YEAR IS BC");
+							var bc_original = 	bc_check[i];
+							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
+							var bc_string = 	bc_number.toString() + " B.C.";
+						
+							_date = _date.replace(bc_original, bc_string);
+						}
+					}
+					
 					
 				} else {
 					trace("NOT A VALID DATE?");
 					trace(d);
 				}
+				
 				
 				return _date;
 			},
@@ -4799,14 +4828,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var events = {}, data = {}, _dates = [], config = {};
 		var has_width = false, has_height = false, ie7 = false;
 		
-		
 		if (type.of(_timeline_id) == "string") {
-			timeline_id = _timeline_id;
+			timeline_id = 			_timeline_id;
 		} else {
-			timeline_id = "#timeline";
+			timeline_id = 			"#timeline";
 		}
 		
-		version = 			"0.98.3";
+		version = 					"0.98.3";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -4862,9 +4890,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					height: 		200
 				}
 			},
-			ease: "easeInOutExpo",
-			duration: 1000,
-			language: VMM.Language
+			ease: 					"easeInOutExpo",
+			duration: 				1000,
+			language: 				VMM.Language
 		};
 		
 		if ( w != null && w != "") {
@@ -5319,29 +5347,32 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		var events = {}, timespan = {}, layout = parent;
 		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content;
-		var current_marker = 		0;
-		var _active = 				false;
-		var timelookup = 			{day: 24, month: 12, year: 10, hour: 60, minute: 60, second: 1000, decade: 10, century: 100, millenium: 1000, week: 4.34812141, days_in_month: 30.4368499, days_in_week: 7, weeks_in_month:4.34812141, weeks_in_year:52.177457, days_in_year: 365.242199, hours_in_day: 24 };
-		var dateFractionBrowser = 	{day: 86400000, week: 7, month: 30.4166666667, year: 12, hour: 24, minute: 1440, second: 86400, decade: 10, century: 100, millenium: 1000 };
-		var interval = 				{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"_idd", interval_type:"interval"};
-		var interval_major = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"major", interval_type:"interval major"};
-		var interval_macro = 		{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:""};
-		var interval_calc = 		{day: {},month: {},year: {},hour: {},minute: {}, second: {},decade: {},century: {},millenium: {},week: {}};
+		
+		var current_marker		= 	0;
+		var _active				=	false;
+		var timelookup			= 	{day: 24, month: 12, year: 10, hour: 60, minute: 60, second: 1000, decade: 10, century: 100, millenium: 1000, age: 1000000, epoch: 10000000, era: 100000000, eon: 500000000, week: 4.34812141, days_in_month: 30.4368499, days_in_week: 7, weeks_in_month:4.34812141, weeks_in_year:52.177457, days_in_year: 365.242199, hours_in_day: 24 };
+		var dateFractionBrowser	= 	{day: 86400000, week: 7, month: 30.4166666667, year: 12, hour: 24, minute: 1440, second: 86400, decade: 10, century: 100, millenium: 1000, age: 1000000, epoch: 10000000, era: 100000000, eon: 500000000 };
+		
+		var interval			= 	{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"_idd", interval_type:"interval"};
+		var interval_major		= 	{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"major", interval_type:"interval major"};
+		var interval_macro		= 	{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"_dd_minor", interval_type:"interval minor"};
+		var interval_calc		= 	{day: {},month: {},year: {},hour: {},minute: {}, second: {},decade: {},century: {},millenium: {},week: {}, age: {}, epoch: {}, era: {}, eon: {} };
 		
 		/* ELEMENTS
 		================================================== */
-		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, $timeintervalbackground, $timenavline, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
+		$timeintervalbackground, $timenavline, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
 		
 		/* ADD to Config
 		================================================== */
-		var config = 				VMM.Timeline.Config;
-		config.nav.rows = 			[config.nav.marker.height, config.nav.marker.height*2, 1];
+		var config				= 	VMM.Timeline.Config;
+		config.nav.rows			= 	[config.nav.marker.height, config.nav.marker.height*2, 1];
 		
 		if (content_width != null && content_width != "") {
-			config.nav.width = 		content_width;
+			config.nav.width	= 	content_width;
 		} 
 		if (content_height != null && content_height != "") {
-			config.nav.height = 	content_height;
+			config.nav.height	= 	content_height;
 		}
 		
 		/*
@@ -5579,24 +5610,56 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		var calculateInterval = function() {
+			// NEED TO REWRITE ALL OF THIS
+			var _first								= 	getDateFractions(data[0].startdate);
+			var _last								=	getDateFractions(data[data.length - 1].enddate);
 			
-			var _first = 							getDateFractions(data[0].startdate);
-			var _last = 							getDateFractions(data[data.length - 1].enddate);
+			// EON
+			interval_calc.eon.type					=	"eon";
+			interval_calc.eon.first					=	_first.eons;
+			interval_calc.eon.base					=	Math.floor(_first.eons);
+			interval_calc.eon.last					=	_last.eons;
+			interval_calc.eon.number				=	timespan.eons;
+			interval_calc.eon.multiplier		 	=	timelookup.eons;
+			interval_calc.eon.minor					=	timelookup.eons;
 			
-			/* MILLENIUM
-			================================================== */
-			// NOT DONE
-			interval_calc.millenium.type 			= "millenium";
-			interval_calc.millenium.first 			= _first.milleniums;
-			interval_calc.millenium.base 			= Math.floor(_first.milleniums);
-			interval_calc.millenium.last 			= _last.milleniums;
-			interval_calc.millenium.number 			= timespan.milleniums;
-			interval_calc.millenium.multiplier	 	= timelookup.millenium;
-			interval_calc.millenium.minor 			= timelookup.millenium;
+			// ERA
+			interval_calc.era.type					=	"era";
+			interval_calc.era.first					=	_first.eras;
+			interval_calc.era.base					=	Math.floor(_first.eras);
+			interval_calc.era.last					=	_last.eras;
+			interval_calc.era.number				=	timespan.eras;
+			interval_calc.era.multiplier		 	=	timelookup.eras;
+			interval_calc.era.minor					=	timelookup.eras;
 			
-			/* CENTURY
-			================================================== */
-			// NOT DONE
+			// EPOCH
+			interval_calc.epoch.type				=	"epoch";
+			interval_calc.epoch.first				=	_first.epochs;
+			interval_calc.epoch.base				=	Math.floor(_first.epochs);
+			interval_calc.epoch.last				=	_last.epochs;
+			interval_calc.epoch.number				=	timespan.epochs;
+			interval_calc.epoch.multiplier		 	=	timelookup.epochs;
+			interval_calc.epoch.minor				=	timelookup.epochs;
+			
+			// AGE
+			interval_calc.age.type					=	"age";
+			interval_calc.age.first					=	_first.ages;
+			interval_calc.age.base					=	Math.floor(_first.ages);
+			interval_calc.age.last					=	_last.ages;
+			interval_calc.age.number				=	timespan.ages;
+			interval_calc.age.multiplier		 	=	timelookup.ages;
+			interval_calc.age.minor					=	timelookup.ages;
+			
+			// MILLENIUM
+			interval_calc.millenium.type 			=	"millenium";
+			interval_calc.millenium.first			=	_first.milleniums;
+			interval_calc.millenium.base			=	Math.floor(_first.milleniums);
+			interval_calc.millenium.last			=	_last.milleniums;
+			interval_calc.millenium.number			=	timespan.milleniums;
+			interval_calc.millenium.multiplier	 	=	timelookup.millenium;
+			interval_calc.millenium.minor			=	timelookup.millenium;
+			
+			// CENTURY
 			interval_calc.century.type 				= "century";
 			interval_calc.century.first 			= _first.centuries;
 			interval_calc.century.base 				= Math.floor(_first.centuries);
@@ -5605,8 +5668,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.century.multiplier	 	= timelookup.century;
 			interval_calc.century.minor 			= timelookup.century;
 			
-			/* DECADE
-			================================================== */
+			// DECADE
 			interval_calc.decade.type 				= "decade";
 			interval_calc.decade.first 				= _first.decades;
 			interval_calc.decade.base 				= Math.floor(_first.decades);
@@ -5615,9 +5677,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.decade.multiplier 		= timelookup.decade;
 			interval_calc.decade.minor 				= timelookup.decade;
 			
-			/* YEAR
-			================================================== */
-			
+			// YEAR
 			interval_calc.year.type					= "year";
 			interval_calc.year.first 				= _first.years;
 			interval_calc.year.base 				= Math.floor(_first.years);
@@ -5626,8 +5686,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.year.multiplier 			= 1;
 			interval_calc.year.minor 				= timelookup.month;
 			
-			/* MONTH
-			================================================== */
+			// MONTH
 			interval_calc.month.type 				= "month";
 			interval_calc.month.first 				= _first.months;
 			interval_calc.month.base 				= Math.floor(_first.months);
@@ -5636,11 +5695,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.month.multiplier 			= 1;
 			interval_calc.month.minor 				= Math.round(timelookup.week);
 			
-			/* WEEK
-			================================================== */
+			// WEEK
 			// NOT DONE
 			interval_calc.week.type 				= "week";
-			
 			interval_calc.week.first 				= _first.weeks;
 			interval_calc.week.base 				= Math.floor(_first.weeks);
 			interval_calc.week.last 				= _last.weeks;
@@ -5648,9 +5705,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.week.multiplier 			= 1;
 			interval_calc.week.minor 				= 7;
 			
-			/* DAY
-			================================================== */
-			// NOT DONE
+			// DAY
 			interval_calc.day.type 					= "day";
 			interval_calc.day.first 				= _first.days;
 			interval_calc.day.base	 				= Math.floor(_first.days);
@@ -5659,9 +5714,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.day.multiplier 			= 1;
 			interval_calc.day.minor 				= 24;
 			
-			/* HOUR
-			================================================== */
-			// NOT DONE
+			// HOUR
 			interval_calc.hour.type 				= "hour";
 			interval_calc.hour.first 				= _first.hours;
 			interval_calc.hour.base 				= Math.floor(_first.hours);
@@ -5670,9 +5723,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.hour.multiplier 			= 1;
 			interval_calc.hour.minor 				= 60;
 			
-			/* MINUTE
-			================================================== */
-			// NOT DONE
+			// MINUTE
 			interval_calc.minute.type 				= "minute";
 			interval_calc.minute.first 				= _first.minutes;
 			interval_calc.minute.base 				= Math.floor(_first.minutes);
@@ -5681,9 +5732,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.minute.multiplier 		= 1;
 			interval_calc.minute.minor 				= 60;
 			
-			/* SECOND
-			================================================== */
-			// NOT DONE
+			// SECOND
 			interval_calc.second.type 				= "decade";
 			interval_calc.second.first 				= _first.seconds;
 			interval_calc.second.base 				= Math.floor(_first.seconds);
@@ -5696,18 +5745,25 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		var getDateFractions = function(the_date, is_utc) {
 			
 			var _time = {};
-			_time.days			= 		the_date / dateFractionBrowser.day;
-			_time.weeks 		= 		_time.days / dateFractionBrowser.week;
-			_time.months 		= 		_time.days / dateFractionBrowser.month;
-			_time.years 		= 		_time.months / dateFractionBrowser.year;
-			_time.hours 		= 		_time.days * dateFractionBrowser.hour;
-			_time.minutes 		= 		_time.days * dateFractionBrowser.minute;
-			_time.seconds 		= 		_time.days * dateFractionBrowser.second;
-			_time.decades 		= 		_time.years / dateFractionBrowser.decade;
-			_time.centuries 	= 		_time.years / dateFractionBrowser.century;
-			_time.milleniums 	= 		_time.years / dateFractionBrowser.millenium;
+			_time.days			=		the_date		/	dateFractionBrowser.day;
+			_time.weeks 		=		_time.days		/	dateFractionBrowser.week;
+			_time.months 		=		_time.days		/	dateFractionBrowser.month;
+			_time.years 		=		_time.months 	/	dateFractionBrowser.year;
+			_time.hours 		=		_time.days		*	dateFractionBrowser.hour;
+			_time.minutes 		=		_time.days		*	dateFractionBrowser.minute;
+			_time.seconds 		=		_time.days		*	dateFractionBrowser.second;
+			_time.decades 		=		_time.years		/	dateFractionBrowser.decade;
+			_time.centuries 	=		_time.years		/	dateFractionBrowser.century;
+			_time.milleniums 	=		_time.years		/	dateFractionBrowser.millenium;
+			_time.ages			=		_time.years		/	dateFractionBrowser.age;
+			_time.epochs		=		_time.years		/	dateFractionBrowser.epoch;
+			_time.eras			=		_time.years		/	dateFractionBrowser.era;
+			_time.eons			=		_time.years		/	dateFractionBrowser.eon;
+			
 			/*
-			trace("MILLENIUMS "	 + 		_time.milleniums);
+			trace("AGES "		 + 		_time.ages);
+			trace("EPOCHS "		 + 		_time.epochs);
+			trace("MILLENIUMS "  + 		_time.milleniums);
 			trace("CENTURIES "	 + 		_time.centuries);
 			trace("DECADES "	 + 		_time.decades);
 			trace("YEARS "		 + 		_time.years);
@@ -5733,7 +5789,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			var tsd;
 			var ted;
-			
 			/* CALCULATE POSITION ON TIMELINE
 			================================================== */
 			tsd = first.months;
@@ -5745,7 +5800,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_last = getDateFractions(last);
 				ted = last.months;
 				
-				if (_type == "millenium") {
+				if (_type == "eon") {
+					tsd = _first.eons;
+					ted = _last.eons;
+				} else if (_type == "era") {
+					tsd = _first.eras;
+					ted = _last.eras;
+				} else if (_type == "epoch") {
+					tsd = _first.epochs;
+					ted = _last.epochs;
+				} else if (_type == "age") {
+					tsd = _first.ages;
+					ted = _last.ages;
+				} else if (_type == "millenium") {
 					tsd = first.milleniums;
 					ted = last.milleniums;
 				} else if (_type == "century") {
@@ -5778,8 +5845,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_pos_end = 	( ted	 - 	interval.base	 ) * (config.nav.interval_width		/	 config.nav.multiplier.current);
 				
 			} else {
-				
-				if (_type == "millenium") {
+				if (_type == "eon") {
+					tsd = _first.eons;
+					ted = _first.eons;
+				} else if (_type == "era") {
+					tsd = _first.eras;
+					ted = _first.eras;
+				} else if (_type == "epoch") {
+					tsd = _first.epochs;
+					ted = _first.epochs;
+				} else if (_type == "age") {
+					tsd = _first.ages;
+					ted = _first.ages;
+				} else if (_type == "millenium") {
 					tsd = first.milleniums;
 					ted = first.milleniums;
 				} else if (_type == "century") {
@@ -5812,7 +5890,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_pos_end = 	_pos;
 				
 			}
-			
 			
 			return pos = {begin:_pos ,end:_pos_end};
 			
@@ -6018,14 +6095,32 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				var _date;
 				var _visible = false;
 				
-				if (_interval.type == "millenium") {
+				if (_interval.type == "eon") {
+					if (_first_run) {
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 500000000) * 500000000	);
+					}
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 500000000));
+				} else if (_interval.type == "era") {
+					if (_first_run) {
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100000000) * 100000000	);
+					}
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 100000000));
+				} else if (_interval.type == "epoch") {
+					if (_first_run) {
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10000000) * 10000000	);
+					}
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 10000000));
+				} else if (_interval.type == "age") {
+					if (_first_run) {
+						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 1000000) * 1000000	);
+					}
+					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 1000000));
+				} else if (_interval.type == "millenium") {
 					if (_first_run) {
 						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 1000) * 1000	);
 					}
 					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 1000));
-				}
-				
-				if (_interval.type == "century") {
+				} else if (_interval.type == "century") {
 					if (_first_run) {
 						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100) * 100		);
 					}
@@ -6185,60 +6280,74 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		var buildInterval = function() {
 			
-			/* CALCULATE INTERVAL
-			================================================== */
+			// CALCULATE INTERVAL
 			timespan = getDateFractions((data[data.length - 1].enddate) - (data[0].startdate), true);
-			//timespan = getDateFractions(	averageDateDistance().mean	);
 			trace(timespan);
 			calculateInterval();
-			//trace("averageDateDistance " + averageDateDistance().mean);
-			//trace(getDateFractions(	averageDateDistance().mean	)); 
-			//trace(timespan);
 			
 			/* DETERMINE DEFAULT INTERVAL TYPE
+				millenium, ages, epoch, era and eon are not working yet
 			================================================== */
-
-			if (timespan.milleniums > data.length / config.nav.density) {
-				interval = 			interval_calc.millenium;
-				interval_major = 	interval_calc.millenium;
-				interval_macro = 	interval_calc.millenium;
-			} else if (timespan.centuries > data.length / config.nav.density) {
-				interval = 			interval_calc.century;
-				interval_major = 	interval_calc.millenium;
-				interval_macro = 	interval_calc.decade;
-			} else if (timespan.decades > data.length / config.nav.density) {
-				interval = 			interval_calc.decade;
-				interval_major = 	interval_calc.century;
-				interval_macro = 	interval_calc.year;
-			} else if (timespan.years > data.length / config.nav.density) {	
-				interval = 			interval_calc.year;
-				interval_major = 	interval_calc.decade;
-				interval_macro = 	interval_calc.month;
-			} else if (timespan.months > data.length / config.nav.density) {
-				interval = 			interval_calc.month;
-				interval_major = 	interval_calc.year;
-				interval_macro = 	interval_calc.day;
-			} else if (timespan.days > data.length / config.nav.density) {
-				interval = 			interval_calc.day;
-				interval_major = 	interval_calc.month;
-				interval_macro = 	interval_calc.hour;
-			} else if (timespan.hours > data.length / config.nav.density) {
-				interval = 			interval_calc.hour;
-				interval_major = 	interval_calc.day;
-				interval_macro = 	interval_calc.minute;
-			} else if (timespan.minutes > data.length / config.nav.density) {
-				interval = 			interval_calc.minute;
-				interval_major = 	interval_calc.hour;
-				interval_macro = 	interval_calc.second;
-			} else if (timespan.seconds > data.length / config.nav.density) {
-				interval = 			interval_calc.second;
-				interval_major = 	interval_calc.minute;
-				interval_macro = 	interval_calc.second;
+			/*
+			if (timespan.eons				>		data.length / config.nav.density) {
+				interval					=		interval_calc.eon;
+				interval_major				=		interval_calc.eon;
+				interval_macro				=		interval_calc.era;
+			} else if (timespan.eras		>		data.length / config.nav.density) {
+				interval					=		interval_calc.era;
+				interval_major				=		interval_calc.eon;
+				interval_macro				=		interval_calc.epoch;
+			} else if (timespan.epochs		>		data.length / config.nav.density) {
+				interval					=		interval_calc.epoch;
+				interval_major				=		interval_calc.era;
+				interval_macro				=		interval_calc.age;
+			} else if (timespan.ages		>		data.length / config.nav.density) {
+				interval					=		interval_calc.ages;
+				interval_major				=		interval_calc.epoch;
+				interval_macro				=		interval_calc.millenium;
+			} else if (timespan.milleniums			>		data.length / config.nav.density) {
+				interval					=		interval_calc.millenium;
+				interval_major				=		interval_calc.age;
+				interval_macro				=		interval_calc.century;
+			} else 
+			*/
+			if (timespan.centuries			>		data.length / config.nav.density) {
+				interval					=		interval_calc.century;
+				interval_major				=		interval_calc.millenium;
+				interval_macro				=		interval_calc.decade;
+			} else if (timespan.decades		>		data.length / config.nav.density) {
+				interval					=		interval_calc.decade;
+				interval_major				=		interval_calc.century;
+				interval_macro				=		interval_calc.year;
+			} else if (timespan.years		>		data.length / config.nav.density) {	
+				interval					=		interval_calc.year;
+				interval_major				=		interval_calc.decade;
+				interval_macro				=		interval_calc.month;
+			} else if (timespan.months		>		data.length / config.nav.density) {
+				interval					=		interval_calc.month;
+				interval_major				=		interval_calc.year;
+				interval_macro				=		interval_calc.day;
+			} else if (timespan.days		>		data.length / config.nav.density) {
+				interval					=		interval_calc.day;
+				interval_major				=		interval_calc.month;
+				interval_macro				=		interval_calc.hour;
+			} else if (timespan.hours		>		data.length / config.nav.density) {
+				interval					=		interval_calc.hour;
+				interval_major				=		interval_calc.day;
+				interval_macro				=		interval_calc.minute;
+			} else if (timespan.minutes		>		data.length / config.nav.density) {
+				interval					=		interval_calc.minute;
+				interval_major				=		interval_calc.hour;
+				interval_macro				=		interval_calc.second;
+			} else if (timespan.seconds		>		data.length / config.nav.density) {
+				interval					=		interval_calc.second;
+				interval_major				=		interval_calc.minute;
+				interval_macro				=		interval_calc.second;
 			} else {
 				trace("NO IDEA WHAT THE TYPE SHOULD BE");
-				interval = 			interval_calc.day;
-				interval_major = 	interval_calc.month;
-				interval_macro = 	interval_calc.hour;
+				interval					=		interval_calc.day;
+				interval_major				=		interval_calc.month;
+				interval_macro				=		interval_calc.hour;
 			}
 			
 			trace("INTERVAL TYPE: " + interval.type);

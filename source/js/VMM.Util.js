@@ -124,6 +124,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
 			hour_suffix: ["am"],
 			
+			//B.C.
+			bc_format: {
+				year: "yyyy",
+				month_short: "mmm",
+				month: "mmmm yyyy",
+				full_short: "mmm d",
+				full: "mmmm d',' yyyy",
+				time_no_seconds_short: "h:MM TT",
+				time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
+				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+			},
+			
 			setLanguage: function(lang) {
 				trace("SET DATE LANGUAGE");
 				VMM.Util.date.dateformats	=	lang.dateformats;	
@@ -196,7 +209,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 			//VMM.Util.date.prettyDate(d, is_abbr)
 			prettyDate: function(d, is_abbr, date_type) {
-				var _date = "";
+				var _date;
+				var bc_check;
 				
 				if (type.of(d) == "date") {
 					if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
@@ -235,12 +249,27 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 							}
 						}
 						
-					}					
+					}
+					
+					bc_check = _date.split(" ");
+				
+					for(var i = 0; i < bc_check.length; i++) {
+						if ( parseInt(bc_check[i]) < 0 ) {
+							trace("YEAR IS BC");
+							var bc_original = 	bc_check[i];
+							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
+							var bc_string = 	bc_number.toString() + " B.C.";
+						
+							_date = _date.replace(bc_original, bc_string);
+						}
+					}
+					
 					
 				} else {
 					trace("NOT A VALID DATE?");
 					trace(d);
 				}
+				
 				
 				return _date;
 			},
