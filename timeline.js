@@ -3561,6 +3561,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// SOUNDCLOUD
 			VMM.Element.height(	layout_media + 		".soundcloud", 							168);
+			VMM.Element.height(	layout_text_media + ".soundcloud", 							168);
 			VMM.Element.width(	layout_media + 		".soundcloud", 							mediasize.media.width);
 			VMM.Element.width(	layout_text_media + ".soundcloud", 							mediasize.text_media.width);
 			VMM.Element.css(	layout_both + 		".soundcloud", 			"max-height", 	168 );
