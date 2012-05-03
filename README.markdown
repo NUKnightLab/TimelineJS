@@ -27,7 +27,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			font: 		'Bevan-PotanoSans',			//OPTIONAL
 			maptype: 	'watercolor',				//OPTIONAL
 			css: 		'path_to_css/timeline.css',	//OPTIONAL
-			js: 		'path_to_js/timeline.js'	//OPTIONAL
+			js: 		'path_to_js/timeline-min.js'	//OPTIONAL
 		}
 	</script>
 	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
