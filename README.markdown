@@ -17,7 +17,7 @@ JSON.
 
 Place the embed code where you want the timeline to show in the `<body>` of your site.
 
-```javascript
+```html
 	<div id="timeline-embed"></div>
 	<script type="text/javascript">
 	    var timeline_config = {
