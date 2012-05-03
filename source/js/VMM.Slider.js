@@ -284,26 +284,35 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* SIZE SLIDES
 		================================================== */
 		var sizeSlides = function() {
+			var layout_text_media = 		".slider-item .layout-text-media .media .media-container ";
+			var layout_media = 				".slider-item .layout-media .media .media-container ";
+			var layout_both	= 				".slider-item .media .media-container";
+			var mediasize = {
+				text_media: {
+					width: 		(config.slider.content.width/100) * 60,
+					height: 	config.slider.height - 60,
+					video: {
+						width: 	0,
+						height: 0
+					}
+				},
+				media: {
+					width: 		config.slider.content.width,
+					height: 	config.slider.height - 110,
+					video: {
+						width: 	0,
+						height: 0
+					}
+				}
+			}
+			
+			mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
+			mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 			
 			VMM.Element.css(".slider-item", "width", config.slider.content.width );
 			VMM.Element.height(".slider-item", config.slider.height);
 			
-			/* RESIZE IFRAME MEDIA ELEMENTS
-			================================================== */
-			var _iframe_height_full = 			Math.round(config.slider.height) - 160;
-			var _iframe_width_full = 			Math.round(config.slider.content.width);
-			var _iframe_height_full_video = 	Math.round((_iframe_width_full / 16) * 9) + 25;
-			
-			var _iframe_width =  				(config.slider.content.width/100)*60 ;
-			var _iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
-			
-			/* MEDIA HEIGHT
-			================================================== */
-			var _media_height = 				Math.round(config.slider.height) - 160;
-			var _media_width_with_text = 		((config.slider.content.width/100) * 60);
-			
-			/* HANDLE SMALLER SIZES
-			================================================== */
+			// HANDLE SMALLER SIZES
 			var is_skinny = false;
 			
 			if (current_width <= 650) {
@@ -315,12 +324,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			if (is_skinny) {
-				_media_height = 				((config.slider.height/100) * 80 ) - 40;
-				_iframe_width =  				config.slider.content.width;
-				_iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
-				_iframe_height_full = 			Math.round((_iframe_width / 16) * 9) + 25;
 				
-				_media_width_with_text = 		config.slider.content.width;
+				mediasize.text_media.width = 	config.slider.content.width;
+				mediasize.text_media.height = 	((config.slider.height/100) * 50 ) - 50;
+				//mediasize.media.height = 		((config.slider.height/100) * 80 ) - 40;
+				mediasize.media.height = 		((config.slider.height/100) * 70 ) - 40;
+				
+				mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
+				mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
@@ -332,15 +343,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Element.css(".slider-item .media blockquote p", "line-height", "18px" );
 				VMM.Element.css(".slider-item .media blockquote p", "font-size", "16px" );
 				
-				VMM.Element.css(".slider-item .content", "height", config.slider.height );
-				VMM.Element.css(".slider-item", "display", "block" );
 				VMM.Element.css(".slider-item", "overflow-y", "auto" );
 				
+				// MAINTAINS VERTICAL CENTER IF IT CAN
+				for(var i = 0; i < slides.length; i++) {
+					if (VMM.Element.height(VMM.Element.find( slides[i], ".content")) > config.slider.height) {
+						VMM.Element.css(slides[i], "display", "block" );
+					} else {
+						VMM.Element.css(slides[i], "display", "table" );
+					}
+				}
+				
 			} else {
-				_media_height = 				config.slider.height - 40;
-				_iframe_width =  				(config.slider.content.width/100)*60 ;
-				_iframe_height = 				Math.round((_iframe_width / 16) * 9) + 25;
-				_media_width_with_text = 		((config.slider.content.width/100) * 60);
 				
 				VMM.Element.css(".slider-item .layout-text-media .text", "width", "40%" );
 				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
@@ -358,45 +372,45 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			// MEDIA FRAME
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-width", config.slider.content.width );
-			//VMM.Element.width(".slider-item .layout-text-media .media .media-container .media-frame", _iframe_width);
-			//VMM.Element.css(".slider-item .layout-text-media .media .media-container .media-frame", "max-height", _iframe_height );
+			VMM.Element.css(	layout_text_media + ".media-frame", 		"max-width", 	mediasize.text_media.width);
+			VMM.Element.height(	layout_text_media + ".media-frame", 						mediasize.text_media.height);
+			VMM.Element.width(	layout_text_media + ".media-frame", 						mediasize.text_media.width);
 			
 			// IMAGES
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-height", _media_height );
-			VMM.Element.css(".slider-item .layout-media .media .media-container img", "max-height", _media_height - 60 );
+			VMM.Element.css(	layout_text_media + "img", 					"max-height", 	mediasize.text_media.height );
+			VMM.Element.css(	layout_media + 		"img", 					"max-height", 	mediasize.media.height );
 			
-			/* FIX FOR NON-WEBKIT BROWSERS
-			================================================== */
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", _media_width_with_text );
-			VMM.Element.css(".slider-item .layout-text-media .media .media-container img", "max-width", _media_width_with_text );
-			VMM.Element.css(".slider-item .media .media-container .twitter .avatar img", "max-width", 32 );
-			VMM.Element.css(".slider-item .media .media-container .twitter .avatar img", "max-height", 32 );
-			
-			// NORMAL
-			VMM.Element.height(".slider-item .media .media-container .media-frame", _iframe_height);
-			VMM.Element.width(".slider-item .media .media-container .media-frame", _iframe_width);
+			// FIX FOR NON-WEBKIT BROWSERS
+			VMM.Element.css(	layout_text_media + "img", 					"max-width", 	mediasize.text_media.width );
+			VMM.Element.css(	layout_text_media + ".twitter .avatar img", "max-width", 	32 );
+			VMM.Element.css(	layout_text_media + ".twitter .avatar img", "max-height", 	32 );
+			VMM.Element.css(	layout_media + 		".twitter .avatar img", "max-width", 	32 );
+			VMM.Element.css(	layout_media + 		".twitter .avatar img", "max-height", 	32 );
 			
 			// IFRAME FULL SIZE VIDEO
-			VMM.Element.height(".slider-item .layout-media .media .media-container .media-frame", _iframe_height_full_video);
-			VMM.Element.width(".slider-item .layout-media .media .media-container .media-frame", _iframe_width_full);
-
+			VMM.Element.width(	layout_text_media + ".media-frame", 						mediasize.text_media.video.width);
+			VMM.Element.height(	layout_text_media + ".media-frame", 						mediasize.text_media.video.height);
+			VMM.Element.width(	layout_media + 		".media-frame", 						mediasize.media.video.width);
+			VMM.Element.height(	layout_media + 		".media-frame", 						mediasize.media.video.height);
+			VMM.Element.css(	layout_media + 		".media-frame", 		"max-height", 	mediasize.media.video.height);
+			VMM.Element.css(	layout_media + 		".media-frame", 		"max-width", 	mediasize.media.video.width);
+			
 			// SOUNDCLOUD
-			VMM.Element.height(".slider-item .layout-media .media .media-container .soundcloud", config.slider.height - 150);
-			VMM.Element.width(".slider-item .layout-media .media .media-container .soundcloud", config.slider.content.width);
-			VMM.Element.width(".slider-item .layout-text-media .media .media-container .soundcloud", _iframe_width);
-			VMM.Element.css(".slider-item .media .media-container .soundcloud", "max-height", 168 );
+			VMM.Element.height(	layout_media + 		".soundcloud", 							168);
+			VMM.Element.width(	layout_media + 		".soundcloud", 							mediasize.media.width);
+			VMM.Element.width(	layout_text_media + ".soundcloud", 							mediasize.text_media.width);
+			VMM.Element.css(	layout_both + 		".soundcloud", 			"max-height", 	168 );
 			
 			// MAPS
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .map", _iframe_height);
-			VMM.Element.height(".slider-item .layout-media .media .media-container .map", _iframe_height_full_video);
-			VMM.Element.width(".slider-item .layout-media .media .media-container .map", _iframe_width_full);
+			VMM.Element.height(	layout_text_media + ".map", 								mediasize.text_media.height);
+			VMM.Element.css(	layout_media + 		".map", 				"max-height", 	mediasize.media.height);
+			VMM.Element.width(	layout_media + 		".map", 								mediasize.media.width);
 
 			// DOCS
-			VMM.Element.height(".slider-item .layout-text-media .media .media-container .doc", _iframe_height);
-			VMM.Element.height(".slider-item .layout-media .media .media-container .doc", _iframe_height_full+60);
+			VMM.Element.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
+			VMM.Element.height(	layout_media + 		".doc", 								mediasize.media.height);
 			
-			
+			trace(mediasize);
 		}
 		
 		/* POSITION SLIDES

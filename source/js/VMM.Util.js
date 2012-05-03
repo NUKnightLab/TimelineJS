@@ -68,10 +68,28 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		},
 		
 		ratio: {
-			/* Get the corresponding ratio number
-			================================================== */
-			// VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
+			fit: function(w, h, ratio_w, ratio_h) {
+				//VMM.Util.ratio.fit(w, h, ratio_w, ratio_h).width;
+				var _fit = {width:0,height:0};
+				// TRY WIDTH FIRST
+				_fit.width = w;
+				//_fit.height = Math.round((h / ratio_h) * ratio_w);
+				_fit.height = Math.round((w / ratio_w) * ratio_h);
+				if (_fit.height > h) {
+					_fit.height = h;
+					//_fit.width = Math.round((w / ratio_w) * ratio_h);
+					_fit.width = Math.round((h / ratio_h) * ratio_w);
+					
+					if (_fit.width > w) {
+						trace("FIT: DIDN'T FIT!!! ")
+					}
+				}
+				
+				return _fit;
+				
+			},
 			r16_9: function(w,h) {
+				//VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
 				if (w !== null && w !== "") {
 					return Math.round((h / 16) * 9);
 				} else if (h !== null && h !== "") {
