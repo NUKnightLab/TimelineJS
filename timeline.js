@@ -4858,7 +4858,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.7";
+		version = 					"0.98.71";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -4934,7 +4934,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		if(window.location.hash) {
 			 var hash					=	window.location.hash.substring(1);
-			 config.current_slide		=	parseInt(hash);
+			 if (!isNaN(hash)) {
+			 	 config.current_slide		=	parseInt(hash);
+			 }
 		}
 		window.onhashchange = function () {
 			if (config.hash_bookmark) {
