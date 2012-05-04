@@ -97,7 +97,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function reSize(firstrun) {
 			VMM.Element.css($timenavline, "left", Math.round(config.width/2)+2);
-			goToMarker(current_marker, config.ease, config.duration, true, firstrun);
+			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
 		};
 		
 		function upDate() {
@@ -196,9 +196,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.Element.removeClass(markers[i].marker, "active");
 			}
 			
-			if (config.start_page && markers[current_marker].type == "start") {
-				VMM.Element.visible(markers[current_marker].marker, false);
-				VMM.Element.addClass(markers[current_marker].marker, "start");
+			if (config.start_page && markers[0].type == "start") {
+				VMM.Element.visible(markers[0].marker, false);
+				VMM.Element.addClass(markers[0].marker, "start");
 			}
 			
 			VMM.Element.addClass(markers[current_marker].marker, "active");
@@ -903,7 +903,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			positionMarkers();
 			positionInterval(interval_array, false, true);
 			positionInterval(interval_major_array);
-			reSize(true);
+			//reSize(true);
 			
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
@@ -932,10 +932,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.DragSlider.createPanel(layout, $timenav, config.width, config.spacing, false);
 			}
 			
+			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
 			VMM.bindEvent(".zoom-out", onZoomOut, "click");
 			VMM.fireEvent(layout, "LOADED");
 			_active = true;
+			
+			reSize(true);
 			
 		};
 		

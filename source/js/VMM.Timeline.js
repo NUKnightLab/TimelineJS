@@ -49,7 +49,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var $timeline, $feedback, $messege, slider, timenav, version, timeline_id;
 		var events = {}, data = {}, _dates = [], config = {};
-		var has_width = false, has_height = false, ie7 = false;
+		var has_width = false, has_height = false, ie7 = false, is_moving = false;
 		
 		if (type.of(_timeline_id) == "string") {
 			timeline_id = 			_timeline_id;
@@ -57,7 +57,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.5";
+		version = 					"0.98.6";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -67,6 +67,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
+			current_slide:			0,
+			hash_bookmark:			false,
+			start_at_end: 			false,
 			start_page: 			false,
 			interval: 				10,
 			something: 				0,
@@ -128,10 +131,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			has_height = true;
 		}
 		
+		if(window.location.hash) {
+			 var hash					=	window.location.hash.substring(1);
+			 config.current_slide		=	parseInt(hash);
+		}
+		window.onhashchange = function () {
+			if (config.hash_bookmark) {
+				if (is_moving) {
+					var hash					=	window.location.hash.substring(1);
+					goToEvent(parseInt(hash));
+				} else {
+					is_moving = false;
+				}
+			}
+		}
+		
 		/* CREATE CONFIG
 		================================================== */
 		var createConfig = function(conf) {
-
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
 			if (typeof timeline_config == 'object') {
@@ -151,13 +168,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			config.nav.width = 				config.width;
-			config.nav.height = 			200;
-			config.feature.width = 			config.width;
-			config.feature.height = 		config.height - config.nav.height;
-			
-			VMM.Timeline.Config = 			config;
-			VMM.master_config.Timeline = 	VMM.Timeline.Config;
+			config.nav.width			=	config.width;
+			config.nav.height			=	200;
+			config.feature.width		=	config.width;
+			config.feature.height		=	config.height - config.nav.height;
+			VMM.Timeline.Config			=	config;
+			VMM.master_config.Timeline	=	VMM.Timeline.Config;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -232,12 +248,32 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function onSlideUpdate(e) {
-			timenav.setMarker(slider.getCurrentNumber(), config.ease,config.duration);
+			is_moving = true;
+			config.current_slide = slider.getCurrentNumber();
+			setHash(config.current_slide);
+			timenav.setMarker(config.current_slide, config.ease,config.duration);
 		};
 		
 		function onMarkerUpdate(e) {
-			slider.setSlide(timenav.getCurrentNumber());
+			is_moving = true;
+			config.current_slide = timenav.getCurrentNumber();
+			setHash(config.current_slide);
+			slider.setSlide(config.current_slide);
 		};
+		
+		var goToEvent = function(n) {
+			if (n <= _dates.length - 1 && n >= 0) {
+				config.current_slide = n;
+				slider.setSlide(config.current_slide);
+				timenav.setMarker(config.current_slide, config.ease,config.duration);
+			} 
+		}
+		
+		function setHash(n) {
+			if (config.hash_bookmark) {
+				window.location.hash = "#" + n.toString();
+			}
+		}
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -312,27 +348,25 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		var build = function() {
 			
-			/* CREATE DOM STRUCTURE
-			================================================== */
+			// START AT END?
+			if (config.start_at_end) {
+				config.current_slide = _dates.length - 1;
+			}
+			// CREATE DOM STRUCTURE
 			VMM.attachElement($timeline, "");
 			VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
 			
 			reSize();
 			
-			/* INIT THE OBJECTS
-			================================================== */
 			VMM.bindEvent("div.slider", onSliderLoaded, "LOADED");
 			VMM.bindEvent("div.navigation", onTimeNavLoaded, "LOADED");
 			VMM.bindEvent("div.slider", onSlideUpdate, "UPDATE");
 			VMM.bindEvent("div.navigation", onMarkerUpdate, "UPDATE");
 			
-			
 			slider.init(_dates);
 			timenav.init(_dates, data.era);
 			
-			
-			/* RESIZE EVENT LISTENERS
-			================================================== */
+			// RESIZE EVENT LISTENERS
 			VMM.bindEvent(global, reSize, "resize");
 			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			

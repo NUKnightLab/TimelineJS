@@ -6,7 +6,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		/* PRIVATE VARS
 		================================================== */
-		var events = {};
+		var events = {}, config;
 		// ARRAYS
 		var data = [], slides = [], medias = [], slide_positions = [];
 		var slides_content = "";
@@ -18,11 +18,37 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		var layout = parent;
 		// ELEMENTS
 		var $slider, $slider_mask, $slider_container, $slides_items;
-		// CONFIG
-		var config = {slider: {width: 720, height: 400, content: {width: 720, height: 400, padding: 130}, nav: {width: 100, height: 200} } };
-		var _config = {interval: 10, something: 0, width: 720, height: 400, ease: "easeInOutExpo", duration: 1000, timeline: false, spacing: 15};
 		// NAVIGATION
 		var navigation = {nextBtn:"", prevBtn:"", nextDate:"", prevDate:"", nextTitle:"", prevTitle:""};
+		// CONFIG
+		if(typeof VMM.Timeline != 'undefined') {
+			config	= 	VMM.Timeline.Config;
+		} else {
+			config = {
+				current_slide: 0,
+				interval: 10, 
+				something: 0, 
+				width: 720, 
+				height: 400, 
+				ease: "easeInOutExpo", 
+				duration: 1000, 
+				timeline: false, 
+				spacing: 15,
+				slider: {
+					width: 720, 
+					height: 400, 
+					content: {
+						width: 720, 
+						height: 400, 
+						padding: 130
+					}, 
+					nav: {
+						width: 100, 
+						height: 200
+					} 
+				} 
+			};
+		}
 		
 		/* PUBLIC VARS
 		================================================== */
@@ -30,7 +56,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		/* APPLY SUPPLIED CONFIG
 		================================================== */
-		
+		/*
 		if (type.of(parent_config) == 'object') {
 		    var x;
 			for (x in parent_config) {
@@ -46,10 +72,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				}
 			}
 		}
-		
+		*/
 		config.slider.width = config.width;
 		config.slider.height = config.height;
-		
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -97,8 +122,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		this.setConfig = function(d) {
 			if(typeof d != 'undefined') {
 				config = d;
-				// TO DO
-				// FIRE AN EVENT ETC
 			} else{
 				trace("NO CONFIG DATA");
 			}
@@ -250,6 +273,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* UPDATE
 		================================================== */
 		function upDate() {
+			config.current_slide = current_slide;
 			VMM.fireEvent(layout, "UPDATE");
 		};
 		
@@ -580,7 +604,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			reSize(false, true);
 			VMM.Element.visible(navigation.prevBtn, false);
 			// GO TO FIRST SLIDE
-			goToSlide(0, "easeOutExpo", __duration, true, true);
+			trace("config.current_slide " + config.current_slide);
+			goToSlide(config.current_slide, "easeOutExpo", __duration, true, true);
 			
 			_active = true;
 		};
