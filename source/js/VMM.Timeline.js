@@ -1,6 +1,6 @@
 /*!
 	Timeline
-	Designed and built by Zach Wise at VeriteCo
+	Designed and built by Zach Wise at VéritéCo
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.71";
+		version = 					"0.98.72";
 		
 		trace("TIMELINE VERSION " + version);
 		

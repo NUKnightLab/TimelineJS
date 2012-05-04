@@ -22,12 +22,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet")	) {
-					VMM.fireEvent(global, "MESSEGE", "Loading Data");
+					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
 				} else {
-					VMM.fireEvent(global, "MESSEGE", "Loading Data");
+					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
 				}

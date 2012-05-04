@@ -525,27 +525,27 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			// VMM.ExternalAPI.youtube.createPlayer(id);
 			createPlayer: function(id) {
 				var p = {
-					active:false,
-					player: {},
-					name:'youtube_'+id,
-					playing:false
+					active: 				false,
+					player: 				{},
+					name:					'youtube_'+id,
+					playing:				false
 				};
 				
 				p.player['youtube_'+id] = new YT.Player('youtube_'+id, {
-					height: '390',
-					width: '640',
+					height: 				'390',
+					width: 					'640',
 					playerVars: {
-						enablejsapi:1,
-						color: 'white',
-						showinfo:0,
-						theme: 'light',
-						rel:0,
-						origin:'http://timeline.verite.co'
+						enablejsapi:		1,
+						color: 				'white',
+						showinfo:			0,
+						theme:				'light',
+						rel:				0,
+						origin:				'http://timeline.verite.co'
 					},
 					videoId: id,
 					events: {
-						'onReady': VMM.ExternalAPI.youtube.onPlayerReady,
-						'onStateChange': VMM.ExternalAPI.youtube.onStateChange
+						'onReady': 			VMM.ExternalAPI.youtube.onPlayerReady,
+						'onStateChange': 	VMM.ExternalAPI.youtube.onStateChange
 					}
 				});
 				

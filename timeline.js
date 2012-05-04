@@ -2758,27 +2758,27 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			// VMM.ExternalAPI.youtube.createPlayer(id);
 			createPlayer: function(id) {
 				var p = {
-					active:false,
-					player: {},
-					name:'youtube_'+id,
-					playing:false
+					active: 				false,
+					player: 				{},
+					name:					'youtube_'+id,
+					playing:				false
 				};
 				
 				p.player['youtube_'+id] = new YT.Player('youtube_'+id, {
-					height: '390',
-					width: '640',
+					height: 				'390',
+					width: 					'640',
 					playerVars: {
-						enablejsapi:1,
-						color: 'white',
-						showinfo:0,
-						theme: 'light',
-						rel:0,
-						origin:'http://timeline.verite.co'
+						enablejsapi:		1,
+						color: 				'white',
+						showinfo:			0,
+						theme:				'light',
+						rel:				0,
+						origin:				'http://timeline.verite.co'
 					},
 					videoId: id,
 					events: {
-						'onReady': VMM.ExternalAPI.youtube.onPlayerReady,
-						'onStateChange': VMM.ExternalAPI.youtube.onStateChange
+						'onReady': 			VMM.ExternalAPI.youtube.onPlayerReady,
+						'onStateChange': 	VMM.ExternalAPI.youtube.onStateChange
 					}
 				});
 				
@@ -4801,7 +4801,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 
 /*!
 	Timeline
-	Designed and built by Zach Wise at VeriteCo
+	Designed and built by Zach Wise at VéritéCo
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -4858,7 +4858,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.71";
+		version = 					"0.98.72";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6531,12 +6531,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet")	) {
-					VMM.fireEvent(global, "MESSEGE", "Loading Data");
+					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
 				} else {
-					VMM.fireEvent(global, "MESSEGE", "Loading Data");
+					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
 				}
