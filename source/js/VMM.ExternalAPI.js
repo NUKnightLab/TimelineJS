@@ -233,55 +233,62 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 			},
 			
+			defaultType: function(name) {
+				if (name.toLowerCase() == "satellite" || name.toLowerCase() == "hybrid" || name.toLowerCase() == "terrain" || name.toLowerCase() == "roadmap") {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			
 			map_subdomains: ["", "a.", "b.", "c.", "d."],
 			
 			map_attribution: {
-				"stamen": "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
-				"apple": "Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
+				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
+				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
 			},
 						
 			map_providers: {
 				"toner": {
-					"url": "http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
-					"minZoom": 0,
-					"maxZoom": 20,
-					"attribution": "stamen"
+					"url": 			"http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
 					
 				},
 				"toner-lines": {
-					"url": "http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
-					"minZoom": 0,
-					"maxZoom": 20,
-					"attribution": "stamen"
+					"url": 			"http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
 				},
 				"toner-labels": {
-					"url": "http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
-					"minZoom": 0,
-					"maxZoom": 20,
-					"attribution": "stamen"
+					"url": 			"http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
 				},
 				"sterrain": {
-					"url": "http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
-					"minZoom": 4,
-					"maxZoom": 20,
-					"attribution": "stamen"
+					"url": 			"http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"minZoom": 		4,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
 				},
 				"apple": {
-					"url": "http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
-					"minZoom": 4,
-					"maxZoom": 20,
-					"attribution": "apple"
+					"url": 			"http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
+					"minZoom": 		4,
+					"maxZoom": 		14,
+					"attribution": 	"apple"
 				},
 				"watercolor": {
-					"url": "http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
-					"minZoom": 3,
-					"maxZoom": 16,
-					"attribution": "stamen"
+					"url": 			"http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"minZoom": 		3,
+					"maxZoom": 		16,
+					"attribution": 	"stamen"
 				}
 			},
 			
 			createMap: function(m) {
-				trace(VMM.ExternalAPI.googlemaps.stamen_map_attribution);
 				/* 	MAP PROVIDERS
 					Including Stamen Maps
 					http://maps.stamen.com/
@@ -295,31 +302,40 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						map_attribution = VMM.ExternalAPI.googlemaps.map_attribution[VMM.ExternalAPI.googlemaps.map_providers[name].attribution];
 						return VMM.ExternalAPI.googlemaps.map_providers[name];
 					} else {
-						throw 'No such provider: "' + name + '"';
+						if (VMM.ExternalAPI.googlemaps.defaultType(name)) {
+							trace("GOOGLE MAP DEFAULT TYPE");
+							return google.maps.MapTypeId[name.toUpperCase()];
+						} else {
+							trace("Not a maptype: " + name );
+						}
 					}
 				}
 				
 				google.maps.VeriteMapType = function(name) {
-					var provider = mapProvider(name);
-					return google.maps.ImageMapType.call(this, {
-						"getTileUrl": function(coord, zoom) {
-							var index = (zoom + coord.x + coord.y) % VMM.ExternalAPI.googlemaps.map_subdomains.length;
-							return [
-								provider.url
-									.replace("{S}", VMM.ExternalAPI.googlemaps.map_subdomains[index])
-									.replace("{Z}", zoom)
-									.replace("{X}", coord.x)
-									.replace("{Y}", coord.y)
-									.replace("{z}", zoom)
-									.replace("{x}", coord.x)
-									.replace("{y}", coord.y)
-							];
-						},
-						"tileSize": new google.maps.Size(256, 256),
-						"name":     name,
-						"minZoom":  provider.minZoom,
-						"maxZoom":  provider.maxZoom
-					});
+					if (VMM.ExternalAPI.googlemaps.defaultType(name)) {
+						return google.maps.MapTypeId[name.toUpperCase()];
+					} else {
+						var provider = 			mapProvider(name);
+						return google.maps.ImageMapType.call(this, {
+							"getTileUrl": function(coord, zoom) {
+								var index = 	(zoom + coord.x + coord.y) % VMM.ExternalAPI.googlemaps.map_subdomains.length;
+								return [
+									provider.url
+										.replace("{S}", VMM.ExternalAPI.googlemaps.map_subdomains[index])
+										.replace("{Z}", zoom)
+										.replace("{X}", coord.x)
+										.replace("{Y}", coord.y)
+										.replace("{z}", zoom)
+										.replace("{x}", coord.x)
+										.replace("{y}", coord.y)
+								];
+							},
+							"tileSize": 		new google.maps.Size(256, 256),
+							"name":				name,
+							"minZoom":			provider.minZoom,
+							"maxZoom":			provider.maxZoom
+						});
+					}
 				};
 				
 				google.maps.VeriteMapType.prototype = new google.maps.ImageMapType("_");
@@ -328,96 +344,94 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				================================================== */
 				var layer;
 				
-				
 				if (type.of(VMM.master_config.Timeline.maptype) == "string") {
-					layer = VMM.master_config.Timeline.maptype;
+					if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
+						layer				=	google.maps.MapTypeId[VMM.master_config.Timeline.maptype.toUpperCase()];
+					} else {
+						layer				=	VMM.master_config.Timeline.maptype;
+					}
 				} else {
-					layer = "toner";
+					layer					=	"toner";
 				}
 				
-				var location = new google.maps.LatLng(41.875696,-87.624207);
+				var location				=	new google.maps.LatLng(41.875696,-87.624207);
 				var latlong;
-				var zoom = 11;
-				var has_location = false;
-				var has_zoom = false;
+				var zoom					=	11;
+				var has_location			=	false;
+				var has_zoom				=	false;
 				var map_bounds;
 				
 				if (type.of(VMM.Util.getUrlVars(m.url)["ll"]) == "string") {
-					has_location = true;
-					latlong = VMM.Util.getUrlVars(m.url)["ll"].split(",");
-					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+					has_location			=	true;
+					latlong					=	VMM.Util.getUrlVars(m.url)["ll"].split(",");
+					location				=	new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
 					
 				} else if (type.of(VMM.Util.getUrlVars(m.url)["sll"]) == "string") {
-					latlong = VMM.Util.getUrlVars(m.url)["sll"].split(",");
-					location = new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+					latlong					=	VMM.Util.getUrlVars(m.url)["sll"].split(",");
+					location				=	new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
 				} 
 				
 				if (type.of(VMM.Util.getUrlVars(m.url)["z"]) == "string") {
-					has_zoom = true;
-					zoom = parseFloat(VMM.Util.getUrlVars(m.url)["z"]);
+					has_zoom				=	true;
+					zoom					=	parseFloat(VMM.Util.getUrlVars(m.url)["z"]);
 				}
 				
 				var map_options = {
-					zoom:zoom,
-					disableDefaultUI: true,
-					mapTypeControl: false,
-					zoomControl: true,
+					zoom:						zoom,
+					disableDefaultUI:			true,
+					mapTypeControl:				false,
+					zoomControl:				true,
 					zoomControlOptions: {
-						style: google.maps.ZoomControlStyle.SMALL,
-						position: google.maps.ControlPosition.TOP_RIGHT
+						style:					google.maps.ZoomControlStyle.SMALL,
+						position:				google.maps.ControlPosition.TOP_RIGHT
 					},
-					center: location,
-					mapTypeId: layer,
+					center: 					location,
+					mapTypeId:					layer,
 					mapTypeControlOptions: {
-				        mapTypeIds: [layer]
+				        mapTypeIds:				[layer]
 				    }
 				}
 				
-				var unique_map_id = m.id.toString() + "_gmap";
+				var unique_map_id			=	m.id.toString() + "_gmap";
+				
 				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
 				
-				var map = new google.maps.Map(document.getElementById(unique_map_id), map_options);
-				map.mapTypes.set(layer, new google.maps.VeriteMapType(layer));
-				
-				/* ATTRIBUTION
-				================================================== */
-				var map_attribution_html = "<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
-				VMM.appendElement("#"+unique_map_id, map_attribution_html);
+				var map						=	new google.maps.Map(document.getElementById(unique_map_id), map_options);
+				 
+				if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
+					
+				} else {
+					map.mapTypes.set(layer, new google.maps.VeriteMapType(layer));
+					// ATTRIBUTION
+					var map_attribution_html =	"<div class='map-attribution'><div class='attribution-text'>" + map_attribution + "</div></div>";
+					VMM.appendElement("#"+unique_map_id, map_attribution_html);
+				}
 				
 				loadKML();
 				
-				/* KML
-				================================================== */
+				// KML
 				function loadKML() {
-					var kml_url = m.url + "&output=kml";
-					kml_url = kml_url.replace("&output=embed", "");
-					
-					var kml_layer = new google.maps.KmlLayer(kml_url, {preserveViewport:true});
+					var kml_url				=	m.url + "&output=kml";
+					kml_url					=	kml_url.replace("&output=embed", "");
+					var kml_layer			=	new google.maps.KmlLayer(kml_url, {preserveViewport:true});
+					var infowindow			=	new google.maps.InfoWindow();
 					kml_layer.setMap(map);
-					
-					var infowindow = new google.maps.InfoWindow();
 
 					google.maps.event.addListenerOnce(kml_layer, "defaultviewport_changed", function() {
-						
 						map.fitBounds(kml_layer.getDefaultViewport() );
-						
 						if (has_location) {
 							map.panTo(location);
 						} 
-						
 						if (has_zoom) {
 							map.setZoom(zoom);
 						}
-						
 					});
-
-
+					
 					google.maps.event.addListener(kml_layer, 'click', function(kmlEvent) {
-						var text = kmlEvent.featureData.description;
-						trace(kmlEvent.featureData.infoWindowHtml)
+						var text			=	kmlEvent.featureData.description;
 						showInfoWindow(text);
+						
 						function showInfoWindow(c) {
-							//trace("showInfoWindow")
 							infowindow.setContent(c);
 							infowindow.open(map);
 						}
