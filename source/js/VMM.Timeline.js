@@ -137,6 +137,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			 	 config.current_slide		=	parseInt(hash);
 			 }
 		}
+		
 		window.onhashchange = function () {
 			if (config.hash_bookmark) {
 				if (is_moving) {
@@ -536,7 +537,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.startdate = new Date(_dates[0].startdate);
 				
 				var td = _dates[0].startdate;
-				var td_num = 0;
+				var td_num = 0; 
 				/*
 				if (_dates[0].startdate.getDate() > 1) {
 					_date.startdate.setDate(td.getDate() - 1);
