@@ -21,13 +21,15 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	<div id="timeline-embed"></div>
 	<script type="text/javascript">
 	    var timeline_config = {
-			width: 		"100%",
-			height: 	"100%",
-			source: 	'path_to_json/or_link_to_googlespreadsheet',
-			font: 		'Bevan-PotanoSans',			//OPTIONAL
-			maptype: 	'watercolor',				//OPTIONAL
-			css: 		'path_to_css/timeline.css',	//OPTIONAL
-			js: 		'path_to_js/timeline-min.js'	//OPTIONAL
+			width:			"100%",
+			height:			"100%",
+			source:			'path_to_json/or_link_to_googlespreadsheet',
+			start_at_end: 	false,							//OPTIONAL
+			hash_bookmark:	true,							//OPTIONAL
+			font:			'Bevan-PotanoSans',				//OPTIONAL
+			maptype:		'watercolor',					//OPTIONAL
+			css:			'path_to_css/timeline.css',		//OPTIONAL
+			js:				'path_to_js/timeline-min.js'	//OPTIONAL
 		}
 	</script>
 	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
@@ -35,6 +37,13 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	
 ## Options
 
+* Start at End `start_at_end`
+	set to true to start the timeline on the last date.
+	default is false
+	
+* Hash Bookmark `hash_bookmark`
+	set to true to allow bookmarking slides using the hash tag
+	default is false
 
 * Map Style Types `maptype:`
 
