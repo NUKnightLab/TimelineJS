@@ -37,45 +37,48 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	
 ## Options
 
-* Start at End `start_at_end`
-	set to true to start the timeline on the last date.
-	default is false
+###Start at End 
+`start_at_end`
+set to true to start the timeline on the last date.
+*default is false*
 	
-* Hash Bookmark `hash_bookmark`
-	set to true to allow bookmarking slides using the hash tag
-	default is false
+###Hash Bookmark 
+`hash_bookmark`
+set to true to allow bookmarking slides using the hash tag
+*default is false*
 
-* Map Style Types `maptype:`
-
-	* [Stamen Maps ](maps.stamen.com)
-		* `toner`
-		* `toner-lines`
-		* `toner-labels`
-		* `watercolor`
-		* `sterrain`
+###Map Style Types 
+`maptype:`
+* [Stamen Maps ](maps.stamen.com)
+	* `toner`
+	* `toner-lines`
+	* `toner-labels`
+	* `watercolor`
+	* `sterrain`
 		
-	* Google Maps
-		* `ROADMAP`
-		* `TERRAIN`
-		* `HYBRID`
-		* `SATELLITE`
+* Google Maps
+	* `ROADMAP`
+	* `TERRAIN`
+	* `HYBRID`
+	* `SATELLITE`
 
-* Font Options `font:`
-	* `Arvo-PTSans`
-	* `Merriweather-NewsCycle`
-	* `PoiretOne-Molengo`
-	* `PTSerif-PTSans`
-	* `DroidSerif-DroidSans`
-	* `Lekton-Molengo`
-	* `NixieOne-Ledger`
-	* `AbrilFatface-Average`
-	* `PlayfairDisplay-Muli`
-	* `Rancho-Gudea`
-	* `Bevan-PotanoSans`
-	* `BreeSerif-OpenSans`
-	* `SansitaOne-Kameron`
-	* `Pacifico-Arimo`
-	* Or make your own 
+###Font Options 
+`font:`
+* `Arvo-PTSans`
+* `Merriweather-NewsCycle`
+* `PoiretOne-Molengo`
+* `PTSerif-PTSans`
+* `DroidSerif-DroidSans`
+* `Lekton-Molengo`
+* `NixieOne-Ledger`
+* `AbrilFatface-Average`
+* `PlayfairDisplay-Muli`
+* `Rancho-Gudea`
+* `Bevan-PotanoSans`
+* `BreeSerif-OpenSans`
+* `SansitaOne-Kameron`
+* `Pacifico-Arimo`
+* Or make your own 
 
 ## File Formats
 
