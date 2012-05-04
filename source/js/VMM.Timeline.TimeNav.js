@@ -62,6 +62,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		================================================== */
 		this.setData = function(d,e) {
 			if(typeof d != 'undefined') {
+				data = {};
 				data = d;
 				eras = e;
 				build();
@@ -1027,6 +1028,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var row = 					2; //row
 			var lpos = 					0; // last marker pos;
 			var row_depth = 			0;
+			markers = 					[];
+			era_markers = 				[];
 			
 			for(var i = 0; i < data.length; i++) {
 				

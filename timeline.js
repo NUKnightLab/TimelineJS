@@ -3186,7 +3186,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		var events = {}, config;
 		// ARRAYS
-		var data = [], slides = [], medias = [], slide_positions = [];
+		var data = [], slides = [], slide_positions = [];
 		var slides_content = "";
 		var current_slide = 0;
 		var current_width = 960;
@@ -3232,31 +3232,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		this.ver = "0.6";
 		
-		/* APPLY SUPPLIED CONFIG
-		================================================== */
-		/*
-		if (type.of(parent_config) == 'object') {
-		    var x;
-			for (x in parent_config) {
-				if (Object.prototype.hasOwnProperty.call(parent_config, x)) {
-					config[x] = parent_config[x];
-				}
-			}
-		} else if (type.of(_config) == 'object') {
-			var x;
-			for (x in _config) {
-				if (Object.prototype.hasOwnProperty.call(_config, x)) {
-					config[x] = _config[x];
-				}
-			}
-		}
-		*/
 		config.slider.width = config.width;
 		config.slider.height = config.height;
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
 		this.init = function(d) {
+			slides = [];
+			slide_positions = [];
+			
 			if(typeof d != 'undefined') {
 				this.setData(d);
 			} else {
@@ -3467,6 +3451,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// Clear out existing content
 			VMM.attachElement($slides_items, "");
+			slides = [];
 			
 			for(var i = 0; i < d.length; i++) {
 				var bw = "";
@@ -4873,7 +4858,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.6";
+		version = 					"0.98.7";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -5474,6 +5459,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		================================================== */
 		this.setData = function(d,e) {
 			if(typeof d != 'undefined') {
+				data = {};
 				data = d;
 				eras = e;
 				build();
@@ -6439,6 +6425,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var row = 					2; //row
 			var lpos = 					0; // last marker pos;
 			var row_depth = 			0;
+			markers = 					[];
+			era_markers = 				[];
 			
 			for(var i = 0; i < data.length; i++) {
 				
