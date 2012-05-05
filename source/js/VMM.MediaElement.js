@@ -79,7 +79,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				if (data.caption != null && data.caption != "") {
 					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
 				}
-				
 			// IMAGE
 				if (m.type				==	"image") {
 					mediaElem			=	"<img src='" + m.id + "'>";
@@ -91,13 +90,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					var googledocs_id	=	"googledoc_" + VMM.Util.unique_ID(5);
-					/*
-					if (m.id.match(/docs.google.com/i)) {
-						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&embedded=true'></iframe>";
-					} else {
-						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + m.id + "&embedded=true'></iframe>";
-					}
-					*/
 					mediaElem			=	"<div class='media-frame doc' id='" + googledocs_id + "'><span class='messege'>Loading Document</span></div>";
 					VMM.ExternalAPI.googledocs.get(m.id, googledocs_id);
 			// YOUTUBE
@@ -128,10 +120,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
-					mediaElem			=	VMM.Util.properQuotes(m.id);
+					mediaElem			=	"<div class='media-frame plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
 			// WEBSITE
 				} else if (m.type		==	"website") { 
-					mediaElem			=	"<iframe class='media-frame' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
+					mediaElem			=	"<iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
 					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
 			// NO MATCH
 				} else {

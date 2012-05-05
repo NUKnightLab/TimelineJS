@@ -198,6 +198,19 @@
 								font-weight: bold;
 								text-transform: uppercase;
 							}
+							.plain-text {
+								display:table;
+								.container {
+									display:table-cell;
+									vertical-align:middle;
+									font-size: @base-font;
+									line-height:@base-line;
+									color: @color-feature-description;
+									p {
+										margin-bottom:@base-line;
+									}
+								}
+							}
 							img, iframe {
 								border: 1px solid @color-line;
 								//max-height:350px;

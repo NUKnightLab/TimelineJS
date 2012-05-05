@@ -58,7 +58,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.99.00";
+		version = 					"1.01";
 		
 		trace("TIMELINE VERSION " + version);
 		

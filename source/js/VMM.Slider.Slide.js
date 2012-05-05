@@ -13,7 +13,6 @@ if (typeof VMM.Slider != 'undefined') {
 		/* PUBLIC
 		================================================== */
 		this.show = function() {
-			trace("LOADED: " + loaded);
 			if (!loaded) {
 				render();
 			}
@@ -65,7 +64,6 @@ if (typeof VMM.Slider != 'undefined') {
 		/* PRIVATE
 		================================================== */
 		var render = function() {
-			trace(data);
 			VMM.attachElement(element, "");
 			VMM.appendElement(element, buildSlide() );
 			loaded = true;
@@ -78,7 +76,7 @@ if (typeof VMM.Slider != 'undefined') {
 		}
 		
 		var buildSlide = function() {
-			var c = {slide:"", text: "", media: "", layout: "content-container layout", has: { text: false, media: false }};
+			var c = {slide:"", text: "", media: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
 			var b_slide, c_wrap;
 			
 			/* DATE
@@ -86,7 +84,15 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						c.text += VMM.createElement("h2", VMM.Util.date.prettyDate(data.startdate), "date");
+						var st = VMM.Util.date.prettyDate(data.startdate);
+						var en = VMM.Util.date.prettyDate(data.enddate);
+						if (st != en) {
+							//st = VMM.Util.date.prettyDate(data.startdate, true);
+							//en = VMM.Util.date.prettyDate(data.enddate, true);
+							c.text += VMM.createElement("h2", st + "<small> &mdash; " + en + "</small>", "date");
+						} else {
+							c.text += VMM.createElement("h2", st, "date");
+						}
 					}
 				}
 			}
@@ -94,6 +100,7 @@ if (typeof VMM.Slider != 'undefined') {
 			/* HEADLINE
 			================================================== */
 			if (data.headline != null && data.headline != "") {
+				c.has.headline		=	true;
 				if (data.type == "start") {
 					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
 				} else {
@@ -106,6 +113,9 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.text != null && data.text != "") {
 				c.has.text		=	true;
 				c.text			+=	VMM.createElement("p", VMM.Util.linkify_with_twitter(data.text, "_blank"));
+			}
+			
+			if (c.has.text || c.has.headline) {
 				c.text			=	VMM.createElement("div", c.text, "container");
 				c.text			=	VMM.createElement("div", c.text, "text");
 			}
@@ -118,6 +128,7 @@ if (typeof VMM.Slider != 'undefined') {
 					c.media		=	VMM.MediaElement.create(data.asset);
 				}
 			}
+			
 			/* COMBINE
 			================================================== */
 			if (c.has.text)	{ c.layout		+=	"-text"		};
