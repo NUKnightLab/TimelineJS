@@ -5,12 +5,21 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	VMM.ExternalAPI = {
 		
 		pushQues: function() {
+			
 			if (VMM.master_config.googlemaps.active) {
 				VMM.ExternalAPI.googlemaps.pushQue();
 			}
+			
 			if (VMM.master_config.youtube.active) {
 				VMM.ExternalAPI.youtube.pushQue();
 			}
+			if (VMM.master_config.soundcloud.active) {
+				VMM.ExternalAPI.soundcloud.pushQue();
+			}
+			if (VMM.master_config.googledocs.active) {
+				VMM.ExternalAPI.googledocs.pushQue();
+			}
+			
 		},
 		
 		twitter: {
@@ -196,7 +205,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				http://maps.google.com/maps?q=Bavaria&hl=en&ll=47.597829,9.398804&spn=1.010316,2.709503&sll=37.0625,-95.677068&sspn=73.579623,173.408203&hnear=Bavaria,+Germany&t=m&z=10&output=embed
 				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
 			*/
-			getMap: function(url, id) {
+			get: function(url, id) {
 				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
@@ -462,10 +471,38 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 		},
 		
+		googledocs: {
+			
+			get: function(url, id) {
+				var doc = {url: url, id: id};
+				VMM.master_config.googledocs.que.push(doc);
+				VMM.master_config.googledocs.active = true;
+			},
+			
+			creatDoc: function(doc) {
+				var mediaElem = ""; 
+				if (doc.url.match(/docs.google.com/i)) {
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&embedded=true'></iframe>";
+				} else {
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + doc.url + "&embedded=true'></iframe>";
+				}
+				VMM.attachElement("#"+doc.id, mediaElem);
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googledocs.que.length; i++) {
+					VMM.ExternalAPI.googledocs.creatDoc(VMM.master_config.googledocs.que[i]);
+					
+				}
+				VMM.master_config.googledocs.que = [];
+				
+			}
+		},
+		
 		//VMM.ExternalAPI.flickr.getPhoto(mediaID, htmlID);
 		flickr: {
 			
-			getPhoto: function(mid, id) {
+			get: function(mid, id) {
 				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + Aes.Ctr.decrypt(VMM.master_config.keys.flickr, VMM.master_config.vp, 256) + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
@@ -502,19 +539,33 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			/* 
 				REFORMAT TO USE API FOR CUSTOM PLAYERS
 			*/
-			getSound: function(url, id) {
-				// http://soundcloud.com/oembed?iframe=true&url=http://soundcloud.com/erasedtapes/olafur-arnalds-poland
-				var the_url = "http://soundcloud.com/oembed?url=" + url + "&format=js&callback=?";
-				VMM.getJSON(the_url, function(d) {
-					VMM.attachElement("#"+id, d.html );
-				});
+			get: function(url, id) {
+				var sound = {url: url, id: id};
+				VMM.master_config.soundcloud.que.push(sound);
+				VMM.master_config.soundcloud.active = true;
 			},
+			createPlayer: function(sound) {
+				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
+				VMM.getJSON(the_url, function(d) {
+					VMM.attachElement("#"+sound.id, d.html);
+				});
+				
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.soundcloud.que.length; i++) {
+					VMM.ExternalAPI.soundcloud.createPlayer(VMM.master_config.soundcloud.que[i]);
+					
+				}
+				VMM.master_config.soundcloud.que = [];
+			},
+			
 			
 		},
 		
 		// VMM.ExternalAPI.youtube.init(id);
 		youtube: {
-			init: function(id) {
+			get: function(id) {
 				var timer;
 				if (VMM.master_config.youtube.active) {
 					trace(id);

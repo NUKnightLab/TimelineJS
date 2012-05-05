@@ -103,27 +103,41 @@ if (typeof VMM == 'undefined') {
 			return this;
 		},
 		
-		vp: "Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
+		vp:				"Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
 		
 		keys: {
-			flickr: "RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
-			google: "jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo="
+			flickr:		"RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
+			google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo="
 		},
 		
 		youtube: {
-			active: false,
-			array: [],
-			api_loaded:false,
-			que: []
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
 		},
 		
 		googlemaps: {
-			active: false,
-			map_active: false,
-			places_active: false,
-			array: [],
-			api_loaded:false,
-			que: []
+			active:			false,
+			map_active:		false,
+			places_active:	false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		googledocs: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		soundcloud: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
 		}
 		
 	}).init();
@@ -1837,24 +1851,29 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type		==	"flickr") {
 					var flickr_id		=	"flickr_" + m.id;
 					mediaElem			=	"<a href='" + m.link + "' target='_blank'><img id='" + flickr_id + "_large" + "'></a>";
-					VMM.ExternalAPI.flickr.getPhoto(m.id, "#" + flickr_id);
+					VMM.ExternalAPI.flickr.get(m.id, "#" + flickr_id);
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
+					var googledocs_id	=	"googledoc_" + VMM.Util.unique_ID(5);
+					/*
 					if (m.id.match(/docs.google.com/i)) {
 						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&embedded=true'></iframe>";
 					} else {
 						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + m.id + "&embedded=true'></iframe>";
 					}
+					*/
+					mediaElem			=	"<div class='media-frame doc' id='" + googledocs_id + "'><span class='messege'>Loading Document</span></div>";
+					VMM.ExternalAPI.googledocs.get(m.id, googledocs_id);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
 					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'>Loading YouTube video...</div>";
-					VMM.ExternalAPI.youtube.init(m.id);
+					VMM.ExternalAPI.youtube.get(m.id);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'>Loading Tweet</div>";
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'>Loading Tweet</span></div>";
 					isTextMedia			=	true;
 					VMM.ExternalAPI.twitter.prettyHTML(m.id);
 			// TWITTER
@@ -1863,13 +1882,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// SOUNDCLOUD
 				} else if (m.type		==	"soundcloud") {
 					var soundcloud_id	=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
-					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id);
+					mediaElem			=	"<div class='media-frame soundcloud' id='" + soundcloud_id + "'><span class='messege'>Loading Sound</span></div>";
+					VMM.ExternalAPI.soundcloud.get(m.id, soundcloud_id);
 			// GOOGLE MAPS
 				} else if (m.type		==	"google-map") {
 					var map_id			=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame map' id='" + map_id + "'>Loading Map...</div>";
-					VMM.ExternalAPI.googlemaps.getMap(m.id, map_id);
+					mediaElem			=	"<div class='media-frame map' id='" + map_id + "'><span class='messege'>Loading Map</span></div>";
+					VMM.ExternalAPI.googlemaps.get(m.id, map_id);
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
@@ -2227,12 +2246,21 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	VMM.ExternalAPI = {
 		
 		pushQues: function() {
+			
 			if (VMM.master_config.googlemaps.active) {
 				VMM.ExternalAPI.googlemaps.pushQue();
 			}
+			
 			if (VMM.master_config.youtube.active) {
 				VMM.ExternalAPI.youtube.pushQue();
 			}
+			if (VMM.master_config.soundcloud.active) {
+				VMM.ExternalAPI.soundcloud.pushQue();
+			}
+			if (VMM.master_config.googledocs.active) {
+				VMM.ExternalAPI.googledocs.pushQue();
+			}
+			
 		},
 		
 		twitter: {
@@ -2418,7 +2446,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				http://maps.google.com/maps?q=Bavaria&hl=en&ll=47.597829,9.398804&spn=1.010316,2.709503&sll=37.0625,-95.677068&sspn=73.579623,173.408203&hnear=Bavaria,+Germany&t=m&z=10&output=embed
 				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
 			*/
-			getMap: function(url, id) {
+			get: function(url, id) {
 				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
@@ -2684,10 +2712,38 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 		},
 		
+		googledocs: {
+			
+			get: function(url, id) {
+				var doc = {url: url, id: id};
+				VMM.master_config.googledocs.que.push(doc);
+				VMM.master_config.googledocs.active = true;
+			},
+			
+			creatDoc: function(doc) {
+				var mediaElem = ""; 
+				if (doc.url.match(/docs.google.com/i)) {
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&embedded=true'></iframe>";
+				} else {
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + doc.url + "&embedded=true'></iframe>";
+				}
+				VMM.attachElement("#"+doc.id, mediaElem);
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googledocs.que.length; i++) {
+					VMM.ExternalAPI.googledocs.creatDoc(VMM.master_config.googledocs.que[i]);
+					
+				}
+				VMM.master_config.googledocs.que = [];
+				
+			}
+		},
+		
 		//VMM.ExternalAPI.flickr.getPhoto(mediaID, htmlID);
 		flickr: {
 			
-			getPhoto: function(mid, id) {
+			get: function(mid, id) {
 				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + Aes.Ctr.decrypt(VMM.master_config.keys.flickr, VMM.master_config.vp, 256) + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
@@ -2724,19 +2780,33 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			/* 
 				REFORMAT TO USE API FOR CUSTOM PLAYERS
 			*/
-			getSound: function(url, id) {
-				// http://soundcloud.com/oembed?iframe=true&url=http://soundcloud.com/erasedtapes/olafur-arnalds-poland
-				var the_url = "http://soundcloud.com/oembed?url=" + url + "&format=js&callback=?";
-				VMM.getJSON(the_url, function(d) {
-					VMM.attachElement("#"+id, d.html );
-				});
+			get: function(url, id) {
+				var sound = {url: url, id: id};
+				VMM.master_config.soundcloud.que.push(sound);
+				VMM.master_config.soundcloud.active = true;
 			},
+			createPlayer: function(sound) {
+				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
+				VMM.getJSON(the_url, function(d) {
+					VMM.attachElement("#"+sound.id, d.html);
+				});
+				
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.soundcloud.que.length; i++) {
+					VMM.ExternalAPI.soundcloud.createPlayer(VMM.master_config.soundcloud.que[i]);
+					
+				}
+				VMM.master_config.soundcloud.que = [];
+			},
+			
 			
 		},
 		
 		// VMM.ExternalAPI.youtube.init(id);
 		youtube: {
-			init: function(id) {
+			get: function(id) {
 				var timer;
 				if (VMM.master_config.youtube.active) {
 					trace(id);
@@ -3481,15 +3551,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		var preloadTimeOutSlides = function() {
-			trace("preloadTimeOutSlides");
-			trace("CURRENT SLIDE: " + current_slide);
 			for(var j = 0; j < config.preload; j++) {
 				if ( !((current_slide + j) >= slides.length - 1)) {
-					trace("PRELOAD: " + (current_slide + j) );
 					slides[current_slide + j].show();
 				}
 				if ( !( (current_slide - j) < 0 ) ) {
-					trace("PRELOAD: " + (current_slide - j) );
 					slides[current_slide - j].show();
 				}
 			}
@@ -5424,7 +5490,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _date		=	{};
 				var td_num		=	0;
 				var td			=	_dates[0].startdate;
-				_date.startdate =	VMM.Util.date.parse(data.startDate);
+				_date.startdate =	_dates[0].startdate;
+				trace(_dates[0].startdate);
+				trace(_date.startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");

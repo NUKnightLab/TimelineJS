@@ -454,7 +454,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _date		=	{};
 				var td_num		=	0;
 				var td			=	_dates[0].startdate;
-				_date.startdate =	VMM.Util.date.parse(data.startDate);
+				_date.startdate =	_dates[0].startdate;
+				trace(_dates[0].startdate);
+				trace(_date.startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");

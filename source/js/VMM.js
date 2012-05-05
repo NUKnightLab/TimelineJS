@@ -103,27 +103,41 @@ if (typeof VMM == 'undefined') {
 			return this;
 		},
 		
-		vp: "Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
+		vp:				"Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
 		
 		keys: {
-			flickr: "RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
-			google: "jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo="
+			flickr:		"RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
+			google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo="
 		},
 		
 		youtube: {
-			active: false,
-			array: [],
-			api_loaded:false,
-			que: []
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
 		},
 		
 		googlemaps: {
-			active: false,
-			map_active: false,
-			places_active: false,
-			array: [],
-			api_loaded:false,
-			que: []
+			active:			false,
+			map_active:		false,
+			places_active:	false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		googledocs: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		soundcloud: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
 		}
 		
 	}).init();

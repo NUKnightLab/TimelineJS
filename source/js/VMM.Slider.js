@@ -284,15 +284,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		var preloadTimeOutSlides = function() {
-			trace("preloadTimeOutSlides");
-			trace("CURRENT SLIDE: " + current_slide);
 			for(var j = 0; j < config.preload; j++) {
 				if ( !((current_slide + j) >= slides.length - 1)) {
-					trace("PRELOAD: " + (current_slide + j) );
 					slides[current_slide + j].show();
 				}
 				if ( !( (current_slide - j) < 0 ) ) {
-					trace("PRELOAD: " + (current_slide - j) );
 					slides[current_slide - j].show();
 				}
 			}
