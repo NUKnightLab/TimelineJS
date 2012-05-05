@@ -2723,9 +2723,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			creatDoc: function(doc) {
 				var mediaElem = ""; 
 				if (doc.url.match(/docs.google.com/i)) {
-					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&embedded=true'></iframe>";
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&amp;embedded=true'></iframe>";
 				} else {
-					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + doc.url + "&embedded=true'></iframe>";
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + doc.url + "&amp;embedded=true'></iframe>";
 				}
 				VMM.attachElement("#"+doc.id, mediaElem);
 			},
