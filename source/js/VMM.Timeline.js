@@ -31,6 +31,7 @@
 // @codekit-prepend "VMM.TouchSlider.js";
 // @codekit-prepend "VMM.DragSlider.js";
 // @codekit-prepend "VMM.Slider.js";
+// @codekit-prepend "VMM.Slider.Slide.js";
 // @codekit-prepend "VMM.Util.js";
 // @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "VMM.Language.js";
@@ -57,7 +58,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.72";
+		version = 					"0.99.00";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -67,6 +68,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
+			preload:				4,
 			current_slide:			0,
 			hash_bookmark:			false,
 			start_at_end: 			false,
@@ -375,75 +377,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		// BUILD SLIDE CONTENT	pass in json object
-		var buildSlide = function(dd, d_date) {
-			var d = dd;
-			var slide = "";
-			var _valid = false;
-			var _hasmedia = false;
-			var _hastext = false;
-			var c = {};
-			
-			c._text = "";
-			c._media = "";
-			
-			updateSize();
-			
-			if (type.of(d_date) == "date") {
-				_valid = true;
-				
-				if (dd.type != "start") {
-					c._text += VMM.createElement("h2", VMM.Util.date.prettyDate(d_date), "date");
-				}
-				
-				if (d.headline != null && d.headline != "") {
-					if (d.type == "tweets") {
-						
-					} else if (dd.type == "start") {
-						c._text += VMM.createElement("h2", VMM.Util.linkify_with_twitter(d.headline, "_blank"), "start");
-					} else {
-						c._text += VMM.createElement("h3", VMM.Util.linkify_with_twitter(d.headline, "_blank"));
-					}
-				}
-				
-				if (d.text != null && d.text != "") {
-					_hastext = true;
-					c._text += VMM.createElement("p", VMM.Util.linkify_with_twitter(d.text, "_blank"));
-				}
-				
-				c._text = VMM.createElement("div", c._text, "container");
-				c._text = VMM.createElement("div", c._text, "text");
-				
-			}
-			
-			if (_valid) {
-				
-				var _layout_class = "content-container layout";
-				
-				if (d.asset != null && d.asset != "") {
-					if (d.asset.media != null && d.asset.media != "") {
-						_hasmedia = true;
-						c._media = VMM.MediaElement.create("", d.asset, true, config.feature.width, config.feature.height);
-					}
-				}
-				
-				if (_hastext) {
-					_layout_class += "-text"
-				}
-				if (_hasmedia) {
-					_layout_class += "-media";
-				}
-				
-				slide = VMM.createElement("div", c._text + c._media, _layout_class);
-				
-				return slide;
-				
-			}
-			
-			return slide;
-			
-		}
-		
 		var updateSize = function() {
 			trace("UPDATE SIZE");
 			config.width = VMM.Element.width($timeline);
@@ -476,9 +409,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					// START DATE
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
-					} else if (data.date[i].type == "google spreadsheet") {
-						//_date.startdate = new Date(Date.parse(data.date[i].startDate));
-						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					} else {
 						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					}
@@ -489,9 +419,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].endDate != null && data.date[i].endDate != "") {
 						if (data.date[i].type == "tweets") {
 							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
-						} else if (data.date[i].type == "google spreadsheet") {
-							//_date.enddate = new Date(Date.parse(data.date[i].endDate));
-							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						} else {
 							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						}
@@ -499,18 +426,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					_date.title = data.date[i].headline;
-					_date.type = data.date[i].type;
-					_date.date = VMM.Util.date.prettyDate(_date.startdate);
-					_date.asset = data.date[i].asset;
-					_date.fulldate = _date.startdate.getTime();
+					_date.title		=	data.date[i].headline;
+					_date.headline	=	data.date[i].headline;
+					_date.type		=	data.date[i].type;
+					_date.date		=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.asset		=	data.date[i].asset;
+					_date.fulldate	=	_date.startdate.getTime();
+					_date.text		=	data.date[i].text;
+					_date.content	=	"";
 					
-					// BUILD SLIDE CONTENT
-					_date.content = buildSlide(data.date[i], _date.startdate);
-					
-					if (_date.content != null && _date.content != "") {
-						_dates.push(_date);
-					}
+					_dates.push(_date);
 					
 				}
 				
@@ -526,25 +451,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
-				var _date = {};
-				if (data.type == "google spreadsheet") {
-					trace("google spreadsheet startpage date " + data.startDate);
-					//_date.startdate = new Date(Date.parse(data.startDate));
-				} else {
-					_date.startdate = VMM.Util.date.parse(data.startDate);
-				}
-				
-				_date.startdate = new Date(_dates[0].startdate);
-				
-				var td = _dates[0].startdate;
-				var td_num = 0;
-				/*
-				if (_dates[0].startdate.getDate() > 1) {
-					_date.startdate.setDate(td.getDate() - 1);
-				} else if (_dates[0].startdate.getHours() > 0) {
-					_date.startdate.setHours(td.getHours() - 1);
-				}
-				*/
+				var _date		=	{};
+				var td_num		=	0;
+				var td			=	_dates[0].startdate;
+				_date.startdate =	VMM.Util.date.parse(data.startDate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -563,19 +473,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate.setMinutes(td.getMinutes() - 1);
 				}
 				
-				_date.uniqueid = VMM.Util.unique_ID(5);
-				_date.enddate = _date.startdate;
-				_date.title = data.headline;
-				_date.headline = data.headline;
-				_date.text = data.text;
-				_date.type = "start";
-				_date.date = VMM.Util.date.prettyDate(data.startDate);
-				_date.asset = data.asset;
-				_date.fulldate = _date.startdate.getTime();
-				_date.content = buildSlide(_date, _date.startdate);
-				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
-					_dates.push(_date);
-				}
+				_date.uniqueid	=	VMM.Util.unique_ID(5);
+				_date.enddate	=	_date.startdate;
+				_date.title		=	data.headline;
+				_date.headline	=	data.headline;
+				_date.text		=	data.text;
+				_date.type		=	"start";
+				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
+				_date.asset		=	data.asset;
+				_date.fulldate	=	_date.startdate.getTime();
+				
+				_dates.push(_date);
 			}
 			
 			/* CUSTOM SORT

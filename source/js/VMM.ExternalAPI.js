@@ -4,6 +4,15 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	
 	VMM.ExternalAPI = {
 		
+		pushQues: function() {
+			if (VMM.master_config.googlemaps.active) {
+				VMM.ExternalAPI.googlemaps.pushQue();
+			}
+			if (VMM.master_config.youtube.active) {
+				VMM.ExternalAPI.youtube.pushQue();
+			}
+		},
+		
 		twitter: {
 			tweetArray: [],
 			// VMM.ExternalAPI.twitter.getHTML(id);
@@ -188,13 +197,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
 			*/
 			getMap: function(url, id) {
+				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
 				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + Aes.Ctr.decrypt(VMM.master_config.keys.google, VMM.master_config.vp, 256) + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
 				var map = {url: url, vars: map_vars, id: id}
-				
+				trace(map);
 				if (VMM.master_config.googlemaps.active) {
-					VMM.master_config.googlemaps.createMap(map);
+					VMM.master_config.googlemaps.que.push(map);
 				} else {
 					VMM.master_config.googlemaps.que.push(map);
 					
@@ -226,11 +236,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (!VMM.master_config.googlemaps.active) {
 					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
 						VMM.master_config.googlemaps.active = true;
-						for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
-							VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
-						}
+						VMM.ExternalAPI.googlemaps.pushQue();
 					}
 				}
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
+					VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
+				}
+				VMM.master_config.googlemaps.que = [];
+				
 			},
 			
 			defaultType: function(name) {
@@ -296,6 +312,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				================================================== */
 				
 				var map_attribution = "";
+				var layer;
+				var map;
 				
 				function mapProvider(name) {
 					if (name in VMM.ExternalAPI.googlemaps.map_providers) {
@@ -342,7 +360,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				/* Make the Map
 				================================================== */
-				var layer;
+				
 				
 				if (type.of(VMM.master_config.Timeline.maptype) == "string") {
 					if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
@@ -397,7 +415,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
 				
 				var map						=	new google.maps.Map(document.getElementById(unique_map_id), map_options);
-				 
+				
 				if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
 					
 				} else {
@@ -408,6 +426,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				loadKML();
+				
+				
 				
 				// KML
 				function loadKML() {
@@ -495,9 +515,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		// VMM.ExternalAPI.youtube.init(id);
 		youtube: {
 			init: function(id) {
-				
+				var timer;
 				if (VMM.master_config.youtube.active) {
-					VMM.master_config.youtube.createPlayer(id);
+					trace(id);
+					VMM.master_config.youtube.que.push(id);
 				} else {
 					
 					VMM.master_config.youtube.que.push(id);
@@ -517,13 +538,21 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			onAPIReady: function() {
 				trace("YOUTUBE API READY")
 				VMM.master_config.youtube.active = true;
-				
+				VMM.ExternalAPI.youtube.pushQue();
+			},
+			
+			pushQue: function() {
 				for(var i = 0; i < VMM.master_config.youtube.que.length; i++) {
 					VMM.ExternalAPI.youtube.createPlayer(VMM.master_config.youtube.que[i]);
 				}
+				
+				VMM.master_config.youtube.que = [];
+				
 			},
+			
 			// VMM.ExternalAPI.youtube.createPlayer(id);
 			createPlayer: function(id) {
+				trace("create player")
 				var p = {
 					active: 				false,
 					player: 				{},
@@ -579,6 +608,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			
 		}
+	
 	}
 	
 }

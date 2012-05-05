@@ -1757,59 +1757,50 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 		init: function() {
 			return this;
 		},
-		// somestring = VMM.MediaElement.thumbnail(data);
+		
 		thumbnail: function(data, w, h) {
 			_w = 32;
 			_h = 32;
-			if (w != null && w != "") {
-				_w = w;
-			}
-			if (h != null && h != "") {
-				_h = h;
-			}
+			if (w != null && w != "") {_w = w};
+			if (h != null && h != "") {_h = h};
 			
 			if (data.media != null && data.media != "") {
-				_valid = true;
-				var mediaElem = "";
-				var m = {};
-				
-				// MEDIA TYPE
-				m = VMM.MediaType(data.media); //returns an object with .type and .id
-				
+				_valid				=	true;
+				var mediaElem		=	"";
+				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
 				// CREATE MEDIA CODE 
 				if (m.type == "image") {
-					mediaElem = "<div class='thumbnail'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='thumbnail'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
-				} else if (m.type == "flickr") {
-					mediaElem = "<div class='thumbnail'><img id='flickr_" + m.id + "_thumb' width='" + _w + "px' height='" + _h + "px'></div>";
+				} else if (m.type	==	"flickr") {
+					mediaElem		=	"<div class='thumbnail'><img id='flickr_" + m.id + "_thumb' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
-				} else if (m.type == "youtube") {
-					mediaElem = "<div class='thumbnail youtube'></div>";
+				} else if (m.type	==	"youtube") {
+					mediaElem		=	"<div class='thumbnail youtube'></div>";
 					return mediaElem;
-				} else if (m.type == "googledoc") {
-					mediaElem = "";
-				} else if (m.type == "vimeo") {
-					mediaElem = "<div class='thumbnail vimeo'></div>";
+				} else if (m.type	==	"googledoc") {
+					mediaElem		=	"";
+				} else if (m.type	==	"vimeo") {
+					mediaElem		=	"<div class='thumbnail vimeo'></div>";
 					return mediaElem;
-				} else if (m.type == "twitter"){
-					mediaElem = "<div class='thumbnail twitter'></div>";
+				} else if (m.type	==	"twitter"){
+					mediaElem		=	"<div class='thumbnail twitter'></div>";
 					return mediaElem;
-				} else if (m.type == "twitter-ready") {
-					mediaElem = "<div class='thumbnail twitter'></div>";
+				} else if (m.type	==	"twitter-ready") {
+					mediaElem		=	"<div class='thumbnail twitter'></div>";
 					return mediaElem;
-				} else if (m.type == "soundcloud") {
-					mediaElem = "<div class='thumbnail soundcloud'></div>";
+				} else if (m.type	==	"soundcloud") {
+					mediaElem		=	"<div class='thumbnail soundcloud'></div>";
 					return mediaElem;
-				} else if (m.type == "google-map") {
-					mediaElem = "<div class='thumbnail map'></div>";
+				} else if (m.type	==	"google-map") {
+					mediaElem		=	"<div class='thumbnail map'></div>";
 					return mediaElem;
-				} else if (m.type == "unknown") {
-					mediaElem = "";
+				} else if (m.type	==	"unknown") {
+					mediaElem		=	"";
 					return mediaElem;
-				} else if (m.type == "website") {
-					mediaElem = "<div class='thumbnail website'></div>";
-					//mediaElem = "<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
-					
+				} else if (m.type	==	"website") {
+					mediaElem		=	"<div class='thumbnail website'></div>";
+					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
 				} else {
 					mediaElem = "<div class='thumbnail'></div>";
@@ -1817,95 +1808,92 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				}
 			}
 		},
-		//VMM.MediaElement.create(element, data, returntrue);
-		create: function(element, data, __return, w, h) {
-			
-			_return = __return;
-			_w = 500;
-			_h = 400;
-			$mediacontainer = element;
-			//VMM.MediaElement.container = element;
-			var _valid = false;
-			if (w != null && w != "") {
-				_w = w;
-			}
-			if (h != null && h != "") {
-				_h = h;
-			}
+		
+		create: function(data) {
+			//$mediacontainer				=	element;
+			var _valid					=	false;
 			
 			if (data.media != null && data.media != "") {
-
-				_valid = true;
-				var mediaElem = "";
-				var captionElem = "";
-				var creditElem = "";
-				var m = {};
-				var media_height = (_h - 50);
-				var isTextMedia = false;
+				var mediaElem			=	"";
+				var captionElem			=	"";
+				var creditElem			=	"";
+				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
+				var isTextMedia			=	false;
+				_valid					=	true;
 				
-				// CREDIT
+			// CREDIT
 				if (data.credit != null && data.credit != "") {
-					creditElem = "<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
+					creditElem			=	"<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
 				}
-				// CAPTION
+			// CAPTION
 				if (data.caption != null && data.caption != "") {
-					captionElem = "<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
+					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
 				}
 				
-				// MEDIA TYPE
-				m = VMM.MediaType(data.media); //returns an object with .type and .id
-				
-				// CREATE MEDIA CODE 
-				if (m.type == "image") {
-					mediaElem = "<img src='" + m.id + "'>";
-				} else if (m.type == "flickr") {
-					var flickr_id = "flickr_" + m.id;
-					mediaElem = "<a href='" + m.link + "' target='_blank'><img id='" + flickr_id + "_large" + "'></a>";
+			// IMAGE
+				if (m.type				==	"image") {
+					mediaElem			=	"<img src='" + m.id + "'>";
+			// FLICKR
+				} else if (m.type		==	"flickr") {
+					var flickr_id		=	"flickr_" + m.id;
+					mediaElem			=	"<a href='" + m.link + "' target='_blank'><img id='" + flickr_id + "_large" + "'></a>";
 					VMM.ExternalAPI.flickr.getPhoto(m.id, "#" + flickr_id);
-				} else if (m.type == "googledoc") {
+			// GOOGLE DOCS
+				} else if (m.type		==	"googledoc") {
 					if (m.id.match(/docs.google.com/i)) {
-						mediaElem = "<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&embedded=true'></iframe>";
+						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&embedded=true'></iframe>";
 					} else {
-						mediaElem = "<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + m.id + "&embedded=true'></iframe>";
+						mediaElem		=	"<iframe class='media-frame doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + m.id + "&embedded=true'></iframe>";
 					}
-					
-					
-				} else if (m.type == "youtube") {
-					mediaElem = "<div class='media-frame video youtube' id='youtube_" + m.id + "'>Loading YouTube video...</div>";
+			// YOUTUBE
+				} else if (m.type		==	"youtube") {
+					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'>Loading YouTube video...</div>";
 					VMM.ExternalAPI.youtube.init(m.id);
-					//mediaElem = "<iframe class='media-frame youtube' onload='timeline.iframeLoaded()' frameborder='0' width='100%' height='100%' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white&enablejsapi=1' allowfullscreen></iframe>";
-				} else if (m.type == "vimeo") {
-					mediaElem = "<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
-				} else if (m.type == "twitter"){
-					mediaElem = "<div class='twitter' id='" + "twitter_" + m.id + "'>Loading Tweet</div>";
-					//VMM.ExternalAPI.twitter.getHTML(m.id);
-					trace("TWITTER");
+			// VIMEO
+				} else if (m.type		==	"vimeo") {
+					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+			// TWITTER
+				} else if (m.type		==	"twitter"){
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'>Loading Tweet</div>";
+					isTextMedia			=	true;
 					VMM.ExternalAPI.twitter.prettyHTML(m.id);
-					isTextMedia = true;
-				} else if (m.type == "twitter-ready") {
-					mediaElem = m.id;
-				} else if (m.type == "soundcloud") {
-					var soundcloud_id = "soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem = "<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
-					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id)
-				} else if (m.type == "google-map") {
-					//mediaElem = "<iframe class='media-frame map' frameborder='0' width='100%' height='100%' scrolling='no' marginheight='0' marginwidth='0' src='" + m.id + "&amp;output=embed'></iframe>"
-					var map_id = "googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem = "<div class='media-frame map' id='" + map_id + "'>Loading Map...</div>";
+			// TWITTER
+				} else if (m.type		==	"twitter-ready") {
+					mediaElem			=	m.id;
+			// SOUNDCLOUD
+				} else if (m.type		==	"soundcloud") {
+					var soundcloud_id	=	"soundcloud_" + VMM.Util.unique_ID(5);
+					mediaElem			=	"<div class='media-frame soundcloud' id='" + soundcloud_id + "'>Loading Sound</div>";
+					VMM.ExternalAPI.soundcloud.getSound(m.id, soundcloud_id);
+			// GOOGLE MAPS
+				} else if (m.type		==	"google-map") {
+					var map_id			=	"googlemap_" + VMM.Util.unique_ID(7);
+					mediaElem			=	"<div class='media-frame map' id='" + map_id + "'>Loading Map...</div>";
 					VMM.ExternalAPI.googlemaps.getMap(m.id, map_id);
-				} else if (m.type == "unknown") { 
+			// UNKNOWN
+				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
-					mediaElem = VMM.Util.properQuotes(m.id); 
-				} else if (m.type == "website") { 
-					mediaElem = "<iframe class='media-frame' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
-					//mediaElem = "<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
+					mediaElem			=	VMM.Util.properQuotes(m.id);
+			// WEBSITE
+				} else if (m.type		==	"website") { 
+					mediaElem			=	"<iframe class='media-frame' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
+					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
+			// NO MATCH
 				} else {
 					trace("NO KNOWN MEDIA TYPE FOUND");
 					trace(m.type);
 				}
-				// WRAP THE MEDIA ELEMENT
-				mediaElem = "<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
 				
+			// WRAP THE MEDIA ELEMENT
+				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
+			// RETURN
+				if (isTextMedia) {
+					return "<div class='media text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+				} else {
+					return "<div class='media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+				}
+				
+				/*
 				if (_return) {
 					if (isTextMedia) {
 						return "<div class='media text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
@@ -1917,6 +1905,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					VMM.appendElement($mediacontainer, creditElem);
 					VMM.appendElement($mediacontainer, captionElem);
 				}
+				*/
 			};
 			
 		},
@@ -2237,6 +2226,15 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 	
 	VMM.ExternalAPI = {
 		
+		pushQues: function() {
+			if (VMM.master_config.googlemaps.active) {
+				VMM.ExternalAPI.googlemaps.pushQue();
+			}
+			if (VMM.master_config.youtube.active) {
+				VMM.ExternalAPI.youtube.pushQue();
+			}
+		},
+		
 		twitter: {
 			tweetArray: [],
 			// VMM.ExternalAPI.twitter.getHTML(id);
@@ -2421,13 +2419,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
 			*/
 			getMap: function(url, id) {
+				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
 				trace(map_vars);
 				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + Aes.Ctr.decrypt(VMM.master_config.keys.google, VMM.master_config.vp, 256) + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
 				var map = {url: url, vars: map_vars, id: id}
-				
+				trace(map);
 				if (VMM.master_config.googlemaps.active) {
-					VMM.master_config.googlemaps.createMap(map);
+					VMM.master_config.googlemaps.que.push(map);
 				} else {
 					VMM.master_config.googlemaps.que.push(map);
 					
@@ -2459,11 +2458,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (!VMM.master_config.googlemaps.active) {
 					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
 						VMM.master_config.googlemaps.active = true;
-						for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
-							VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
-						}
+						VMM.ExternalAPI.googlemaps.pushQue();
 					}
 				}
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
+					VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
+				}
+				VMM.master_config.googlemaps.que = [];
+				
 			},
 			
 			defaultType: function(name) {
@@ -2529,6 +2534,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				================================================== */
 				
 				var map_attribution = "";
+				var layer;
+				var map;
 				
 				function mapProvider(name) {
 					if (name in VMM.ExternalAPI.googlemaps.map_providers) {
@@ -2575,7 +2582,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				/* Make the Map
 				================================================== */
-				var layer;
+				
 				
 				if (type.of(VMM.master_config.Timeline.maptype) == "string") {
 					if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
@@ -2630,7 +2637,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
 				
 				var map						=	new google.maps.Map(document.getElementById(unique_map_id), map_options);
-				 
+				
 				if (VMM.ExternalAPI.googlemaps.defaultType(VMM.master_config.Timeline.maptype)) {
 					
 				} else {
@@ -2641,6 +2648,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				loadKML();
+				
+				
 				
 				// KML
 				function loadKML() {
@@ -2728,9 +2737,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		// VMM.ExternalAPI.youtube.init(id);
 		youtube: {
 			init: function(id) {
-				
+				var timer;
 				if (VMM.master_config.youtube.active) {
-					VMM.master_config.youtube.createPlayer(id);
+					trace(id);
+					VMM.master_config.youtube.que.push(id);
 				} else {
 					
 					VMM.master_config.youtube.que.push(id);
@@ -2750,13 +2760,21 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			onAPIReady: function() {
 				trace("YOUTUBE API READY")
 				VMM.master_config.youtube.active = true;
-				
+				VMM.ExternalAPI.youtube.pushQue();
+			},
+			
+			pushQue: function() {
 				for(var i = 0; i < VMM.master_config.youtube.que.length; i++) {
 					VMM.ExternalAPI.youtube.createPlayer(VMM.master_config.youtube.que[i]);
 				}
+				
+				VMM.master_config.youtube.que = [];
+				
 			},
+			
 			// VMM.ExternalAPI.youtube.createPlayer(id);
 			createPlayer: function(id) {
+				trace("create player")
 				var p = {
 					active: 				false,
 					player: 				{},
@@ -2812,6 +2830,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			
 		}
+	
 	}
 	
 }
@@ -3182,27 +3201,26 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
 	VMM.Slider = function(parent, parent_config) {
 		
-		/* PRIVATE VARS
-		================================================== */
 		var events = {}, config;
-		// ARRAYS
-		var data = [], slides = [], slide_positions = [];
-		var slides_content = "";
-		var current_slide = 0;
-		var current_width = 960;
-		var touch = {move: false, x: 10, y:0, off: 0, dampen: 48};
-		var content = "";
-		var _active = false;
-		var layout = parent;
-		// ELEMENTS
 		var $slider, $slider_mask, $slider_container, $slides_items;
-		// NAVIGATION
-		var navigation = {nextBtn:"", prevBtn:"", nextDate:"", prevDate:"", nextTitle:"", prevTitle:""};
+		var data = [], slides = [], slide_positions = [];
+		
+		var slides_content		=	"";
+		var current_slide		=	0;
+		var current_width		=	960;
+		var touch				=	{move: false, x: 10, y:0, off: 0, dampen: 48};
+		var content				=	"";
+		var _active				=	false;
+		var layout				=	parent;
+		var navigation			=	{nextBtn:"", prevBtn:"", nextDate:"", prevDate:"", nextTitle:"", prevTitle:""};
+		var timer;
+		
 		// CONFIG
 		if(typeof VMM.Timeline != 'undefined') {
 			config	= 	VMM.Timeline.Config;
 		} else {
 			config = {
+				preload: 4,
 				current_slide: 0,
 				interval: 10, 
 				something: 0, 
@@ -3232,8 +3250,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		this.ver = "0.6";
 		
-		config.slider.width = config.width;
-		config.slider.height = config.height;
+		config.slider.width		=	config.width;
+		config.slider.height	=	config.height;
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -3337,8 +3355,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.width($slides_items, (slides.length * config.slider.content.width));
 			
 			if (_from_start) {
-				var _pos = VMM.Element.position(slides[current_slide]);
-				VMM.Element.css($slider_container, "left", _pos.left);
+				var _pos = slides[current_slide].leftpos();
+				VMM.Element.css($slider_container, "left", _pos);
 			}
 			
 			// RESIZE SLIDES
@@ -3353,7 +3371,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Element.height(navigation.nextBtn, config.slider.height);
 			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
-			
 			
 			// Animate Changes
 			VMM.Element.height($slider_mask, config.slider.height);
@@ -3373,7 +3390,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		function onNextClick(e) {
 			if (current_slide == slides.length - 1) {
-				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(VMM.Element.position(slides[current_slide]).left)});
+				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(slides[current_slide].leftpos()) } );
 			} else {
 				goToSlide(current_slide+1);
 				upDate();
@@ -3405,28 +3422,25 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		function onTouchUpdate(e, b) {
 			if (slide_positions.length == 0) {
 				for(var i = 0; i < slides.length; i++) {
-					var sp = VMM.Element.position(slides[i]);
-					slide_positions.push(sp.left);
+					slide_positions.push( slides[i].leftpos() );
 				}
 			}
 			if (typeof b.left == "number") {
 				var _pos = b.left;
-				if (_pos < -(VMM.Element.position(slides[current_slide]).left) - (config.slider_width/3)) {
+				var _slide_pos = -(slides[current_slide].leftpos());
+				if (_pos < _slide_pos - (config.slider_width/3)) {
 					onNextClick();
-				} else if (_pos > -(VMM.Element.position(slides[current_slide]).left) + (config.slider_width/3)) {
+				} else if (_pos > _slide_pos + (config.slider_width/3)) {
 					onPrevClick();
 				} else {
-					VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(VMM.Element.position(slides[current_slide]).left)});
+					VMM.Element.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
 				}
 			} else {
-				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(VMM.Element.position(slides[current_slide]).left)});
+				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
 			}
 			
 			if (typeof b.top == "number") {
 				VMM.Element.animate($slider_container, config.duration, config.ease, {"top": -b.top});
-				//VMM.Element.animate(layout, _duration, _ease, {scrollTop: VMM.Element.prop(layout, "scrollHeight")  + b.top });
-				//VMM.Element.animate(layout, _duration, _ease, {scrollTop: VMM.Element.prop(layout, "scrollHeight") + VMM.Element.height(layout) });
-				//VMM.Element.animate($slider_container, config.duration, config.ease, {"top": -400});
 			} else {
 				
 			}
@@ -3448,24 +3462,39 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* BUILD SLIDES
 		================================================== */
 		var buildSlides = function(d) {
-			
-			// Clear out existing content
 			VMM.attachElement($slides_items, "");
 			slides = [];
 			
 			for(var i = 0; i < d.length; i++) {
-				var bw = "";
-				var _slide;
-				var _media;
-				
-				bw = VMM.createElement("div", d[i].content, "content");
-				
-				_slide = VMM.appendAndGetElement($slides_items, "<div>", "slider-item" , bw);
-				
+				var _slide = new VMM.Slider.Slide(d[i], $slides_items);
+				//_slide.show();
 				slides.push(_slide);
 			}
+		}
+		
+		var preloadSlides = function(skip) {
+			if (skip) {
+				preloadTimeOutSlides();
+			} else {
+				timer = setTimeout(preloadTimeOutSlides, config.duration);
+			}
+		}
+		
+		var preloadTimeOutSlides = function() {
+			trace("preloadTimeOutSlides");
+			trace("CURRENT SLIDE: " + current_slide);
+			for(var j = 0; j < config.preload; j++) {
+				if ( !((current_slide + j) >= slides.length - 1)) {
+					trace("PRELOAD: " + (current_slide + j) );
+					slides[current_slide + j].show();
+				}
+				if ( !( (current_slide - j) < 0 ) ) {
+					trace("PRELOAD: " + (current_slide - j) );
+					slides[current_slide - j].show();
+				}
+			}
 			
-			
+			sizeSlides();
 		}
 		
 		/* SIZE SLIDES
@@ -3514,7 +3543,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 				mediasize.text_media.width = 	config.slider.content.width;
 				mediasize.text_media.height = 	((config.slider.height/100) * 50 ) - 50;
-				//mediasize.media.height = 		((config.slider.height/100) * 80 ) - 40;
 				mediasize.media.height = 		((config.slider.height/100) * 70 ) - 40;
 				
 				mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
@@ -3535,9 +3563,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				// MAINTAINS VERTICAL CENTER IF IT CAN
 				for(var i = 0; i < slides.length; i++) {
 					if (VMM.Element.height(VMM.Element.find( slides[i], ".content")) > config.slider.height) {
-						VMM.Element.css(slides[i], "display", "block" );
+						slides[i].css("display", "block");
 					} else {
-						VMM.Element.css(slides[i], "display", "table" );
+						slides[i].css("display", "table");
 					}
 				}
 				
@@ -3607,7 +3635,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
-				VMM.Element.css(slides[i], "left", pos);
+				//VMM.Element.css(slides[i], "left", pos);
+				slides[i].leftpos(pos);
 			}
 		}
 		
@@ -3617,13 +3646,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _ease = "linear";
 			for(var i = 0; i < slides.length; i++) {
 				if (i == current_slide) {
-					VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 1});
-				} else if (i == current_slide - 1) {
-					VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 0.1});	
-				} else if (i == current_slide + 1) {
-					VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 0.1});	
+					//VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 1});
+					slides[i].animate(config.duration, _ease, {"opacity": 1});
+				} else if (i == current_slide - 1 || i == current_slide + 1) {
+					//VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 0.1});
+					slides[i].animate(config.duration, _ease, {"opacity": 0.1});
 				} else {
-					VMM.Element.css(slides[i], "opacity", n);	
+					//VMM.Element.css(slides[i], "opacity", n);	
+					slides[i].opacity(n);
 				}
 			}
 		}
@@ -3644,20 +3674,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _duration = config.duration;
 			var is_last = false;
 			var is_first = false;
+			var _pos = slides[current_slide].leftpos();
+			//var _pos = VMM.Element.position(slides[current_slide]);
 			
-			if (current_slide == 0) {
-				is_first = true;
-			}
-			if (current_slide +1 >= slides.length) {
-				is_last = true
-			}
-			
+			if (current_slide == 0) {is_first = true};
+			if (current_slide +1 >= slides.length) {is_last = true};
 			if (ease != null && ease != "") {_ease = ease};
 			if (duration != null && duration != "") {_duration = duration};
-			
-			/* get slide position
-			================================================== */
-			var _pos = VMM.Element.position(slides[current_slide]);
 			
 			/* set proper nav titles and dates etc.
 			================================================== */
@@ -3683,10 +3706,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* ANIMATE SLIDE
 			================================================== */
 			if (fast) {
-				VMM.Element.css($slider_container, "left", -(_pos.left - config.slider.content.padding));	
+				VMM.Element.css($slider_container, "left", -(_pos - config.slider.content.padding));	
 			} else{
 				VMM.Element.stop($slider_container);
-				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos.left - config.slider.content.padding)});
+				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos - config.slider.content.padding)});
 			}
 			
 			if (firstrun) {
@@ -3696,14 +3719,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* SET Vertical Scoll
 			================================================== */
 			//opacitySlides(0.85);
-			if (VMM.Element.height(slides[current_slide]) > config.slider_height) {
+			//if (VMM.Element.height(slides[current_slide]) > config.slider_height) {
+			if (slides[current_slide].height() > config.slider_height) {
 				VMM.Element.css(".slider", "overflow-y", "scroll" );
 			} else {
 				VMM.Element.css(layout, "overflow-y", "hidden" );
-			   VMM.Element.animate(layout, _duration, _ease, {scrollTop: VMM.Element.prop(layout, "scrollHeight") - VMM.Element.height(layout) });
-				
+				VMM.Element.animate(layout, _duration, _ease, {scrollTop: VMM.Element.prop(layout, "scrollHeight") - VMM.Element.height(layout) });
 			}
 			
+			preloadSlides();
 			//VMM.Element.css(navigation.nextBtnContainer, "left", ( VMM.Element.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
@@ -3756,7 +3780,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (VMM.Browser.device == "tablet" || VMM.Browser.device == "mobile") {
 				config.duration = 500;
 				__duration = 1000;
-				VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Element.width(slides[0]), config.spacing, true);
+				//VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Element.width(slides[0]), config.spacing, true);
+				VMM.TouchSlider.createPanel($slider_container, $slider_container, slides[0].width(), config.spacing, true);
 				VMM.bindEvent($slider_container, onTouchUpdate, "TOUCHUPDATE");
 			} else if (VMM.Browser.device == "mobile") {
 				
@@ -3780,6 +3805,150 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 
 
 
+
+
+/*********************************************** 
+     Begin VMM.Slider.Slide.js 
+***********************************************/ 
+
+/* Slider Slide 
+================================================== */
+if (typeof VMM.Slider != 'undefined') {
+	// VMM.Slider.Slide(element, data)
+	VMM.Slider.Slide = function(d, _parent) {
+		
+		var data		=	d;
+		var slide		=	{};
+		var media		=	"";
+		var loaded		=	false;
+		var element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
+		
+		/* PUBLIC
+		================================================== */
+		this.show = function() {
+			trace("LOADED: " + loaded);
+			if (!loaded) {
+				render();
+			}
+		};
+		
+		this.hide = function() {
+			if (loaded) {
+				removeSlide();
+			}
+		};
+		
+		this.elem = function() {	
+			return element;
+		};
+		
+		this.position = function() {
+			return VMM.Element.position(element);
+		};
+		
+		this.leftpos = function(p) {
+			if(typeof p != 'undefined') {
+				VMM.Element.css(element, "left", p);
+			} else {
+				trace("LEFT: " + VMM.Element.position(element).left);
+				return VMM.Element.position(element).left
+			}
+		};
+		
+		this.animate = function(d, e, p) {
+			VMM.Element.animate(element, d, e, p);
+		};
+		
+		this.css = function(p, v) {
+			VMM.Element.css(element, p, v );
+		}
+		
+		this.opacity = function(p) {
+			VMM.Element.css(element, "opacity", p);	
+		}
+		
+		this.width = function() {
+			return VMM.Element.width(element);
+		};
+		
+		this.height = function() {
+			return VMM.Element.height(element);
+		};
+		
+		/* PRIVATE
+		================================================== */
+		var render = function() {
+			trace(data);
+			VMM.attachElement(element, "");
+			VMM.appendElement(element, buildSlide() );
+			loaded = true;
+			var timer = setTimeout(VMM.ExternalAPI.pushQues, 500);
+		};
+		
+		var removeSlide = function() {
+			VMM.attachElement(element, "");
+			loaded = false;
+		}
+		
+		var buildSlide = function() {
+			var c = {slide:"", text: "", media: "", layout: "content-container layout", has: { text: false, media: false }};
+			var b_slide, c_wrap;
+			
+			/* DATE
+			================================================== */
+			if (data.startdate != null && data.startdate != "") {
+				if (type.of(data.startdate) == "date") {
+					if (data.type != "start") {
+						c.text += VMM.createElement("h2", VMM.Util.date.prettyDate(data.startdate), "date");
+					}
+				}
+			}
+			
+			/* HEADLINE
+			================================================== */
+			if (data.headline != null && data.headline != "") {
+				if (data.type == "start") {
+					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
+				} else {
+					c.text		+=	VMM.createElement("h3", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
+				}
+			}
+			
+			/* TEXT
+			================================================== */
+			if (data.text != null && data.text != "") {
+				c.has.text		=	true;
+				c.text			+=	VMM.createElement("p", VMM.Util.linkify_with_twitter(data.text, "_blank"));
+				c.text			=	VMM.createElement("div", c.text, "container");
+				c.text			=	VMM.createElement("div", c.text, "text");
+			}
+			
+			/* MEDIA
+			================================================== */
+			if (data.asset != null && data.asset != "") {
+				if (data.asset.media != null && data.asset.media != "") {
+					c.has.media	=	true;
+					c.media		=	VMM.MediaElement.create(data.asset);
+				}
+			}
+			/* COMBINE
+			================================================== */
+			if (c.has.text)	{ c.layout		+=	"-text"		};
+			if (c.has.media){ c.layout		+=	"-media"	};
+			
+			c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			c_wrap = VMM.createElement("div", c.slide, "content");
+			
+			/* RETURN
+			================================================== */
+			// return c.slide;
+			return c_wrap;
+			
+		};
+		
+	}
+	
+};
 
 
 /*********************************************** 
@@ -4832,6 +5001,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 // @codekit-prepend "VMM.TouchSlider.js";
 // @codekit-prepend "VMM.DragSlider.js";
 // @codekit-prepend "VMM.Slider.js";
+// @codekit-prepend "VMM.Slider.Slide.js";
 // @codekit-prepend "VMM.Util.js";
 // @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "VMM.Language.js";
@@ -4858,7 +5028,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"0.98.72";
+		version = 					"0.99.00";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -4868,6 +5038,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
+			preload:				4,
 			current_slide:			0,
 			hash_bookmark:			false,
 			start_at_end: 			false,
@@ -4938,6 +5109,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			 	 config.current_slide		=	parseInt(hash);
 			 }
 		}
+		
 		window.onhashchange = function () {
 			if (config.hash_bookmark) {
 				if (is_moving) {
@@ -5175,75 +5347,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		// BUILD SLIDE CONTENT	pass in json object
-		var buildSlide = function(dd, d_date) {
-			var d = dd;
-			var slide = "";
-			var _valid = false;
-			var _hasmedia = false;
-			var _hastext = false;
-			var c = {};
-			
-			c._text = "";
-			c._media = "";
-			
-			updateSize();
-			
-			if (type.of(d_date) == "date") {
-				_valid = true;
-				
-				if (dd.type != "start") {
-					c._text += VMM.createElement("h2", VMM.Util.date.prettyDate(d_date), "date");
-				}
-				
-				if (d.headline != null && d.headline != "") {
-					if (d.type == "tweets") {
-						
-					} else if (dd.type == "start") {
-						c._text += VMM.createElement("h2", VMM.Util.linkify_with_twitter(d.headline, "_blank"), "start");
-					} else {
-						c._text += VMM.createElement("h3", VMM.Util.linkify_with_twitter(d.headline, "_blank"));
-					}
-				}
-				
-				if (d.text != null && d.text != "") {
-					_hastext = true;
-					c._text += VMM.createElement("p", VMM.Util.linkify_with_twitter(d.text, "_blank"));
-				}
-				
-				c._text = VMM.createElement("div", c._text, "container");
-				c._text = VMM.createElement("div", c._text, "text");
-				
-			}
-			
-			if (_valid) {
-				
-				var _layout_class = "content-container layout";
-				
-				if (d.asset != null && d.asset != "") {
-					if (d.asset.media != null && d.asset.media != "") {
-						_hasmedia = true;
-						c._media = VMM.MediaElement.create("", d.asset, true, config.feature.width, config.feature.height);
-					}
-				}
-				
-				if (_hastext) {
-					_layout_class += "-text"
-				}
-				if (_hasmedia) {
-					_layout_class += "-media";
-				}
-				
-				slide = VMM.createElement("div", c._text + c._media, _layout_class);
-				
-				return slide;
-				
-			}
-			
-			return slide;
-			
-		}
-		
 		var updateSize = function() {
 			trace("UPDATE SIZE");
 			config.width = VMM.Element.width($timeline);
@@ -5276,9 +5379,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					// START DATE
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
-					} else if (data.date[i].type == "google spreadsheet") {
-						//_date.startdate = new Date(Date.parse(data.date[i].startDate));
-						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					} else {
 						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
 					}
@@ -5289,9 +5389,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].endDate != null && data.date[i].endDate != "") {
 						if (data.date[i].type == "tweets") {
 							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
-						} else if (data.date[i].type == "google spreadsheet") {
-							//_date.enddate = new Date(Date.parse(data.date[i].endDate));
-							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						} else {
 							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
 						}
@@ -5299,18 +5396,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					_date.title = data.date[i].headline;
-					_date.type = data.date[i].type;
-					_date.date = VMM.Util.date.prettyDate(_date.startdate);
-					_date.asset = data.date[i].asset;
-					_date.fulldate = _date.startdate.getTime();
+					_date.title		=	data.date[i].headline;
+					_date.headline	=	data.date[i].headline;
+					_date.type		=	data.date[i].type;
+					_date.date		=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.asset		=	data.date[i].asset;
+					_date.fulldate	=	_date.startdate.getTime();
+					_date.text		=	data.date[i].text;
+					_date.content	=	"";
 					
-					// BUILD SLIDE CONTENT
-					_date.content = buildSlide(data.date[i], _date.startdate);
-					
-					if (_date.content != null && _date.content != "") {
-						_dates.push(_date);
-					}
+					_dates.push(_date);
 					
 				}
 				
@@ -5326,25 +5421,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
-				var _date = {};
-				if (data.type == "google spreadsheet") {
-					trace("google spreadsheet startpage date " + data.startDate);
-					//_date.startdate = new Date(Date.parse(data.startDate));
-				} else {
-					_date.startdate = VMM.Util.date.parse(data.startDate);
-				}
-				
-				_date.startdate = new Date(_dates[0].startdate);
-				
-				var td = _dates[0].startdate;
-				var td_num = 0;
-				/*
-				if (_dates[0].startdate.getDate() > 1) {
-					_date.startdate.setDate(td.getDate() - 1);
-				} else if (_dates[0].startdate.getHours() > 0) {
-					_date.startdate.setHours(td.getHours() - 1);
-				}
-				*/
+				var _date		=	{};
+				var td_num		=	0;
+				var td			=	_dates[0].startdate;
+				_date.startdate =	VMM.Util.date.parse(data.startDate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -5363,19 +5443,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate.setMinutes(td.getMinutes() - 1);
 				}
 				
-				_date.uniqueid = VMM.Util.unique_ID(5);
-				_date.enddate = _date.startdate;
-				_date.title = data.headline;
-				_date.headline = data.headline;
-				_date.text = data.text;
-				_date.type = "start";
-				_date.date = VMM.Util.date.prettyDate(data.startDate);
-				_date.asset = data.asset;
-				_date.fulldate = _date.startdate.getTime();
-				_date.content = buildSlide(_date, _date.startdate);
-				if (_date.content != null && _date.content != "" || _date.title != null && _date.title != "") {
-					_dates.push(_date);
-				}
+				_date.uniqueid	=	VMM.Util.unique_ID(5);
+				_date.enddate	=	_date.startdate;
+				_date.title		=	data.headline;
+				_date.headline	=	data.headline;
+				_date.text		=	data.text;
+				_date.type		=	"start";
+				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
+				_date.asset		=	data.asset;
+				_date.fulldate	=	_date.startdate.getTime();
+				
+				_dates.push(_date);
 			}
 			
 			/* CUSTOM SORT
