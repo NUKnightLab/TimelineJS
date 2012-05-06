@@ -32,6 +32,12 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		    media.type  = "vimeo";
 		    media.id    = vimeo_id;
 		    success = true;
+		} else if (d.match('(www.)?dailymotion\.com')) {
+		    daily_id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
+
+		    media.type  = "dailymotion";
+		    media.id    = daily_id;
+		    success = true;
 		} else if (d.match('(player.)?soundcloud\.com')) {
 			//soundcloud_url = unescape(d.split(/value="/)[1].split(/["]/)[0]);
 			//soundcloud_id = soundcloud_url.split(/tracks\//)[1].split(/[&"]/)[0];

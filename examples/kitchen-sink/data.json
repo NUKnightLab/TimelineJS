@@ -166,6 +166,16 @@
                     "credit":"",
                     "caption":""
                 }
+            },
+			{
+                "startDate":"2012,5,6",
+                "headline":"Dailymotion video",
+                "asset":
+                {
+                    "media":"http://www.dailymotion.com/video/xcv6dv",
+                    "credit":"PATRICK JEAN",
+                    "caption":"PIXELS is Patrick Jean' latest short film, shot on location in New York."
+                }
             }
         ]
     }
