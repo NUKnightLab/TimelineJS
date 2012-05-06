@@ -504,8 +504,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				var flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Element.attr("#"+flickr_large_id, "src", flickr_img_large);
-				VMM.Element.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
+				VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
 			}
 			
 		},

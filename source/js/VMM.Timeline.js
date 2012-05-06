@@ -186,7 +186,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var createStructure = function(w, h) {
 			$timeline = 			VMM.getElement(timeline_id);
 			
-			VMM.Element.addClass(timeline_id, "vmm-timeline");
+			VMM.Lib.addClass(timeline_id, "vmm-timeline");
 			
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
@@ -194,15 +194,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
 			if (!has_width) {
-				config.width = VMM.Element.width($timeline);
+				config.width = VMM.Lib.width($timeline);
 			} else {
-				VMM.Element.width($timeline, config.width);
+				VMM.Lib.width($timeline, config.width);
 			}
 
 			if (!has_height) {
-				config.height = VMM.Element.height($timeline);
+				config.height = VMM.Lib.height($timeline);
 			} else {
-				VMM.Element.height($timeline, config.height);
+				VMM.Lib.height($timeline, config.height);
 			}
 			
 		}
@@ -342,11 +342,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		var hideMessege = function() {
-			VMM.Element.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
+			VMM.Lib.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
 		};
 		
 		var detachMessege = function() {
-			VMM.Element.detach($feedback);
+			VMM.Lib.detach($feedback);
 		}
 		
 		/* BUILD DISPLAY
@@ -379,8 +379,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var updateSize = function() {
 			trace("UPDATE SIZE");
-			config.width = VMM.Element.width($timeline);
-			config.height = VMM.Element.height($timeline);
+			config.width = VMM.Lib.width($timeline);
+			config.height = VMM.Lib.height($timeline);
 			
 			config.nav.width = config.width;
 			config.feature.width = config.width;

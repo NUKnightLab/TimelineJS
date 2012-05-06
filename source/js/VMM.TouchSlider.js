@@ -58,14 +58,14 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			return false;
 		},
 		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		},
 		getTop: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'top').substring(0, VMM.Element.css(elem, 'top').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'top').substring(0, VMM.Lib.css(elem, 'top').length - 2), 10);
 		},
 	    touchStart: function(elem, e) {
 			
-			VMM.Element.css(elem, '-webkit-transition-duration', '0');
+			VMM.Lib.css(elem, '-webkit-transition-duration', '0');
 			
 			VMM.TouchSlider.startX = e.originalEvent.touches[0].screenX;
 			VMM.TouchSlider.startY = e.originalEvent.touches[0].screenY;
@@ -82,9 +82,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 				//This means they dragged to the right past the first item
 				
 				if (VMM.TouchSlider.vertical) {
-					VMM.Element.animate(elem, 1000, "", {"top": 0});
+					VMM.Lib.animate(elem, 1000, "", {"top": 0});
 				} else {
-					VMM.Element.animate(elem, 1000, "", {"left": 0});
+					VMM.Lib.animate(elem, 1000, "", {"left": 0});
 				}
 				
 				VMM.TouchSlider.startX = null;
@@ -139,7 +139,7 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			} else {
 				trace("not sticky");
 				//VMM.TouchSlider.doSlide(elem, Math.min(0, newLeft), '0.5s');
-				VMM.Element.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
+				VMM.Lib.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
 			}
 			*/
 			
@@ -148,9 +148,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			
 	    },
 		doSlide: function(elem, x, duration) {
-			VMM.Element.css(elem, '-webkit-transition-property', 'left');
-			VMM.Element.css(elem, '-webkit-transition-duration', duration);
-			VMM.Element.css(elem, 'left', x);
+			VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+			VMM.Lib.css(elem, '-webkit-transition-duration', duration);
+			VMM.Lib.css(elem, 'left', x);
 		},
 		touchMove: function(elem, e) {
 			
@@ -163,22 +163,22 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			if (VMM.TouchSlider.vertical) {
 				
 				if (VMM.TouchSlider.startY > e.originalEvent.touches[0].screenY) {
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
 					VMM.TouchSlider.slidingTop = true;
 				} else {
 					var top = (e.originalEvent.touches[0].screenY - VMM.TouchSlider.startY + VMM.TouchSlider.startTop);
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
 					VMM.TouchSlider.slidingTop = false;
 				}
 				
 			} else {
 				
 				if (VMM.TouchSlider.startX > e.originalEvent.touches[0].screenX) {
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
 					VMM.TouchSlider.slidingLeft = true;
 				} else {
 					var left = (e.originalEvent.touches[0].screenX - VMM.TouchSlider.startX + VMM.TouchSlider.startLeft);
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
 					VMM.TouchSlider.slidingLeft = false;
 				}
 				

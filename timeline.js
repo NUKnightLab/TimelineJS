@@ -1055,14 +1055,13 @@ Utf8.decode = function(strUtf) {
 ================================================== */
 if(typeof VMM != 'undefined') {
 	
-	//VMM.attachElement(element, content);
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
 			jQuery(element).html(content);
 		}
 		
 	};
-	//VMM.appendElement(element, content);
+	
 	VMM.appendElement = function(element, content) {
 		
 		if( typeof( jQuery ) != 'undefined' ){
@@ -1079,7 +1078,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.getElement(element);
+	
 	VMM.getElement = function(element, p) {
 		var e;
 		if( typeof( jQuery ) != 'undefined' ){
@@ -1093,8 +1092,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.bindEvent(element, the_handler, the_event_type, event_data);
-	//VMM.bindEvent(window, the_handler, "event type", {event_data});
+	
 	VMM.bindEvent = function(element, the_handler, the_event_type, event_data) {
 		var e;
 		var _event_type = "click";
@@ -1115,7 +1113,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.unbindEvent(window, the_handler, "event type");
+	
 	VMM.unbindEvent = function(element, the_handler, the_event_type) {
 		var e;
 		var _event_type = "click";
@@ -1132,7 +1130,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.fireEvent(element, "resize", [data]);
+	
 	VMM.fireEvent = function(element, the_event_type, the_data) {
 		var e;
 		var _event_type = "click";
@@ -1153,7 +1151,6 @@ if(typeof VMM != 'undefined') {
 		
 	};
 
-	// VMM.getJSON(url, the_function);
 	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
@@ -1191,14 +1188,14 @@ if(typeof VMM != 'undefined') {
 			}
 		}
 	}
-	// VMM.parseJSON(the_json);
+	
 	VMM.parseJSON = function(the_json) {
 		if( typeof( jQuery ) != 'undefined' ){
 			return jQuery.parseJSON(the_json);
 		}
 	}
+	
 	// ADD ELEMENT AND RETURN IT
-	// VMM.appendAndGetElement(append_to_element, tag, cName, content, [attrib]);
 	VMM.appendAndGetElement = function(append_to_element, tag, cName, content) {
 		var e;
 		var _tag = "<div>";
@@ -1233,12 +1230,12 @@ if(typeof VMM != 'undefined') {
 		
 	};
 	
-	VMM.Element = ({
+	VMM.Lib = ({
 		
 		init: function() {
 			return this;
 		},
-		// VMM.Element.hide(element);
+		
 		hide: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1251,25 +1248,25 @@ if(typeof VMM != 'undefined') {
 			}
 			
 		},
-		// VMM.Element.remove(element);
+		
 		remove: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).remove();
 			}
 		},
-		// VMM.Element.detach(element);
+		
 		detach: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).detach();
 			}
 		},
-		// VMM.Element.append(element, value);
+		
 		append: function(element, value) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).append(value);
 			}
 		},
-		// VMM.Element.show(element);
+		
 		show: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1282,7 +1279,7 @@ if(typeof VMM != 'undefined') {
 			}
 			
 		},
-		// VMM.Element.load(element, callback_function, event_data);
+		
 		load: function(element, callback_function, event_data) {
 			var _event_data = {elem:element}; // return element by default
 			if (_event_data != null && _event_data != "") {
@@ -1292,19 +1289,19 @@ if(typeof VMM != 'undefined') {
 				jQuery(element).load(_event_data, callback_function);
 			}
 		},
-		//VMM.Element.addClass(element, cName);
+		
 		addClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).addClass(cName);
 			}
 		},
-		//VMM.Element.removeClass(element, cName);
+		
 		removeClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).removeClass(cName);
 			}
 		},
-		//VMM.Element.attr(element, aName, value);
+		
 		attr: function(element, aName, value) {
 			if (value != null && value != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1316,15 +1313,15 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		//VMM.Element.prop(element, aName, value);
+		
 		prop: function(element, aName, value) {
 			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
-			    VMM.Element.attribute(element, aName, value);
+			    VMM.Lib.attribute(element, aName, value);
 			} else {
 				jQuery(element).prop(aName, value);
 			}
 		},
-		//VMM.Element.attribute(element, aName, value);
+		
 		attribute: function(element, aName, value) {
 			
 			if (value != null && value != "") {
@@ -1337,9 +1334,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets  or gets the visability of a dom element
-		================================================== */
-		//VMM.Element.visible(element, show);
+		
 		visible: function(element, show) {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1359,9 +1354,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets a style for the specified element or gets the style
-		================================================== */
-		//VMM.Element.css(element, prop, value);
+		
 		css: function(element, prop, value) {
 
 			if (value != null && value != "") {
@@ -1381,9 +1374,7 @@ if(typeof VMM != 'undefined') {
 				return jQuery(element).css(propval);
 			}
 		},
-		/* Gets offset
-		================================================== */
-		//VMM.Element.offset(element);
+		
 		offset: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -1391,9 +1382,7 @@ if(typeof VMM != 'undefined') {
 			}
 			return p;
 		},
-		/* Gets position
-		================================================== */
-		//VMM.Element.position(element);
+		
 		position: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -1401,9 +1390,7 @@ if(typeof VMM != 'undefined') {
 			}
 			return p;
 		},
-		/* Sets  or gets the width of a dom element
-		================================================== */
-		//VMM.Element.width(element, s);
+		
 		width: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1415,8 +1402,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets  or gets the width of a dom element
-		================================================== */
+		
 		height: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -1428,26 +1414,20 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* TOGGLE CLASS
-		================================================== */
-		// VMM.Element.toggleClass(element, cName);
+		
 		toggleClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).toggleClass(cName);
 			}
 		},
-		/* Each
-		================================================== */
-		// VMM.Element.each(element, return_function);
+		
 		each:function(element, return_function) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).each(return_function);
 			}
 			
 		},
-		/* Each
-		================================================== */
-		// VMM.Element.html(element, str);
+		
 		html: function(element, str) {
 			var e;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -1468,23 +1448,19 @@ if(typeof VMM != 'undefined') {
 			}
 
 		},
-		/* Find
-		================================================== */
-		// VMM.Element.find(element, selec);
+		
 		find: function(element, selec) {
 			if( typeof( jQuery ) != 'undefined' ){
 				return jQuery(element).find(selec);
 			}
 		},
-		/* Animate
-		================================================== */
-		// VMM.Element.stop(element);
+		
 		stop: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).stop();
 			}
 		},
-		// VMM.Element.animate(element, duration, ease, att, callback_function);
+		
 		animate: function(element, duration, ease, att, callback_function) {
 			
 			var _ease = "easein";
@@ -1515,12 +1491,12 @@ if(typeof VMM != 'undefined') {
 				
 				var _tdd = Math.round((_duration/1500)*10)/10
 				var __duration = _tdd + 's';
-				VMM.Element.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-moz-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-o-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-ms-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, 'transition', 'all '+ __duration + ' ease');
-				VMM.Element.cssmultiple(element, _att);
+				VMM.Lib.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-moz-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-o-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-ms-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, 'transition', 'all '+ __duration + ' ease');
+				VMM.Lib.cssmultiple(element, _att);
 				
 				//callback_function();
 				/*
@@ -1543,17 +1519,6 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 			
-			
-			/*
-			VMM.Element.cssmultiple(element, {
-				'-webkit-transition': 'all 1s ease-in-out',
-				'-moz-transition': 'all 1s ease-in-out',
-				'-o-transition': 'all 1s ease-in-out',
-				'-ms-transition': 'all 1s ease-in-out',
-				'transition': 'all 1s ease-in-out',
-				
-			});
-			*/
 		},
 		
 	}).init();
@@ -2731,8 +2696,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				var flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Element.attr("#"+flickr_large_id, "src", flickr_img_large);
-				VMM.Element.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
+				VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
 			}
 			
 		},
@@ -2922,14 +2887,14 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			return false;
 		},
 		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		},
 		getTop: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'top').substring(0, VMM.Element.css(elem, 'top').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'top').substring(0, VMM.Lib.css(elem, 'top').length - 2), 10);
 		},
 	    touchStart: function(elem, e) {
 			
-			VMM.Element.css(elem, '-webkit-transition-duration', '0');
+			VMM.Lib.css(elem, '-webkit-transition-duration', '0');
 			
 			VMM.TouchSlider.startX = e.originalEvent.touches[0].screenX;
 			VMM.TouchSlider.startY = e.originalEvent.touches[0].screenY;
@@ -2946,9 +2911,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 				//This means they dragged to the right past the first item
 				
 				if (VMM.TouchSlider.vertical) {
-					VMM.Element.animate(elem, 1000, "", {"top": 0});
+					VMM.Lib.animate(elem, 1000, "", {"top": 0});
 				} else {
-					VMM.Element.animate(elem, 1000, "", {"left": 0});
+					VMM.Lib.animate(elem, 1000, "", {"left": 0});
 				}
 				
 				VMM.TouchSlider.startX = null;
@@ -3003,7 +2968,7 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			} else {
 				trace("not sticky");
 				//VMM.TouchSlider.doSlide(elem, Math.min(0, newLeft), '0.5s');
-				VMM.Element.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
+				VMM.Lib.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
 			}
 			*/
 			
@@ -3012,9 +2977,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			
 	    },
 		doSlide: function(elem, x, duration) {
-			VMM.Element.css(elem, '-webkit-transition-property', 'left');
-			VMM.Element.css(elem, '-webkit-transition-duration', duration);
-			VMM.Element.css(elem, 'left', x);
+			VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+			VMM.Lib.css(elem, '-webkit-transition-duration', duration);
+			VMM.Lib.css(elem, 'left', x);
 		},
 		touchMove: function(elem, e) {
 			
@@ -3027,22 +2992,22 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 			if (VMM.TouchSlider.vertical) {
 				
 				if (VMM.TouchSlider.startY > e.originalEvent.touches[0].screenY) {
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
 					VMM.TouchSlider.slidingTop = true;
 				} else {
 					var top = (e.originalEvent.touches[0].screenY - VMM.TouchSlider.startY + VMM.TouchSlider.startTop);
-					VMM.Element.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
+					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
 					VMM.TouchSlider.slidingTop = false;
 				}
 				
 			} else {
 				
 				if (VMM.TouchSlider.startX > e.originalEvent.touches[0].screenX) {
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
 					VMM.TouchSlider.slidingLeft = true;
 				} else {
 					var left = (e.originalEvent.touches[0].screenX - VMM.TouchSlider.startX + VMM.TouchSlider.startLeft);
-					VMM.Element.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
+					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
 					VMM.TouchSlider.slidingLeft = false;
 				}
 				
@@ -3131,12 +3096,12 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			
 			VMM.DragSlider.startLeft = VMM.DragSlider.getLeft(elem);
 			VMM.DragSlider.dragStartTime = new Date().getTime();
-			VMM.DragSlider.dragWidth = VMM.Element.width(delem);
+			VMM.DragSlider.dragWidth = VMM.Lib.width(delem);
 			
 			// CANCEL CURRENT ANIMATION IF ANIMATING
 			var _newx = Math.round(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft);
 			
-			VMM.Element.stop(elem);
+			VMM.Lib.stop(elem);
 			VMM.bindEvent(delem, VMM.DragSlider.onDragMove, "mousemove", {element: elem});
 
 	    },
@@ -3146,7 +3111,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			if (VMM.DragSlider.getLeft(elem) > 0) {
 				//(VMM.DragSlider.dragWidth/2)
 				//This means they dragged to the right past the first item
-				//VMM.Element.animate(elem, 1000, "linear", {"left": 0});
+				//VMM.Lib.animate(elem, 1000, "linear", {"left": 0});
 				
 				//VMM.fireEvent(elem, "DRAGUPDATE", [0]);
 			} else {
@@ -3162,12 +3127,12 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			VMM.DragSlider.sliding = true;
 			if (VMM.DragSlider.startX > e.pageX) {
 				//Sliding to the left
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
 				VMM.DragSlider.slidingLeft = true;
 			} else {
 				//Sliding to the right
 				var left = (e.pageX - VMM.DragSlider.startX + VMM.DragSlider.startLeft);
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
 				VMM.DragSlider.slidingLeft = false;
 			}
 		},
@@ -3192,14 +3157,14 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			VMM.fireEvent(elem, "DRAGUPDATE", [_r_object]);
 			var _ease = "easeOutExpo";
 			if (_r_object.time > 0) {
-				VMM.Element.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
+				VMM.Lib.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
 			};
 			
 			
 			//VMM.DragSlider.startX = null;
 		},
 		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		}
 	
 	}
@@ -3362,15 +3327,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			current_width = config.slider.width;
 			
-			config.slider.nav.height = VMM.Element.height(navigation.prevBtnContainer);
+			config.slider.nav.height = VMM.Lib.height(navigation.prevBtnContainer);
 			
 			config.slider.content.width = current_width - (config.slider.content.padding *2);
 			
-			VMM.Element.width($slides_items, (slides.length * config.slider.content.width));
+			VMM.Lib.width($slides_items, (slides.length * config.slider.content.width));
 			
 			if (_from_start) {
 				var _pos = slides[current_slide].leftpos();
-				VMM.Element.css($slider_container, "left", _pos);
+				VMM.Lib.css($slider_container, "left", _pos);
 			}
 			
 			// RESIZE SLIDES
@@ -3380,22 +3345,22 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			positionSlides();
 			
 			// POSITION NAV
-			VMM.Element.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
-			VMM.Element.height(navigation.prevBtn, config.slider.height);
-			VMM.Element.height(navigation.nextBtn, config.slider.height);
-			VMM.Element.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
-			VMM.Element.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
+			VMM.Lib.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
+			VMM.Lib.height(navigation.prevBtn, config.slider.height);
+			VMM.Lib.height(navigation.nextBtn, config.slider.height);
+			VMM.Lib.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
+			VMM.Lib.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
 			
 			// Animate Changes
-			VMM.Element.height($slider_mask, config.slider.height);
-			VMM.Element.width($slider_mask, current_width);
+			VMM.Lib.height($slider_mask, config.slider.height);
+			VMM.Lib.width($slider_mask, current_width);
 			
 			if (_go_to_slide) {
 				goToSlide(current_slide, "linear", 1);
 			};
 			
 			if (current_slide == 0) {
-				VMM.Element.visible(navigation.prevBtn, false);
+				VMM.Lib.visible(navigation.prevBtn, false);
 			}
 			
 		}
@@ -3404,7 +3369,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		function onNextClick(e) {
 			if (current_slide == slides.length - 1) {
-				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": -(slides[current_slide].leftpos()) } );
+				VMM.Lib.animate($slider_container, config.duration, config.ease, {"left": -(slides[current_slide].leftpos()) } );
 			} else {
 				goToSlide(current_slide+1);
 				upDate();
@@ -3447,14 +3412,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				} else if (_pos > _slide_pos + (config.slider_width/3)) {
 					onPrevClick();
 				} else {
-					VMM.Element.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
+					VMM.Lib.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
 				}
 			} else {
-				VMM.Element.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
+				VMM.Lib.animate($slider_container, config.duration, config.ease, {"left": _slide_pos });
 			}
 			
 			if (typeof b.top == "number") {
-				VMM.Element.animate($slider_container, config.duration, config.ease, {"top": -b.top});
+				VMM.Lib.animate($slider_container, config.duration, config.ease, {"top": -b.top});
 			} else {
 				
 			}
@@ -3535,8 +3500,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
 			mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 			
-			VMM.Element.css(".slider-item", "width", config.slider.content.width );
-			VMM.Element.height(".slider-item", config.slider.height);
+			VMM.Lib.css(".slider-item", "width", config.slider.content.width );
+			VMM.Lib.height(".slider-item", config.slider.height);
 			
 			// HANDLE SMALLER SIZES
 			var is_skinny = false;
@@ -3558,21 +3523,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
 				mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 				
-				VMM.Element.css(".slider-item .layout-text-media .text", "width", "100%" );
-				VMM.Element.css(".slider-item .layout-text-media .text", "display", "block" );
-				VMM.Element.css(".slider-item .layout-text-media .text .container", "display", "block" );
-				VMM.Element.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
+				VMM.Lib.css(".slider-item .layout-text-media .text", "width", "100%" );
+				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "block" );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "block" );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
 				
-				VMM.Element.css(".slider-item .layout-text-media .media", "float", "none" );
+				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "none" );
 				
-				VMM.Element.css(".slider-item .media blockquote p", "line-height", "18px" );
-				VMM.Element.css(".slider-item .media blockquote p", "font-size", "16px" );
+				VMM.Lib.css(".slider-item .media blockquote p", "line-height", "18px" );
+				VMM.Lib.css(".slider-item .media blockquote p", "font-size", "16px" );
 				
-				VMM.Element.css(".slider-item", "overflow-y", "auto" );
+				VMM.Lib.css(".slider-item", "overflow-y", "auto" );
 				
 				// MAINTAINS VERTICAL CENTER IF IT CAN
 				for(var i = 0; i < slides.length; i++) {
-					if (VMM.Element.height(VMM.Element.find( slides[i], ".content")) > config.slider.height) {
+					if (VMM.Lib.height(VMM.Lib.find( slides[i], ".content")) > config.slider.height) {
 						slides[i].css("display", "block");
 					} else {
 						slides[i].css("display", "table");
@@ -3581,60 +3546,60 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 			} else {
 				
-				VMM.Element.css(".slider-item .layout-text-media .text", "width", "40%" );
-				VMM.Element.css(".slider-item .layout-text-media .text", "display", "table-cell" );
-				VMM.Element.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
-				VMM.Element.css(".slider-item .layout-text-media .text .container", "width", "auto" );
+				VMM.Lib.css(".slider-item .layout-text-media .text", "width", "40%" );
+				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "table-cell" );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", "auto" );
 				
-				VMM.Element.css(".slider-item .layout-text-media .media", "float", "left" );
-				VMM.Element.css(".slider-item .layout-text-media", "display", "table" );
+				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "left" );
+				VMM.Lib.css(".slider-item .layout-text-media", "display", "table" );
 				
-				VMM.Element.css(".slider-item .media blockquote p", "line-height", "36px" );
-				VMM.Element.css(".slider-item .media blockquote p", "font-size", "28px" );
+				VMM.Lib.css(".slider-item .media blockquote p", "line-height", "36px" );
+				VMM.Lib.css(".slider-item .media blockquote p", "font-size", "28px" );
 				
-				VMM.Element.css(".slider-item", "display", "table" );
-				VMM.Element.css(".slider-item", "overflow-y", "auto" );
+				VMM.Lib.css(".slider-item", "display", "table" );
+				VMM.Lib.css(".slider-item", "overflow-y", "auto" );
 			}
 			
 			// MEDIA FRAME
-			VMM.Element.css(	layout_text_media + ".media-frame", 		"max-width", 	mediasize.text_media.width);
-			VMM.Element.height(	layout_text_media + ".media-frame", 						mediasize.text_media.height);
-			VMM.Element.width(	layout_text_media + ".media-frame", 						mediasize.text_media.width);
+			VMM.Lib.css(	layout_text_media + ".media-frame", 		"max-width", 	mediasize.text_media.width);
+			VMM.Lib.height(	layout_text_media + ".media-frame", 						mediasize.text_media.height);
+			VMM.Lib.width(	layout_text_media + ".media-frame", 						mediasize.text_media.width);
 			
 			// IMAGES
-			VMM.Element.css(	layout_text_media + "img", 					"max-height", 	mediasize.text_media.height );
-			VMM.Element.css(	layout_media + 		"img", 					"max-height", 	mediasize.media.height );
+			VMM.Lib.css(	layout_text_media + "img", 					"max-height", 	mediasize.text_media.height );
+			VMM.Lib.css(	layout_media + 		"img", 					"max-height", 	mediasize.media.height );
 			
 			// FIX FOR NON-WEBKIT BROWSERS
-			VMM.Element.css(	layout_text_media + "img", 					"max-width", 	mediasize.text_media.width );
-			VMM.Element.css(	layout_text_media + ".twitter .avatar img", "max-width", 	32 );
-			VMM.Element.css(	layout_text_media + ".twitter .avatar img", "max-height", 	32 );
-			VMM.Element.css(	layout_media + 		".twitter .avatar img", "max-width", 	32 );
-			VMM.Element.css(	layout_media + 		".twitter .avatar img", "max-height", 	32 );
+			VMM.Lib.css(	layout_text_media + "img", 					"max-width", 	mediasize.text_media.width );
+			VMM.Lib.css(	layout_text_media + ".twitter .avatar img", "max-width", 	32 );
+			VMM.Lib.css(	layout_text_media + ".twitter .avatar img", "max-height", 	32 );
+			VMM.Lib.css(	layout_media + 		".twitter .avatar img", "max-width", 	32 );
+			VMM.Lib.css(	layout_media + 		".twitter .avatar img", "max-height", 	32 );
 			
 			// IFRAME FULL SIZE VIDEO
-			VMM.Element.width(	layout_text_media + ".media-frame", 						mediasize.text_media.video.width);
-			VMM.Element.height(	layout_text_media + ".media-frame", 						mediasize.text_media.video.height);
-			VMM.Element.width(	layout_media + 		".media-frame", 						mediasize.media.video.width);
-			VMM.Element.height(	layout_media + 		".media-frame", 						mediasize.media.video.height);
-			VMM.Element.css(	layout_media + 		".media-frame", 		"max-height", 	mediasize.media.video.height);
-			VMM.Element.css(	layout_media + 		".media-frame", 		"max-width", 	mediasize.media.video.width);
+			VMM.Lib.width(	layout_text_media + ".media-frame", 						mediasize.text_media.video.width);
+			VMM.Lib.height(	layout_text_media + ".media-frame", 						mediasize.text_media.video.height);
+			VMM.Lib.width(	layout_media + 		".media-frame", 						mediasize.media.video.width);
+			VMM.Lib.height(	layout_media + 		".media-frame", 						mediasize.media.video.height);
+			VMM.Lib.css(	layout_media + 		".media-frame", 		"max-height", 	mediasize.media.video.height);
+			VMM.Lib.css(	layout_media + 		".media-frame", 		"max-width", 	mediasize.media.video.width);
 			
 			// SOUNDCLOUD
-			VMM.Element.height(	layout_media + 		".soundcloud", 							168);
-			VMM.Element.height(	layout_text_media + ".soundcloud", 							168);
-			VMM.Element.width(	layout_media + 		".soundcloud", 							mediasize.media.width);
-			VMM.Element.width(	layout_text_media + ".soundcloud", 							mediasize.text_media.width);
-			VMM.Element.css(	layout_both + 		".soundcloud", 			"max-height", 	168 );
+			VMM.Lib.height(	layout_media + 		".soundcloud", 							168);
+			VMM.Lib.height(	layout_text_media + ".soundcloud", 							168);
+			VMM.Lib.width(	layout_media + 		".soundcloud", 							mediasize.media.width);
+			VMM.Lib.width(	layout_text_media + ".soundcloud", 							mediasize.text_media.width);
+			VMM.Lib.css(	layout_both + 		".soundcloud", 			"max-height", 	168 );
 			
 			// MAPS
-			VMM.Element.height(	layout_text_media + ".map", 								mediasize.text_media.height);
-			VMM.Element.css(	layout_media + 		".map", 				"max-height", 	mediasize.media.height);
-			VMM.Element.width(	layout_media + 		".map", 								mediasize.media.width);
+			VMM.Lib.height(	layout_text_media + ".map", 								mediasize.text_media.height);
+			VMM.Lib.css(	layout_media + 		".map", 				"max-height", 	mediasize.media.height);
+			VMM.Lib.width(	layout_media + 		".map", 								mediasize.media.width);
 
 			// DOCS
-			VMM.Element.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
-			VMM.Element.height(	layout_media + 		".doc", 								mediasize.media.height);
+			VMM.Lib.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
+			VMM.Lib.height(	layout_media + 		".doc", 								mediasize.media.height);
 			
 			trace(mediasize);
 		}
@@ -3645,7 +3610,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
-				//VMM.Element.css(slides[i], "left", pos);
+				//VMM.Lib.css(slides[i], "left", pos);
 				slides[i].leftpos(pos);
 			}
 		}
@@ -3656,13 +3621,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _ease = "linear";
 			for(var i = 0; i < slides.length; i++) {
 				if (i == current_slide) {
-					//VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 1});
+					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 1});
 					slides[i].animate(config.duration, _ease, {"opacity": 1});
 				} else if (i == current_slide - 1 || i == current_slide + 1) {
-					//VMM.Element.animate(slides[i], config.duration, _ease, {"opacity": 0.1});
+					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 0.1});
 					slides[i].animate(config.duration, _ease, {"opacity": 0.1});
 				} else {
-					//VMM.Element.css(slides[i], "opacity", n);	
+					//VMM.Lib.css(slides[i], "opacity", n);	
 					slides[i].opacity(n);
 				}
 			}
@@ -3685,7 +3650,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var is_last = false;
 			var is_first = false;
 			var _pos = slides[current_slide].leftpos();
-			//var _pos = VMM.Element.position(slides[current_slide]);
+			//var _pos = VMM.Lib.position(slides[current_slide]);
 			
 			if (current_slide == 0) {is_first = true};
 			if (current_slide +1 >= slides.length) {is_last = true};
@@ -3695,18 +3660,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* set proper nav titles and dates etc.
 			================================================== */
 			if (is_first) {
-				VMM.Element.visible(navigation.prevBtn, false);
+				VMM.Lib.visible(navigation.prevBtn, false);
 			} else {
-				VMM.Element.visible(navigation.prevBtn, true);
+				VMM.Lib.visible(navigation.prevBtn, true);
 				if (config.type == "timeline") {
 					VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
 				}
 				VMM.attachElement(navigation.prevTitle, VMM.Util.unlinkify(data[current_slide - 1].title));
 			}
 			if (is_last) {
-				VMM.Element.visible(navigation.nextBtn, false);
+				VMM.Lib.visible(navigation.nextBtn, false);
 			} else {
-				VMM.Element.visible(navigation.nextBtn, true);
+				VMM.Lib.visible(navigation.nextBtn, true);
 				if (config.type == "timeline") {
 					VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
 				}
@@ -3716,10 +3681,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* ANIMATE SLIDE
 			================================================== */
 			if (fast) {
-				VMM.Element.css($slider_container, "left", -(_pos - config.slider.content.padding));	
+				VMM.Lib.css($slider_container, "left", -(_pos - config.slider.content.padding));	
 			} else{
-				VMM.Element.stop($slider_container);
-				VMM.Element.animate($slider_container, _duration, _ease, {"left": -(_pos - config.slider.content.padding)});
+				VMM.Lib.stop($slider_container);
+				VMM.Lib.animate($slider_container, _duration, _ease, {"left": -(_pos - config.slider.content.padding)});
 			}
 			
 			if (firstrun) {
@@ -3729,16 +3694,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			/* SET Vertical Scoll
 			================================================== */
 			//opacitySlides(0.85);
-			//if (VMM.Element.height(slides[current_slide]) > config.slider_height) {
+			//if (VMM.Lib.height(slides[current_slide]) > config.slider_height) {
 			if (slides[current_slide].height() > config.slider_height) {
-				VMM.Element.css(".slider", "overflow-y", "scroll" );
+				VMM.Lib.css(".slider", "overflow-y", "scroll" );
 			} else {
-				VMM.Element.css(layout, "overflow-y", "hidden" );
-				VMM.Element.animate(layout, _duration, _ease, {scrollTop: VMM.Element.prop(layout, "scrollHeight") - VMM.Element.height(layout) });
+				VMM.Lib.css(layout, "overflow-y", "hidden" );
+				VMM.Lib.animate(layout, _duration, _ease, {scrollTop: VMM.Lib.prop(layout, "scrollHeight") - VMM.Lib.height(layout) });
 			}
 			
 			preloadSlides();
-			//VMM.Element.css(navigation.nextBtnContainer, "left", ( VMM.Element.width(navigation.nextBtnContainer) - config.slider.nav.width) );
+			//VMM.Lib.css(navigation.nextBtnContainer, "left", ( VMM.Lib.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
 		/* BUILD NAVIGATION
@@ -3790,17 +3755,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (VMM.Browser.device == "tablet" || VMM.Browser.device == "mobile") {
 				config.duration = 500;
 				__duration = 1000;
-				//VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Element.width(slides[0]), config.spacing, true);
+				//VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Lib.width(slides[0]), config.spacing, true);
 				VMM.TouchSlider.createPanel($slider_container, $slider_container, slides[0].width(), config.spacing, true);
 				VMM.bindEvent($slider_container, onTouchUpdate, "TOUCHUPDATE");
 			} else if (VMM.Browser.device == "mobile") {
 				
 			} else {
-				//VMM.DragSlider.createPanel($slider_container, $slider_container, VMM.Element.width(slides[0]), config.spacing, true);
+				//VMM.DragSlider.createPanel($slider_container, $slider_container, VMM.Lib.width(slides[0]), config.spacing, true);
 			}
 			
 			reSize(false, true);
-			VMM.Element.visible(navigation.prevBtn, false);
+			VMM.Lib.visible(navigation.prevBtn, false);
 			// GO TO FIRST SLIDE
 			trace("config.current_slide " + config.current_slide);
 			goToSlide(config.current_slide, "easeOutExpo", __duration, true, true);
@@ -3852,36 +3817,36 @@ if (typeof VMM.Slider != 'undefined') {
 		};
 		
 		this.position = function() {
-			return VMM.Element.position(element);
+			return VMM.Lib.position(element);
 		};
 		
 		this.leftpos = function(p) {
 			if(typeof p != 'undefined') {
-				VMM.Element.css(element, "left", p);
+				VMM.Lib.css(element, "left", p);
 			} else {
-				trace("LEFT: " + VMM.Element.position(element).left);
-				return VMM.Element.position(element).left
+				trace("LEFT: " + VMM.Lib.position(element).left);
+				return VMM.Lib.position(element).left
 			}
 		};
 		
 		this.animate = function(d, e, p) {
-			VMM.Element.animate(element, d, e, p);
+			VMM.Lib.animate(element, d, e, p);
 		};
 		
 		this.css = function(p, v) {
-			VMM.Element.css(element, p, v );
+			VMM.Lib.css(element, p, v );
 		}
 		
 		this.opacity = function(p) {
-			VMM.Element.css(element, "opacity", p);	
+			VMM.Lib.css(element, "opacity", p);	
 		}
 		
 		this.width = function() {
-			return VMM.Element.width(element);
+			return VMM.Lib.width(element);
 		};
 		
 		this.height = function() {
-			return VMM.Element.height(element);
+			return VMM.Lib.height(element);
 		};
 		
 		/* PRIVATE
@@ -5177,7 +5142,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var createStructure = function(w, h) {
 			$timeline = 			VMM.getElement(timeline_id);
 			
-			VMM.Element.addClass(timeline_id, "vmm-timeline");
+			VMM.Lib.addClass(timeline_id, "vmm-timeline");
 			
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
@@ -5185,15 +5150,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
 			if (!has_width) {
-				config.width = VMM.Element.width($timeline);
+				config.width = VMM.Lib.width($timeline);
 			} else {
-				VMM.Element.width($timeline, config.width);
+				VMM.Lib.width($timeline, config.width);
 			}
 
 			if (!has_height) {
-				config.height = VMM.Element.height($timeline);
+				config.height = VMM.Lib.height($timeline);
 			} else {
-				VMM.Element.height($timeline, config.height);
+				VMM.Lib.height($timeline, config.height);
 			}
 			
 		}
@@ -5333,11 +5298,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		var hideMessege = function() {
-			VMM.Element.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
+			VMM.Lib.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
 		};
 		
 		var detachMessege = function() {
-			VMM.Element.detach($feedback);
+			VMM.Lib.detach($feedback);
 		}
 		
 		/* BUILD DISPLAY
@@ -5370,8 +5335,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var updateSize = function() {
 			trace("UPDATE SIZE");
-			config.width = VMM.Element.width($timeline);
-			config.height = VMM.Element.height($timeline);
+			config.width = VMM.Lib.width($timeline);
+			config.height = VMM.Lib.height($timeline);
 			
 			config.nav.width = config.width;
 			config.feature.width = config.width;
@@ -5597,7 +5562,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function reSize(firstrun) {
-			VMM.Element.css($timenavline, "left", Math.round(config.width/2)+2);
+			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
 		};
 		
@@ -5671,7 +5636,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function onMarkerHover(e) {
-			VMM.Element.toggleClass(e.data.elem, "zFront");
+			VMM.Lib.toggleClass(e.data.elem, "zFront");
 		};
 		
 		var goToMarker = function(n, ease, duration, fast, firstrun) {
@@ -5681,7 +5646,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _duration = 	config.duration;
 			var is_last = 		false;
 			var is_first = 		false;
-			var _pos = 			VMM.Element.position(markers[current_marker].marker);
+			var _pos = 			VMM.Lib.position(markers[current_marker].marker);
 			
 			if (current_marker == 0) {
 				is_first = true;
@@ -5694,26 +5659,26 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// set marker style
 			for(var i = 0; i < markers.length; i++) {
-				VMM.Element.removeClass(markers[i].marker, "active");
+				VMM.Lib.removeClass(markers[i].marker, "active");
 			}
 			
 			if (config.start_page && markers[0].type == "start") {
-				VMM.Element.visible(markers[0].marker, false);
-				VMM.Element.addClass(markers[0].marker, "start");
+				VMM.Lib.visible(markers[0].marker, false);
+				VMM.Lib.addClass(markers[0].marker, "start");
 			}
 			
-			VMM.Element.addClass(markers[current_marker].marker, "active");
+			VMM.Lib.addClass(markers[current_marker].marker, "active");
 			
 			// ANIMATE MARKER
-			VMM.Element.stop($timenav);
-			VMM.Element.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
+			VMM.Lib.stop($timenav);
+			VMM.Lib.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
 			
 		}
 		
 		/* TOUCH EVENTS
 		================================================== */
 		function onTouchUpdate(e, b) {
-			VMM.Element.animate($timenav, b.time/2, config.ease, {"left": b.left});
+			VMM.Lib.animate($timenav, b.time/2, config.ease, {"left": b.left});
 		};
 		
 		/* CALCULATIONS
@@ -6070,9 +6035,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _line_height = 				6;
 			var cur_mark = 					0;
 			
-			VMM.Element.removeClass(".flag", "row1");
-			VMM.Element.removeClass(".flag", "row2");
-			VMM.Element.removeClass(".flag", "row3");
+			VMM.Lib.removeClass(".flag", "row1");
+			VMM.Lib.removeClass(".flag", "row2");
+			VMM.Lib.removeClass(".flag", "row3");
 			
 			for(var i = 0; i < markers.length; i++) {
 				
@@ -6093,10 +6058,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					VMM.Element.stop(_marker);
-					VMM.Element.animate(_marker, config.duration/2, config.ease, {"left": pos});
+					VMM.Lib.stop(_marker);
+					VMM.Lib.animate(_marker, config.duration/2, config.ease, {"left": pos});
 				} else {
-					VMM.Element.css(_marker, "left", pos);
+					VMM.Lib.css(_marker, "left", pos);
 				}
 				
 				if (i == current_marker) {
@@ -6105,9 +6070,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// EVENT LENGTH LINE
 				if (_line > 5) {
-					VMM.Element.css(_marker_line_event, "height", _line_height);
-					VMM.Element.css(_marker_line_event, "width", _line);
-					VMM.Element.css(_marker_line_event, "top", _line_last_height_pos);
+					VMM.Lib.css(_marker_line_event, "height", _line_height);
+					VMM.Lib.css(_marker_line_event, "width", _line);
+					VMM.Lib.css(_marker_line_event, "top", _line_last_height_pos);
 				}
 				
 				// CONTROL ROW POSITION
@@ -6128,15 +6093,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				lpos = pos;
 				
 				if (is_animated) {
-					VMM.Element.stop(_marker_flag);
-					VMM.Element.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
+					VMM.Lib.stop(_marker_flag);
+					VMM.Lib.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
 				} else {
-					VMM.Element.css(_marker_flag, "top", config.nav.rows[row]);
+					VMM.Lib.css(_marker_flag, "top", config.nav.rows[row]);
 				}
 				
 				// IS THE MARKER A REPRESENTATION OF A START SCREEN?
 				if (config.start_page && markers[i].type == "start") {
-					VMM.Element.visible(_marker, false);
+					VMM.Lib.visible(_marker, false);
 				}
 				
 			}
@@ -6150,14 +6115,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				var era_height = 		25;
 				
 				// APPLY POSITION TO MARKER
-				VMM.Element.css(era_elem, "left", pos.begin);
-				VMM.Element.css(era_elem, "width", era_length);
+				VMM.Lib.css(era_elem, "left", pos.begin);
+				VMM.Lib.css(era_elem, "width", era_length);
 			}
 			
 			
 			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
-			VMM.Element.stop($timenav);
-			VMM.Element.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			VMM.Lib.stop($timenav);
+			VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
 
 		
 		}
@@ -6180,9 +6145,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					VMM.Element.animate(_interval, config.duration/2, config.ease, {"left": pos});
+					VMM.Lib.animate(_interval, config.duration/2, config.ease, {"left": pos});
 				} else {
-					VMM.Element.css(_interval, "left", pos);
+					VMM.Lib.css(_interval, "left", pos);
 				}
 				
 				// CONDENSE WHAT IS DISPLAYED
@@ -6209,18 +6174,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (_interval_visible) {
 					if (!is_visible) {
 						if (is_animated) {
-							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
+							VMM.Lib.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
 						} else {
-							VMM.Element.css(_interval, "opacity", 0);
+							VMM.Lib.css(_interval, "opacity", 0);
 						}
 						the_intervals[i].interval_visible = false;
 					}
 				} else {
 					if (is_visible) {
 						if (is_animated) {
-							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
+							VMM.Lib.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
 						} else {
-							VMM.Element.css(_interval, "opacity", 100);
+							VMM.Lib.css(_interval, "opacity", 100);
 						}
 						the_intervals[i].interval_visible = true;
 					}
@@ -6234,8 +6199,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			VMM.Element.css($timeintervalminor_minor, "left", -(config.width/2));
-			VMM.Element.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) );
+			VMM.Lib.css($timeintervalminor_minor, "left", -(config.width/2));
+			VMM.Lib.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) );
 		}
 		
 		var createIntervalElements = function(_interval, _array, _element_parent) {
@@ -6351,8 +6316,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				VMM.appendElement(_element, _idd);
 				
-				VMM.Element.css(_element, "text-indent", -(VMM.Element.width(_element)/2));
-				VMM.Element.css(_element, "opacity", "0");
+				VMM.Lib.css(_element, "text-indent", -(VMM.Lib.width(_element)/2));
+				VMM.Lib.css(_element, "opacity", "0");
 
 				_last_pos = pos;
 				
@@ -6373,7 +6338,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			VMM.Element.width($timeintervalminor_minor, _largest_pos);
+			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
 			
 			positionInterval(_array);
 			
@@ -6409,19 +6374,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
-				VMM.Element.css($toolbar, "top", 27);
-				VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
-				VMM.Element.attribute($backhome, "rel", "tooltip");
+				VMM.Lib.css($toolbar, "top", 27);
+				VMM.Lib.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
 			
 			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Element.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
-			VMM.Element.attribute($zoomin, "rel", "tooltip");
-			VMM.Element.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
-			VMM.Element.attribute($zoomout, "rel", "tooltip");
+			VMM.Lib.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
+			VMM.Lib.attribute($zoomin, "rel", "tooltip");
+			VMM.Lib.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
+			VMM.Lib.attribute($zoomout, "rel", "tooltip");
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
 			
@@ -6552,7 +6517,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
 				
 				// ADD ID
-				VMM.Element.attr(_marker, "id", (data[i].uniqueid).toString());
+				VMM.Lib.attr(_marker, "id", (data[i].uniqueid).toString());
 				
 				// MARKER CLICK
 				VMM.bindEvent(_marker_flag, onMarkerClick, "", {number: i});
@@ -6590,8 +6555,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					color: 				eras[j].color
 				};
 				
-				VMM.Element.attr(era.content, "id", era.uniqueid);
-				VMM.Element.css(era.content, "background", era.color);
+				VMM.Lib.attr(era.content, "id", era.uniqueid);
+				VMM.Lib.css(era.content, "background", era.color);
 				VMM.appendElement(era.content, "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>");
 				
 				era_markers.push(era);
@@ -6657,36 +6622,36 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 			/*	Timeline start slide
 			================================================== */
-			if (VMM.Element.find("#timeline section", "time")[0]) {
-				_data_obj.timeline.startDate = VMM.Element.html(VMM.Element.find("#timeline section", "time")[0]);
-				_data_obj.timeline.headline = VMM.Element.html(VMM.Element.find("#timeline section", "h2"));
-				_data_obj.timeline.text = VMM.Element.html(VMM.Element.find("#timeline section", "article"));
+			if (VMM.Lib.find("#timeline section", "time")[0]) {
+				_data_obj.timeline.startDate = VMM.Lib.html(VMM.Lib.find("#timeline section", "time")[0]);
+				_data_obj.timeline.headline = VMM.Lib.html(VMM.Lib.find("#timeline section", "h2"));
+				_data_obj.timeline.text = VMM.Lib.html(VMM.Lib.find("#timeline section", "article"));
 				
 				var found_main_media = false;
 				
-				if (VMM.Element.find("#timeline section", "figure img").length != 0) {
+				if (VMM.Lib.find("#timeline section", "figure img").length != 0) {
 					found_main_media = true;
-					_data_obj.timeline.asset.media = VMM.Element.attr(VMM.Element.find("#timeline section", "figure img"), "src");
-				} else if (VMM.Element.find("#timeline section", "figure a").length != 0) {
+					_data_obj.timeline.asset.media = VMM.Lib.attr(VMM.Lib.find("#timeline section", "figure img"), "src");
+				} else if (VMM.Lib.find("#timeline section", "figure a").length != 0) {
 					found_main_media = true;
-					_data_obj.timeline.asset.media = VMM.Element.attr(VMM.Element.find("#timeline section", "figure a"), "href");
+					_data_obj.timeline.asset.media = VMM.Lib.attr(VMM.Lib.find("#timeline section", "figure a"), "href");
 				} else {
 					//trace("NOT FOUND");
 				}
 
 				if (found_main_media) {
-					if (VMM.Element.find("#timeline section", "cite").length != 0) {
-						_data_obj.timeline.asset.credit = VMM.Element.html(VMM.Element.find("#timeline section", "cite"));
+					if (VMM.Lib.find("#timeline section", "cite").length != 0) {
+						_data_obj.timeline.asset.credit = VMM.Lib.html(VMM.Lib.find("#timeline section", "cite"));
 					}
-					if (VMM.Element.find(this, "figcaption").length != 0) {
-						_data_obj.timeline.asset.caption = VMM.Element.html(VMM.Element.find("#timeline section", "figcaption"));
+					if (VMM.Lib.find(this, "figcaption").length != 0) {
+						_data_obj.timeline.asset.caption = VMM.Lib.html(VMM.Lib.find("#timeline section", "figcaption"));
 					}
 				}
 			}
 			
 			/*	Timeline Date Slides
 			================================================== */
-			VMM.Element.each("#timeline li", function(i, elem){
+			VMM.Lib.each("#timeline li", function(i, elem){
 				
 				var valid_date = false;
 				
@@ -6704,37 +6669,37 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		            "tags":"Optional"
 				};
 				
-				if (VMM.Element.find(this, "time") != 0) {
+				if (VMM.Lib.find(this, "time") != 0) {
 					
 					valid_date = true;
 					
-					_date.startDate = VMM.Element.html(VMM.Element.find(this, "time")[0]);
+					_date.startDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
 
-					if (VMM.Element.find(this, "time")[1]) {
-						_date.endDate = VMM.Element.html(VMM.Element.find(this, "time")[0]);
+					if (VMM.Lib.find(this, "time")[1]) {
+						_date.endDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
 					}
 
-					_date.headline = VMM.Element.html(VMM.Element.find(this, "h3"));
+					_date.headline = VMM.Lib.html(VMM.Lib.find(this, "h3"));
 
-					_date.text = VMM.Element.html(VMM.Element.find(this, "article"));
+					_date.text = VMM.Lib.html(VMM.Lib.find(this, "article"));
 
 					var found_media = false;
-					if (VMM.Element.find(this, "figure img").length != 0) {
+					if (VMM.Lib.find(this, "figure img").length != 0) {
 						found_media = true;
-						_date.asset.media = VMM.Element.attr(VMM.Element.find(this, "figure img"), "src");
-					} else if (VMM.Element.find(this, "figure a").length != 0) {
+						_date.asset.media = VMM.Lib.attr(VMM.Lib.find(this, "figure img"), "src");
+					} else if (VMM.Lib.find(this, "figure a").length != 0) {
 						found_media = true;
-						_date.asset.media = VMM.Element.attr(VMM.Element.find(this, "figure a"), "href");
+						_date.asset.media = VMM.Lib.attr(VMM.Lib.find(this, "figure a"), "href");
 					} else {
 						//trace("NOT FOUND");
 					}
 
 					if (found_media) {
-						if (VMM.Element.find(this, "cite").length != 0) {
-							_date.asset.credit = VMM.Element.html(VMM.Element.find(this, "cite"));
+						if (VMM.Lib.find(this, "cite").length != 0) {
+							_date.asset.credit = VMM.Lib.html(VMM.Lib.find(this, "cite"));
 						}
-						if (VMM.Element.find(this, "figcaption").length != 0) {
-							_date.asset.caption = VMM.Element.html(VMM.Element.find(this, "figcaption"));
+						if (VMM.Lib.find(this, "figcaption").length != 0) {
+							_date.asset.caption = VMM.Lib.html(VMM.Lib.find(this, "figcaption"));
 						}
 					}
 					

@@ -97,7 +97,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function reSize(firstrun) {
-			VMM.Element.css($timenavline, "left", Math.round(config.width/2)+2);
+			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
 		};
 		
@@ -171,7 +171,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function onMarkerHover(e) {
-			VMM.Element.toggleClass(e.data.elem, "zFront");
+			VMM.Lib.toggleClass(e.data.elem, "zFront");
 		};
 		
 		var goToMarker = function(n, ease, duration, fast, firstrun) {
@@ -181,7 +181,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _duration = 	config.duration;
 			var is_last = 		false;
 			var is_first = 		false;
-			var _pos = 			VMM.Element.position(markers[current_marker].marker);
+			var _pos = 			VMM.Lib.position(markers[current_marker].marker);
 			
 			if (current_marker == 0) {
 				is_first = true;
@@ -194,26 +194,26 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// set marker style
 			for(var i = 0; i < markers.length; i++) {
-				VMM.Element.removeClass(markers[i].marker, "active");
+				VMM.Lib.removeClass(markers[i].marker, "active");
 			}
 			
 			if (config.start_page && markers[0].type == "start") {
-				VMM.Element.visible(markers[0].marker, false);
-				VMM.Element.addClass(markers[0].marker, "start");
+				VMM.Lib.visible(markers[0].marker, false);
+				VMM.Lib.addClass(markers[0].marker, "start");
 			}
 			
-			VMM.Element.addClass(markers[current_marker].marker, "active");
+			VMM.Lib.addClass(markers[current_marker].marker, "active");
 			
 			// ANIMATE MARKER
-			VMM.Element.stop($timenav);
-			VMM.Element.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
+			VMM.Lib.stop($timenav);
+			VMM.Lib.animate($timenav, _duration, _ease, {"left": (config.width/2) - (_pos.left)});
 			
 		}
 		
 		/* TOUCH EVENTS
 		================================================== */
 		function onTouchUpdate(e, b) {
-			VMM.Element.animate($timenav, b.time/2, config.ease, {"left": b.left});
+			VMM.Lib.animate($timenav, b.time/2, config.ease, {"left": b.left});
 		};
 		
 		/* CALCULATIONS
@@ -570,9 +570,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _line_height = 				6;
 			var cur_mark = 					0;
 			
-			VMM.Element.removeClass(".flag", "row1");
-			VMM.Element.removeClass(".flag", "row2");
-			VMM.Element.removeClass(".flag", "row3");
+			VMM.Lib.removeClass(".flag", "row1");
+			VMM.Lib.removeClass(".flag", "row2");
+			VMM.Lib.removeClass(".flag", "row3");
 			
 			for(var i = 0; i < markers.length; i++) {
 				
@@ -593,10 +593,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					VMM.Element.stop(_marker);
-					VMM.Element.animate(_marker, config.duration/2, config.ease, {"left": pos});
+					VMM.Lib.stop(_marker);
+					VMM.Lib.animate(_marker, config.duration/2, config.ease, {"left": pos});
 				} else {
-					VMM.Element.css(_marker, "left", pos);
+					VMM.Lib.css(_marker, "left", pos);
 				}
 				
 				if (i == current_marker) {
@@ -605,9 +605,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// EVENT LENGTH LINE
 				if (_line > 5) {
-					VMM.Element.css(_marker_line_event, "height", _line_height);
-					VMM.Element.css(_marker_line_event, "width", _line);
-					VMM.Element.css(_marker_line_event, "top", _line_last_height_pos);
+					VMM.Lib.css(_marker_line_event, "height", _line_height);
+					VMM.Lib.css(_marker_line_event, "width", _line);
+					VMM.Lib.css(_marker_line_event, "top", _line_last_height_pos);
 				}
 				
 				// CONTROL ROW POSITION
@@ -628,15 +628,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				lpos = pos;
 				
 				if (is_animated) {
-					VMM.Element.stop(_marker_flag);
-					VMM.Element.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
+					VMM.Lib.stop(_marker_flag);
+					VMM.Lib.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
 				} else {
-					VMM.Element.css(_marker_flag, "top", config.nav.rows[row]);
+					VMM.Lib.css(_marker_flag, "top", config.nav.rows[row]);
 				}
 				
 				// IS THE MARKER A REPRESENTATION OF A START SCREEN?
 				if (config.start_page && markers[i].type == "start") {
-					VMM.Element.visible(_marker, false);
+					VMM.Lib.visible(_marker, false);
 				}
 				
 			}
@@ -650,14 +650,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				var era_height = 		25;
 				
 				// APPLY POSITION TO MARKER
-				VMM.Element.css(era_elem, "left", pos.begin);
-				VMM.Element.css(era_elem, "width", era_length);
+				VMM.Lib.css(era_elem, "left", pos.begin);
+				VMM.Lib.css(era_elem, "width", era_length);
 			}
 			
 			
 			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
-			VMM.Element.stop($timenav);
-			VMM.Element.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			VMM.Lib.stop($timenav);
+			VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
 
 		
 		}
@@ -680,9 +680,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					VMM.Element.animate(_interval, config.duration/2, config.ease, {"left": pos});
+					VMM.Lib.animate(_interval, config.duration/2, config.ease, {"left": pos});
 				} else {
-					VMM.Element.css(_interval, "left", pos);
+					VMM.Lib.css(_interval, "left", pos);
 				}
 				
 				// CONDENSE WHAT IS DISPLAYED
@@ -709,18 +709,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (_interval_visible) {
 					if (!is_visible) {
 						if (is_animated) {
-							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
+							VMM.Lib.animate(_interval, config.duration*2, config.ease, {"opacity": 0});
 						} else {
-							VMM.Element.css(_interval, "opacity", 0);
+							VMM.Lib.css(_interval, "opacity", 0);
 						}
 						the_intervals[i].interval_visible = false;
 					}
 				} else {
 					if (is_visible) {
 						if (is_animated) {
-							VMM.Element.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
+							VMM.Lib.animate(_interval, config.duration*2, config.ease, {"opacity": 100});
 						} else {
-							VMM.Element.css(_interval, "opacity", 100);
+							VMM.Lib.css(_interval, "opacity", 100);
 						}
 						the_intervals[i].interval_visible = true;
 					}
@@ -734,8 +734,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			VMM.Element.css($timeintervalminor_minor, "left", -(config.width/2));
-			VMM.Element.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) );
+			VMM.Lib.css($timeintervalminor_minor, "left", -(config.width/2));
+			VMM.Lib.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) );
 		}
 		
 		var createIntervalElements = function(_interval, _array, _element_parent) {
@@ -851,8 +851,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				VMM.appendElement(_element, _idd);
 				
-				VMM.Element.css(_element, "text-indent", -(VMM.Element.width(_element)/2));
-				VMM.Element.css(_element, "opacity", "0");
+				VMM.Lib.css(_element, "text-indent", -(VMM.Lib.width(_element)/2));
+				VMM.Lib.css(_element, "opacity", "0");
 
 				_last_pos = pos;
 				
@@ -873,7 +873,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			VMM.Element.width($timeintervalminor_minor, _largest_pos);
+			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
 			
 			positionInterval(_array);
 			
@@ -909,19 +909,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
-				VMM.Element.css($toolbar, "top", 27);
-				VMM.Element.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
-				VMM.Element.attribute($backhome, "rel", "tooltip");
+				VMM.Lib.css($toolbar, "top", 27);
+				VMM.Lib.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
 			
 			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Element.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
-			VMM.Element.attribute($zoomin, "rel", "tooltip");
-			VMM.Element.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
-			VMM.Element.attribute($zoomout, "rel", "tooltip");
+			VMM.Lib.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
+			VMM.Lib.attribute($zoomin, "rel", "tooltip");
+			VMM.Lib.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
+			VMM.Lib.attribute($zoomout, "rel", "tooltip");
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
 			
@@ -1052,7 +1052,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
 				
 				// ADD ID
-				VMM.Element.attr(_marker, "id", (data[i].uniqueid).toString());
+				VMM.Lib.attr(_marker, "id", (data[i].uniqueid).toString());
 				
 				// MARKER CLICK
 				VMM.bindEvent(_marker_flag, onMarkerClick, "", {number: i});
@@ -1090,8 +1090,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					color: 				eras[j].color
 				};
 				
-				VMM.Element.attr(era.content, "id", era.uniqueid);
-				VMM.Element.css(era.content, "background", era.color);
+				VMM.Lib.attr(era.content, "id", era.uniqueid);
+				VMM.Lib.css(era.content, "background", era.color);
 				VMM.appendElement(era.content, "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>");
 				
 				era_markers.push(era);

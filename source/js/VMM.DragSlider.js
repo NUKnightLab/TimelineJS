@@ -72,12 +72,12 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			
 			VMM.DragSlider.startLeft = VMM.DragSlider.getLeft(elem);
 			VMM.DragSlider.dragStartTime = new Date().getTime();
-			VMM.DragSlider.dragWidth = VMM.Element.width(delem);
+			VMM.DragSlider.dragWidth = VMM.Lib.width(delem);
 			
 			// CANCEL CURRENT ANIMATION IF ANIMATING
 			var _newx = Math.round(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft);
 			
-			VMM.Element.stop(elem);
+			VMM.Lib.stop(elem);
 			VMM.bindEvent(delem, VMM.DragSlider.onDragMove, "mousemove", {element: elem});
 
 	    },
@@ -87,7 +87,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			if (VMM.DragSlider.getLeft(elem) > 0) {
 				//(VMM.DragSlider.dragWidth/2)
 				//This means they dragged to the right past the first item
-				//VMM.Element.animate(elem, 1000, "linear", {"left": 0});
+				//VMM.Lib.animate(elem, 1000, "linear", {"left": 0});
 				
 				//VMM.fireEvent(elem, "DRAGUPDATE", [0]);
 			} else {
@@ -103,12 +103,12 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			VMM.DragSlider.sliding = true;
 			if (VMM.DragSlider.startX > e.pageX) {
 				//Sliding to the left
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
 				VMM.DragSlider.slidingLeft = true;
 			} else {
 				//Sliding to the right
 				var left = (e.pageX - VMM.DragSlider.startX + VMM.DragSlider.startLeft);
-				VMM.Element.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
+				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
 				VMM.DragSlider.slidingLeft = false;
 			}
 		},
@@ -133,14 +133,14 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			VMM.fireEvent(elem, "DRAGUPDATE", [_r_object]);
 			var _ease = "easeOutExpo";
 			if (_r_object.time > 0) {
-				VMM.Element.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
+				VMM.Lib.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
 			};
 			
 			
 			//VMM.DragSlider.startX = null;
 		},
 		getLeft: function(elem) {
-			return parseInt(VMM.Element.css(elem, 'left').substring(0, VMM.Element.css(elem, 'left').length - 2), 10);
+			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		}
 	
 	}

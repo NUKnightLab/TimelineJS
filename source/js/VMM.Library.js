@@ -2,14 +2,13 @@
 ================================================== */
 if(typeof VMM != 'undefined') {
 	
-	//VMM.attachElement(element, content);
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
 			jQuery(element).html(content);
 		}
 		
 	};
-	//VMM.appendElement(element, content);
+	
 	VMM.appendElement = function(element, content) {
 		
 		if( typeof( jQuery ) != 'undefined' ){
@@ -26,7 +25,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.getElement(element);
+	
 	VMM.getElement = function(element, p) {
 		var e;
 		if( typeof( jQuery ) != 'undefined' ){
@@ -40,8 +39,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.bindEvent(element, the_handler, the_event_type, event_data);
-	//VMM.bindEvent(window, the_handler, "event type", {event_data});
+	
 	VMM.bindEvent = function(element, the_handler, the_event_type, event_data) {
 		var e;
 		var _event_type = "click";
@@ -62,7 +60,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.unbindEvent(window, the_handler, "event type");
+	
 	VMM.unbindEvent = function(element, the_handler, the_event_type) {
 		var e;
 		var _event_type = "click";
@@ -79,7 +77,7 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-	//VMM.fireEvent(element, "resize", [data]);
+	
 	VMM.fireEvent = function(element, the_event_type, the_data) {
 		var e;
 		var _event_type = "click";
@@ -100,7 +98,6 @@ if(typeof VMM != 'undefined') {
 		
 	};
 
-	// VMM.getJSON(url, the_function);
 	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
@@ -138,14 +135,14 @@ if(typeof VMM != 'undefined') {
 			}
 		}
 	}
-	// VMM.parseJSON(the_json);
+	
 	VMM.parseJSON = function(the_json) {
 		if( typeof( jQuery ) != 'undefined' ){
 			return jQuery.parseJSON(the_json);
 		}
 	}
+	
 	// ADD ELEMENT AND RETURN IT
-	// VMM.appendAndGetElement(append_to_element, tag, cName, content, [attrib]);
 	VMM.appendAndGetElement = function(append_to_element, tag, cName, content) {
 		var e;
 		var _tag = "<div>";
@@ -180,12 +177,12 @@ if(typeof VMM != 'undefined') {
 		
 	};
 	
-	VMM.Element = ({
+	VMM.Lib = ({
 		
 		init: function() {
 			return this;
 		},
-		// VMM.Element.hide(element);
+		
 		hide: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -198,25 +195,25 @@ if(typeof VMM != 'undefined') {
 			}
 			
 		},
-		// VMM.Element.remove(element);
+		
 		remove: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).remove();
 			}
 		},
-		// VMM.Element.detach(element);
+		
 		detach: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).detach();
 			}
 		},
-		// VMM.Element.append(element, value);
+		
 		append: function(element, value) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).append(value);
 			}
 		},
-		// VMM.Element.show(element);
+		
 		show: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -229,7 +226,7 @@ if(typeof VMM != 'undefined') {
 			}
 			
 		},
-		// VMM.Element.load(element, callback_function, event_data);
+		
 		load: function(element, callback_function, event_data) {
 			var _event_data = {elem:element}; // return element by default
 			if (_event_data != null && _event_data != "") {
@@ -239,19 +236,19 @@ if(typeof VMM != 'undefined') {
 				jQuery(element).load(_event_data, callback_function);
 			}
 		},
-		//VMM.Element.addClass(element, cName);
+		
 		addClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).addClass(cName);
 			}
 		},
-		//VMM.Element.removeClass(element, cName);
+		
 		removeClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).removeClass(cName);
 			}
 		},
-		//VMM.Element.attr(element, aName, value);
+		
 		attr: function(element, aName, value) {
 			if (value != null && value != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -263,15 +260,15 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		//VMM.Element.prop(element, aName, value);
+		
 		prop: function(element, aName, value) {
 			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
-			    VMM.Element.attribute(element, aName, value);
+			    VMM.Lib.attribute(element, aName, value);
 			} else {
 				jQuery(element).prop(aName, value);
 			}
 		},
-		//VMM.Element.attribute(element, aName, value);
+		
 		attribute: function(element, aName, value) {
 			
 			if (value != null && value != "") {
@@ -284,9 +281,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets  or gets the visability of a dom element
-		================================================== */
-		//VMM.Element.visible(element, show);
+		
 		visible: function(element, show) {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -306,9 +301,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets a style for the specified element or gets the style
-		================================================== */
-		//VMM.Element.css(element, prop, value);
+		
 		css: function(element, prop, value) {
 
 			if (value != null && value != "") {
@@ -328,9 +321,7 @@ if(typeof VMM != 'undefined') {
 				return jQuery(element).css(propval);
 			}
 		},
-		/* Gets offset
-		================================================== */
-		//VMM.Element.offset(element);
+		
 		offset: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -338,9 +329,7 @@ if(typeof VMM != 'undefined') {
 			}
 			return p;
 		},
-		/* Gets position
-		================================================== */
-		//VMM.Element.position(element);
+		
 		position: function(element) {
 			var p;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -348,9 +337,7 @@ if(typeof VMM != 'undefined') {
 			}
 			return p;
 		},
-		/* Sets  or gets the width of a dom element
-		================================================== */
-		//VMM.Element.width(element, s);
+		
 		width: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -362,8 +349,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* Sets  or gets the width of a dom element
-		================================================== */
+		
 		height: function(element, s) {
 			if (s != null && s != "") {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -375,26 +361,20 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		/* TOGGLE CLASS
-		================================================== */
-		// VMM.Element.toggleClass(element, cName);
+		
 		toggleClass: function(element, cName) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).toggleClass(cName);
 			}
 		},
-		/* Each
-		================================================== */
-		// VMM.Element.each(element, return_function);
+		
 		each:function(element, return_function) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).each(return_function);
 			}
 			
 		},
-		/* Each
-		================================================== */
-		// VMM.Element.html(element, str);
+		
 		html: function(element, str) {
 			var e;
 			if( typeof( jQuery ) != 'undefined' ){
@@ -415,23 +395,19 @@ if(typeof VMM != 'undefined') {
 			}
 
 		},
-		/* Find
-		================================================== */
-		// VMM.Element.find(element, selec);
+		
 		find: function(element, selec) {
 			if( typeof( jQuery ) != 'undefined' ){
 				return jQuery(element).find(selec);
 			}
 		},
-		/* Animate
-		================================================== */
-		// VMM.Element.stop(element);
+		
 		stop: function(element) {
 			if( typeof( jQuery ) != 'undefined' ){
 				jQuery(element).stop();
 			}
 		},
-		// VMM.Element.animate(element, duration, ease, att, callback_function);
+		
 		animate: function(element, duration, ease, att, callback_function) {
 			
 			var _ease = "easein";
@@ -462,12 +438,12 @@ if(typeof VMM != 'undefined') {
 				
 				var _tdd = Math.round((_duration/1500)*10)/10
 				var __duration = _tdd + 's';
-				VMM.Element.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-moz-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-o-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, '-ms-transition', 'all '+ __duration + ' ease');
-				VMM.Element.css(element, 'transition', 'all '+ __duration + ' ease');
-				VMM.Element.cssmultiple(element, _att);
+				VMM.Lib.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-moz-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-o-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-ms-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, 'transition', 'all '+ __duration + ' ease');
+				VMM.Lib.cssmultiple(element, _att);
 				
 				//callback_function();
 				/*
@@ -490,17 +466,6 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 			
-			
-			/*
-			VMM.Element.cssmultiple(element, {
-				'-webkit-transition': 'all 1s ease-in-out',
-				'-moz-transition': 'all 1s ease-in-out',
-				'-o-transition': 'all 1s ease-in-out',
-				'-ms-transition': 'all 1s ease-in-out',
-				'transition': 'all 1s ease-in-out',
-				
-			});
-			*/
 		},
 		
 	}).init();

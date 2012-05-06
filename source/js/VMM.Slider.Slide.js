@@ -29,36 +29,36 @@ if (typeof VMM.Slider != 'undefined') {
 		};
 		
 		this.position = function() {
-			return VMM.Element.position(element);
+			return VMM.Lib.position(element);
 		};
 		
 		this.leftpos = function(p) {
 			if(typeof p != 'undefined') {
-				VMM.Element.css(element, "left", p);
+				VMM.Lib.css(element, "left", p);
 			} else {
-				trace("LEFT: " + VMM.Element.position(element).left);
-				return VMM.Element.position(element).left
+				trace("LEFT: " + VMM.Lib.position(element).left);
+				return VMM.Lib.position(element).left
 			}
 		};
 		
 		this.animate = function(d, e, p) {
-			VMM.Element.animate(element, d, e, p);
+			VMM.Lib.animate(element, d, e, p);
 		};
 		
 		this.css = function(p, v) {
-			VMM.Element.css(element, p, v );
+			VMM.Lib.css(element, p, v );
 		}
 		
 		this.opacity = function(p) {
-			VMM.Element.css(element, "opacity", p);	
+			VMM.Lib.css(element, "opacity", p);	
 		}
 		
 		this.width = function() {
-			return VMM.Element.width(element);
+			return VMM.Lib.width(element);
 		};
 		
 		this.height = function() {
-			return VMM.Element.height(element);
+			return VMM.Lib.height(element);
 		};
 		
 		/* PRIVATE
