@@ -1058,7 +1058,7 @@ if(typeof VMM != 'undefined') {
 	//VMM.attachElement(element, content);
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).html(content);
+			jQuery(element).html(content);
 		}
 		
 	};
@@ -1066,7 +1066,7 @@ if(typeof VMM != 'undefined') {
 	VMM.appendElement = function(element, content) {
 		
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).append(content);
+			jQuery(element).append(content);
 		}
 		
 	};
@@ -1187,11 +1187,7 @@ if(typeof VMM != 'undefined') {
 					return jQuery.getJSON(url, data, callback);
 				}
 			} else {
-				//$.getJSON(url, data);
-				trace("getJSON");
 				return jQuery.getJSON(url, data, callback);
-				
-				
 			}
 		}
 	}
@@ -1224,14 +1220,12 @@ if(typeof VMM != 'undefined') {
 		
 		if( typeof( jQuery ) != 'undefined' ){
 			
-			e = $(tag);
+			e = jQuery(tag);
 			
 			e.addClass(_class);
 			e.html(_content);
 			
 			jQuery(append_to_element).append(e);
-			
-			//$(e).appendTo(element);
 			
 		}
 		
@@ -1324,7 +1318,7 @@ if(typeof VMM != 'undefined') {
 		},
 		//VMM.Element.prop(element, aName, value);
 		prop: function(element, aName, value) {
-			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test($.fn.jquery)) {
+			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
 			    VMM.Element.attribute(element, aName, value);
 			} else {
 				jQuery(element).prop(aName, value);
@@ -2242,7 +2236,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.googlemaps.active) {
 				VMM.ExternalAPI.googlemaps.pushQue();
 			}
-			
 			if (VMM.master_config.youtube.active) {
 				VMM.ExternalAPI.youtube.pushQue();
 			}
@@ -2426,18 +2419,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 		},
 		
-		//VMM.ExternalAPI.googlemaps.getMap()
 		googlemaps: {
-			/*
-				//http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9
-				
-				http://maps.google.com/maps?q=chicago&hl=en&sll=41.874961,-87.619054&sspn=0.159263,0.351906&t=t&hnear=Chicago,+Cook,+Illinois&z=11&output=kml
-				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a53ad1e3365113a32&msa=0
-				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a53ad1e3365113a32&msa=0&output=kml
-				http://maps.google.com/maps/ms?msid=215143221704623082244.0004a21354b1a2f188082&msa=0&ll=38.719738,-9.142599&spn=0.04172,0.087976&iwloc=0004a214c0e99e2da91e0
-				http://maps.google.com/maps?q=Bavaria&hl=en&ll=47.597829,9.398804&spn=1.010316,2.709503&sll=37.0625,-95.677068&sspn=73.579623,173.408203&hnear=Bavaria,+Germany&t=m&z=10&output=embed
-				http://maps.google.com/maps?q=Zernikedreef+11,+Leiden,+Nederland&hl=en&sll=37.0625,-95.677068&sspn=45.957536,93.076172&oq=zernike&hnear=Zernikedreef+11,+Leiden,+Zuid-Holland,+The+Netherlands&t=m&z=16
-			*/
+			
 			get: function(url, id) {
 				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
@@ -2458,101 +2441,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						});
 					}
 				}
-				
-
-				
 			},
 			
-			onMapAPIReady: function() {
-				VMM.master_config.googlemaps.map_active = true;
-				VMM.master_config.googlemaps.places_active = true;
-				VMM.ExternalAPI.googlemaps.onAPIReady();
-			},
-			
-			onPlacesAPIReady: function() {
-				VMM.master_config.googlemaps.places_active = true;
-				VMM.ExternalAPI.googlemaps.onAPIReady();
-			},
-			
-			onAPIReady: function() {
-				if (!VMM.master_config.googlemaps.active) {
-					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
-						VMM.master_config.googlemaps.active = true;
-						VMM.ExternalAPI.googlemaps.pushQue();
-					}
-				}
-			},
-			
-			pushQue: function() {
-				for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
-					VMM.ExternalAPI.googlemaps.createMap(VMM.master_config.googlemaps.que[i]);
-				}
-				VMM.master_config.googlemaps.que = [];
-				
-			},
-			
-			defaultType: function(name) {
-				if (name.toLowerCase() == "satellite" || name.toLowerCase() == "hybrid" || name.toLowerCase() == "terrain" || name.toLowerCase() == "roadmap") {
-					return true;
-				} else {
-					return false;
-				}
-			},
-			
-			map_subdomains: ["", "a.", "b.", "c.", "d."],
-			
-			map_attribution: {
-				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
-				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
-			},
-						
-			map_providers: {
-				"toner": {
-					"url": 			"http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
-					"minZoom": 		0,
-					"maxZoom": 		20,
-					"attribution": 	"stamen"
-					
-				},
-				"toner-lines": {
-					"url": 			"http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
-					"minZoom": 		0,
-					"maxZoom": 		20,
-					"attribution": 	"stamen"
-				},
-				"toner-labels": {
-					"url": 			"http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
-					"minZoom": 		0,
-					"maxZoom": 		20,
-					"attribution": 	"stamen"
-				},
-				"sterrain": {
-					"url": 			"http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
-					"minZoom": 		4,
-					"maxZoom": 		20,
-					"attribution": 	"stamen"
-				},
-				"apple": {
-					"url": 			"http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
-					"minZoom": 		4,
-					"maxZoom": 		14,
-					"attribution": 	"apple"
-				},
-				"watercolor": {
-					"url": 			"http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
-					"minZoom": 		3,
-					"maxZoom": 		16,
-					"attribution": 	"stamen"
-				}
-			},
-			
-			createMap: function(m) {
-				/* 	MAP PROVIDERS
-					Including Stamen Maps
-					http://maps.stamen.com/
-					Except otherwise noted, each of these map tile sets are © Stamen Design, under a Creative Commons Attribution (CC BY 3.0) license.
-				================================================== */
-				
+			create: function(m) {
 				var map_attribution = "";
 				var layer;
 				var map;
@@ -2669,8 +2560,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				loadKML();
 				
-				
-				
 				// KML
 				function loadKML() {
 					var kml_url				=	m.url + "&output=kml";
@@ -2702,6 +2591,90 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			},
 			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googlemaps.que.length; i++) {
+					VMM.ExternalAPI.googlemaps.create(VMM.master_config.googlemaps.que[i]);
+				}
+				VMM.master_config.googlemaps.que = [];
+			},
+			
+			onMapAPIReady: function() {
+				VMM.master_config.googlemaps.map_active = true;
+				VMM.master_config.googlemaps.places_active = true;
+				VMM.ExternalAPI.googlemaps.onAPIReady();
+			},
+			
+			onPlacesAPIReady: function() {
+				VMM.master_config.googlemaps.places_active = true;
+				VMM.ExternalAPI.googlemaps.onAPIReady();
+			},
+			
+			onAPIReady: function() {
+				if (!VMM.master_config.googlemaps.active) {
+					if (VMM.master_config.googlemaps.map_active && VMM.master_config.googlemaps.places_active) {
+						VMM.master_config.googlemaps.active = true;
+						VMM.ExternalAPI.googlemaps.pushQue();
+					}
+				}
+			},
+			
+			defaultType: function(name) {
+				if (name.toLowerCase() == "satellite" || name.toLowerCase() == "hybrid" || name.toLowerCase() == "terrain" || name.toLowerCase() == "roadmap") {
+					return true;
+				} else {
+					return false;
+				}
+			},
+			
+			map_subdomains: ["", "a.", "b.", "c.", "d."],
+			
+			map_attribution: {
+				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
+				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
+			},
+						
+			map_providers: {
+				"toner": {
+					"url": 			"http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
+					
+				},
+				"toner-lines": {
+					"url": 			"http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
+				},
+				"toner-labels": {
+					"url": 			"http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"minZoom": 		0,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
+				},
+				"sterrain": {
+					"url": 			"http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"minZoom": 		4,
+					"maxZoom": 		20,
+					"attribution": 	"stamen"
+				},
+				"apple": {
+					"url": 			"http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
+					"minZoom": 		4,
+					"maxZoom": 		14,
+					"attribution": 	"apple"
+				},
+				"watercolor": {
+					"url": 			"http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"minZoom": 		3,
+					"maxZoom": 		16,
+					"attribution": 	"stamen"
+				}
+			},
+			
+			
+			
 		},
 		
 		googledocs: {
@@ -2712,7 +2685,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.googledocs.active = true;
 			},
 			
-			creatDoc: function(doc) {
+			create: function(doc) {
 				var mediaElem = ""; 
 				if (doc.url.match(/docs.google.com/i)) {
 					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&amp;embedded=true'></iframe>";
@@ -2724,24 +2697,22 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			pushQue: function() {
 				for(var i = 0; i < VMM.master_config.googledocs.que.length; i++) {
-					VMM.ExternalAPI.googledocs.creatDoc(VMM.master_config.googledocs.que[i]);
-					
+					VMM.ExternalAPI.googledocs.create(VMM.master_config.googledocs.que[i]);
 				}
 				VMM.master_config.googledocs.que = [];
-				
 			}
+		
 		},
 		
-		//VMM.ExternalAPI.flickr.getPhoto(mediaID, htmlID);
 		flickr: {
 			
 			get: function(mid, id) {
 				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + Aes.Ctr.decrypt(VMM.master_config.keys.flickr, VMM.master_config.vp, 256) + "&photo_id=" + mid + "&format=json&jsoncallback=?";
-				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.setPhoto);
+				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
 			},
 			
-			setPhoto: function(d) {
+			create: function(d) {
 				var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
 				var id = "flickr_" + flickr_id;
 				var flickr_large_id = id + "_large";
@@ -2764,79 +2735,49 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.Element.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
 			}
 			
-			
 		},
 		
 		soundcloud: {
-			// VMM.ExternalAPI.soundcloud.getSound(url, id)
-			/* 
-				REFORMAT TO USE API FOR CUSTOM PLAYERS
-			*/
+			
 			get: function(url, id) {
 				var sound = {url: url, id: id};
 				VMM.master_config.soundcloud.que.push(sound);
 				VMM.master_config.soundcloud.active = true;
 			},
-			createPlayer: function(sound) {
+			
+			create: function(sound) {
 				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+sound.id, d.html);
 				});
-				
 			},
 			
 			pushQue: function() {
 				for(var i = 0; i < VMM.master_config.soundcloud.que.length; i++) {
-					VMM.ExternalAPI.soundcloud.createPlayer(VMM.master_config.soundcloud.que[i]);
-					
+					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[i]);
 				}
 				VMM.master_config.soundcloud.que = [];
 			},
 			
-			
 		},
 		
-		// VMM.ExternalAPI.youtube.init(id);
 		youtube: {
+			
 			get: function(id) {
-				var timer;
 				if (VMM.master_config.youtube.active) {
-					trace(id);
 					VMM.master_config.youtube.que.push(id);
 				} else {
-					
 					VMM.master_config.youtube.que.push(id);
-					
-					if (VMM.master_config.youtube.api_loaded) {
-						
-					} else {
-						
+					if (!VMM.master_config.youtube.api_loaded) {
 						VMM.LoadLib.js('http://www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
 						});
 					}
-					
 				}
 			},
 			
-			onAPIReady: function() {
-				trace("YOUTUBE API READY")
-				VMM.master_config.youtube.active = true;
-				VMM.ExternalAPI.youtube.pushQue();
-			},
-			
-			pushQue: function() {
-				for(var i = 0; i < VMM.master_config.youtube.que.length; i++) {
-					VMM.ExternalAPI.youtube.createPlayer(VMM.master_config.youtube.que[i]);
-				}
+			create: function(id) {
 				
-				VMM.master_config.youtube.que = [];
-				
-			},
-			
-			// VMM.ExternalAPI.youtube.createPlayer(id);
-			createPlayer: function(id) {
-				trace("create player")
 				var p = {
 					active: 				false,
 					player: 				{},
@@ -2865,9 +2806,20 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.youtube.array.push(p);
 			},
 			
-			//VMM.ExternalAPI.youtube.stopPlayers();
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.youtube.que.length; i++) {
+					VMM.ExternalAPI.youtube.create(VMM.master_config.youtube.que[i]);
+				}
+				VMM.master_config.youtube.que = [];
+			},
+			
+			onAPIReady: function() {
+				VMM.master_config.youtube.active = true;
+				VMM.ExternalAPI.youtube.pushQue();
+			},
+			
 			stopPlayers: function() {
-				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {				
+				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {
 					if (VMM.master_config.youtube.array[i].playing) {
 						var the_name = VMM.master_config.youtube.array[i].name;
 						VMM.master_config.youtube.array[i].player[the_name].stopVideo();

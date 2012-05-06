@@ -5,7 +5,7 @@ if(typeof VMM != 'undefined') {
 	//VMM.attachElement(element, content);
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).html(content);
+			jQuery(element).html(content);
 		}
 		
 	};
@@ -13,7 +13,7 @@ if(typeof VMM != 'undefined') {
 	VMM.appendElement = function(element, content) {
 		
 		if( typeof( jQuery ) != 'undefined' ){
-			$(element).append(content);
+			jQuery(element).append(content);
 		}
 		
 	};
@@ -134,11 +134,7 @@ if(typeof VMM != 'undefined') {
 					return jQuery.getJSON(url, data, callback);
 				}
 			} else {
-				//$.getJSON(url, data);
-				trace("getJSON");
 				return jQuery.getJSON(url, data, callback);
-				
-				
 			}
 		}
 	}
@@ -171,14 +167,12 @@ if(typeof VMM != 'undefined') {
 		
 		if( typeof( jQuery ) != 'undefined' ){
 			
-			e = $(tag);
+			e = jQuery(tag);
 			
 			e.addClass(_class);
 			e.html(_content);
 			
 			jQuery(append_to_element).append(e);
-			
-			//$(e).appendTo(element);
 			
 		}
 		
@@ -271,7 +265,7 @@ if(typeof VMM != 'undefined') {
 		},
 		//VMM.Element.prop(element, aName, value);
 		prop: function(element, aName, value) {
-			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test($.fn.jquery)) {
+			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
 			    VMM.Element.attribute(element, aName, value);
 			} else {
 				jQuery(element).prop(aName, value);
