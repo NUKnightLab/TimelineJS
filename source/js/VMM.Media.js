@@ -66,6 +66,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Media == 'undefined') {
 					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
 				} else if (m.type == "vimeo") {
 					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
+				} else if (m.type == "dailymotion") {
+					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.dailymotion.com/embed/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
 				} else {
 					
 				}

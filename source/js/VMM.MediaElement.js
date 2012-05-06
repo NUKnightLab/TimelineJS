@@ -33,6 +33,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type	==	"vimeo") {
 					mediaElem		=	"<div class='thumbnail vimeo'></div>";
 					return mediaElem;
+				} else if (m.type	==	"dailymotion") {
+					mediaElem		=	"<div class='thumbnail dailymotion'></div>";
+					return mediaElem;
 				} else if (m.type	==	"twitter"){
 					mediaElem		=	"<div class='thumbnail twitter'></div>";
 					return mediaElem;
@@ -99,6 +102,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+			// DAILYMOTION
+				} else if (m.type		==	"dailymoton") {
+					mediaElem			=	"<iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
 					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'>Loading Tweet</span></div>";
