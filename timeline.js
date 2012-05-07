@@ -1756,6 +1756,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type	==	"vimeo") {
 					mediaElem		=	"<div class='thumbnail vimeo'></div>";
 					return mediaElem;
+				} else if (m.type  ==  "dailymotion") {
+					mediaElem    =  "<div class='thumbnail dailymotion'></div>";
+					return mediaElem;
 				} else if (m.type	==	"twitter"){
 					mediaElem		=	"<div class='thumbnail twitter'></div>";
 					return mediaElem;
@@ -1822,6 +1825,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+			// DAILYMOTION
+				} else if (m.type		==	"dailymotion") {
+					mediaElem			=	"<iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
 					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'>Loading Tweet</span></div>";
@@ -1897,82 +1903,66 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	VMM.MediaType = function(d) {
 		var success = false;
 		var media   = {};
+		
 		if (d.match("div class='twitter'")) {
-			media.type  = "twitter-ready";
-		    media.id    = d;
+			media.type = "twitter-ready";
+		    media.id = d;
 		    success = true;
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
-				youtube_id = VMM.Util.getUrlVars(d)["v"];
-				//youtube_id = d.split(/embed\//)[1].split('"')[0];
+				media.id = VMM.Util.getUrlVars(d)["v"];
 			} else { 
-				youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
 			}
-			//youtube_id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
-			// http://www.youtube.com/watch?feature=player_embedded&v=0l-ivcnLrSc
-			//http://www.youtube.com/watch?v=0l-ivcnLrSc
-		    media.type  = "youtube";
-		    media.id    = youtube_id;
+		    media.type = "youtube";
 		    success = true;
 		} else if (d.match('(player.)?vimeo\.com')) {
-		    //vimeo_id = d.split(/video\/|http:\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
-		    vimeo_id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];
-		
-		    media.type  = "vimeo";
-		    media.id    = vimeo_id;
+		    media.type = "vimeo";
+		    media.id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];;
 		    success = true;
+	    } else if (d.match('(www.)?dailymotion\.com')) {
+			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
+			media.type  = "dailymotion";
+			success = true;
 		} else if (d.match('(player.)?soundcloud\.com')) {
-			//soundcloud_url = unescape(d.split(/value="/)[1].split(/["]/)[0]);
-			//soundcloud_id = soundcloud_url.split(/tracks\//)[1].split(/[&"]/)[0];
-			media.type  = "soundcloud";
-			media.id    = d;
+			media.type = "soundcloud";
+			media.id = d;
 			success = true;
 		} else if (d.match('(www.)?twitter\.com')) {
-			trace("TWITTER MATCH");
-			// https://twitter.com/#!/twitterapi/statuses/133640144317198338
-			// https://twitter.com/#!/DeliciousHot/status/23189589820702720
 			if (d.match("status\/")) {
-				twitter_id = d.split("status\/")[1];
+				media.id = d.split("status\/")[1];
 			} else if (d.match("statuses\/")) {
-				twitter_id = d.split("statuses\/")[1];
+				media.id = d.split("statuses\/")[1];
 			} else {
-				twitter_id = "";
+				media.id = "";
 			}
-
 			media.type = "twitter";
-			media.id = twitter_id;
 			success = true;
 		} else if (d.match("maps.google") && !d.match("staticmap")) {
-			//maps.google.com
-			media.type  = "google-map";
-		    media.id    = d.split(/src=['|"][^'|"]*?['|"]/gi);
-			//trace("google map " + media.id);
+			media.type = "google-map";
+		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
 			success = true;
 		} else if (d.match("flickr.com/photos")) {
 			media.type = "flickr";
-			//media.id = d.split('/photos/[^/]+/([0-9]+)/gi');
-			
 			media.id = d.split("photos\/")[1].split("/")[1];
 			media.link = d;
-			//media.id = media.id.split("/")[1];
-			//trace("FLICKR " + media.id);
 			success = true;
 		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap")) {
-			media.type  = "image";
-			media.id    = d;
+			media.type = "image";
+			media.id = d;
 			success = true;
 		} else if (VMM.FileExtention.googleDocType(d)) {
-			media.type  = "googledoc";
-			media.id    = d;
+			media.type = "googledoc";
+			media.id = d;
 			success = true;
 		} 	else if (d.indexOf('http://') == 0) {
-			media.type  = "website";
-			media.id    = d;
+			media.type = "website";
+			media.id = d;
 			success = true;
 		} else {
 			trace("unknown media");  
-			media.type  = "unknown";
-			media.id    = d;
+			media.type = "unknown";
+			media.id = d;
 			success = true;
 		}
 		
