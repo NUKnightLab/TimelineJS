@@ -58,7 +58,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.01";
+		version = 					"1.02";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -317,6 +317,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
+					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));

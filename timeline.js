@@ -4071,7 +4071,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				full_short: "mmm d",
 				full: "mmmm d',' yyyy",
 				time_no_seconds_short: "h:MM TT",
-				time_no_seconds_small_date: "'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+				time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 				full_long: "mmm d',' yyyy 'at' hh:MM TT",
 				full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
 			},
@@ -4973,7 +4973,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			full_short: "mmm d",
 			full: "mmmm d',' yyyy",
 			time_no_seconds_short: "h:MM TT",
-			time_no_seconds_small_date: "'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "mmm d',' yyyy 'at' hh:MM TT",
 			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
 		},
@@ -5050,7 +5050,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.01";
+		version = 					"1.02";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -5309,6 +5309,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
+					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
@@ -6637,8 +6638,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					trace("DATA SOURCE: TWITTER SEARCH");
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
-				} else if (	raw_data.match("spreadsheet")	) {
-					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+				} else if (	raw_data.match("spreadsheet") ) {
+					trace("raw_data " + raw_data)
+					//VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
