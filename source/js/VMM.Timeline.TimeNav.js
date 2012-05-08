@@ -840,7 +840,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					_interval.date.setSeconds(_interval.date.getSeconds() + inc_time);
 				}
 				
-				_idd = VMM.Util.date.prettyDate(_interval.date, true, _interval.type);
+				_idd = VMM.Util.date.prettyDate(_interval.date, true);
 				
 				inc_time = 1;
 				

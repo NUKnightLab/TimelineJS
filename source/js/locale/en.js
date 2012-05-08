@@ -17,9 +17,9 @@ if(typeof VMM != 'undefined') {
 			full_short: "mmm d",
 			full: "mmmm d',' yyyy",
 			time_no_seconds_short: "h:MM TT",
-			time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-			full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+			time_no_seconds_small_date: "'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+			full_long: "mmm d',' yyyy 'at' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
 		},
 		messages: {
 			loading_timeline: "Loading Timeline... ",

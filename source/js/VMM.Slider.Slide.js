@@ -87,9 +87,7 @@ if (typeof VMM.Slider != 'undefined') {
 						var st = VMM.Util.date.prettyDate(data.startdate);
 						var en = VMM.Util.date.prettyDate(data.enddate);
 						if (st != en) {
-							//st = VMM.Util.date.prettyDate(data.startdate, true);
-							//en = VMM.Util.date.prettyDate(data.enddate, true);
-							c.text += VMM.createElement("h2", st + "<small> &mdash; " + en + "</small>", "date");
+							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
 						} else {
 							c.text += VMM.createElement("h2", st, "date");
 						}

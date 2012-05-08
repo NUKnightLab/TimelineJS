@@ -97,7 +97,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					VMM.ExternalAPI.googledocs.get(m.id, googledocs_id);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'>Loading YouTube video...</div>";
+					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'>Loading YouTube video</span></div>";
 					VMM.ExternalAPI.youtube.get(m.id);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {

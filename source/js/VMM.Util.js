@@ -106,6 +106,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		},
 		
 		date: {
+			
 			dateformats: {
 				year: "yyyy",
 				month_short: "mmm",
@@ -113,10 +114,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				full_short: "mmm d",
 				full: "mmmm d',' yyyy",
 				time_no_seconds_short: "h:MM TT",
-				time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+				time_no_seconds_small_date: "'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+				full_long: "mmm d',' yyyy 'at' hh:MM TT",
+				full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
 			},
+			
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -207,72 +209,92 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				}
 			},
 			
-			//VMM.Util.date.prettyDate(d, is_abbr)
-			prettyDate: function(d, is_abbr, date_type) {
+			prettyDate: function(d, is_abbr, d2) {
 				var _date;
+				var _date2;
+				var format;
 				var bc_check;
+				var is_pair = false;
+				
+				if (d2 != null) {
+					is_pair = true;
+				}
 				
 				if (type.of(d) == "date") {
 					if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
-						// trace("YEAR ONLY");
-						_date = dateFormat(d, VMM.Util.date.dateformats.year);
-					} else {
-						if (d.getDate() <= 1 && d.getHours() === 0 && d.getMinutes() === 0) {
-							// trace("YEAR MONTH");
-							if (is_abbr) {
-								_date = dateFormat(d, VMM.Util.date.dateformats.month_short );
-								
-							} else {
-								_date = dateFormat(d, VMM.Util.date.dateformats.month);
-							}
-							
-						} else if (d.getHours() === 0 && d.getMinutes() === 0) {
-							// trace("YEAR MONTH DAY");
-							if (is_abbr) {
-								_date = dateFormat(d, VMM.Util.date.dateformats.full_short);
-							} else {
-								_date = dateFormat(d, VMM.Util.date.dateformats.full);
-							}
-						} else  if (d.getMinutes() === 0) {
-							// trace("YEAR MONTH DAY HOUR");
-							if (is_abbr) {
-								_date = dateFormat(d, VMM.Util.date.dateformats.time_no_seconds_short);
-							} else {
-								_date = dateFormat(d, VMM.Util.date.dateformats.time_no_seconds_small_date );
-							}
+						// YEAR ONLY
+						format = VMM.Util.date.dateformats.year;
+					} else if (d.getDate() <= 1 && d.getHours() === 0 && d.getMinutes() === 0) {
+						// YEAR MONTH
+						if (is_abbr) {
+							format = VMM.Util.date.dateformats.month_short;
 						} else {
-							// trace("YEAR MONTH DAY HOUR MINUTE");
-							if (is_abbr){
-								_date = dateFormat(d, VMM.Util.date.dateformats.time_no_seconds_short);   
-							} else {
-								_date = dateFormat(d, VMM.Util.date.dateformats.full_long);
-							}
+							format = VMM.Util.date.dateformats.month;
 						}
-						
+					} else if (d.getHours() === 0 && d.getMinutes() === 0) {
+						// YEAR MONTH DAY
+						if (is_abbr) {
+							format = VMM.Util.date.dateformats.full_short;
+						} else {
+							format = VMM.Util.date.dateformats.full;
+						}
+					} else  if (d.getMinutes() === 0) {
+						// YEAR MONTH DAY HOUR
+						if (is_abbr) {
+							format = VMM.Util.date.dateformats.time_no_seconds_short;
+						} else {
+							format = VMM.Util.date.dateformats.time_no_seconds_small_date;
+						}
+					} else {
+						// YEAR MONTH DAY HOUR MINUTE
+						if (is_abbr){
+							format = VMM.Util.date.dateformats.time_no_seconds_short; 
+						} else {
+							format = VMM.Util.date.dateformats.full_long; 
+						}
 					}
 					
+					_date = dateFormat(d, format);
 					bc_check = _date.split(" ");
-				
+					
+					// BC TIME SUPPORT
 					for(var i = 0; i < bc_check.length; i++) {
 						if ( parseInt(bc_check[i]) < 0 ) {
 							trace("YEAR IS BC");
 							var bc_original = 	bc_check[i];
 							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
 							var bc_string = 	bc_number.toString() + " B.C.";
-						
 							_date = _date.replace(bc_original, bc_string);
 						}
 					}
 					
 					
+					if (is_pair) {
+						_date2 = dateFormat(d2, format);
+						bc_check = _date2.split(" ");
+						// BC TIME SUPPORT
+						for(var i = 0; i < bc_check.length; i++) {
+							if ( parseInt(bc_check[i]) < 0 ) {
+								trace("YEAR IS BC");
+								var bc_original = 	bc_check[i];
+								var bc_number = 	Math.abs( parseInt(bc_check[i]) );
+								var bc_string = 	bc_number.toString() + " B.C.";
+								_date2 = _date2.replace(bc_original, bc_string);
+							}
+						}
+						
+					}
 				} else {
 					trace("NOT A VALID DATE?");
 					trace(d);
 				}
 				
-				
-				return _date;
-			},
+				if (is_pair) {
+					return _date + " &mdash; " + _date2;
+				} else {
+					return _date;
+				}
+			}
 			
 		},
 		
