@@ -223,10 +223,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			//	https://docs.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public
 			type: "google spreadsheet",
 			
+			
 			getData: function(raw_data) {
+				var loc = (window.parent.document.location).toString();
+				var prefix = "";
+				if (loc.match("http")) {
+					prefix = loc;
+				} else {
+					prefix = "https://";
+				}
 				
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
-				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+				var _url = prefix + "spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
 				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 			},
 			
