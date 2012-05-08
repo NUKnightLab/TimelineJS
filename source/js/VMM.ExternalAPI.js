@@ -138,7 +138,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				});
 				
 			},
-			// VMM.ExternalAPI.twitter.prettyHTML(id);
+			
 			prettyHTML: function(id) {
 				var id = id.toString();
 				var error_obj = {
@@ -147,8 +147,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
 				trace("id " + id);
 				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
-				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
 				
+				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
 					.error(function(jqXHR, textStatus, errorThrown) {
 						trace("TWITTER error");
 						trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
@@ -157,13 +157,26 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					.success(function() {
 						clearTimeout(twitter_timeout);
 					});
-					
-				
 			},
 			
 			notFoundError: function(id) {
 				trace("TWITTER JSON ERROR TIMEOUT " + id);
-				VMM.attachElement("#twitter_" + id, "<p>TWEET NOT FOUND " + id + "</p>"  );
+				VMM.attachElement("#twitter_" + id, "<span class='messege'><p>Error loading tweet: " + id + "</p></span>"  );
+				
+				// CHECK RATE STATUS
+				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
+					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
+					trace("TWITTER RATE LIMIT WILL RESET AT " + d.reset_time);
+					var mes = "";
+					if (d.remaining_hits == 0) {
+						mes		= 	"<p>You've reached the maximum number of tweets you can load in an hour.</p>";
+						mes 	+=	"<p>You can view tweets again starting at: <br/>" + d.reset_time + "</p>";
+					} else {
+						mes 	= 	"<p>Tweet " + id + " was not found.</p>";
+					}
+					VMM.attachElement("#twitter_" + id, "<span class='messege'>" + mes + "</span>" );
+				});
+				
 			},
 			
 			formatJSON: function(d) {
@@ -197,10 +210,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			get: function(url, id) {
 				var timer;
 				var map_vars = VMM.Util.getUrlVars(url);
-				trace(map_vars);
-				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + Aes.Ctr.decrypt(VMM.master_config.keys.google, VMM.master_config.vp, 256) + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
-				var map = {url: url, vars: map_vars, id: id}
-				trace(map);
+				var api_key;
+				
+				if (VMM.master_config.Timeline.api_keys.google != "") {
+					api_key = VMM.master_config.Timeline.api_keys.google;
+				} else {
+					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.google, VMM.master_config.vp, 256);
+				}
+				
+				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				var map = { url: url, vars: map_vars, id: id };
+				
 				if (VMM.master_config.googlemaps.active) {
 					VMM.master_config.googlemaps.que.push(map);
 				} else {
@@ -480,8 +500,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		flickr: {
 			
 			get: function(mid, id) {
-				// http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=6d6f59d8d30d79f4f402a7644d5073e3&photo_id=6115056146&format=json&nojsoncallback=1
-				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + Aes.Ctr.decrypt(VMM.master_config.keys.flickr, VMM.master_config.vp, 256) + "&photo_id=" + mid + "&format=json&jsoncallback=?";
+				var api_key;
+				if (VMM.master_config.Timeline.api_keys.flickr != "") {
+					api_key = VMM.master_config.Timeline.api_keys.flickr;
+				} else {
+					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
+				}
+				
+				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
 			},
 			
