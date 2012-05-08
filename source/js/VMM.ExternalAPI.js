@@ -592,8 +592,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						color: 				'white',
 						showinfo:			0,
 						theme:				'light',
-						rel:				0,
-						origin:				'http://timeline.verite.co'
+						rel:				0
 					},
 					videoId: id,
 					events: {
