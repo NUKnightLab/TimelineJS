@@ -27,7 +27,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		    success = true;
 	    } else if (d.match('(www.)?dailymotion\.com')) {
 			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
-			media.type  = "dailymotion";
+			media.type = "dailymotion";
 			success = true;
 		} else if (d.match('(player.)?soundcloud\.com')) {
 			media.type = "soundcloud";

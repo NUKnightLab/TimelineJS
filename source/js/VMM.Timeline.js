@@ -73,6 +73,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			hash_bookmark:			false,
 			start_at_end: 			false,
 			start_page: 			false,
+			api_keys: {
+				google:				"",
+				flickr:				"",
+				twitter:			""
+			},
 			interval: 				10,
 			something: 				0,
 			width: 					960,
