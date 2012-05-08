@@ -48,6 +48,7 @@
 .vmm-timeline .thumbnail{width:24px;height:24px;overflow:hidden;float:left;margin-right:5px;border:1px solid #333333;}
 .vmm-timeline .thumbnail.twitter{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -889px;width:24px;height:24px;}
 .vmm-timeline .thumbnail.vimeo{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -963px;width:24px;height:24px;}
+.vmm-timeline .thumbnail.dailymotion{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -1111px;width:24px;height:24px;}
 .vmm-timeline .thumbnail.youtube{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -1111px;width:24px;height:24px;}
 .vmm-timeline .thumbnail.soundcloud{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -659px;width:24px;height:24px;}
 .vmm-timeline .thumbnail.map{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:0 -514px;width:26px;height:21px;}
