@@ -134,19 +134,13 @@
 		}
 		
 		.timenav {
-			//height:@navigation-height;
 			position:absolute;
 			top: 0px;
-			//left: 0px;
 			left: -250px;
 			z-index:1;
-			//.background-time-tic();
-			
 			
 			.content {
-				//height: @navigation-content-height;
 				position: relative;
-				//z-index:10;
 				
 				.marker.start {
 					display:none;
@@ -203,17 +197,17 @@
 				}
 				.marker:hover {
 					.line {
-						z-index:201;
+						z-index:24;
 						background:@color-nav-title;
 					}
 				}
+				
 				.marker {
 					
 					position:absolute;
 					top: 0px;
 					left: 150px;
 					display: block;
-					//z-index:20;
 					
 					.dot {
 						position:absolute;
@@ -260,28 +254,25 @@
 						z-index:23;
 						width:153px;
 						height:56px;
-						//overflow:hidden;
 						.time-flag();
-						//.opacity(33);
-						//border: 1px solid @color-line;
-						//.border-radius(5px);
-						//.box-shadow(0px 1px 0px @color-line);
 						
 						.flag-content {
-							padding: 5px 7px 2px 5px;
+							//padding: 5px 7px 2px 5px;
+							padding: 0px 7px 2px 6px;
 							overflow:hidden;
-							height:33px;
+							height:36px;
 
 							h3 {
 								
 								font-weight: bold;
 								font-size: @base-font;
 								line-height: @base-line;
-								
 								font-size: 11px;
 								line-height:11px;
+								//overflow: visible;
 								//color:@color-nav-date;
 								color:@color-nav-title;
+								margin-top:5px;
 								margin-bottom:2px;
 								small {
 									display:none;
@@ -294,7 +285,7 @@
 								font-size: @base-font;
 								line-height: @base-line;
 								
-
+								margin-top:5px;
 								font-size: 10px;
 								line-height:10px;
 								//color:@color-nav-title;
@@ -303,12 +294,13 @@
 									display:none;
 								}
 							}
+							
 							.thumbnail {
-								//border: 1px solid @color-line;
 								margin-bottom:15px;
 							}
 
 						}
+						
 					}
 					.flag:hover {
 						cursor: pointer;

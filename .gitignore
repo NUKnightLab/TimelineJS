@@ -1,9 +1,5 @@
-
-.DS_Store
-
-source/.DS_Store
-
-source/js/.DS_Store
+*.DS_Store
+.DS_Store*
 
 dev_examples/
 
@@ -12,4 +8,5 @@ dev_examples/
 *.tmproject
 
 tmtags
-source/gfx/.DS_Store
+
+source/gfx/Sprites/.DS_Store

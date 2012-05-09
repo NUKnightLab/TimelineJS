@@ -51,9 +51,7 @@
 	.nav-previous, .nav-next {
 		position:absolute;
 		top: 0px;
-		//background-color: #f5f5f5; // TEMP
 		width: @feature-nav-width; 
-		//height: @feature-nav-height;
 		color: #DBDBDB;
 		font-size:@base-font-small;
 		.nav-container {
@@ -61,7 +59,7 @@
 			position:absolute;
 		}
 		.icon {
-			//line-height:@feature-nav-height;
+			margin-top:@feature-nav-icon-wh/2;
 			margin-bottom:@base-space;
 		}
 		.date {
@@ -88,55 +86,39 @@
 		color: @color-dark-second;
 		cursor: pointer;
 	}
-	
 	.nav-previous {
 		float: left;
 		text-align:left;
-		
-		
-		//margin-left: -100%;
-		
 		.icon {
-			height:24px;
-			margin-left: 10px;
-			padding-left: 20px;
+			margin-left: @base-space;
 			.icon-previous();
 		}
 		.date, .title {
 			text-align:left;
-			padding-left:10px;
+			padding-left:@base-space;
 		}
 	}
-	
 	.nav-previous:hover {
 		.icon {
-			margin-left: 5px;
-			padding-left: 20px;
+			margin-left: @base-space - 5;
 		}
 	}
 	
 	.nav-next {
 		float: right;
 		text-align:right;
-		
-		//margin-left: -@feature-nav-width;
-		
 		.icon {
-			height:24px;
-			margin-right: 10px;
-			padding-right: 20px;
+			margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh;
 			.icon-next()
 		}
 		.date, .title {
 			text-align:right;
-			padding-right:10px;
+			padding-right:@base-space;
 		}
 	}
-	
 	.nav-next:hover {
 		.icon {
-			margin-right: 5px;
-			padding-right: 20px;
+			margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh + 5;
 		}
 	}
 	

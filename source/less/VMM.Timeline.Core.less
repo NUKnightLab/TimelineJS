@@ -127,7 +127,6 @@
 	}
 	.twitter {
 		text-align:left;
-		background-color:@white;
 		margin-left: auto;
 		margin-right: auto;
 		margin-bottom:@base-space;
@@ -220,29 +219,61 @@
 		height:24px;
 		overflow:hidden;
 		float:left;
-		margin-right:5px;
-		border: 1px solid @color-line;
+		margin-right:1px;
+		margin-top:6px;
+		//margin-left:6px;
+		/*
+		border: 0px solid @color-line;
+		border-bottom-width: 1px;
+		border-right-width: 1px;
+		//background:#E9E9E9;
+		-webkit-border-bottom-right-radius:3px;
+		   -moz-border-bottom-right-radius:3px;
+		        border-bottom-right-radius:3px;
+		-webkit-border-top-left-radius:3px;
+		   -moz-border-top-left-radius:3px;
+		        border-top-left-radius:3px;
+		
+		-moz-box-shadow: 1px 1px 0 @color-base;
+		-webkit-box-shadow: 1px 1px 0 @color-base;
+		box-shadow: 1px 1px 0 @color-base;
+		*/
 	}
-	.thumbnail.twitter {
+	.thumbnail.thumb-plaintext {
+		.icon-plaintext();
+	}
+	.thumbnail.thumb-quote {
+		.icon-quote();
+	}
+	.thumbnail.thumb-document {
+		.icon-document();
+	}
+	.thumbnail.thumb-photo {
+		.icon-photo();
+		border:0;
+		img {
+			border:0 !important;
+		}
+	}
+	.thumbnail.thumb-twitter {
 		.icon-twitter();
 	}
-	.thumbnail.vimeo {
+	.thumbnail.thumb-vimeo {
 		.icon-vimeo();
 	}
-	.thumbnail.dailymotion {
-		.icon-dailymotion();
-	}
-	.thumbnail.youtube {
+	.thumbnail.thumb-youtube {
 		.icon-youtube();
 	}
-	.thumbnail.soundcloud {
-		.icon-soundcloud();
+	.thumbnail.thumb-video {
+		.icon-video();
 	}
-	.thumbnail.map {
-		.icon-map();
-		//.icon-map-pin();
+	.thumbnail.thumb-audio {
+		.icon-audio();
 	}
-	.thumbnail.website {
+	.thumbnail.thumb-map {
+		.icon-mappin();
+	}
+	.thumbnail.thumb-website {
 		.icon-website();
 	}
 	
