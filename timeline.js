@@ -1776,7 +1776,11 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
 					return mediaElem;
 				} else if (m.type	==	"unknown") {
-					mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
+					if (m.id.match("blockquote")) {
+						mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+					} else {
+						mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
+					}
 					return mediaElem;
 				} else if (m.type	==	"website") {
 					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
