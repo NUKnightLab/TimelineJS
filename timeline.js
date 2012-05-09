@@ -1733,8 +1733,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 		},
 		
 		thumbnail: function(data, w, h) {
-			_w = 32;
-			_h = 32;
+			_w = 16;
+			_h = 24;
 			if (w != null && w != "") {_w = w};
 			if (h != null && h != "") {_h = h};
 			
@@ -1744,46 +1744,49 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
 				// CREATE MEDIA CODE 
 				if (m.type == "image") {
-					mediaElem		=	"<div class='thumbnail'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					//mediaElem		=	"<div class='thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
-					mediaElem		=	"<div class='thumbnail'><img id='flickr_" + m.id + "_thumb' width='" + _w + "px' height='" + _h + "px'></div>";
+					//mediaElem		=	"<div class='thumbnail thumb-photo'><img id='flickr_" + m.id + "_thumb' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail youtube'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-youtube'></div>";
 					return mediaElem;
 				} else if (m.type	==	"googledoc") {
-					mediaElem		=	"";
+					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
+					return mediaElem;
 				} else if (m.type	==	"vimeo") {
-					mediaElem		=	"<div class='thumbnail vimeo'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-vimeo'></div>";
 					return mediaElem;
 				} else if (m.type  ==  "dailymotion") {
-					mediaElem    =  "<div class='thumbnail dailymotion'></div>";
+					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
 					return mediaElem;
 				} else if (m.type	==	"twitter"){
-					mediaElem		=	"<div class='thumbnail twitter'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
 					return mediaElem;
 				} else if (m.type	==	"twitter-ready") {
-					mediaElem		=	"<div class='thumbnail twitter'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
 					return mediaElem;
 				} else if (m.type	==	"soundcloud") {
-					mediaElem		=	"<div class='thumbnail soundcloud'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-audio'></div>";
 					return mediaElem;
 				} else if (m.type	==	"google-map") {
-					mediaElem		=	"<div class='thumbnail map'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
 					return mediaElem;
 				} else if (m.type	==	"unknown") {
-					mediaElem		=	"";
+					mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
 					return mediaElem;
 				} else if (m.type	==	"website") {
-					mediaElem		=	"<div class='thumbnail website'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
 					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
 				} else {
-					mediaElem = "<div class='thumbnail'></div>";
+					mediaElem = "<div class='thumbnail thumb-plaintext'></div>";
 					return mediaElem;
 				}
-			}
+			} 
 		},
 		
 		create: function(data) {
@@ -1817,11 +1820,11 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					var googledocs_id	=	"googledoc_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame doc' id='" + googledocs_id + "'><span class='messege'>Loading Document</span></div>";
+					mediaElem			=	"<div class='media-frame doc' id='" + googledocs_id + "'><span class='messege'><p>Loading Document</p></span></div>";
 					VMM.ExternalAPI.googledocs.get(m.id, googledocs_id);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'>Loading YouTube video</span></div>";
+					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div>";
 					VMM.ExternalAPI.youtube.get(m.id);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
@@ -1831,7 +1834,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem			=	"<iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'>Loading Tweet</span></div>";
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
 					isTextMedia			=	true;
 					VMM.ExternalAPI.twitter.prettyHTML(m.id);
 			// TWITTER
@@ -1840,12 +1843,12 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// SOUNDCLOUD
 				} else if (m.type		==	"soundcloud") {
 					var soundcloud_id	=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame soundcloud' id='" + soundcloud_id + "'><span class='messege'>Loading Sound</span></div>";
+					mediaElem			=	"<div class='media-frame soundcloud' id='" + soundcloud_id + "'><span class='messege'><p>Loading Sound</p></span></div>";
 					VMM.ExternalAPI.soundcloud.get(m.id, soundcloud_id);
 			// GOOGLE MAPS
 				} else if (m.type		==	"google-map") {
 					var map_id			=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame map' id='" + map_id + "'><span class='messege'>Loading Map</span></div>";
+					mediaElem			=	"<div class='media-frame map' id='" + map_id + "'><span class='messege'><p>Loading Map</p></span></div>";
 					VMM.ExternalAPI.googlemaps.get(m.id, map_id);
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
@@ -6552,7 +6555,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// THUMBNAIL
 				if (data[i].asset != null && data[i].asset != "") {
-					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 32, 32));
+					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 24, 24));
+				} else {
+					//VMM.appendElement(_marker_content, "<div class='thumbnail thumb-plaintext'></div>");
+					VMM.appendElement(_marker_content, "<div style='margin-right:7px;height:50px;width:2px;float:left;'></div>");
 				}
 				
 				// ADD DATE AND TITLE
@@ -6851,7 +6857,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				}
 				
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
-				var _url = prefix + "spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+				var _url ="https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
 				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 			},
 			

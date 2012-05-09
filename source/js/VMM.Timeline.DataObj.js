@@ -234,7 +234,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				}
 				
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
-				var _url = prefix + "spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+				var _url ="https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
 				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 			},
 			
