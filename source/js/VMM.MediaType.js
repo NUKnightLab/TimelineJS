@@ -60,6 +60,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "googledoc";
 			media.id = d;
 			success = true;
+		} else if (d.match('(www.)?wikipedia\.org')) {
+			media.type = "wikipedia";
+			media.id = d;
+			success = true;
 		} 	else if (d.indexOf('http://') == 0) {
 			media.type = "website";
 			media.id = d;

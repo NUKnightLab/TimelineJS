@@ -564,12 +564,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			//http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Beastie%20Boys&format=json&exintro=1
 			
 			get: function(url, id) {
-				var wiki = {url: url, id: id};
-				VMM.master_config.wikipedia.que.push(wiki);
+				var api_obj = {url: url, id: id};
+				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
 			},
 			
-			create: function(wiki) {
+			create: function(api_obj) {
+				VMM.attachElement("#"+api_obj.id, api_obj.url);
 				/*
 				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + wiki.url + "&format=json&exintro=1&callback=?";
 				VMM.getJSON(the_url, function(d) {

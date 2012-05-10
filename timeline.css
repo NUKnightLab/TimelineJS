@@ -57,6 +57,7 @@
 .vmm-timeline .thumbnail.thumb-audio{background-image:url(timeline.png);background-repeat:no-repeat;background-position:-304px -24px;}
 .vmm-timeline .thumbnail.thumb-map{background-image:url(timeline.png);background-repeat:no-repeat;background-position:-208px -48px;}
 .vmm-timeline .thumbnail.thumb-website{background-image:url(timeline.png);background-repeat:no-repeat;background-position:-232px -24px;}
+.vmm-timeline .thumbnail.thumb-wikipedia{background-image:url(timeline.png);background-repeat:no-repeat;background-position:-184px -48px;}
 .vmm-timeline .zFront{z-index:204;}
 .slider{width:100%;height:100%;overflow:hidden;}.slider .slider-container-mask{text-align:center;width:100%;height:100%;overflow:hidden;}.slider .slider-container-mask .slider-container{position:absolute;top:0px;left:-2160px;width:100%;height:100%;text-align:center;display:block;background-color:#ffffff;}.slider .slider-container-mask .slider-container .slider-item-container{display:table-cell;vertical-align:middle;}
 .slider img,.slider embed,.slider object,.slider video,.slider iframe{max-width:100%;}
