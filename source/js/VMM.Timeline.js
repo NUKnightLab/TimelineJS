@@ -20,6 +20,8 @@
 	http://incident57.com/codekit/
 ================================================== */
 
+// @codekit-prepend "VMM.Timeline.License.js";
+
 // @codekit-prepend "VMM.js";
 // @codekit-prepend "VMM.Library.js";
 // @codekit-prepend "VMM.Browser.js";
@@ -35,11 +37,12 @@
 // @codekit-prepend "VMM.Util.js";
 // @codekit-prepend "VMM.LoadLib.js";
 // @codekit-prepend "VMM.Language.js";
-// @codekit-prepend "bootstrap-tooltip.js";
-// @codekit-prepend "AES.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
 // @codekit-append "VMM.Timeline.DataObj.js";
+
+// @codekit-prepend "lib/AES.js";
+// @codekit-prepend "lib/bootstrap-tooltip.js";
 
 /* Timeline
 ================================================== */

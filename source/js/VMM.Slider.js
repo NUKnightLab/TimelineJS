@@ -474,6 +474,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var is_last = false;
 			var is_first = false;
 			var _pos = slides[current_slide].leftpos();
+			var _title = "";
 			//var _pos = VMM.Lib.position(slides[current_slide]);
 			
 			if (current_slide == 0) {is_first = true};
@@ -483,23 +484,42 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* set proper nav titles and dates etc.
 			================================================== */
+			trace(data[current_slide]);
 			if (is_first) {
 				VMM.Lib.visible(navigation.prevBtn, false);
 			} else {
 				VMM.Lib.visible(navigation.prevBtn, true);
+				_title = VMM.Util.unlinkify(data[current_slide - 1].title)
 				if (config.type == "timeline") {
-					VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
+					if(typeof data[current_slide - 1].date === "undefined") {
+						VMM.attachElement(navigation.prevDate, _title);
+						VMM.attachElement(navigation.prevTitle, "");
+					} else {
+						VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
+						VMM.attachElement(navigation.prevTitle, _title);
+					}
+				} else {
+					VMM.attachElement(navigation.prevTitle, _title);
 				}
-				VMM.attachElement(navigation.prevTitle, VMM.Util.unlinkify(data[current_slide - 1].title));
+				
 			}
 			if (is_last) {
 				VMM.Lib.visible(navigation.nextBtn, false);
 			} else {
 				VMM.Lib.visible(navigation.nextBtn, true);
+				_title = VMM.Util.unlinkify(data[current_slide + 1].title);
 				if (config.type == "timeline") {
-					VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
+					if(typeof data[current_slide + 1].date === "undefined") {
+						VMM.attachElement(navigation.nextDate, _title);
+						VMM.attachElement(navigation.nextTitle, "");
+					} else {
+						VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
+						VMM.attachElement(navigation.nextTitle, _title);
+					}
+				} else {
+					VMM.attachElement(navigation.nextTitle,  _title);
 				}
-				VMM.attachElement(navigation.nextTitle,  VMM.Util.unlinkify(data[current_slide + 1].title) );
+				
 			}
 			
 			/* ANIMATE SLIDE
@@ -541,8 +561,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			navigation.nextBtnContainer = VMM.appendAndGetElement(navigation.nextBtn, "<div>", "nav-container", temp_icon);
 			navigation.prevBtnContainer = VMM.appendAndGetElement(navigation.prevBtn, "<div>", "nav-container", temp_icon);
 			if (config.type == "timeline") {
-				navigation.nextDate = VMM.appendAndGetElement(navigation.nextBtnContainer, "<div>", "date", "1957");
-				navigation.prevDate = VMM.appendAndGetElement(navigation.prevBtnContainer, "<div>", "date", "1957");
+				navigation.nextDate = VMM.appendAndGetElement(navigation.nextBtnContainer, "<div>", "date", "");
+				navigation.prevDate = VMM.appendAndGetElement(navigation.prevBtnContainer, "<div>", "date", "");
 			}
 			navigation.nextTitle = VMM.appendAndGetElement(navigation.nextBtnContainer, "<div>", "title", "Title Goes Here");
 			navigation.prevTitle = VMM.appendAndGetElement(navigation.prevBtnContainer, "<div>", "title", "Title Goes Here");

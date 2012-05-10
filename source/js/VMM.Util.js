@@ -7,6 +7,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		init: function() {
 			return this;
 		},
+		
+		/* CORRECT PROTOCOL
+		================================================== */
+		correctProtocol: function(url) {
+			var loc = (window.parent.location.protocol).toString();
+			var prefix = "";
+			var _url = url.split("://", 2);
+			
+			if (loc.match("http")) {
+				prefix = loc;
+			} else {
+				prefix = "https";
+			}
+			
+			return prefix + "://" + _url[1];
+			
+		},
 
 		/* RANDOM BETWEEN
 		================================================== */

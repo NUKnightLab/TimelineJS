@@ -22,8 +22,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet") ) {
-					trace("raw_data " + raw_data)
-					//VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
@@ -225,17 +224,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 			
 			getData: function(raw_data) {
-				var loc = (window.parent.document.location).toString();
-				var prefix = "";
-				if (loc.match("http")) {
-					prefix = loc;
-				} else {
-					prefix = "https://";
-				}
 				
 				var _key = VMM.Util.getUrlVars(raw_data)["key"];
-				var _url ="https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
+				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+				
+				VMM.getJSON(VMM.Util.correctProtocol(_url), VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
 			},
 			
 			buildData: function(d) {

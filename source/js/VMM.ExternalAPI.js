@@ -148,7 +148,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace("id " + id);
 				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
 				
-				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
+				VMM.getJSON(VMM.Util.correctProtocol(the_url), VMM.ExternalAPI.twitter.formatJSON)
 					.error(function(jqXHR, textStatus, errorThrown) {
 						trace("TWITTER error");
 						trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
@@ -481,9 +481,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			create: function(doc) {
 				var mediaElem = ""; 
 				if (doc.url.match(/docs.google.com/i)) {
-					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + doc.url + "&amp;embedded=true'></iframe>";
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + VMM.Util.correctProtocol(doc.url) + "&amp;embedded=true'></iframe>";
 				} else {
-					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='http://docs.google.com/viewer?url=" + doc.url + "&amp;embedded=true'></iframe>";
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + VMM.Util.correctProtocol("http://docs.google.com/viewer?url=") + VMM.Util.correctProtocol(doc.url) + "&amp;embedded=true'></iframe>";
 				}
 				VMM.attachElement("#"+doc.id, mediaElem);
 			},
@@ -556,6 +556,36 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[i]);
 				}
 				VMM.master_config.soundcloud.que = [];
+			},
+			
+		},
+		
+		wikipedia: {
+			//http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Beastie%20Boys&format=json&exintro=1
+			
+			get: function(url, id) {
+				var wiki = {url: url, id: id};
+				VMM.master_config.wikipedia.que.push(wiki);
+				VMM.master_config.wikipedia.active = true;
+			},
+			
+			create: function(wiki) {
+				/*
+				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + wiki.url + "&format=json&exintro=1&callback=?";
+				VMM.getJSON(the_url, function(d) {
+					if (d.query.pages[0].extract.match("REDIRECT")) {
+						
+					}
+					VMM.attachElement("#"+wiki.id, d.html);
+				});
+				*/
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.wikipedia.que.length; i++) {
+					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[i]);
+				}
+				VMM.master_config.wikipedia.que = [];
 			},
 			
 		},

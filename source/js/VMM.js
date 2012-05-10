@@ -134,6 +134,13 @@ if (typeof VMM == 'undefined') {
 			que:			[]
 		},
 		
+		wikipedia: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		soundcloud: {
 			active:			false,
 			array:			[],
