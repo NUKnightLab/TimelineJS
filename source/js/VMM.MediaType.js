@@ -62,7 +62,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			success = true;
 		} else if (d.match('(www.)?wikipedia\.org')) {
 			media.type = "wikipedia";
-			media.id = d;
+			//media.id = d.split("wiki\/")[1];
+			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
+			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
+			trace("WIKIPEDIA " + media.id);
 			success = true;
 		} 	else if (d.indexOf('http://') == 0) {
 			media.type = "website";

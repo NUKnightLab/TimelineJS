@@ -177,7 +177,7 @@
 								margin-left:auto;
 								margin-right:auto;
 								text-align:center;
-								margin-top:50%;
+								margin-top: 50%;
 								font-size: 28px;
 								font-weight: bold;
 								text-transform: uppercase;
@@ -193,6 +193,107 @@
 									p {
 										margin-bottom:@base-line;
 									}
+								}
+							}
+							.twitter {
+								text-align:left;
+								margin-left: auto;
+								margin-right: auto;
+								margin-bottom:@base-space;
+								clear:both;
+								blockquote {
+									font-size: @base-font;
+									line-height: @base-line;
+									color:@color-feature-description;
+									p {
+										font-size: 28px;
+										line-height: 36px;
+										margin-bottom: 6px;
+										padding-top: 10px;
+										background-color:@white;
+										color:@color-feature-title;
+										//margin-left:10px;
+									}
+									.quote-mark {
+										color:@color-dark-third;
+									}
+								}
+								.created-at {
+									.icon-twitter();
+									width:24px;
+									height:24px;
+									overflow:hidden;
+									margin-left:@base-space;
+									display:inline-block;
+									float:right;
+									.opacity(25);
+								}
+								.created-at:hover {
+									.opacity(100);
+								}
+								.vcard {
+									float:right;
+									margin-bottom:@base-space;
+									//position: relative;
+									a {
+										color: @color-dark-second;
+									}
+									a:hover {
+										text-decoration: none;
+										.fn {
+											text-decoration: underline;
+										}
+									}
+									.fn, .nickname {
+				
+										padding-left: 42px;
+									}
+									.fn {
+										display:block;
+										//display:inline;
+										font-weight: bold;
+
+									}
+									.nickname {
+										margin-top:3px;
+										display:block;
+										color: @color-dark-third;
+									}
+			
+									.avatar {
+										float:left;
+										//position: absolute;
+										display: block;
+										width: 32px;
+										height: 32px;
+										img {
+											//border: 0px solid #999;
+											-moz-border-radius: 5px;
+											-webkit-border-radius: 5px;
+											border-radius: 5px;
+										}
+									}
+								}
+							}
+							.wikipedia {
+								font-size: @base-font;
+								line-height: @base-line;
+								text-align:left;
+								margin-left: auto;
+								margin-right: auto;
+								margin-bottom:@base-space;
+								clear:both;
+								.wiki-source {
+									margin-bottom:@base-space;
+								}
+								h4 {
+									border-bottom: 1px solid @color-line;
+									margin-bottom:5px;
+									font-style: italic;
+								}
+								p {
+									font-size: 13px;
+									line-height: 19px;
 								}
 							}
 							img, iframe {
@@ -328,6 +429,9 @@
 						}
 						
 					}
+				}
+				.twitter, .wikipedia {
+					max-width:70%;
 				}
 			}
 		}

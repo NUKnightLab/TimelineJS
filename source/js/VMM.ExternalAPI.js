@@ -18,6 +18,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.googledocs.active) {
 				VMM.ExternalAPI.googledocs.pushQue();
 			}
+			if (VMM.master_config.wikipedia.active) {
+				VMM.ExternalAPI.wikipedia.pushQue();
+			}
 			
 		},
 		
@@ -564,25 +567,44 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			//http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Beastie%20Boys&format=json&exintro=1
 			
 			get: function(url, id) {
+				trace("WIKIPEDIA GET");
 				var api_obj = {url: url, id: id};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
 			},
 			
 			create: function(api_obj) {
-				VMM.attachElement("#"+api_obj.id, api_obj.url);
-				/*
-				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + wiki.url + "&format=json&exintro=1&callback=?";
+				
+				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + api_obj.url + "&format=json&exintro=1&callback=?";
 				VMM.getJSON(the_url, function(d) {
-					if (d.query.pages[0].extract.match("REDIRECT")) {
-						
+					var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
+					var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
+					var _wiki = "";
+					var wiki_text = "";
+					var wiki_text_array = wiki_extract.split("<p>");
+					var wiki_number_of_paragraphs = 2;
+					
+					for(var i = 0; i < wiki_text_array.length; i++) {
+						if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {
+							wiki_text	+= "<p>" + wiki_text_array[i+1];
+						}
 					}
-					VMM.attachElement("#"+wiki.id, d.html);
+					
+					_wiki		=	"<h4>" + wiki_title + "</h4>";
+					_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+					_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
+					
+					if (wiki_extract.match("REDIRECT")) {
+						
+					} else {
+						VMM.attachElement("#"+api_obj.id, _wiki );
+					}
 				});
-				*/
+				
 			},
 			
 			pushQue: function() {
+				trace("WIKIPEDIA PUSH QUE");
 				for(var i = 0; i < VMM.master_config.wikipedia.que.length; i++) {
 					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[i]);
 				}

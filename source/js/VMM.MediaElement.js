@@ -137,7 +137,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// WIKIPEDIA
 				} else if (m.type		==	"wikipedia") {
 					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='wikipedia' id='" + "wikipedia_" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
+					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
 					VMM.ExternalAPI.wikipedia.get(m.id, _id);
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
