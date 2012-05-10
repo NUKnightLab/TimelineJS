@@ -49,7 +49,7 @@
 .vmm-timeline .thumbnail.thumb-plaintext{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-280px -48px;}
 .vmm-timeline .thumbnail.thumb-quote{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-232px -48px;}
 .vmm-timeline .thumbnail.thumb-document{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-256px -48px;}
-.vmm-timeline .thumbnail.thumb-photo{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-280px -24px;border:0;}.vmm-timeline .thumbnail.thumb-photo img{border:0 !important;}
+.vmm-timeline .thumbnail.thumb-photo{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-280px -24px;border:0;}.vmm-timeline .thumbnail.thumb-photo img{border:0px none #333333 !important;}
 .vmm-timeline .thumbnail.thumb-twitter{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-256px -24px;}
 .vmm-timeline .thumbnail.thumb-vimeo{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-328px -48px;}
 .vmm-timeline .thumbnail.thumb-youtube{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-328px -72px;}
