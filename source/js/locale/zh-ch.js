@@ -22,10 +22,10 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'",
 		},
 		messages: {
-			loading_timeline: "Loading Timeline... ",
-			return_to_title: "Return to Title",
-			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline"
+			loading_timeline: "加载时间线... ",
+			return_to_title: "回到开头",
+			expand_timeline: "伸展时间",
+			contract_timeline: "缩短时间"
 		}
 	}
 }
