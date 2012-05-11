@@ -34,16 +34,6 @@
 .vmm-timeline img{max-height:100%;border:1px solid #999999;}
 .vmm-timeline a{color:#0bd4e3;text-decoration:none;}
 .vmm-timeline a:hover{color:#07909a;text-decoration:underline;}
-.vmm-timeline .twitter{text-align:left;margin-left:auto;margin-right:auto;margin-bottom:15px;clear:both;}.vmm-timeline .twitter blockquote{font-size:15px;line-height:20px;color:#aaaaaa;}.vmm-timeline .twitter blockquote p{font-size:28px;line-height:36px;margin-bottom:6px;padding-top:10px;background-color:#1a1a1a;color:#ffffff;}
-.vmm-timeline .twitter blockquote .quote-mark{color:#aaaaaa;}
-.vmm-timeline .twitter .created-at{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-256px -24px;width:24px;height:24px;overflow:hidden;margin-left:15px;display:inline-block;float:right;filter:alpha(opacity=25);-khtml-opacity:0.25;-moz-opacity:0.25;opacity:0.25;}
-.vmm-timeline .twitter .created-at:hover{filter:alpha(opacity=100);-khtml-opacity:1;-moz-opacity:1;opacity:1;}
-.vmm-timeline .twitter .vcard{float:right;margin-bottom:15px;}.vmm-timeline .twitter .vcard a{color:#aaaaaa;}
-.vmm-timeline .twitter .vcard a:hover{text-decoration:none;}.vmm-timeline .twitter .vcard a:hover .fn{text-decoration:underline;}
-.vmm-timeline .twitter .vcard .fn,.vmm-timeline .twitter .vcard .nickname{padding-left:42px;}
-.vmm-timeline .twitter .vcard .fn{display:block;font-weight:bold;}
-.vmm-timeline .twitter .vcard .nickname{margin-top:3px;display:block;color:#aaaaaa;}
-.vmm-timeline .twitter .vcard .avatar{float:left;display:block;width:32px;height:32px;}.vmm-timeline .twitter .vcard .avatar img{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 .vmm-timeline .thumbnail{width:24px;height:24px;overflow:hidden;float:left;margin-right:1px;margin-top:6px;}
 .vmm-timeline .thumbnail.thumb-plaintext{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-280px -48px;}
 .vmm-timeline .thumbnail.thumb-quote{background-image:url(themes/timeline-dark.png);background-repeat:no-repeat;background-position:-232px -48px;}

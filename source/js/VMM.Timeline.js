@@ -20,8 +20,6 @@
 	http://incident57.com/codekit/
 ================================================== */
 
-// @codekit-prepend "VMM.Timeline.License.js";
-
 // @codekit-prepend "VMM.js";
 // @codekit-prepend "VMM.Library.js";
 // @codekit-prepend "VMM.Browser.js";
