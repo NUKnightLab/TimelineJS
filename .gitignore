@@ -2,11 +2,11 @@
 .DS_Store*
 
 dev_examples/
-
+cdn/
 *.tmproj
 
 *.tmproject
-
+VMM.Timeline.CDN.js
 tmtags
 
 source/gfx/Sprites/
