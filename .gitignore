@@ -2,7 +2,7 @@
 .DS_Store*
 
 dev_examples/
-
+cdn/
 *.tmproj
 
 *.tmproject
