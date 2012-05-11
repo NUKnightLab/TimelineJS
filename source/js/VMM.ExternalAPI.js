@@ -564,7 +564,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		},
 		
 		wikipedia: {
-			//http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Beastie%20Boys&format=json&exintro=1
 			
 			get: function(url, id) {
 				trace("WIKIPEDIA GET");
