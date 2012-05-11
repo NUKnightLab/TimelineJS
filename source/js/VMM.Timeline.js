@@ -435,14 +435,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					_date.title		=	data.date[i].headline;
-					_date.headline	=	data.date[i].headline;
-					_date.type		=	data.date[i].type;
-					_date.date		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.asset		=	data.date[i].asset;
-					_date.fulldate	=	_date.startdate.getTime();
-					_date.text		=	data.date[i].text;
-					_date.content	=	"";
+					_date.title				=	data.date[i].headline;
+					_date.headline			=	data.date[i].headline;
+					_date.type				=	data.date[i].type;
+					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
+					_date.asset				=	data.date[i].asset;
+					_date.fulldate			=	_date.startdate.getTime();
+					_date.text				=	data.date[i].text;
+					_date.content			=	"";
 					
 					_dates.push(_date);
 					

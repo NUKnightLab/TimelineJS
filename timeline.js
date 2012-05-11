@@ -3245,8 +3245,8 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = VMM.Util.date.prettyDate(data.startdate);
-						var en = VMM.Util.date.prettyDate(data.enddate);
+						var st = data.startdate_str;
+						var en = data.enddate_str;
 						if (st != en) {
 							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
 						} else {
@@ -5819,14 +5819,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					_date.title		=	data.date[i].headline;
-					_date.headline	=	data.date[i].headline;
-					_date.type		=	data.date[i].type;
-					_date.date		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.asset		=	data.date[i].asset;
-					_date.fulldate	=	_date.startdate.getTime();
-					_date.text		=	data.date[i].text;
-					_date.content	=	"";
+					_date.title				=	data.date[i].headline;
+					_date.headline			=	data.date[i].headline;
+					_date.type				=	data.date[i].type;
+					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
+					_date.asset				=	data.date[i].asset;
+					_date.fulldate			=	_date.startdate.getTime();
+					_date.text				=	data.date[i].text;
+					_date.content			=	"";
 					
 					_dates.push(_date);
 					

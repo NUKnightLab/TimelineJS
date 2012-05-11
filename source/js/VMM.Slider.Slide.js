@@ -84,8 +84,8 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = VMM.Util.date.prettyDate(data.startdate);
-						var en = VMM.Util.date.prettyDate(data.enddate);
+						var st = data.startdate_str;
+						var en = data.enddate_str;
 						if (st != en) {
 							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
 						} else {
