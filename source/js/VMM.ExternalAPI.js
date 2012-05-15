@@ -21,6 +21,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.wikipedia.active) {
 				VMM.ExternalAPI.wikipedia.pushQue();
 			}
+			if (VMM.master_config.vimeo.active) {
+				VMM.ExternalAPI.vimeo.pushQue();
+			}
 			
 		},
 		
@@ -534,7 +537,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var flickr_img_thumb = d.sizes.size[0].source;
 				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
-				VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+				//VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
 			}
 			
 		},
@@ -615,6 +619,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		youtube: {
 			
 			get: function(id) {
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=jsonc&callback=?";
+				
 				if (VMM.master_config.youtube.active) {
 					VMM.master_config.youtube.que.push(id);
 				} else {
@@ -625,6 +631,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						});
 					}
 				}
+				
+				// THUMBNAIL
+				VMM.getJSON(url, VMM.ExternalAPI.youtube.createThumb);
 			},
 			
 			create: function(id) {
@@ -654,6 +663,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				});
 				
 				VMM.master_config.youtube.array.push(p);
+			},
+			
+			createThumb: function(d) {
+		        trace(d.data.id);
+				trace(d.data.thumbnail.sqDefault);
+				var thumb_id = "youtube_" + d.data.id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 			},
 			
 			pushQue: function() {
@@ -692,6 +708,35 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			}
 			
+			
+		},
+		
+		vimeo: {
+			
+			get: function(id) {
+				VMM.master_config.vimeo.que.push(id);
+				VMM.master_config.vimeo.active = true;
+			},
+			
+			create: function(d) {
+				trace("VIMEO CREATE");
+				// THUMBNAIL
+				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
+				VMM.getJSON(url, VMM.ExternalAPI.vimeo.createThumb);
+			},
+			
+			createThumb: function(d) {
+				trace("VIMEO CREATE THUMB");
+				var thumb_id = "vimeo_" + d[0].id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.vimeo.que.length; i++) {
+					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[i]);
+				}
+				VMM.master_config.vimeo.que = [];
+			}
 			
 		}
 	
