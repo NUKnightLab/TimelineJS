@@ -118,6 +118,13 @@ if (typeof VMM == 'undefined') {
 			que:			[]
 		},
 		
+		vimeo: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		googlemaps: {
 			active:			false,
 			map_active:		false,
