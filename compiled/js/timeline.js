@@ -1,5 +1,5 @@
 /*!
-	Timeline
+	TimelineJS
 	Designed and built by Zach Wise at VéritéCo
 
 	This program is free software: you can redistribute it and/or modify
@@ -134,6 +134,13 @@ if (typeof VMM == 'undefined') {
 		},
 		
 		youtube: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		vimeo: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
@@ -1034,17 +1041,16 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
-					//mediaElem		=	"<div class='thumbnail thumb-photo'><img id='flickr_" + m.id + "_thumb' width='" + _w + "px' height='" + _h + "px'></div>";
-					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-photo' id='flickr_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail thumb-youtube'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"googledoc") {
 					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
 					return mediaElem;
 				} else if (m.type	==	"vimeo") {
-					mediaElem		=	"<div class='thumbnail thumb-vimeo'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type  ==  "dailymotion") {
 					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
@@ -1123,6 +1129,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+					VMM.ExternalAPI.vimeo.get(m.id);
 			// DAILYMOTION
 				} else if (m.type		==	"dailymotion") {
 					mediaElem			=	"<iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe>";
@@ -1152,7 +1159,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
-					mediaElem			=	"<div class='media-frame plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
+					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
 			// WEBSITE
 				} else if (m.type		==	"website") { 
 					mediaElem			=	"<iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
@@ -1512,6 +1519,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			}
 			if (VMM.master_config.wikipedia.active) {
 				VMM.ExternalAPI.wikipedia.pushQue();
+			}
+			if (VMM.master_config.vimeo.active) {
+				VMM.ExternalAPI.vimeo.pushQue();
 			}
 			
 		},
@@ -2026,7 +2036,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var flickr_img_thumb = d.sizes.size[0].source;
 				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
-				VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+				//VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
 			}
 			
 		},
@@ -2107,6 +2118,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		youtube: {
 			
 			get: function(id) {
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=jsonc&callback=?";
+				
 				if (VMM.master_config.youtube.active) {
 					VMM.master_config.youtube.que.push(id);
 				} else {
@@ -2117,6 +2130,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						});
 					}
 				}
+				
+				// THUMBNAIL
+				VMM.getJSON(url, VMM.ExternalAPI.youtube.createThumb);
 			},
 			
 			create: function(id) {
@@ -2146,6 +2162,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				});
 				
 				VMM.master_config.youtube.array.push(p);
+			},
+			
+			createThumb: function(d) {
+		        trace(d.data.id);
+				trace(d.data.thumbnail.sqDefault);
+				var thumb_id = "youtube_" + d.data.id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 			},
 			
 			pushQue: function() {
@@ -2184,6 +2207,35 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			}
 			
+			
+		},
+		
+		vimeo: {
+			
+			get: function(id) {
+				VMM.master_config.vimeo.que.push(id);
+				VMM.master_config.vimeo.active = true;
+			},
+			
+			create: function(d) {
+				trace("VIMEO CREATE");
+				// THUMBNAIL
+				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
+				VMM.getJSON(url, VMM.ExternalAPI.vimeo.createThumb);
+			},
+			
+			createThumb: function(d) {
+				trace("VIMEO CREATE THUMB");
+				var thumb_id = "vimeo_" + d[0].id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.vimeo.que.length; i++) {
+					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[i]);
+				}
+				VMM.master_config.vimeo.que = [];
+			}
 			
 		}
 	
@@ -3048,7 +3100,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.prevDate, _title);
 						VMM.attachElement(navigation.prevTitle, "");
 					} else {
-						VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
+						VMM.attachElement(navigation.prevDate, data[current_slide - 1].startdate_str);
 						VMM.attachElement(navigation.prevTitle, _title);
 					}
 				} else {
@@ -3066,7 +3118,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.nextDate, _title);
 						VMM.attachElement(navigation.nextTitle, "");
 					} else {
-						VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
+						VMM.attachElement(navigation.nextDate, data[current_slide + 1].startdate_str);
 						VMM.attachElement(navigation.nextTitle, _title);
 					}
 				} else {
@@ -3269,8 +3321,8 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = VMM.Util.date.prettyDate(data.startdate);
-						var en = VMM.Util.date.prettyDate(data.enddate);
+						var st = data.startdate_str;
+						var en = data.enddate_str;
 						if (st != en) {
 							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
 						} else {
@@ -3525,6 +3577,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 					var _d_array; // DATE ARRAY
 					var _t_array; // TIME ARRAY
 					if ( d.match(/,/gi) ) {
+						trace("DATE HAS ,");
 						_d_array = d.split(",");
 						for(var i = 0; i < _d_array.length; i++) {
 							_d_array[i] = parseInt(_d_array[i]);
@@ -3537,6 +3590,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
 						if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
 					} else if (d.match("/")) {
+						trace("DATE HAS /");
 						var _time_parse;
 						var _times;
 						if (d.match(" ")) {
@@ -3563,7 +3617,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						_date.setMinutes(0);
 						_date.setSeconds(0);
 						_date.setMilliseconds(0);
-					}else {
+					} else {
 						_date = new Date(
 							parseInt(d.slice(0,4)), 
 							parseInt(d.slice(4,6)) - 1, 
@@ -5148,6 +5202,281 @@ Utf8.decode = function(strUtf) {
 }( window.jQuery );
 
 /*********************************************** 
+     Begin bootstrap-tooltip.js 
+***********************************************/ 
+
+/* ===========================================================
+ * bootstrap-tooltip.js v2.0.1
+ * http://twitter.github.com/bootstrap/javascript.html#tooltips
+ * Inspired by the original jQuery.tipsy by Jason Frame
+ * ===========================================================
+ * Copyright 2012 Twitter, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ========================================================== */
+
+!function( $ ) {
+
+  "use strict"
+
+ /* TOOLTIP PUBLIC CLASS DEFINITION
+  * =============================== */
+
+  var Tooltip = function ( element, options ) {
+    this.init('tooltip', element, options)
+  }
+
+  Tooltip.prototype = {
+
+    constructor: Tooltip
+
+  , init: function ( type, element, options ) {
+      var eventIn
+        , eventOut
+
+      this.type = type
+      this.$element = $(element)
+      this.options = this.getOptions(options)
+      this.enabled = true
+
+      if (this.options.trigger != 'manual') {
+        eventIn  = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
+        eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'
+        this.$element.on(eventIn, this.options.selector, $.proxy(this.enter, this))
+        this.$element.on(eventOut, this.options.selector, $.proxy(this.leave, this))
+      }
+
+      this.options.selector ?
+        (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
+        this.fixTitle()
+    }
+
+  , getOptions: function ( options ) {
+      options = $.extend({}, $.fn[this.type].defaults, options, this.$element.data())
+
+      if (options.delay && typeof options.delay == 'number') {
+        options.delay = {
+          show: options.delay
+        , hide: options.delay
+        }
+      }
+
+      return options
+    }
+
+  , enter: function ( e ) {
+      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
+
+      if (!self.options.delay || !self.options.delay.show) {
+        self.show()
+      } else {
+        self.hoverState = 'in'
+        setTimeout(function() {
+          if (self.hoverState == 'in') {
+            self.show()
+          }
+        }, self.options.delay.show)
+      }
+    }
+
+  , leave: function ( e ) {
+      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
+
+      if (!self.options.delay || !self.options.delay.hide) {
+        self.hide()
+      } else {
+        self.hoverState = 'out'
+        setTimeout(function() {
+          if (self.hoverState == 'out') {
+            self.hide()
+          }
+        }, self.options.delay.hide)
+      }
+    }
+
+  , show: function () {
+      var $tip
+        , inside
+        , pos
+        , actualWidth
+        , actualHeight
+        , placement
+        , tp
+
+      if (this.hasContent() && this.enabled) {
+        $tip = this.tip()
+        this.setContent()
+
+        if (this.options.animation) {
+          $tip.addClass('fade')
+        }
+
+        placement = typeof this.options.placement == 'function' ?
+          this.options.placement.call(this, $tip[0], this.$element[0]) :
+          this.options.placement
+
+        inside = /in/.test(placement)
+
+        $tip
+          .remove()
+          .css({ top: 0, left: 0, display: 'block' })
+          .appendTo(inside ? this.$element : document.body)
+
+        pos = this.getPosition(inside)
+
+        actualWidth = $tip[0].offsetWidth
+        actualHeight = $tip[0].offsetHeight
+
+        switch (inside ? placement.split(' ')[1] : placement) {
+          case 'bottom':
+            tp = {top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}
+            break
+          case 'top':
+            tp = {top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}
+            break
+          case 'left':
+            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}
+            break
+          case 'right':
+            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}
+            break
+        }
+
+        $tip
+          .css(tp)
+          .addClass(placement)
+          .addClass('in')
+      }
+    }
+
+  , setContent: function () {
+      var $tip = this.tip()
+      $tip.find('.tooltip-inner').html(this.getTitle())
+      $tip.removeClass('fade in top bottom left right')
+    }
+
+  , hide: function () {
+      var that = this
+        , $tip = this.tip()
+
+      $tip.removeClass('in')
+
+      function removeWithAnimation() {
+        var timeout = setTimeout(function () {
+          $tip.off($.support.transition.end).remove()
+        }, 500)
+
+        $tip.one($.support.transition.end, function () {
+          clearTimeout(timeout)
+          $tip.remove()
+        })
+      }
+
+      $.support.transition && this.$tip.hasClass('fade') ?
+        removeWithAnimation() :
+        $tip.remove()
+    }
+
+  , fixTitle: function () {
+      var $e = this.$element
+      if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
+        $e.attr('data-original-title', $e.attr('title') || '').removeAttr('title')
+      }
+    }
+
+  , hasContent: function () {
+      return this.getTitle()
+    }
+
+  , getPosition: function (inside) {
+      return $.extend({}, (inside ? {top: 0, left: 0} : this.$element.offset()), {
+        width: this.$element[0].offsetWidth
+      , height: this.$element[0].offsetHeight
+      })
+    }
+
+  , getTitle: function () {
+      var title
+        , $e = this.$element
+        , o = this.options
+
+      title = $e.attr('data-original-title')
+        || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
+
+      title = title.toString().replace(/(^\s*|\s*$)/, "")
+
+      return title
+    }
+
+  , tip: function () {
+      return this.$tip = this.$tip || $(this.options.template)
+    }
+
+  , validate: function () {
+      if (!this.$element[0].parentNode) {
+        this.hide()
+        this.$element = null
+        this.options = null
+      }
+    }
+
+  , enable: function () {
+      this.enabled = true
+    }
+
+  , disable: function () {
+      this.enabled = false
+    }
+
+  , toggleEnabled: function () {
+      this.enabled = !this.enabled
+    }
+
+  , toggle: function () {
+      this[this.tip().hasClass('in') ? 'hide' : 'show']()
+    }
+
+  }
+
+
+ /* TOOLTIP PLUGIN DEFINITION
+  * ========================= */
+
+  $.fn.tooltip = function ( option ) {
+    return this.each(function () {
+      var $this = $(this)
+        , data = $this.data('tooltip')
+        , options = typeof option == 'object' && option
+      if (!data) $this.data('tooltip', (data = new Tooltip(this, options)))
+      if (typeof option == 'string') data[option]()
+    })
+  }
+
+  $.fn.tooltip.Constructor = Tooltip
+
+  $.fn.tooltip.defaults = {
+    animation: true
+  , delay: 0
+  , selector: false
+  , placement: 'top'
+  , trigger: 'hover'
+  , title: ''
+  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+  }
+
+}( window.jQuery );
+
+/*********************************************** 
      Begin VMM.Timeline.js 
 ***********************************************/ 
 
@@ -5589,14 +5918,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.enddate = _date.startdate;
 					}
 					
-					_date.title		=	data.date[i].headline;
-					_date.headline	=	data.date[i].headline;
-					_date.type		=	data.date[i].type;
-					_date.date		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.asset		=	data.date[i].asset;
-					_date.fulldate	=	_date.startdate.getTime();
-					_date.text		=	data.date[i].text;
-					_date.content	=	"";
+					_date.title				=	data.date[i].headline;
+					_date.headline			=	data.date[i].headline;
+					_date.type				=	data.date[i].type;
+					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
+					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
+					_date.asset				=	data.date[i].asset;
+					_date.fulldate			=	_date.startdate.getTime();
+					_date.text				=	data.date[i].text;
+					_date.content			=	"";
+					
 					
 					_dates.push(_date);
 					
@@ -5617,7 +5949,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _date		=	{};
 				var td_num		=	0;
 				var td			=	_dates[0].startdate;
-				_date.startdate =	_dates[0].startdate;
+				_date.startdate =	new Date(_dates[0].startdate);
 				trace(_dates[0].startdate);
 				trace(_date.startdate);
 				
@@ -5694,7 +6026,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		/* ELEMENTS
 		================================================== */
 		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
-		$timeintervalbackground, $timenavline, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+		$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
 		
 		/* ADD to Config
 		================================================== */
@@ -6418,7 +6750,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _largest_pos = 0;
 			
 			VMM.attachElement(_element_parent, "");
-			
 			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			
 			for(var i = 0; i < Math.ceil(_interval.number) + 1; i++) {
@@ -6542,7 +6873,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				};
 				
 				_array.push(_obj);
-				
 			}
 			
 			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
@@ -6567,6 +6897,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timeinterval = 			VMM.appendAndGetElement($time, "<div>", "time-interval");
 			$timebackground = 			VMM.appendAndGetElement(layout, "<div>", "timenav-background");
 			$timenavline = 				VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
+			$timenavindicator = 		VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground = 	VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
 			$toolbar = 					VMM.appendAndGetElement(layout, "<div>", "toolbar");
 			
@@ -6621,7 +6952,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			timespan = getDateFractions((data[data.length - 1].enddate) - (data[0].startdate), true);
 			trace(timespan);
 			calculateInterval();
-			
+
 			/* DETERMINE DEFAULT INTERVAL TYPE
 				millenium, ages, epoch, era and eon are not working yet
 			================================================== */
