@@ -10,3 +10,5 @@ VMM.Timeline.CDN.js
 tmtags
 
 source/gfx/Sprites/
+
+node_modules/
