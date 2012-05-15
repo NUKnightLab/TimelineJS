@@ -2,8 +2,8 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Timeline Google Spreadsheet Template</title>
-		<meta name="description" content="Template Description">
+		<title>JSON Example Timeline</title>
+		<meta name="description" content="TimelineJS example">
 
 		<style>
 			html, body {
@@ -32,17 +32,16 @@
 		<div id="timeline-embed"></div>
 		<script type="text/javascript">
 		    var timeline_config = {
-				width: "100%",
+				width: 	"100%",
 				height: "100%",
-				source: 'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadHdKcHlHcTB5bzhvbF9iTWwyMmJHdkE&output=html',
-				font: 	'Bevan-PotanoSans',	//OPTIONAL
-				//start_at_end:	true,						//OPTIONAL
-				//hash_bookmark: true,						//OPTIONAL
-				css: 	'../../compiled/css/timeline.css',	//OPTIONAL
-				js: 	'../../compiled/timeline-min.js'	//OPTIONAL
+				source: 'example_json.json',
+				//start_at_end:	true,					//OPTIONAL
+				//hash_bookmark: true,					//OPTIONAL
+				css: 	'../compiled/css/timeline.css',	//OPTIONAL
+				js: 	'../compiled/js/timeline-min.js'	//OPTIONAL
 			}
 		</script>
-		<script type="text/javascript" src="http://veritetimeline.appspot.com/latest/timeline-embed.js"></script>
+		<script type="text/javascript" src="../compiled/js/timeline-embed.js"></script>
 		<!-- END Timeline Embed -->
 	</body>
 </html>
