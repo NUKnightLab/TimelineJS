@@ -22,7 +22,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		/* ELEMENTS
 		================================================== */
 		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
-		$timeintervalbackground, $timenavline, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+		$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
 		
 		/* ADD to Config
 		================================================== */
@@ -746,7 +746,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			var _largest_pos = 0;
 			
 			VMM.attachElement(_element_parent, "");
-			
 			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			
 			for(var i = 0; i < Math.ceil(_interval.number) + 1; i++) {
@@ -870,7 +869,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				};
 				
 				_array.push(_obj);
-				
 			}
 			
 			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
@@ -895,6 +893,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timeinterval = 			VMM.appendAndGetElement($time, "<div>", "time-interval");
 			$timebackground = 			VMM.appendAndGetElement(layout, "<div>", "timenav-background");
 			$timenavline = 				VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
+			$timenavindicator = 		VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground = 	VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
 			$toolbar = 					VMM.appendAndGetElement(layout, "<div>", "toolbar");
 			
@@ -949,7 +948,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			timespan = getDateFractions((data[data.length - 1].enddate) - (data[0].startdate), true);
 			trace(timespan);
 			calculateInterval();
-			
+
 			/* DETERMINE DEFAULT INTERVAL TYPE
 				millenium, ages, epoch, era and eon are not working yet
 			================================================== */
