@@ -495,7 +495,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.prevDate, _title);
 						VMM.attachElement(navigation.prevTitle, "");
 					} else {
-						VMM.attachElement(navigation.prevDate, data[current_slide - 1].date);
+						VMM.attachElement(navigation.prevDate, data[current_slide - 1].startdate_str);
 						VMM.attachElement(navigation.prevTitle, _title);
 					}
 				} else {
@@ -513,7 +513,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.nextDate, _title);
 						VMM.attachElement(navigation.nextTitle, "");
 					} else {
-						VMM.attachElement(navigation.nextDate, data[current_slide + 1].date);
+						VMM.attachElement(navigation.nextDate, data[current_slide + 1].startdate_str);
 						VMM.attachElement(navigation.nextTitle, _title);
 					}
 				} else {
