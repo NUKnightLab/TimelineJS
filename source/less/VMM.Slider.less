@@ -135,7 +135,7 @@
 		height:100%;
 		padding:0px;
 		margin:0px;
-		overflow: hidden;
+		//overflow: hidden;
 		display:table;
 		.content {
 			display:table-cell;
@@ -145,6 +145,8 @@
 			.content-container {
 				display:table;
 				vertical-align:middle;
+				
+				
 				.text {
 					width:40%;
 					max-width:50%;
@@ -167,10 +169,13 @@
 						margin-right: auto;
 						.media-container {
 							display:inline-block;
-							overflow: hidden;
+							//overflow: hidden;
 							line-height:0px;
 							padding:0px;
 							//max-height:400px;
+							.media-frame, img, iframe {
+								.media-shadow();
+							}
 							span.messege {
 								display:block;
 								vertical-align:middle;
@@ -285,30 +290,34 @@
 								clear:both;
 								.wiki-source {
 									margin-bottom:@base-space;
+									font-size: 13px;
+									line-height: 19px;
+									font-style: italic;
 								}
 								h4 {
 									border-bottom: 1px solid @color-line;
 									margin-bottom:5px;
-									font-style: italic;
+									
 								}
 								p {
 									font-size: 13px;
 									line-height: 19px;
 								}
 							}
-							img, iframe {
-								border: 1px solid @color-line;
-								//max-height:350px;
-							}
 							.map {
 								line-height: normal;
-								border: 1px solid @color-line;
 								z-index:200;
 								text-align:left;
 								background-color:@white;
+								
 								img {
 									max-height:none !important;
 									max-width:none !important;
+									border:0;
+									-webkit-box-shadow: none;
+									   -moz-box-shadow: none;
+									        box-shadow: none;
+									
 								}
 								.google-map {
 									height:100%;
@@ -423,9 +432,10 @@
 						.media-container {
 							margin-left: auto;
 							margin-right: auto;
-							overflow: hidden;
+							//overflow: hidden;
 							line-height:0px;
 							padding:0px;
+							
 						}
 						
 					}

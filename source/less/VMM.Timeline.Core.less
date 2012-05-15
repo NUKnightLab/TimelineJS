@@ -15,10 +15,10 @@
 	-webkit-border-radius: 10px;
      -moz-border-radius: 10px;
           border-radius: 10px;
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
-		-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
-		box-shadow: 1px 2px 6px rgba(0,0,0,.25);
-		
+
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.35);
+	   -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.35);
+	        box-shadow: 1px 1px 3px rgba(0,0,0,.35);
 } 
 
 /* TIMELINE
@@ -55,7 +55,6 @@
 			z-index:10;
 			padding-top:@base-space;
 			.box-shadow();
-			
 		}
 	}
 	
@@ -131,8 +130,8 @@
 	
 	
 	.thumbnail {
-		width:24px;
-		height:24px;
+		width:@base-thumb;
+		height:@base-thumb;
 		overflow:hidden;
 		float:left;
 		margin-right:1px;
