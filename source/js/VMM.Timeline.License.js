@@ -1,5 +1,5 @@
 /*!
-	Timeline
+	TimelineJS
 	Designed and built by Zach Wise at VéritéCo
 
 	This program is free software: you can redistribute it and/or modify
