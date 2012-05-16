@@ -102,7 +102,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					_date.startDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
 
 					if (VMM.Lib.find(this, "time")[1]) {
-						_date.endDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
+						_date.endDate = VMM.Lib.html(VMM.Lib.find(this, "time")[1]);
 					}
 
 					_date.headline = VMM.Lib.html(VMM.Lib.find(this, "h3"));
