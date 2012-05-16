@@ -5702,7 +5702,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 
 		function onDataReady(e, d) {
-			
+			trace("onDataReady");
+			trace(d);
 			data = d.timeline;
 			
 			if (type.of(data.era) == "array") {
@@ -5803,7 +5804,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
@@ -5815,6 +5815,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		this.iframeLoaded = function() {
 			trace("iframeLoaded");
 		};
+		
+		this.reload = function(_d) {
+			trace("loadNewDates" + _d);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			data = {};
+			VMM.Timeline.DataObj.getData(_d);
+		}
 		
 		/* DATA 
 		================================================== */
@@ -5889,7 +5896,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var buildDates = function() {
 			
 			updateSize();
-			
+			_dates = [];
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
@@ -7126,7 +7133,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		model_array: [],
 		
 		getData: function(raw_data) {
-			
+			VMM.Timeline.DataObj.data_obj = {};
 			data = VMM.Timeline.DataObj.data_obj;
 
 			if (type.of(raw_data) == "object") {
@@ -7145,6 +7152,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				} else {
 					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
+					trace("raw data" + raw_data);
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
 				}
 			} else if (type.of(raw_data) == "html") {

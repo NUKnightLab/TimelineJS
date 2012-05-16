@@ -10,7 +10,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		model_array: [],
 		
 		getData: function(raw_data) {
-			
+			VMM.Timeline.DataObj.data_obj = {};
 			data = VMM.Timeline.DataObj.data_obj;
 
 			if (type.of(raw_data) == "object") {
@@ -29,6 +29,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				} else {
 					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
+					trace("raw data" + raw_data);
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
 				}
 			} else if (type.of(raw_data) == "html") {

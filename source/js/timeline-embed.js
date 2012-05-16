@@ -109,7 +109,7 @@
 	var isReady			=	false;
 	var preload_checks	=	0;
 	var timeout;
-	var timeline;
+	var timelinejs;
 	
 	/* Add Timeline Div
 	================================================== */
@@ -270,8 +270,9 @@
 			if (jsReady && cssReady && fontCSSReady && fontJSReady) {
 				if (!isReady) {
 					isReady = true;
-					timeline = new VMM.Timeline();
-					timeline.init(embed_config.source);
+					
+					timelinejs = new VMM.Timeline();
+					timelinejs.init(embed_config.source);
 				}
 			} else {
 				//alert("run timeout");

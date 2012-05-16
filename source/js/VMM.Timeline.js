@@ -334,6 +334,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace("iframeLoaded");
 		};
 		
+		this.reload = function(_d) {
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
