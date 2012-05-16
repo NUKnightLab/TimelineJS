@@ -62,7 +62,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.10";
+		version = 					"1.20";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -220,7 +220,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 
 		function onDataReady(e, d) {
-			
+			trace("onDataReady");
+			trace(d);
 			data = d.timeline;
 			
 			if (type.of(data.era) == "array") {
@@ -321,7 +322,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
@@ -335,6 +335,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		this.reload = function(_d) {
+			trace("loadNewDates" + _d);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			data = {};
+			VMM.Timeline.DataObj.getData(_d);
+		}
+		
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
@@ -408,7 +414,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var buildDates = function() {
 			
 			updateSize();
-			
+			_dates = [];
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
