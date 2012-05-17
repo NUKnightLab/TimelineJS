@@ -6030,10 +6030,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate			=	_date.startdate.getTime();
 					_date.text				=	data.date[i].text;
 					_date.content			=	"";
-<<<<<<< HEAD:timeline.js
-=======
 					
->>>>>>> Canary:compiled/js/timeline.js
 					
 					_dates.push(_date);
 					

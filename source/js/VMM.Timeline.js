@@ -454,10 +454,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate			=	_date.startdate.getTime();
 					_date.text				=	data.date[i].text;
 					_date.content			=	"";
-<<<<<<< HEAD
-=======
 					
->>>>>>> Canary
 					
 					_dates.push(_date);
 					
