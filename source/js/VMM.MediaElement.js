@@ -160,9 +160,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
 			// RETURN
 				if (isTextMedia) {
-					return "<div class='media text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+					return "<div class='text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
 				} else {
-					return "<div class='media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+					return "<div class='media-wrapper'>" + mediaElem + "</div>";
 				}
 				
 				/*

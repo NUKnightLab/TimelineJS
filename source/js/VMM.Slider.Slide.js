@@ -8,19 +8,32 @@ if (typeof VMM.Slider != 'undefined') {
 		var slide		=	{};
 		var media		=	"";
 		var loaded		=	false;
+		var preloaded	=	false;
+		var is_skinny	=	false;
 		var element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
-		
+		var c = {slide:"", text: "", media: "", media_element: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
+		var $media, $text, $slide, $wrap;
 		/* PUBLIC
 		================================================== */
-		this.show = function() {
+		this.show = function(skinny) {
 			if (!loaded) {
-				render();
+				if (preloaded) {
+					reLayout(skinny);
+				} else {
+					render(skinny);
+				}
 			}
 		};
 		
 		this.hide = function() {
 			if (loaded) {
 				removeSlide();
+			}
+		};
+		
+		this.layout = function(skinny) {
+			if (loaded && preloaded) {
+				reLayout(skinny);
 			}
 		};
 		
@@ -72,21 +85,42 @@ if (typeof VMM.Slider != 'undefined') {
 		
 		/* PRIVATE
 		================================================== */
-		var render = function() {
-			VMM.attachElement(element, "");
-			VMM.appendElement(element, buildSlide() );
+		var render = function(skinny) {
+			buildSlide(skinny);
 			loaded = true;
+			preloaded = true;
 			var timer = setTimeout(VMM.ExternalAPI.pushQues, 500);
 		};
 		
 		var removeSlide = function() {
-			VMM.attachElement(element, "");
+			//VMM.attachElement(element, "");
 			loaded = false;
 		}
 		
-		var buildSlide = function() {
-			var c = {slide:"", text: "", media: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
-			var b_slide, c_wrap;
+		var reLayout = function(skinny) {
+			
+			if (c.has.text)	{
+				if (skinny) {
+					if (!is_skinny) {
+						VMM.Lib.removeClass($slide, "pad-left");
+						VMM.Lib.detach($text);
+						VMM.Lib.prepend($slide, $text);
+						is_skinny = true;
+					}
+				} else {
+					if (is_skinny) {
+						VMM.Lib.addClass($slide, "pad-left");
+						VMM.Lib.detach($text);
+						VMM.Lib.append($slide, $text);
+						is_skinny = false
+					}
+				}
+			} 
+		}
+		
+		var buildSlide = function(skinny) {
+			$wrap	=	VMM.appendAndGetElement(element, "<div>", "content");
+			$slide	=	VMM.appendAndGetElement($wrap, "<div>");
 			
 			/* DATE
 			================================================== */
@@ -124,7 +158,7 @@ if (typeof VMM.Slider != 'undefined') {
 			
 			if (c.has.text || c.has.headline) {
 				c.text			=	VMM.createElement("div", c.text, "container");
-				c.text			=	VMM.createElement("div", c.text, "text");
+				$text			=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
 			}
 			
 			/* MEDIA
@@ -132,7 +166,7 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.asset != null && data.asset != "") {
 				if (data.asset.media != null && data.asset.media != "") {
 					c.has.media	=	true;
-					c.media		=	VMM.MediaElement.create(data.asset);
+					$media		=	VMM.appendAndGetElement($slide, "<div>", "media", VMM.MediaElement.create(data.asset));
 				}
 			}
 			
@@ -140,20 +174,22 @@ if (typeof VMM.Slider != 'undefined') {
 			================================================== */
 			if (c.has.text)	{ c.layout		+=	"-text"		};
 			if (c.has.media){ c.layout		+=	"-media"	};
-			
-			//c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+
 			if (c.has.text)	{
-				c.slide = VMM.createElement("div", c.media + c.text, c.layout + " pad-left");
+				if (skinny) {
+					VMM.Lib.addClass($slide, c.layout);
+					is_skinny = true;
+				} else {
+					VMM.Lib.addClass($slide, c.layout);
+					VMM.Lib.addClass($slide, "pad-left");
+					VMM.Lib.detach($text);
+					VMM.Lib.append($slide, $text);
+				}
+				
 			} else {
-				c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+				VMM.Lib.addClass($slide, c.layout);
 			}
 			
-			c_wrap = VMM.createElement("div", c.slide, "content");
-			
-			/* RETURN
-			================================================== */
-			// return c.slide;
-			return c_wrap;
 			
 		};
 		

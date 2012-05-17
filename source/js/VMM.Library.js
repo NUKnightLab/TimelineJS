@@ -214,6 +214,12 @@ if(typeof VMM != 'undefined') {
 			}
 		},
 		
+		prepend: function(element, value) {
+			if( typeof( jQuery ) != 'undefined' ){
+				jQuery(element).prepend(value);
+			}
+		},
+		
 		show: function(element, duration) {
 			if (duration != null && duration != "") {
 				if( typeof( jQuery ) != 'undefined' ){

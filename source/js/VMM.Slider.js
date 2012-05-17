@@ -333,7 +333,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// HANDLE SMALLER SIZES
 			var is_skinny = false;
 			
-			if (current_width <= 650) {
+			if (current_width <= 600) {
 				is_skinny = true;
 			} else if (VMM.Browser.device == "mobile" && VMM.Browser.orientation == "portrait") {
 				is_skinny = true;
@@ -426,6 +426,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
 			for(var i = 0; i < slides.length; i++) {
+				
+				slides[i].layout(is_skinny);
+				
 				if (slides[i].content_height() > config.slider.height + 20) {
 					slides[i].css("display", "block");
 				} else {

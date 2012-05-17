@@ -606,7 +606,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					var _wiki = "";
 					var wiki_text = "";
 					var wiki_text_array = wiki_extract.split("<p>");
-					var wiki_number_of_paragraphs = 2;
+					var wiki_number_of_paragraphs = 1;
 					
 					for(var i = 0; i < wiki_text_array.length; i++) {
 						if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {

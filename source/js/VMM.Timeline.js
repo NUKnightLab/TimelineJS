@@ -62,13 +62,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.26";
+		version = 					"1.30";
 		
 		trace("TIMELINE VERSION " + version);
 		
 		/* CONFIG
 		================================================== */
 		config = {
+			embed:					false,
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
@@ -475,8 +476,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var td_num		=	0;
 				var td			=	_dates[0].startdate;
 				_date.startdate =	new Date(_dates[0].startdate);
-				trace(_dates[0].startdate);
-				trace(_date.startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -504,6 +503,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
 				_date.asset		=	data.asset;
 				_date.fulldate	=	_date.startdate.getTime();
+				
+				if (config.embed) {
+					document.title = _date.headline;
+				}
 				
 				_dates.push(_date);
 			}

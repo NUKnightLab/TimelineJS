@@ -166,6 +166,15 @@
 						padding-left: @base-space*2;
 					}
 				}
+				.media.text-media {
+					.media-wrapper {
+						.media-container {
+							border: none;
+							background-color: @white;
+						}
+					}
+				}
+				
 			}
 			.content-container {
 				display:table;
@@ -478,13 +487,24 @@
 			
 			/* Text and Media Slides
 			================================================== */
+			
 			.content-container.layout-text-media {
 				.text-media {
-					padding-right:@base-space;
-					border-right: 1px solid @color-dark-fifth;//@color-line;
+					//padding-right:@base-space;
+					border-top: 1px solid @color-dark-fifth;//@color-line;
+					//padding-right:@base-space;
+					//border-right: 1px solid @color-dark-fifth;//@color-line;
 				}
 				
 			}
+			.content-container.layout-text-media.pad-left {
+				.text-media {
+					padding-right:@base-space;
+					border-right: 1px solid @color-dark-fifth;//@color-line;
+					border-top: 0px solid @color-dark-fifth;//@color-line;
+				}
+			}
+			
 			/* Text Only Slides
 			================================================== */
 			.content-container.layout-text {
