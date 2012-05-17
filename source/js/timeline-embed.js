@@ -20,7 +20,7 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "Embed.LoadLib.js";
+// @codekit-prepend "lib/Embed.LoadLib.js";
 
 
 /* TIMELINE CDN LOADER
@@ -150,7 +150,7 @@
 		/* Load Font CSS
 		================================================== */
 
-		if (embed_config.font.match("http://")) {
+		if (embed_config.font.match("/")) {
 			font_css_url = embed_config.font;
 		} else {
 			font_css_url = font_css_url + embed_config.font + ".css";
