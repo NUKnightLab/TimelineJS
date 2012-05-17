@@ -1529,6 +1529,17 @@
       "outputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Rancho-Gudea.css",
       "strictImports" : 0,
       "fileType" : 0
+    },
+    "\/source\/js\/locale\/ja.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/locale\/ja.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/locale\/ja.js",
+      "fileType" : 5
     }
   },
   "manualImportLinks" : [
@@ -1614,6 +1625,13 @@
       "position" : 0,
       "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
       "baseFileAbbreviatedPath" : "\/source\/js\/locale\/pt-br.js",
+      "followForSyntaxChecking" : 1
+    },
+    {
+      "type" : 0,
+      "position" : 0,
+      "linkedFileAbbreviatedPath" : "\/source\/js\/VMM.Timeline.js",
+      "baseFileAbbreviatedPath" : "\/source\/js\/locale\/ja.js",
       "followForSyntaxChecking" : 1
     }
   ],
