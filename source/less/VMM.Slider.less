@@ -180,11 +180,14 @@
 						display:table-cell;
 						vertical-align:middle;
 						text-align:left;
-						-webkit-hyphens:auto;
-						   -moz-hyphens:auto;
-						    -ms-hyphens:auto;
-						        hyphens:auto;
-						word-wrap:break-word;
+						p {
+							-webkit-hyphens:auto;
+							   -moz-hyphens:auto;
+							    -ms-hyphens:auto;
+							        hyphens:auto;
+							word-wrap:break-word;
+							
+						}
 					}
 				}
 				.media {
@@ -373,8 +376,15 @@
 								h4 {
 									border-bottom: 1px solid @color-line;
 									margin-bottom:5px;
-									
 								}
+								h4 a {
+									color: @color-feature-title;
+								}
+								h4 a:hover {
+									color: @color-theme;
+									text-decoration: none;
+								}
+								
 								p {
 									font-size: 13px;
 									line-height: 19px;

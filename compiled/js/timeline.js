@@ -2130,7 +2130,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						}
 					}
 					
-					_wiki		=	"<h4>" + wiki_title + "</h4>";
+					_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
 					_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
 					_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
 					
@@ -5593,7 +5593,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.25";
+		version = 					"1.26";
 		
 		trace("TIMELINE VERSION " + version);
 		
