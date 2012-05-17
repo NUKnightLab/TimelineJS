@@ -97,8 +97,8 @@
 .slider .slider-item .content .content-container .media .media-wrapper .credit{color:#999999;text-align:right;display:block;margin:0 auto;margin-top:6px;font-size:10px;line-height:13px;}
 .slider .slider-item .content .content-container .media .media-wrapper .caption{text-align:left;margin-top:10px;color:#aaaaaa;font-size:11px;line-height:14px;text-rendering:optimizeLegibility;}
 .slider .slider-item .content .media.text-media .media-wrapper .media-container{border:none;background-color:#1a1a1a;}
-.slider .slider-item .content-container.layout-text-media .text-media{border-top:1px solid #e3e3e3;}
-.slider .slider-item .content-container.layout-text-media.pad-left .text-media{padding-right:15px;border-right:1px solid #e3e3e3;border-top:0px solid #e3e3e3;}
+.slider .slider-item .content-container.layout-text-media .text-media{border-top:1px solid #e3e3e3;padding-top:15px;padding-right:0;}
+.slider .slider-item .content-container.layout-text-media.pad-left .text-media{padding-right:15px;padding-top:0;border-right:1px solid #e3e3e3;border-top:0px solid #e3e3e3;}
 .slider .slider-item .content-container.layout-text{width:100%;}.slider .slider-item .content-container.layout-text .text{width:100%;max-width:100%;}.slider .slider-item .content-container.layout-text .text .container{display:block;vertical-align:middle;text-align:left;padding:0px;width:90%;text-align:left;margin-left:auto;margin-right:auto;}
 .slider .slider-item .content-container.layout-media{width:100%;}.slider .slider-item .content-container.layout-media .text{width:100%;height:100%;max-width:100%;display:block;text-align:center;}.slider .slider-item .content-container.layout-media .text .container{display:block;text-align:center;width:100%;margin-left:none;margin-right:none;}
 .slider .slider-item .content-container.layout-media .media{width:100%;min-width:50%;float:none;}.slider .slider-item .content-container.layout-media .media .media-wrapper{display:block;}.slider .slider-item .content-container.layout-media .media .media-wrapper .media-container{margin-left:auto;margin-right:auto;line-height:0px;padding:0px;}

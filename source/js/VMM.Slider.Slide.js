@@ -144,7 +144,7 @@ if (typeof VMM.Slider != 'undefined') {
 				c.has.headline		=	true;
 				if (data.type == "start") {
 					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
-				} else {
+				} else { 
 					c.text		+=	VMM.createElement("h3", VMM.Util.linkify_with_twitter(data.headline, "_blank"));
 				}
 			}
