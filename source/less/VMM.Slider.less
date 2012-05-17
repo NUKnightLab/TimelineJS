@@ -135,13 +135,47 @@
 		height:100%;
 		padding:0px;
 		margin:0px;
-		overflow: hidden;
+		//overflow: hidden;
 		display:table;
+		overflow-x:hidden;
+		overflow-y:auto;
+		
 		.content {
 			display:table-cell;
-			vertical-align:middle;			
+			vertical-align:middle;
+			
 			/* All Slides
 			================================================== */
+			.pad-top {
+				.text {
+					.container {
+						padding-top: @base-space;
+					}
+				}
+			}
+			.pad-right {
+				.text {
+					.container {
+						padding-right: @base-space;
+					}
+				}
+			}
+			.pad-left {
+				.text {
+					.container {
+						padding-left: @base-space*2;
+					}
+				}
+				.media.text-media {
+					.media-wrapper {
+						.media-container {
+							border: none;
+							background-color: @white;
+						}
+					}
+				}
+				
+			}
 			.content-container {
 				display:table;
 				vertical-align:middle;
@@ -155,7 +189,14 @@
 						display:table-cell;
 						vertical-align:middle;
 						text-align:left;
-						padding-right: @base-space;
+						p {
+							-webkit-hyphens:auto;
+							   -moz-hyphens:auto;
+							    -ms-hyphens:auto;
+							        hyphens:auto;
+							word-wrap:break-word;
+							
+						}
 					}
 				}
 				.media {
@@ -167,17 +208,69 @@
 						margin-right: auto;
 						.media-container {
 							display:inline-block;
-							overflow: hidden;
 							line-height:0px;
 							padding:0px;
-							//max-height:400px;
+							max-height:100%;
+							//overflow:hidden;
+							
+							/* MEDIA SHADOWS AND BORDERS
+							================================================== */
+							.media-frame, .media-image img {
+								border: 1px solid;
+								border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
+								background:@color-background;
+							}
+							.soundcloud {
+								border: 0;
+							}
+							.media-image {
+								display: inline-block;
+							}
+							
+							.media-shadow {
+								position: relative;
+								z-index: 1;
+								background:@color-background;
+								
+							}
+							.media-shadow:before, .media-shadow:after {
+								z-index: -1;
+								position: absolute;
+								content: "";
+								bottom: 15px;
+								left: 10px;
+								width: 50%;
+								top: 80%;
+								max-width:300px;
+								background: @color-dark-fourth;
+								-webkit-box-shadow: 0 15px 10px @color-dark-fourth;
+								   -moz-box-shadow: 0 15px 10px @color-dark-fourth;
+								        box-shadow: 0 15px 10px @color-dark-fourth;
+								-webkit-transform: rotate(-2deg);
+								   -moz-transform: rotate(-2deg);
+								     -o-transform: rotate(-2deg);
+								    -ms-transform: rotate(-2deg);
+								        transform: rotate(-2deg);
+							}
+							.media-shadow::after {
+								-webkit-transform: rotate(2deg);
+								   -moz-transform: rotate(2deg);
+								     -o-transform: rotate(2deg);
+								    -ms-transform: rotate(2deg);
+								        transform: rotate(2deg);
+								right: 10px;
+								left: auto;
+							}
+							
+							
 							span.messege {
 								display:block;
 								vertical-align:middle;
 								margin-left:auto;
 								margin-right:auto;
 								text-align:center;
-								margin-top:50%;
+								background:@color-background;
+								//margin-top: 50%;
 								font-size: 28px;
 								font-weight: bold;
 								text-transform: uppercase;
@@ -195,19 +288,131 @@
 									}
 								}
 							}
-							img, iframe {
-								border: 1px solid @color-line;
-								//max-height:350px;
+							.twitter {
+								text-align:left;
+								margin-left: auto;
+								margin-right: auto;
+								margin-bottom:@base-space;
+								clear:both;
+								blockquote {
+									font-size: @base-font;
+									line-height: @base-line;
+									color:@color-feature-description;
+									p {
+										font-size: 28px;
+										line-height: 36px;
+										margin-bottom: 6px;
+										padding-top: 10px;
+										background-color:@white;
+										color:@color-feature-title;
+										//margin-left:10px;
+									}
+									.quote-mark {
+										color:@color-dark-third;
+									}
+								}
+								.created-at {
+									.icon-twitter();
+									width:24px;
+									height:24px;
+									overflow:hidden;
+									margin-left:@base-space;
+									display:inline-block;
+									float:right;
+									.opacity(25);
+								}
+								.created-at:hover {
+									.opacity(100);
+								}
+								.vcard {
+									float:right;
+									margin-bottom:@base-space;
+									//position: relative;
+									a {
+										color: @color-dark-second;
+									}
+									a:hover {
+										text-decoration: none;
+										.fn {
+											text-decoration: underline;
+										}
+									}
+									.fn, .nickname {
+				
+										padding-left: 42px;
+									}
+									.fn {
+										display:block;
+										//display:inline;
+										font-weight: bold;
+
+									}
+									.nickname {
+										margin-top:3px;
+										display:block;
+										color: @color-dark-third;
+									}
+			
+									.avatar {
+										float:left;
+										//position: absolute;
+										display: block;
+										width: 32px;
+										height: 32px;
+										img {
+											//border: 0px solid #999;
+											-moz-border-radius: 5px;
+											-webkit-border-radius: 5px;
+											border-radius: 5px;
+										}
+									}
+								}
+							}
+							.wikipedia {
+								font-size: @base-font;
+								line-height: @base-line;
+								text-align:left;
+								margin-left: auto;
+								margin-right: auto;
+								margin-bottom:@base-space;
+								clear:both;
+								.wiki-source {
+									margin-bottom:@base-space;
+									font-size: 13px;
+									line-height: 19px;
+									font-style: italic;
+								}
+								h4 {
+									border-bottom: 1px solid @color-line;
+									margin-bottom:5px;
+								}
+								h4 a {
+									color: @color-feature-title;
+								}
+								h4 a:hover {
+									color: @color-theme;
+									text-decoration: none;
+								}
+								
+								p {
+									font-size: 13px;
+									line-height: 19px;
+								}
 							}
 							.map {
 								line-height: normal;
-								border: 1px solid @color-line;
 								z-index:200;
 								text-align:left;
 								background-color:@white;
+								
 								img {
 									max-height:none !important;
 									max-width:none !important;
+									border:0;
+									-webkit-box-shadow: none;
+									   -moz-box-shadow: none;
+									        box-shadow: none;
+									
 								}
 								.google-map {
 									height:100%;
@@ -249,18 +454,22 @@
 							.credit {
 								color: @color-credit;
 								text-align: right;
-								font-size: 10px;
-								line-height: 10px;
 								display: block;
 								margin: 0 auto;
-								margin-top:4px;
+								margin-top:6px;
+								.text-font(@base-font-small - 1);
+								//max-height:16px;
+								//overflow:auto;
 							}
 							.caption {
 								text-align:left;
-								margin-top:10px;
+								margin-top:@base-font-small - 1;
 								color: @color-caption;
-								font-size: 11px;
-								line-height: 14px;
+								.text-font(@base-font-small);
+								text-rendering: optimizeLegibility;
+								//max-height:45px;
+								//overflow-x:hidden;
+								//overflow-y:auto;
 							}
 						}
 					}
@@ -272,6 +481,27 @@
 							background-color: @white;
 						}
 					}
+				}
+			}
+			
+			
+			/* Text and Media Slides
+			================================================== */
+			
+			.content-container.layout-text-media {
+				.text-media {
+					border-top: 1px solid @color-dark-fifth;
+					padding-top:@base-space;
+					padding-right:0;
+				}
+				
+			}
+			.content-container.layout-text-media.pad-left {
+				.text-media {
+					padding-right:@base-space;
+					padding-top:0;
+					border-right: 1px solid @color-dark-fifth;
+					border-top: 0px solid @color-dark-fifth;
 				}
 			}
 			
@@ -322,12 +552,16 @@
 						.media-container {
 							margin-left: auto;
 							margin-right: auto;
-							overflow: hidden;
+							//overflow: hidden;
 							line-height:0px;
 							padding:0px;
+							
 						}
 						
 					}
+				}
+				.twitter, .wikipedia {
+					max-width:70%;
 				}
 			}
 		}

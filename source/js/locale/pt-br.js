@@ -25,7 +25,7 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Carregando Timeline... ",
 			return_to_title: "Voltar para o título",
 			expand_timeline: "Expandir Timeline",
-			contract_timeline: "Contratar Timeline"
+			contract_timeline: "Contrair Timeline"
 		}
 	}
 }

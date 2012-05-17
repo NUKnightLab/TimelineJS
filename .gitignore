@@ -1,12 +1,16 @@
 *.DS_Store
 .DS_Store*
-
 dev_examples/
 cdn/
-*.tmproj
-
-*.tmproject
+<<<<<<< HEAD
+=======
 VMM.Timeline.CDN.js
+>>>>>>> Canary
+*.tmproj
+*.tmproject
+<<<<<<< HEAD
+VMM.Timeline.CDN.js
+=======
+>>>>>>> Canary
 tmtags
-
 source/gfx/Sprites/

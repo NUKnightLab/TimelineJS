@@ -53,6 +53,7 @@
 @base-line: 					20px;
 @base-space: 					15px;
 @base-font-small: 				11px;
+@base-thumb: 					24px;
 
 /* FEATURE SIZES
 ================================================== */
@@ -69,3 +70,23 @@
 @navigation-time-height: 		50px;
 @navigation-content-height: 	@navigation-height - @navigation-time-height;
 @navigation-marker-height:		6px;
+
+/* MIXINS
+================================================== */
+.box-shadow(@shadow: 1px 1px 7px rgba(0,0,0,.30)) {
+  -webkit-box-shadow: @shadow;
+     -moz-box-shadow: @shadow;
+          box-shadow: @shadow;
+}
+.media-shadow(@shadow: 0 1px 3px 0px @color-dark-fourth) {
+	-webkit-box-shadow: @shadow;
+	   -moz-box-shadow: @shadow;
+	        box-shadow: @shadow;
+	border: 1px solid;
+	border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
+}
+.text-font(@fontsize: 15px) {
+	font-size: @fontsize;
+	line-height: round((@fontsize/100) * 130);
+}
+

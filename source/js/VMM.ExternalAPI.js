@@ -18,6 +18,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.googledocs.active) {
 				VMM.ExternalAPI.googledocs.pushQue();
 			}
+			if (VMM.master_config.wikipedia.active) {
+				VMM.ExternalAPI.wikipedia.pushQue();
+			}
+			if (VMM.master_config.vimeo.active) {
+				VMM.ExternalAPI.vimeo.pushQue();
+			}
 			
 		},
 		
@@ -506,7 +512,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
 			},
@@ -516,22 +521,45 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var id = "flickr_" + flickr_id;
 				var flickr_large_id = id + "_large";
 				var flickr_thumb_id = id + "_thumb";
-				// FIND LARGE SIZE
-				var flickr_img_large;
-				var flickr_large_found = false;
+				var flickr_img_size, flickr_img_thumb, flickr_size_found = false;
+				var flickr_best_size = "Large";
+				
+				flickr_best_size = VMM.ExternalAPI.flickr.sizes(VMM.master_config.sizes.api.height);
+				
 				for(var i = 0; i < d.sizes.size.length; i++) {
-					if (d.sizes.size[i].label == "Large") {
-						flickr_large_found = true;
-						flickr_img_large = d.sizes.size[i].source;
+					if (d.sizes.size[i].label == flickr_best_size) {
+						flickr_size_found = true;
+						flickr_img_size = d.sizes.size[i].source;
 					}
 				}
-				if (!flickr_large_found) {
-					flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				if (!flickr_size_found) {
+					flickr_img_size = d.sizes.size[d.sizes.size.length - 1].source;
 				}
 				
-				var flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
-				VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+				flickr_img_thumb = d.sizes.size[0].source;
+				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
+				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+			},
+			
+			sizes: function(s) {
+				var _size = "";
+				if (s <= 75) {
+					_size = "Thumbnail";
+				} else if (s <= 180) {
+					_size = "Small";
+				} else if (s <= 240) {
+					_size = "Small 320";
+				} else if (s <= 375) {
+					_size = "Medium";
+				} else if (s <= 480) {
+					_size = "Medium 640";
+				} else if (s <= 600) {
+					_size = "Medium 800";
+				} else {
+					_size = "Large";
+				}
+				
+				return _size;
 			}
 			
 		},
@@ -561,28 +589,46 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		},
 		
 		wikipedia: {
-			//http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=Beastie%20Boys&format=json&exintro=1
 			
 			get: function(url, id) {
+				trace("WIKIPEDIA GET");
 				var api_obj = {url: url, id: id};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
 			},
 			
 			create: function(api_obj) {
-				VMM.attachElement("#"+api_obj.id, api_obj.url);
-				/*
-				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + wiki.url + "&format=json&exintro=1&callback=?";
+				
+				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + api_obj.url + "&format=json&exintro=1&callback=?";
 				VMM.getJSON(the_url, function(d) {
-					if (d.query.pages[0].extract.match("REDIRECT")) {
-						
+					var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
+					var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
+					var _wiki = "";
+					var wiki_text = "";
+					var wiki_text_array = wiki_extract.split("<p>");
+					var wiki_number_of_paragraphs = 1;
+					
+					for(var i = 0; i < wiki_text_array.length; i++) {
+						if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {
+							wiki_text	+= "<p>" + wiki_text_array[i+1];
+						}
 					}
-					VMM.attachElement("#"+wiki.id, d.html);
+					
+					_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
+					_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+					_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
+					
+					if (wiki_extract.match("REDIRECT")) {
+						
+					} else {
+						VMM.attachElement("#"+api_obj.id, _wiki );
+					}
 				});
-				*/
+				
 			},
 			
 			pushQue: function() {
+				trace("WIKIPEDIA PUSH QUE");
 				for(var i = 0; i < VMM.master_config.wikipedia.que.length; i++) {
 					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[i]);
 				}
@@ -594,6 +640,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		youtube: {
 			
 			get: function(id) {
+				var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=jsonc&callback=?";
+				
 				if (VMM.master_config.youtube.active) {
 					VMM.master_config.youtube.que.push(id);
 				} else {
@@ -604,6 +652,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						});
 					}
 				}
+				
+				// THUMBNAIL
+				VMM.getJSON(url, VMM.ExternalAPI.youtube.createThumb);
 			},
 			
 			create: function(id) {
@@ -633,6 +684,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				});
 				
 				VMM.master_config.youtube.array.push(p);
+			},
+			
+			createThumb: function(d) {
+		        trace(d.data.id);
+				trace(d.data.thumbnail.sqDefault);
+				var thumb_id = "youtube_" + d.data.id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 			},
 			
 			pushQue: function() {
@@ -671,6 +729,35 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			}
 			
+			
+		},
+		
+		vimeo: {
+			
+			get: function(id) {
+				VMM.master_config.vimeo.que.push(id);
+				VMM.master_config.vimeo.active = true;
+			},
+			
+			create: function(d) {
+				trace("VIMEO CREATE");
+				// THUMBNAIL
+				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
+				VMM.getJSON(url, VMM.ExternalAPI.vimeo.createThumb);
+			},
+			
+			createThumb: function(d) {
+				trace("VIMEO CREATE THUMB");
+				var thumb_id = "vimeo_" + d[0].id + "_thumb";
+				VMM.attachElement("#" + thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
+			},
+			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.vimeo.que.length; i++) {
+					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[i]);
+				}
+				VMM.master_config.vimeo.que = [];
+			}
 			
 		}
 	

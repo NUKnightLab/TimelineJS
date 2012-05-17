@@ -20,7 +20,7 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "Embed.LoadLib.js";
+// @codekit-prepend "lib/Embed.LoadLib.js";
 
 
 /* TIMELINE CDN LOADER
@@ -109,7 +109,7 @@
 	var isReady			=	false;
 	var preload_checks	=	0;
 	var timeout;
-	var timeline;
+	var timelinejs;
 	
 	/* Add Timeline Div
 	================================================== */
@@ -150,7 +150,7 @@
 		/* Load Font CSS
 		================================================== */
 
-		if (embed_config.font.match("http://")) {
+		if (embed_config.font.match("/")) {
 			font_css_url = embed_config.font;
 		} else {
 			font_css_url = font_css_url + embed_config.font + ".css";
@@ -270,8 +270,9 @@
 			if (jsReady && cssReady && fontCSSReady && fontJSReady) {
 				if (!isReady) {
 					isReady = true;
-					timeline = new VMM.Timeline();
-					timeline.init(embed_config.source);
+					
+					timelinejs = new VMM.Timeline();
+					timelinejs.init(embed_config.source);
 				}
 			} else {
 				//alert("run timeout");

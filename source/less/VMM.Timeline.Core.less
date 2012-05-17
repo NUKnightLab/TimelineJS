@@ -15,10 +15,10 @@
 	-webkit-border-radius: 10px;
      -moz-border-radius: 10px;
           border-radius: 10px;
-	-moz-box-shadow: 0 1px 3px rgba(0,0,0,.25);
-		-webkit-box-shadow: 0 1px 3px rgba(0,0,0,.25);
-		box-shadow: 1px 2px 6px rgba(0,0,0,.25);
-		
+
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,.35);
+	   -moz-box-shadow: 1px 1px 3px rgba(0,0,0,.35);
+	        box-shadow: 1px 1px 3px rgba(0,0,0,.35);
 } 
 
 /* TIMELINE
@@ -55,7 +55,6 @@
 			z-index:10;
 			padding-top:@base-space;
 			.box-shadow();
-			
 		}
 	}
 	
@@ -125,98 +124,14 @@
 		color:@color-theme-dark;
 		text-decoration: underline;
 	}
-	.twitter {
-		text-align:left;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom:@base-space;
-		clear:both;
-		blockquote {
-			font-size: @base-font;
-			line-height: @base-line;
-			color:@color-feature-description;
-			p {
-				font-size: 28px;
-				line-height: 36px;
-				margin-bottom: 6px;
-				padding-top: 10px;
-				background-color:@white;
-				color:@color-feature-title;
-				//margin-left:10px;
-			}
-			.quote-mark {
-				color:@color-dark-third;
-			}
-		}
-		.created-at {
-			.icon-twitter();
-			width:24px;
-			height:24px;
-			overflow:hidden;
-			margin-left:@base-space;
-			display:inline-block;
-			float:right;
-			.opacity(25);
-		}
-		.created-at:hover {
-			.opacity(100);
-		}
-		.vcard {
-			float:right;
-			margin-bottom:@base-space;
-			//position: relative;
-			a {
-				color: @color-dark-second;
-			}
-			a:hover {
-				text-decoration: none;
-				.fn {
-					text-decoration: underline;
-				}
-			}
-			.fn, .nickname {
-				
-				padding-left: 42px;
-			}
-			.fn {
-				display:block;
-				//display:inline;
-				font-weight: bold;
-
-			}
-			.nickname {
-				margin-top:3px;
-				display:block;
-				color: @color-dark-third;
-			}
-			
-			.avatar {
-				float:left;
-				//position: absolute;
-				display: block;
-				width: 32px;
-				height: 32px;
-				img {
-					//border: 0px solid #999;
-					-moz-border-radius: 5px;
-					-webkit-border-radius: 5px;
-					border-radius: 5px;
-				}
-			}
-		}
-		
-
-	}
 	
-	.layout-media {
-		.twitter {
-			max-width:70%;
-		}
-	}
+	
+	
+	
 	
 	.thumbnail {
-		width:24px;
-		height:24px;
+		width:@base-thumb;
+		height:@base-thumb;
 		overflow:hidden;
 		float:left;
 		margin-right:1px;

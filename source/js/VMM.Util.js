@@ -8,7 +8,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return this;
 		},
 		
-		/* CORRECT PROTOCOL
+		/* CORRECT PROTOCOL (DOES NOT WORK)
 		================================================== */
 		correctProtocol: function(url) {
 			var loc = (window.parent.location.protocol).toString();
@@ -24,7 +24,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return prefix + "://" + _url[1];
 			
 		},
-
+		
+		/* GET OBJECT ATTRIBUTE BY INDEX
+		================================================== */
+		getObjectAttributeByIndex: function(obj, index) {
+			var i = 0;
+			for (var attr in obj){
+				if (index === i){
+					return obj[attr];
+				}
+				i++;
+			}
+			return null;
+		},
 		/* RANDOM BETWEEN
 		================================================== */
 		//VMM.Util.randomBetween(1, 3)
@@ -213,7 +225,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						_date.setMinutes(0);
 						_date.setSeconds(0);
 						_date.setMilliseconds(0);
-					}else {
+					} else {
 						_date = new Date(
 							parseInt(d.slice(0,4)), 
 							parseInt(d.slice(4,6)) - 1, 
@@ -404,6 +416,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank' 'void(0)'>$1</a>");
 		},
 		
+		linkify_wikipedia: function(text) {
+			
+			var urlPattern = /<i[^>]*>(.*?)<\/i>/gim;
+			return text
+				.replace(urlPattern, "<a target='_blank' href='http://en.wikipedia.org/wiki/$&' onclick='void(0)'>$&</a>")
+				.replace(/<i\b[^>]*>/gim, "")
+				.replace(/<\/i>/gim, "");
+		},
 		/* Turns plain text links into real links
 		================================================== */
 		// VMM.Util.unlinkify();

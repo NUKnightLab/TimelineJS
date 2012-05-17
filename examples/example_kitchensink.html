@@ -2,12 +2,9 @@
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title>Language Example Embed Timeline</title>
-		
-		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-		<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+		<title>Kitchen Sink Timeline</title>
+		<meta name="description" content="TimelineJS example">
+
 		<style>
 			html, body {
 				height:100%;
@@ -27,7 +24,7 @@
 			}
 			
 		</style>
-
+		
 	</head>
 
 	<body>
@@ -35,13 +32,16 @@
 		<div id="timeline-embed"></div>
 		<script type="text/javascript">
 		    var timeline_config = {
-				width: "100%",
+				width: 	"100%",
 				height: "100%",
-				source: 'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadHdKcHlHcTB5bzhvbF9iTWwyMmJHdkE&output=html',
-				js: 'http://veritetimeline.appspot.com/latest/locale/fr.js' // FRENCH
+				source: 'example_kitchensink.json',
+				//start_at_end:	true,								//OPTIONAL
+				//hash_bookmark: true,								//OPTIONAL
+				css: 	'../compiled/css/timeline.css',				//OPTIONAL
+				js: 	'../compiled/js/timeline-min.js'				//OPTIONAL
 			}
 		</script>
-		<script type="text/javascript" src="../timeline-embed.js"></script>
+		<script type="text/javascript" src="../compiled/js/timeline-embed.js"></script>
 		<!-- END Timeline Embed -->
 	</body>
 </html>

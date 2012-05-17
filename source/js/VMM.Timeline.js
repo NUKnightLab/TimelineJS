@@ -19,9 +19,7 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-
 // @codekit-prepend "VMM.Timeline.License.js";
-
 // @codekit-prepend "VMM.js";
 // @codekit-prepend "VMM.Library.js";
 // @codekit-prepend "VMM.Browser.js";
@@ -44,6 +42,9 @@
 // @codekit-prepend "lib/AES.js";
 // @codekit-prepend "lib/bootstrap-tooltip.js";
 
+
+
+
 /* Timeline
 ================================================== */
 
@@ -61,13 +62,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.10";
+		version = 					"1.30";
 		
 		trace("TIMELINE VERSION " + version);
 		
 		/* CONFIG
 		================================================== */
 		config = {
+			embed:					false,
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
@@ -219,7 +221,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 
 		function onDataReady(e, d) {
-			
+			trace("onDataReady");
+			trace(d);
 			data = d.timeline;
 			
 			if (type.of(data.era) == "array") {
@@ -320,7 +323,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					trace("GET DATA 1")
 					VMM.Timeline.DataObj.getData(_data);
 				} else {
 					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
@@ -332,6 +334,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		this.iframeLoaded = function() {
 			trace("iframeLoaded");
 		};
+		
+		this.reload = function(_d) {
+			trace("loadNewDates" + _d);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			data = {};
+			VMM.Timeline.DataObj.getData(_d);
+		}
 		
 		/* DATA 
 		================================================== */
@@ -406,7 +415,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var buildDates = function() {
 			
 			updateSize();
-			
+			_dates = [];
 			VMM.fireEvent(global, "MESSEGE", "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
@@ -445,6 +454,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate			=	_date.startdate.getTime();
 					_date.text				=	data.date[i].text;
 					_date.content			=	"";
+<<<<<<< HEAD
+=======
+					
+>>>>>>> Canary
 					
 					_dates.push(_date);
 					
@@ -465,9 +478,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _date		=	{};
 				var td_num		=	0;
 				var td			=	_dates[0].startdate;
-				_date.startdate =	_dates[0].startdate;
-				trace(_dates[0].startdate);
-				trace(_date.startdate);
+				_date.startdate =	new Date(_dates[0].startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -495,6 +506,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
 				_date.asset		=	data.asset;
 				_date.fulldate	=	_date.startdate.getTime();
+				
+				if (config.embed) {
+					document.title = _date.headline;
+				}
 				
 				_dates.push(_date);
 			}

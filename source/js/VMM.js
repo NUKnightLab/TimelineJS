@@ -103,6 +103,13 @@ if (typeof VMM == 'undefined') {
 			return this;
 		},
 		
+		sizes: {
+			api: {
+				width:			0,
+				height:			0
+			}
+		},
+		
 		vp:				"Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
 		
 		api_keys_master: {
@@ -111,7 +118,21 @@ if (typeof VMM == 'undefined') {
 			twitter:	""
 		},
 		
+		flickr: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		youtube: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
+		vimeo: {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
@@ -168,7 +189,7 @@ if (typeof VMM == 'undefined') {
 			};
 			
 			if (styles != null && styles != "") {
-				ce += " " + styles;
+				ce += " style='" + styles + "'";
 			};
 			
 			ce += ">";
