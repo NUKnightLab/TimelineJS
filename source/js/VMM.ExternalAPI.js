@@ -512,7 +512,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
 			},
@@ -522,23 +521,45 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var id = "flickr_" + flickr_id;
 				var flickr_large_id = id + "_large";
 				var flickr_thumb_id = id + "_thumb";
-				// FIND LARGE SIZE
-				var flickr_img_large;
-				var flickr_large_found = false;
+				var flickr_img_size, flickr_img_thumb, flickr_size_found = false;
+				var flickr_best_size = "Large";
+				
+				flickr_best_size = VMM.ExternalAPI.flickr.sizes(VMM.master_config.sizes.api.height);
+				
 				for(var i = 0; i < d.sizes.size.length; i++) {
-					if (d.sizes.size[i].label == "Large") {
-						flickr_large_found = true;
-						flickr_img_large = d.sizes.size[i].source;
+					if (d.sizes.size[i].label == flickr_best_size) {
+						flickr_size_found = true;
+						flickr_img_size = d.sizes.size[i].source;
 					}
 				}
-				if (!flickr_large_found) {
-					flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				if (!flickr_size_found) {
+					flickr_img_size = d.sizes.size[d.sizes.size.length - 1].source;
 				}
 				
-				var flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
+				flickr_img_thumb = d.sizes.size[0].source;
+				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
 				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
-				//VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+			},
+			
+			sizes: function(s) {
+				var _size = "";
+				if (s <= 75) {
+					_size = "Thumbnail";
+				} else if (s <= 180) {
+					_size = "Small";
+				} else if (s <= 240) {
+					_size = "Small 320";
+				} else if (s <= 375) {
+					_size = "Medium";
+				} else if (s <= 480) {
+					_size = "Medium 640";
+				} else if (s <= 600) {
+					_size = "Medium 800";
+				} else {
+					_size = "Large";
+				}
+				
+				return _size;
 			}
 			
 		},
