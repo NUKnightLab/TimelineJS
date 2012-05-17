@@ -36,7 +36,6 @@ if (typeof VMM.Slider != 'undefined') {
 			if(typeof p != 'undefined') {
 				VMM.Lib.css(element, "left", p);
 			} else {
-				trace("LEFT: " + VMM.Lib.position(element).left);
 				return VMM.Lib.position(element).left
 			}
 		};
@@ -60,6 +59,16 @@ if (typeof VMM.Slider != 'undefined') {
 		this.height = function() {
 			return VMM.Lib.height(element);
 		};
+		
+		this.content_height = function () {
+			var ch = VMM.Lib.find( element, ".content")[0];
+			
+			if (ch != 'undefined' && ch != null) {
+				return VMM.Lib.height(ch);
+			} else {
+				return 0;
+			}
+		}
 		
 		/* PRIVATE
 		================================================== */
@@ -132,7 +141,13 @@ if (typeof VMM.Slider != 'undefined') {
 			if (c.has.text)	{ c.layout		+=	"-text"		};
 			if (c.has.media){ c.layout		+=	"-media"	};
 			
-			c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			//c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			if (c.has.text)	{
+				c.slide = VMM.createElement("div", c.media + c.text, c.layout + " pad-left");
+			} else {
+				c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			}
+			
 			c_wrap = VMM.createElement("div", c.slide, "content");
 			
 			/* RETURN

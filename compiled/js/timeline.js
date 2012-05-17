@@ -125,12 +125,26 @@ if (typeof VMM == 'undefined') {
 			return this;
 		},
 		
+		sizes: {
+			api: {
+				width:			0,
+				height:			0
+			}
+		},
+		
 		vp:				"Pellentesque nibh felis, eleifend id, commodo in, interdum vitae, leo",
 		
 		api_keys_master: {
 			flickr:		"RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
 			google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo=",
 			twitter:	""
+		},
+		
+		flickr: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
 		},
 		
 		youtube: {
@@ -197,7 +211,7 @@ if (typeof VMM == 'undefined') {
 			};
 			
 			if (styles != null && styles != "") {
-				ce += " " + styles;
+				ce += " style='" + styles + "'";
 			};
 			
 			ce += ">";
@@ -1111,28 +1125,28 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				}
 			// IMAGE
 				if (m.type				==	"image") {
-					mediaElem			=	"<img src='" + m.id + "'>";
+					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
 			// FLICKR
 				} else if (m.type		==	"flickr") {
 					_id					=	"flickr_" + m.id;
-					mediaElem			=	"<a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a>";
+					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
 					VMM.ExternalAPI.flickr.get(m.id, "#" + _id);
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
 					VMM.ExternalAPI.googledocs.get(m.id, _id);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div>";
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
 					VMM.ExternalAPI.youtube.get(m.id);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
-					mediaElem			=	"<iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe>";
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
 					VMM.ExternalAPI.vimeo.get(m.id);
 			// DAILYMOTION
 				} else if (m.type		==	"dailymotion") {
-					mediaElem			=	"<iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe>";
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
 					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
@@ -1140,29 +1154,32 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					VMM.ExternalAPI.twitter.prettyHTML(m.id);
 			// TWITTER
 				} else if (m.type		==	"twitter-ready") {
+					isTextMedia			=	true;
 					mediaElem			=	m.id;
 			// SOUNDCLOUD
 				} else if (m.type		==	"soundcloud") {
 					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
 					VMM.ExternalAPI.soundcloud.get(m.id, _id);
 			// GOOGLE MAPS
 				} else if (m.type		==	"google-map") {
 					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
 					VMM.ExternalAPI.googlemaps.get(m.id, _id);
 			// WIKIPEDIA
 				} else if (m.type		==	"wikipedia") {
 					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
 					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
+					isTextMedia			=	true;
 					VMM.ExternalAPI.wikipedia.get(m.id, _id);
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
+					isTextMedia			=	true;
 					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
 			// WEBSITE
 				} else if (m.type		==	"website") { 
-					mediaElem			=	"<iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe>";
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe></div>";
 					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
 			// NO MATCH
 				} else {
@@ -2011,7 +2028,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				
 				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + mid + "&format=json&jsoncallback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
 			},
@@ -2021,23 +2037,45 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var id = "flickr_" + flickr_id;
 				var flickr_large_id = id + "_large";
 				var flickr_thumb_id = id + "_thumb";
-				// FIND LARGE SIZE
-				var flickr_img_large;
-				var flickr_large_found = false;
+				var flickr_img_size, flickr_img_thumb, flickr_size_found = false;
+				var flickr_best_size = "Large";
+				
+				flickr_best_size = VMM.ExternalAPI.flickr.sizes(VMM.master_config.sizes.api.height);
+				
 				for(var i = 0; i < d.sizes.size.length; i++) {
-					if (d.sizes.size[i].label == "Large") {
-						flickr_large_found = true;
-						flickr_img_large = d.sizes.size[i].source;
+					if (d.sizes.size[i].label == flickr_best_size) {
+						flickr_size_found = true;
+						flickr_img_size = d.sizes.size[i].source;
 					}
 				}
-				if (!flickr_large_found) {
-					flickr_img_large = d.sizes.size[d.sizes.size.length - 1].source;
+				if (!flickr_size_found) {
+					flickr_img_size = d.sizes.size[d.sizes.size.length - 1].source;
 				}
 				
-				var flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_large);
+				flickr_img_thumb = d.sizes.size[0].source;
+				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
 				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
-				//VMM.Lib.attr("#"+flickr_thumb_id, "src", flickr_img_thumb);
+			},
+			
+			sizes: function(s) {
+				var _size = "";
+				if (s <= 75) {
+					_size = "Thumbnail";
+				} else if (s <= 180) {
+					_size = "Small";
+				} else if (s <= 240) {
+					_size = "Small 320";
+				} else if (s <= 375) {
+					_size = "Medium";
+				} else if (s <= 480) {
+					_size = "Medium 640";
+				} else if (s <= 600) {
+					_size = "Medium 800";
+				} else {
+					_size = "Large";
+				}
+				
+				return _size;
 			}
 			
 		},
@@ -2890,7 +2928,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		var preloadTimeOutSlides = function() {
 			for(var j = 0; j < config.preload; j++) {
-				if ( !((current_slide + j) >= slides.length - 1)) {
+				if ( !((current_slide + j) > slides.length - 1)) {
 					slides[current_slide + j].show();
 				}
 				if ( !( (current_slide - j) < 0 ) ) {
@@ -2926,6 +2964,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				}
 			}
 			
+			VMM.master_config.sizes.api.width = mediasize.media.width;
+			VMM.master_config.sizes.api.height = mediasize.media.height;
+			
 			mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
 			mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 			
@@ -2958,20 +2999,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
 				
 				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "none" );
+				VMM.Lib.addClass(".slider-item .content-container", "pad-top");
 				
 				VMM.Lib.css(".slider-item .media blockquote p", "line-height", "18px" );
 				VMM.Lib.css(".slider-item .media blockquote p", "font-size", "16px" );
 				
 				VMM.Lib.css(".slider-item", "overflow-y", "auto" );
 				
-				// MAINTAINS VERTICAL CENTER IF IT CAN
-				for(var i = 0; i < slides.length; i++) {
-					if (VMM.Lib.height(VMM.Lib.find( slides[i], ".content")) > config.slider.height) {
-						slides[i].css("display", "block");
-					} else {
-						slides[i].css("display", "table");
-					}
-				}
 				
 			} else {
 				
@@ -2979,6 +3013,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", "auto" );
+				
+				//VMM.Lib.addClass(".slider-item .content-container", "pad-left");
+				VMM.Lib.removeClass(".slider-item .content-container", "pad-top");
 				
 				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "left" );
 				VMM.Lib.css(".slider-item .layout-text-media", "display", "table" );
@@ -3030,7 +3067,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
 			VMM.Lib.height(	layout_media + 		".doc", 								mediasize.media.height);
 			
-			trace(mediasize);
+			// MAINTAINS VERTICAL CENTER IF IT CAN
+			for(var i = 0; i < slides.length; i++) {
+				if (slides[i].content_height() > config.slider.height + 20) {
+					slides[i].css("display", "block");
+				} else {
+					slides[i].css("display", "table");
+				}
+			}
+			
 		}
 		
 		/* POSITION SLIDES
@@ -3039,7 +3084,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
-				//VMM.Lib.css(slides[i], "left", pos);
 				slides[i].leftpos(pos);
 			}
 		}
@@ -3050,13 +3094,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _ease = "linear";
 			for(var i = 0; i < slides.length; i++) {
 				if (i == current_slide) {
-					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 1});
 					slides[i].animate(config.duration, _ease, {"opacity": 1});
 				} else if (i == current_slide - 1 || i == current_slide + 1) {
-					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 0.1});
 					slides[i].animate(config.duration, _ease, {"opacity": 0.1});
 				} else {
-					//VMM.Lib.css(slides[i], "opacity", n);	
 					slides[i].opacity(n);
 				}
 			}
@@ -3080,7 +3121,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var is_first = false;
 			var _pos = slides[current_slide].leftpos();
 			var _title = "";
-			//var _pos = VMM.Lib.position(slides[current_slide]);
 			
 			if (current_slide == 0) {is_first = true};
 			if (current_slide +1 >= slides.length) {is_last = true};
@@ -3089,7 +3129,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* set proper nav titles and dates etc.
 			================================================== */
-			trace(data[current_slide]);
 			if (is_first) {
 				VMM.Lib.visible(navigation.prevBtn, false);
 			} else {
@@ -3142,8 +3181,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* SET Vertical Scoll
 			================================================== */
-			//opacitySlides(0.85);
-			//if (VMM.Lib.height(slides[current_slide]) > config.slider_height) {
 			if (slides[current_slide].height() > config.slider_height) {
 				VMM.Lib.css(".slider", "overflow-y", "scroll" );
 			} else {
@@ -3152,7 +3189,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			preloadSlides();
-			//VMM.Lib.css(navigation.nextBtnContainer, "left", ( VMM.Lib.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
 		/* BUILD NAVIGATION
@@ -3273,7 +3309,6 @@ if (typeof VMM.Slider != 'undefined') {
 			if(typeof p != 'undefined') {
 				VMM.Lib.css(element, "left", p);
 			} else {
-				trace("LEFT: " + VMM.Lib.position(element).left);
 				return VMM.Lib.position(element).left
 			}
 		};
@@ -3297,6 +3332,16 @@ if (typeof VMM.Slider != 'undefined') {
 		this.height = function() {
 			return VMM.Lib.height(element);
 		};
+		
+		this.content_height = function () {
+			var ch = VMM.Lib.find( element, ".content")[0];
+			
+			if (ch != 'undefined' && ch != null) {
+				return VMM.Lib.height(ch);
+			} else {
+				return 0;
+			}
+		}
 		
 		/* PRIVATE
 		================================================== */
@@ -3369,7 +3414,13 @@ if (typeof VMM.Slider != 'undefined') {
 			if (c.has.text)	{ c.layout		+=	"-text"		};
 			if (c.has.media){ c.layout		+=	"-media"	};
 			
-			c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			//c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			if (c.has.text)	{
+				c.slide = VMM.createElement("div", c.media + c.text, c.layout + " pad-left");
+			} else {
+				c.slide = VMM.createElement("div", c.text + c.media, c.layout);
+			}
+			
 			c_wrap = VMM.createElement("div", c.slide, "content");
 			
 			/* RETURN
@@ -3577,7 +3628,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 					var _d_array; // DATE ARRAY
 					var _t_array; // TIME ARRAY
 					if ( d.match(/,/gi) ) {
-						trace("DATE HAS ,");
 						_d_array = d.split(",");
 						for(var i = 0; i < _d_array.length; i++) {
 							_d_array[i] = parseInt(_d_array[i]);
@@ -3590,7 +3640,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
 						if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
 					} else if (d.match("/")) {
-						trace("DATE HAS /");
 						var _time_parse;
 						var _times;
 						if (d.match(" ")) {
@@ -5544,7 +5593,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.20";
+		version = 					"1.25";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6109,6 +6158,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function reSize(firstrun) {
 			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
+			VMM.Lib.css($timenavindicator, "left", Math.round(config.width/2)-8);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
 		};
 		
@@ -7225,7 +7275,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					_date.startDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
 
 					if (VMM.Lib.find(this, "time")[1]) {
-						_date.endDate = VMM.Lib.html(VMM.Lib.find(this, "time")[0]);
+						_date.endDate = VMM.Lib.html(VMM.Lib.find(this, "time")[1]);
 					}
 
 					_date.headline = VMM.Lib.html(VMM.Lib.find(this, "h3"));

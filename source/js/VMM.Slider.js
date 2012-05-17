@@ -285,7 +285,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		var preloadTimeOutSlides = function() {
 			for(var j = 0; j < config.preload; j++) {
-				if ( !((current_slide + j) >= slides.length - 1)) {
+				if ( !((current_slide + j) > slides.length - 1)) {
 					slides[current_slide + j].show();
 				}
 				if ( !( (current_slide - j) < 0 ) ) {
@@ -321,6 +321,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				}
 			}
 			
+			VMM.master_config.sizes.api.width = mediasize.media.width;
+			VMM.master_config.sizes.api.height = mediasize.media.height;
+			
 			mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
 			mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 			
@@ -353,20 +356,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
 				
 				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "none" );
+				VMM.Lib.addClass(".slider-item .content-container", "pad-top");
 				
 				VMM.Lib.css(".slider-item .media blockquote p", "line-height", "18px" );
 				VMM.Lib.css(".slider-item .media blockquote p", "font-size", "16px" );
 				
 				VMM.Lib.css(".slider-item", "overflow-y", "auto" );
 				
-				// MAINTAINS VERTICAL CENTER IF IT CAN
-				for(var i = 0; i < slides.length; i++) {
-					if (VMM.Lib.height(VMM.Lib.find( slides[i], ".content")) > config.slider.height) {
-						slides[i].css("display", "block");
-					} else {
-						slides[i].css("display", "table");
-					}
-				}
 				
 			} else {
 				
@@ -374,6 +370,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", "auto" );
+				
+				//VMM.Lib.addClass(".slider-item .content-container", "pad-left");
+				VMM.Lib.removeClass(".slider-item .content-container", "pad-top");
 				
 				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "left" );
 				VMM.Lib.css(".slider-item .layout-text-media", "display", "table" );
@@ -425,7 +424,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
 			VMM.Lib.height(	layout_media + 		".doc", 								mediasize.media.height);
 			
-			trace(mediasize);
+			// MAINTAINS VERTICAL CENTER IF IT CAN
+			for(var i = 0; i < slides.length; i++) {
+				if (slides[i].content_height() > config.slider.height + 20) {
+					slides[i].css("display", "block");
+				} else {
+					slides[i].css("display", "table");
+				}
+			}
+			
 		}
 		
 		/* POSITION SLIDES
@@ -434,7 +441,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
-				//VMM.Lib.css(slides[i], "left", pos);
 				slides[i].leftpos(pos);
 			}
 		}
@@ -445,13 +451,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _ease = "linear";
 			for(var i = 0; i < slides.length; i++) {
 				if (i == current_slide) {
-					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 1});
 					slides[i].animate(config.duration, _ease, {"opacity": 1});
 				} else if (i == current_slide - 1 || i == current_slide + 1) {
-					//VMM.Lib.animate(slides[i], config.duration, _ease, {"opacity": 0.1});
 					slides[i].animate(config.duration, _ease, {"opacity": 0.1});
 				} else {
-					//VMM.Lib.css(slides[i], "opacity", n);	
 					slides[i].opacity(n);
 				}
 			}
@@ -475,7 +478,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var is_first = false;
 			var _pos = slides[current_slide].leftpos();
 			var _title = "";
-			//var _pos = VMM.Lib.position(slides[current_slide]);
 			
 			if (current_slide == 0) {is_first = true};
 			if (current_slide +1 >= slides.length) {is_last = true};
@@ -484,7 +486,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* set proper nav titles and dates etc.
 			================================================== */
-			trace(data[current_slide]);
 			if (is_first) {
 				VMM.Lib.visible(navigation.prevBtn, false);
 			} else {
@@ -537,8 +538,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* SET Vertical Scoll
 			================================================== */
-			//opacitySlides(0.85);
-			//if (VMM.Lib.height(slides[current_slide]) > config.slider_height) {
 			if (slides[current_slide].height() > config.slider_height) {
 				VMM.Lib.css(".slider", "overflow-y", "scroll" );
 			} else {
@@ -547,7 +546,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			preloadSlides();
-			//VMM.Lib.css(navigation.nextBtnContainer, "left", ( VMM.Lib.width(navigation.nextBtnContainer) - config.slider.nav.width) );
 		}
 
 		/* BUILD NAVIGATION

@@ -137,16 +137,39 @@
 		margin:0px;
 		//overflow: hidden;
 		display:table;
+		overflow-x:hidden;
+		overflow-y:auto;
+		
 		.content {
 			display:table-cell;
-			vertical-align:middle;			
+			vertical-align:middle;
+			
 			/* All Slides
 			================================================== */
+			.pad-top {
+				.text {
+					.container {
+						padding-top: @base-space;
+					}
+				}
+			}
+			.pad-right {
+				.text {
+					.container {
+						padding-right: @base-space;
+					}
+				}
+			}
+			.pad-left {
+				.text {
+					.container {
+						padding-left: @base-space*2;
+					}
+				}
+			}
 			.content-container {
 				display:table;
 				vertical-align:middle;
-				
-				
 				.text {
 					width:40%;
 					max-width:50%;
@@ -157,7 +180,11 @@
 						display:table-cell;
 						vertical-align:middle;
 						text-align:left;
-						padding-right: @base-space;
+						-webkit-hyphens:auto;
+						   -moz-hyphens:auto;
+						    -ms-hyphens:auto;
+						        hyphens:auto;
+						word-wrap:break-word;
 					}
 				}
 				.media {
@@ -169,20 +196,69 @@
 						margin-right: auto;
 						.media-container {
 							display:inline-block;
-							//overflow: hidden;
 							line-height:0px;
 							padding:0px;
-							//max-height:400px;
-							.media-frame, img, iframe {
-								.media-shadow();
+							max-height:100%;
+							//overflow:hidden;
+							
+							/* MEDIA SHADOWS AND BORDERS
+							================================================== */
+							.media-frame, .media-image img {
+								border: 1px solid;
+								border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
+								background:@color-background;
 							}
+							.soundcloud {
+								border: 0;
+							}
+							.media-image {
+								display: inline-block;
+							}
+							
+							.media-shadow {
+								position: relative;
+								z-index: 1;
+								background:@color-background;
+								
+							}
+							.media-shadow:before, .media-shadow:after {
+								z-index: -1;
+								position: absolute;
+								content: "";
+								bottom: 15px;
+								left: 10px;
+								width: 50%;
+								top: 80%;
+								max-width:300px;
+								background: @color-dark-fourth;
+								-webkit-box-shadow: 0 15px 10px @color-dark-fourth;
+								   -moz-box-shadow: 0 15px 10px @color-dark-fourth;
+								        box-shadow: 0 15px 10px @color-dark-fourth;
+								-webkit-transform: rotate(-2deg);
+								   -moz-transform: rotate(-2deg);
+								     -o-transform: rotate(-2deg);
+								    -ms-transform: rotate(-2deg);
+								        transform: rotate(-2deg);
+							}
+							.media-shadow::after {
+								-webkit-transform: rotate(2deg);
+								   -moz-transform: rotate(2deg);
+								     -o-transform: rotate(2deg);
+								    -ms-transform: rotate(2deg);
+								        transform: rotate(2deg);
+								right: 10px;
+								left: auto;
+							}
+							
+							
 							span.messege {
 								display:block;
 								vertical-align:middle;
 								margin-left:auto;
 								margin-right:auto;
 								text-align:center;
-								margin-top: 50%;
+								background:@color-background;
+								//margin-top: 50%;
 								font-size: 28px;
 								font-weight: bold;
 								text-transform: uppercase;
@@ -359,18 +435,22 @@
 							.credit {
 								color: @color-credit;
 								text-align: right;
-								font-size: 10px;
-								line-height: 10px;
 								display: block;
 								margin: 0 auto;
-								margin-top:4px;
+								margin-top:6px;
+								.text-font(@base-font-small - 1);
+								//max-height:16px;
+								//overflow:auto;
 							}
 							.caption {
 								text-align:left;
-								margin-top:10px;
+								margin-top:@base-font-small - 1;
 								color: @color-caption;
-								font-size: 11px;
-								line-height: 14px;
+								.text-font(@base-font-small);
+								text-rendering: optimizeLegibility;
+								//max-height:45px;
+								//overflow-x:hidden;
+								//overflow-y:auto;
 							}
 						}
 					}
@@ -385,6 +465,16 @@
 				}
 			}
 			
+			
+			/* Text and Media Slides
+			================================================== */
+			.content-container.layout-text-media {
+				.text-media {
+					padding-right:@base-space;
+					border-right: 1px solid @color-dark-fifth;//@color-line;
+				}
+				
+			}
 			/* Text Only Slides
 			================================================== */
 			.content-container.layout-text {

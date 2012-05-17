@@ -98,6 +98,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function reSize(firstrun) {
 			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
+			VMM.Lib.css($timenavindicator, "left", Math.round(config.width/2)-8);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
 		};
 		

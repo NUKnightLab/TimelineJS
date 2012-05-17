@@ -78,12 +78,15 @@
      -moz-box-shadow: @shadow;
           box-shadow: @shadow;
 }
-.media-shadow(@shadow: 0 1px 3px 0px rgba(0,0,0,0.35)) {
+.media-shadow(@shadow: 0 1px 3px 0px @color-dark-fourth) {
 	-webkit-box-shadow: @shadow;
 	   -moz-box-shadow: @shadow;
 	        box-shadow: @shadow;
 	border: 1px solid;
 	border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
-	//border-color: @color-line @color-line-hover @color-line-hover @color-line;
+}
+.text-font(@fontsize: 15px) {
+	font-size: @fontsize;
+	line-height: round((@fontsize/100) * 130);
 }
 
