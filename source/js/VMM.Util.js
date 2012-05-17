@@ -187,7 +187,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 					var _d_array; // DATE ARRAY
 					var _t_array; // TIME ARRAY
 					if ( d.match(/,/gi) ) {
-						trace("DATE HAS ,");
 						_d_array = d.split(",");
 						for(var i = 0; i < _d_array.length; i++) {
 							_d_array[i] = parseInt(_d_array[i]);
@@ -200,7 +199,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
 						if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
 					} else if (d.match("/")) {
-						trace("DATE HAS /");
 						var _time_parse;
 						var _times;
 						if (d.match(" ")) {
