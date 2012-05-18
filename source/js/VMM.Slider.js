@@ -309,6 +309,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 					video: {
 						width: 	0,
 						height: 0
+					},
+					text: {
+						width:	((config.slider.content.width/100) * 40) - 30,
+						height:	config.slider.height
 					}
 				},
 				media: {
@@ -370,7 +374,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "table-cell" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", "auto" );
-				
+				VMM.Lib.css(".slider-item .layout-text-media .text .container .start", "width", mediasize.text_media.text.width );
 				//VMM.Lib.addClass(".slider-item .content-container", "pad-left");
 				VMM.Lib.removeClass(".slider-item .content-container", "pad-top");
 				
@@ -601,8 +605,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				config.duration = 500;
 				__duration = 1000;
 				//VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Lib.width(slides[0]), config.spacing, true);
-				VMM.TouchSlider.createPanel($slider_container, $slider_container, slides[0].width(), config.spacing, true);
-				VMM.bindEvent($slider_container, onTouchUpdate, "TOUCHUPDATE");
+				//VMM.TouchSlider.createPanel($slider_container, $slider_container, slides[0].width(), config.spacing, true);
+				//VMM.bindEvent($slider_container, onTouchUpdate, "TOUCHUPDATE");
 			} else if (VMM.Browser.device == "mobile") {
 				
 			} else {
@@ -611,8 +615,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			reSize(false, true);
 			VMM.Lib.visible(navigation.prevBtn, false);
-			// GO TO FIRST SLIDE
-			trace("config.current_slide " + config.current_slide);
 			goToSlide(config.current_slide, "easeOutExpo", __duration, true, true);
 			
 			_active = true;
