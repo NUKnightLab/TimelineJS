@@ -28,14 +28,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
-			var i = 0;
-			for (var attr in obj){
-				if (index === i){
-					return obj[attr];
+			if(typeof obj != 'undefined') {
+				var i = 0;
+				for (var attr in obj){
+					if (index === i){
+						return obj[attr];
+					}
+					i++;
 				}
-				i++;
+				return "";
+			} else {
+				return "";
 			}
-			return null;
+			
 		},
 		/* RANDOM BETWEEN
 		================================================== */
@@ -422,7 +427,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text
 				.replace(urlPattern, "<a target='_blank' href='http://en.wikipedia.org/wiki/$&' onclick='void(0)'>$&</a>")
 				.replace(/<i\b[^>]*>/gim, "")
-				.replace(/<\/i>/gim, "");
+				.replace(/<\/i>/gim, "")
+				.replace(/<b\b[^>]*>/gim, "")
+				.replace(/<\/b>/gim, "");
 		},
 		/* Turns plain text links into real links
 		================================================== */
@@ -610,8 +617,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 
 				__firstToUpperCase: function (w) {
 					var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
-					split[1] = split[1].toUpperCase();
-					return split.join('');
+					if (split[1]){
+						split[1] = split[1].toUpperCase();
+						return split.join('');
+						
+					} else {
+						return "";
+					}
+					
 				},
 			};
 

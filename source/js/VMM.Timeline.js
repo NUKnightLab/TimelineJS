@@ -505,7 +505,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.fulldate	=	_date.startdate.getTime();
 				
 				if (config.embed) {
-					document.title = _date.headline;
+					//document.title = _date.headline;
 				}
 				
 				_dates.push(_date);

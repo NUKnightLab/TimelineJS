@@ -2123,28 +2123,34 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + api_obj.url + "&format=json&exintro=1&callback=?";
 				VMM.getJSON(the_url, function(d) {
-					var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
-					var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
-					var _wiki = "";
-					var wiki_text = "";
-					var wiki_text_array = wiki_extract.split("<p>");
-					var wiki_number_of_paragraphs = 1;
+					trace(d);
+					if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
+						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer.</p>" );
+					} else {
+						var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
+						var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
+						var _wiki = "";
+						var wiki_text = "";
+						var wiki_text_array = wiki_extract.split("<p>");
+						var wiki_number_of_paragraphs = 1;
 					
-					for(var i = 0; i < wiki_text_array.length; i++) {
-						if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {
-							wiki_text	+= "<p>" + wiki_text_array[i+1];
+						for(var i = 0; i < wiki_text_array.length; i++) {
+							if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {
+								wiki_text	+= "<p>" + wiki_text_array[i+1];
+							}
+						}
+					
+						_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
+						_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+						_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
+					
+						if (wiki_extract.match("REDIRECT")) {
+						
+						} else {
+							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
 					}
 					
-					_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
-					_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
-					_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
-					
-					if (wiki_extract.match("REDIRECT")) {
-						
-					} else {
-						VMM.attachElement("#"+api_obj.id, _wiki );
-					}
 				});
 				
 			},
@@ -3516,14 +3522,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
-			var i = 0;
-			for (var attr in obj){
-				if (index === i){
-					return obj[attr];
+			if(typeof obj != 'undefined') {
+				var i = 0;
+				for (var attr in obj){
+					if (index === i){
+						return obj[attr];
+					}
+					i++;
 				}
-				i++;
+				return "";
+			} else {
+				return "";
 			}
-			return null;
+			
 		},
 		/* RANDOM BETWEEN
 		================================================== */
@@ -3910,7 +3921,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text
 				.replace(urlPattern, "<a target='_blank' href='http://en.wikipedia.org/wiki/$&' onclick='void(0)'>$&</a>")
 				.replace(/<i\b[^>]*>/gim, "")
-				.replace(/<\/i>/gim, "");
+				.replace(/<\/i>/gim, "")
+				.replace(/<b\b[^>]*>/gim, "")
+				.replace(/<\/b>/gim, "");
 		},
 		/* Turns plain text links into real links
 		================================================== */
@@ -4098,8 +4111,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 
 				__firstToUpperCase: function (w) {
 					var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
-					split[1] = split[1].toUpperCase();
-					return split.join('');
+					if (split[1]){
+						split[1] = split[1].toUpperCase();
+						return split.join('');
+						
+					} else {
+						return "";
+					}
+					
 				},
 			};
 
@@ -6083,7 +6102,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.fulldate	=	_date.startdate.getTime();
 				
 				if (config.embed) {
-					document.title = _date.headline;
+					//document.title = _date.headline;
 				}
 				
 				_dates.push(_date);
