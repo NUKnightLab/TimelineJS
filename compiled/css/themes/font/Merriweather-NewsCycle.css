@@ -3,5 +3,6 @@
 .vmm-timeline .timenav h1,.vmm-timeline .flag-content h1,.vmm-timeline .era h1,.vmm-timeline .timenav h2,.vmm-timeline .flag-content h2,.vmm-timeline .era h2,.vmm-timeline .timenav h3,.vmm-timeline .flag-content h3,.vmm-timeline .era h3,.vmm-timeline .timenav h4,.vmm-timeline .flag-content h4,.vmm-timeline .era h4,.vmm-timeline .timenav h5,.vmm-timeline .flag-content h5,.vmm-timeline .era h5,.vmm-timeline .timenav h6,.vmm-timeline .flag-content h6,.vmm-timeline .era h6{font-family:'News Cycle',sans-serif !important;}
 .vmm-timeline p,.vmm-timeline blockquote,.vmm-timeline blockquote p,.vmm-timeline .twitter blockquote p{font-family:'News Cycle',sans-serif !important;}
 .vmm-timeline p{font-size:16px;line-height:22px;}
+.vmm-timeline .wikipedia p{font-size:14px !important;line-height:20px !important;}
 .vmm-timeline .feature h1,.vmm-timeline .feature h2,.vmm-timeline .feature h3,.vmm-timeline .feature h4,.vmm-timeline .feature h5,.vmm-timeline .feature h6{font-family:'Merriweather',serif;font-weight:900;}
 .tooltip{font-family:'News Cycle',sans-serif;}
