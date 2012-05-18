@@ -142,10 +142,11 @@
 .vmm-timeline .feature h3,.vmm-timeline .feature h4,.vmm-timeline .feature h5,.vmm-timeline .feature h6{margin-bottom:15px;}
 .vmm-timeline .feature p{color:#aaaaaa;}
 .vmm-timeline .date a,.vmm-timeline .title a{color:#999999;}
+.vmm-timeline .hyphenate{-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;word-wrap:break-word;}
 .vmm-timeline h1,.vmm-timeline h2,.vmm-timeline h3,.vmm-timeline h4,.vmm-timeline h5,.vmm-timeline h6{font-weight:normal;color:#ffffff;text-transform:none;}.vmm-timeline h1 a,.vmm-timeline h2 a,.vmm-timeline h3 a,.vmm-timeline h4 a,.vmm-timeline h5 a,.vmm-timeline h6 a{color:#999999;}
 .vmm-timeline h1 small,.vmm-timeline h2 small,.vmm-timeline h3 small,.vmm-timeline h4 small,.vmm-timeline h5 small,.vmm-timeline h6 small{color:#999999;}
 .vmm-timeline h1.date,.vmm-timeline h2.date,.vmm-timeline h3.date,.vmm-timeline h4.date,.vmm-timeline h5.date,.vmm-timeline h6.date{font-weight:bold;}
-.vmm-timeline h2.start{font-size:36px;line-height:38px;margin-bottom:15px;-webkit-hyphens:auto;-moz-hyphens:auto;-ms-hyphens:auto;hyphens:auto;word-wrap:break-word;}
+.vmm-timeline h2.start{font-size:36px;line-height:38px;margin-bottom:15px;}
 .vmm-timeline h1{margin-bottom:15px;font-size:32px;line-height:34px;}.vmm-timeline h1 small{font-size:18px;}
 .vmm-timeline h2{margin-bottom:15px;font-size:28px;line-height:30px;}.vmm-timeline h2 small{font-size:14px;line-height:16px;}
 .vmm-timeline h2.date{font-size:16px;line-height:18px;margin-bottom:3.75px;color:#999999;}
