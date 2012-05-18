@@ -70,6 +70,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		config = {
 			embed:					false,
+			events: {
+				data_ready:		"DATAREADY",
+				messege:		"MESSEGE",
+				headline:		"TIMELINE_HEADLINE",
+				slide_change:	"SLIDE_CHANGE"
+			},
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
@@ -189,6 +195,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.height		=	config.height - config.nav.height;
 			VMM.Timeline.Config			=	config;
 			VMM.master_config.Timeline	=	VMM.Timeline.Config;
+			this.events					=	config.events;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -320,7 +327,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
 				ie7 = true;
-				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
 					VMM.Timeline.DataObj.getData(_data);
@@ -340,14 +347,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
-		}
+		};
 		
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
 			VMM.getJSON(url, function(d) {
 				data = VMM.Timeline.DataObj.getData(d);
-				VMM.fireEvent(global, "DATAREADY");
+				VMM.fireEvent(global, config.events.data_ready);
 			});
 		};
 		
@@ -416,7 +423,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			updateSize();
 			_dates = [];
-			VMM.fireEvent(global, "MESSEGE", "Building Dates");
+			VMM.fireEvent(global, config.events.messege, "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -505,7 +512,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.fulldate	=	_date.startdate.getTime();
 				
 				if (config.embed) {
-					//document.title = _date.headline;
+					VMM.fireEvent(global, config.events.headline, _date.headline);
 				}
 				
 				_dates.push(_date);

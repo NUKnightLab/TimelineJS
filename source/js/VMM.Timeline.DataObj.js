@@ -22,12 +22,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet") ) {
-					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
 				} else {
-					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
 					trace("raw data" + raw_data);
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
@@ -136,7 +136,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				
 			});
 			
-			VMM.fireEvent(global, "DATAREADY", _data_obj);
+			VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 			
 		},
 		
@@ -144,7 +144,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			if (d.timeline.type == "default") {
 				
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
-				VMM.fireEvent(global, "DATAREADY", d);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, d);
 				
 			} else if (d.timeline.type == "twitter") {
 				
@@ -214,7 +214,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					
 				};
 				
-				VMM.fireEvent(global, "DATAREADY", _data_obj);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 			}
 		},
 		
@@ -233,7 +233,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			},
 			
 			buildData: function(d) {
-				VMM.fireEvent(global, "MESSEGE", "Parsing Data");
+				VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
 				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 				for(var i = 0; i < d.feed.entry.length; i++) {
@@ -265,7 +265,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					}
 				};
 				
-				VMM.fireEvent(global, "DATAREADY", _data_obj);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 				
 			}
 			

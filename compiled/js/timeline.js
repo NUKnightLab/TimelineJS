@@ -459,7 +459,7 @@ if(typeof VMM != 'undefined') {
 		
 	};
 
-	VMM.getJSON = function(url, data, callback) {
+	VMM.getJSONnoP = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
 			/* CHECK FOR IE AND USE Use Microsoft XDR
@@ -469,10 +469,102 @@ if(typeof VMM != 'undefined') {
 				var ie_url = url;
 
 				if (ie_url.match('^http://')){
-					trace("RUNNING GET JSON")
-				     ie_url = ie_url.replace("http://","//");
-					return jQuery.getJSON(url, data, callback);
+					trace("RUNNING getJSONnoP XDR2");
+					var xdr = new XDomainRequest();
+					xdr.open("get", ie_url);
+					xdr.onload = function() {
+						var ie_json = VMM.parseJSON(xdr.responseText);
+						trace(xdr.responseText);
+						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(ie_json)
+						}								
+								
+					}
+					xdr.send();
+					/*
+					jQuery.ajax({
+						url: ie_url,
+						dataType: 'json',
+						type: "GET",
+					})
+					.done(function(d) {
+						trace("AJAX GOT IT");
+						trace(d);
+						if (type.of(d) == "null" || type.of(d) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(d)
+						}
+						
+					})
+					.fail(function(jqXHR, textStatus) {
+						trace(" getJSONnoP error " + textStatus);
+					})
+					.always(function() {
+						trace(" getJSONnoP complete");
+					});
+					*/
+					   
 				} else if (ie_url.match('^https://')) {
+					trace("RUNNING XDR");
+					ie_url = ie_url.replace("https://","http://");
+					
+					jQuery.ajax({
+						url: ie_url,
+						dataType: 'json',
+						type: "GET",
+					})
+					.done(function(d) {
+						trace("AJAX GOT IT");
+						trace(d);
+						if (type.of(d) == "null" || type.of(d) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(d)
+						}
+						
+					})
+					.fail(function(jqXHR, textStatus) {
+						trace(" getJSONnoP error " + textStatus);
+					})
+					.always(function() {
+						trace(" getJSONnoP complete");
+					});
+					
+					
+					
+
+				} else {
+					return jQuery.getJSON(url, data, callback);
+				}
+				
+			} else {
+				return jQuery.getJSON(url, data, callback);
+			}
+		}
+		
+	};
+	
+	VMM.getJSON = function(url, data, callback) {
+		if( typeof( jQuery ) != 'undefined' ){
+			
+			/* CHECK FOR IE AND USE Use Microsoft XDR
+			================================================== */
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
+				trace("it's ie");
+				var ie_url = url;
+				
+				if (ie_url.match('^http://')){
+					trace("RUNNING GET JSON");
+					return jQuery.getJSON(ie_url, data, callback);
+				} else if (ie_url.match('^https://')) {
+					trace("RUNNING XDR");
+					ie_url = ie_url.replace("https://","http://");
+					return jQuery.getJSON(ie_url, data, callback);
+					
+					/*
 					trace("RUNNING XDR");
 					ie_url = ie_url.replace("https://","http://");
 					var xdr = new XDomainRequest();
@@ -488,9 +580,11 @@ if(typeof VMM != 'undefined') {
 								
 					}
 					xdr.send();
+					*/
 				} else {
 					return jQuery.getJSON(url, data, callback);
 				}
+				
 			} else {
 				return jQuery.getJSON(url, data, callback);
 			}
@@ -538,7 +632,7 @@ if(typeof VMM != 'undefined') {
 		
 	};
 	
-	VMM.Lib = ({
+	VMM.Lib = {
 		
 		init: function() {
 			return this;
@@ -835,14 +929,63 @@ if(typeof VMM != 'undefined') {
 			
 		},
 		
-	}).init();
+	}
 }
 
-/*	jQuery Easing v1.3
-	http://gsgd.co.uk/sandbox/jquery/easing/
-================================================== */
 if( typeof( jQuery ) != 'undefined' ){
+	// XDR
+	// https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
 	
+	(function( jQuery ) {
+		trace("AJAX CROSS DOMAIN");
+		if ( window.XDomainRequest ) {
+			jQuery.ajaxTransport(function( s ) {
+				trace("USING AJAX CROSS DOMAIN");
+				if ( s.crossDomain && s.async ) {
+					if ( s.timeout ) {
+						s.xdrTimeout = s.timeout;
+						delete s.timeout;
+					}
+					var xdr;
+					return {
+						send: function( _, complete ) {
+							function callback( status, statusText, responses, responseHeaders ) {
+								xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop;
+								xdr = undefined;
+								complete( status, statusText, responses, responseHeaders );
+							}
+							xdr = new XDomainRequest();
+							xdr.open( s.type, s.url );
+							xdr.onload = function() {
+								callback( 200, "OK", { text: xdr.responseText }, "Content-Type: " + xdr.contentType );
+							};
+							xdr.onerror = function() {
+								callback( 404, "Not Found" );
+							};
+							if ( s.xdrTimeout ) {
+								xdr.ontimeout = function() {
+									callback( 0, "timeout" );
+								};
+								xdr.timeout = s.xdrTimeout;
+							}
+							xdr.send( ( s.hasContent && s.data ) || null );
+						},
+						abort: function() {
+							if ( xdr ) {
+								xdr.onerror = jQuery.noop();
+								xdr.abort();
+							}
+						}
+					};
+				}
+			});
+		}
+	})( jQuery );
+	
+	
+	/*	jQuery Easing v1.3
+		http://gsgd.co.uk/sandbox/jquery/easing/
+	================================================== */
 	jQuery.easing['jswing'] = jQuery.easing['swing'];
 
 	jQuery.extend( jQuery.easing, {
@@ -2120,13 +2263,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(api_obj) {
+				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
 				
-				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + api_obj.url + "&format=json&exintro=1&callback=?";
+				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
+					VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
+				}
+				
 				VMM.getJSON(the_url, function(d) {
-					trace(d);
-					if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer.</p>" );
-					} else {
+					if (d.query) {
 						var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
 						var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
 						var _wiki = "";
@@ -2149,6 +2293,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						} else {
 							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
+					} else {
+						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
 					}
 					
 				});
@@ -5667,6 +5813,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		config = {
 			embed:					false,
+			events: {
+				data_ready:		"DATAREADY",
+				messege:		"MESSEGE",
+				headline:		"TIMELINE_HEADLINE",
+				slide_change:	"SLIDE_CHANGE"
+			},
 			id: 					timeline_id,
 			type: 					"timeline",
 			maptype: 				"toner",
@@ -5786,6 +5938,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.feature.height		=	config.height - config.nav.height;
 			VMM.Timeline.Config			=	config;
 			VMM.master_config.Timeline	=	VMM.Timeline.Config;
+			this.events					=	config.events;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -5917,7 +6070,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
 				ie7 = true;
-				VMM.fireEvent(global, "MESSEGE", "Internet Explorer 7 is not supported by #Timeline.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer 7 is not supported by #Timeline.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
 					VMM.Timeline.DataObj.getData(_data);
@@ -5937,14 +6090,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
-		}
+		};
 		
 		/* DATA 
 		================================================== */
 		var getData = function(url) {
 			VMM.getJSON(url, function(d) {
 				data = VMM.Timeline.DataObj.getData(d);
-				VMM.fireEvent(global, "DATAREADY");
+				VMM.fireEvent(global, config.events.data_ready);
 			});
 		};
 		
@@ -6013,7 +6166,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			updateSize();
 			_dates = [];
-			VMM.fireEvent(global, "MESSEGE", "Building Dates");
+			VMM.fireEvent(global, config.events.messege, "Building Dates");
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -6102,7 +6255,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.fulldate	=	_date.startdate.getTime();
 				
 				if (config.embed) {
-					//document.title = _date.headline;
+					VMM.fireEvent(global, config.events.headline, _date.headline);
 				}
 				
 				_dates.push(_date);
@@ -7264,12 +7417,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
 					
 				} else if (	raw_data.match("spreadsheet") ) {
-					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
 					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
 					
 				} else {
-					VMM.fireEvent(global, "MESSEGE", VMM.Timeline.Config.language.messages.loading_timeline);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
 					trace("raw data" + raw_data);
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
@@ -7378,7 +7531,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 				
 			});
 			
-			VMM.fireEvent(global, "DATAREADY", _data_obj);
+			VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 			
 		},
 		
@@ -7386,7 +7539,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			if (d.timeline.type == "default") {
 				
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
-				VMM.fireEvent(global, "DATAREADY", d);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, d);
 				
 			} else if (d.timeline.type == "twitter") {
 				
@@ -7456,7 +7609,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					
 				};
 				
-				VMM.fireEvent(global, "DATAREADY", _data_obj);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 			}
 		},
 		
@@ -7475,7 +7628,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			},
 			
 			buildData: function(d) {
-				VMM.fireEvent(global, "MESSEGE", "Parsing Data");
+				VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
 				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 				for(var i = 0; i < d.feed.entry.length; i++) {
@@ -7507,7 +7660,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					}
 				};
 				
-				VMM.fireEvent(global, "DATAREADY", _data_obj);
+				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
 				
 			}
 			

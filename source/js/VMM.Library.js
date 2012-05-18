@@ -98,7 +98,7 @@ if(typeof VMM != 'undefined') {
 		
 	};
 
-	VMM.getJSON = function(url, data, callback) {
+	VMM.getJSONnoP = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
 			/* CHECK FOR IE AND USE Use Microsoft XDR
@@ -108,10 +108,102 @@ if(typeof VMM != 'undefined') {
 				var ie_url = url;
 
 				if (ie_url.match('^http://')){
-					trace("RUNNING GET JSON")
-				     ie_url = ie_url.replace("http://","//");
-					return jQuery.getJSON(url, data, callback);
+					trace("RUNNING getJSONnoP XDR2");
+					var xdr = new XDomainRequest();
+					xdr.open("get", ie_url);
+					xdr.onload = function() {
+						var ie_json = VMM.parseJSON(xdr.responseText);
+						trace(xdr.responseText);
+						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(ie_json)
+						}								
+								
+					}
+					xdr.send();
+					/*
+					jQuery.ajax({
+						url: ie_url,
+						dataType: 'json',
+						type: "GET",
+					})
+					.done(function(d) {
+						trace("AJAX GOT IT");
+						trace(d);
+						if (type.of(d) == "null" || type.of(d) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(d)
+						}
+						
+					})
+					.fail(function(jqXHR, textStatus) {
+						trace(" getJSONnoP error " + textStatus);
+					})
+					.always(function() {
+						trace(" getJSONnoP complete");
+					});
+					*/
+					   
 				} else if (ie_url.match('^https://')) {
+					trace("RUNNING XDR");
+					ie_url = ie_url.replace("https://","http://");
+					
+					jQuery.ajax({
+						url: ie_url,
+						dataType: 'json',
+						type: "GET",
+					})
+					.done(function(d) {
+						trace("AJAX GOT IT");
+						trace(d);
+						if (type.of(d) == "null" || type.of(d) == "undefined") {
+							trace("IE JSON ERROR")
+						} else {
+							return data(d)
+						}
+						
+					})
+					.fail(function(jqXHR, textStatus) {
+						trace(" getJSONnoP error " + textStatus);
+					})
+					.always(function() {
+						trace(" getJSONnoP complete");
+					});
+					
+					
+					
+
+				} else {
+					return jQuery.getJSON(url, data, callback);
+				}
+				
+			} else {
+				return jQuery.getJSON(url, data, callback);
+			}
+		}
+		
+	};
+	
+	VMM.getJSON = function(url, data, callback) {
+		if( typeof( jQuery ) != 'undefined' ){
+			
+			/* CHECK FOR IE AND USE Use Microsoft XDR
+			================================================== */
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
+				trace("it's ie");
+				var ie_url = url;
+				
+				if (ie_url.match('^http://')){
+					trace("RUNNING GET JSON");
+					return jQuery.getJSON(ie_url, data, callback);
+				} else if (ie_url.match('^https://')) {
+					trace("RUNNING XDR");
+					ie_url = ie_url.replace("https://","http://");
+					return jQuery.getJSON(ie_url, data, callback);
+					
+					/*
 					trace("RUNNING XDR");
 					ie_url = ie_url.replace("https://","http://");
 					var xdr = new XDomainRequest();
@@ -127,9 +219,11 @@ if(typeof VMM != 'undefined') {
 								
 					}
 					xdr.send();
+					*/
 				} else {
 					return jQuery.getJSON(url, data, callback);
 				}
+				
 			} else {
 				return jQuery.getJSON(url, data, callback);
 			}
@@ -177,7 +271,7 @@ if(typeof VMM != 'undefined') {
 		
 	};
 	
-	VMM.Lib = ({
+	VMM.Lib = {
 		
 		init: function() {
 			return this;
@@ -474,14 +568,63 @@ if(typeof VMM != 'undefined') {
 			
 		},
 		
-	}).init();
+	}
 }
 
-/*	jQuery Easing v1.3
-	http://gsgd.co.uk/sandbox/jquery/easing/
-================================================== */
 if( typeof( jQuery ) != 'undefined' ){
+	// XDR
+	// https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
 	
+	(function( jQuery ) {
+		trace("AJAX CROSS DOMAIN");
+		if ( window.XDomainRequest ) {
+			jQuery.ajaxTransport(function( s ) {
+				trace("USING AJAX CROSS DOMAIN");
+				if ( s.crossDomain && s.async ) {
+					if ( s.timeout ) {
+						s.xdrTimeout = s.timeout;
+						delete s.timeout;
+					}
+					var xdr;
+					return {
+						send: function( _, complete ) {
+							function callback( status, statusText, responses, responseHeaders ) {
+								xdr.onload = xdr.onerror = xdr.ontimeout = jQuery.noop;
+								xdr = undefined;
+								complete( status, statusText, responses, responseHeaders );
+							}
+							xdr = new XDomainRequest();
+							xdr.open( s.type, s.url );
+							xdr.onload = function() {
+								callback( 200, "OK", { text: xdr.responseText }, "Content-Type: " + xdr.contentType );
+							};
+							xdr.onerror = function() {
+								callback( 404, "Not Found" );
+							};
+							if ( s.xdrTimeout ) {
+								xdr.ontimeout = function() {
+									callback( 0, "timeout" );
+								};
+								xdr.timeout = s.xdrTimeout;
+							}
+							xdr.send( ( s.hasContent && s.data ) || null );
+						},
+						abort: function() {
+							if ( xdr ) {
+								xdr.onerror = jQuery.noop();
+								xdr.abort();
+							}
+						}
+					};
+				}
+			});
+		}
+	})( jQuery );
+	
+	
+	/*	jQuery Easing v1.3
+		http://gsgd.co.uk/sandbox/jquery/easing/
+	================================================== */
 	jQuery.easing['jswing'] = jQuery.easing['swing'];
 
 	jQuery.extend( jQuery.easing, {

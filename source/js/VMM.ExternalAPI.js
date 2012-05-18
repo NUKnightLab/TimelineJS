@@ -598,13 +598,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(api_obj) {
+				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
 				
-				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&titles=" + api_obj.url + "&format=json&exintro=1&callback=?";
+				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
+					VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
+				}
+				
 				VMM.getJSON(the_url, function(d) {
-					trace(d);
-					if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer.</p>" );
-					} else {
+					if (d.query) {
 						var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
 						var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
 						var _wiki = "";
@@ -627,6 +628,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						} else {
 							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
+					} else {
+						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
 					}
 					
 				});
