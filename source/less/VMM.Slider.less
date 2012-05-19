@@ -56,36 +56,36 @@
 		font-size:@base-font-small;
 		.nav-container {
 			height:100px;
+			width:100px;
 			position:absolute;
 		}
 		.icon {
 			margin-top:@feature-nav-icon-wh/2;
 			margin-bottom:@base-space;
 		}
-		.date {
-			font-size: @base-font;
-			font-weight: bold;
-			line-height: @base-line;
-			
-			text-transform: uppercase;
-			margin-bottom:5px;
-		}
 		.date, .title {
 			line-height:14px;
-			//width: @feature-nav-width; 
-			-webkit-hyphens:auto;
-			   -moz-hyphens:auto;
-			    -ms-hyphens:auto;
-			        hyphens:auto;
-			word-wrap:break-word;
-			
 			a {
 				color: @color-nav-description;
 			}
 			small {
 				display:none;
 			}
+		}
+		.date {
+			font-size: @base-font-small + 2;
+			line-height: @base-font-small + 2;
 			
+			//font-size: @base-font;
+			//line-height: @base-line;
+			font-weight: bold;
+			
+			text-transform: uppercase;
+			margin-bottom:5px;
+		}
+		.title {
+			font-size: @base-font-small;
+			line-height: @base-font-small + 2;
 		}
 	}
 	

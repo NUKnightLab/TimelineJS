@@ -172,8 +172,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
 			VMM.Lib.height(navigation.prevBtn, config.slider.height);
 			VMM.Lib.height(navigation.nextBtn, config.slider.height);
-			VMM.Lib.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
-			VMM.Lib.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
+			VMM.Lib.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) + 10 );
+			VMM.Lib.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) + 10 );
 			
 			// Animate Changes
 			VMM.Lib.height($slider_mask, config.slider.height);
