@@ -62,7 +62,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.30";
+		version = 					"1.35";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -74,7 +74,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				data_ready:		"DATAREADY",
 				messege:		"MESSEGE",
 				headline:		"TIMELINE_HEADLINE",
-				slide_change:	"SLIDE_CHANGE"
+				slide_change:	"SLIDE_CHANGE",
+				resize:			"resize"
 			},
 			id: 					timeline_id,
 			type: 					"timeline",
@@ -319,8 +320,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
 			
-			VMM.bindEvent(global, onDataReady, "DATAREADY");
-			VMM.bindEvent(global, showMessege, "MESSEGE");
+			VMM.bindEvent(global, onDataReady, config.events.data_ready);
+			VMM.bindEvent(global, showMessege, config.events.messege);
 			
 			/* GET DATA
 			================================================== */
@@ -397,7 +398,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.init(_dates, data.era);
 			
 			// RESIZE EVENT LISTENERS
-			VMM.bindEvent(global, reSize, "resize");
+			VMM.bindEvent(global, reSize, config.events.resize);
 			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			
 		};

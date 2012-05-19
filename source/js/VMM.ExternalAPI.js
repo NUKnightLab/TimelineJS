@@ -591,7 +591,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		wikipedia: {
 			
 			get: function(url, id) {
-				trace("WIKIPEDIA GET");
 				var api_obj = {url: url, id: id};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
@@ -601,7 +600,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
 				
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-					VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
+					var temp_text	=	"<h4><a href='http://en.wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
+					temp_text		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+					temp_text	+=	"<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>";
+					VMM.attachElement("#"+api_obj.id, temp_text );
 				}
 				
 				VMM.getJSON(the_url, function(d) {
@@ -628,8 +630,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						} else {
 							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
-					} else {
-						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
 					}
 					
 				});

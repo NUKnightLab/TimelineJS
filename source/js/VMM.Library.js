@@ -97,129 +97,20 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-
-	VMM.getJSONnoP = function(url, data, callback) {
-		if( typeof( jQuery ) != 'undefined' ){
-			
-			/* CHECK FOR IE AND USE Use Microsoft XDR
-			================================================== */
-			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-				trace("it's ie");
-				var ie_url = url;
-
-				if (ie_url.match('^http://')){
-					trace("RUNNING getJSONnoP XDR2");
-					var xdr = new XDomainRequest();
-					xdr.open("get", ie_url);
-					xdr.onload = function() {
-						var ie_json = VMM.parseJSON(xdr.responseText);
-						trace(xdr.responseText);
-						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(ie_json)
-						}								
-								
-					}
-					xdr.send();
-					/*
-					jQuery.ajax({
-						url: ie_url,
-						dataType: 'json',
-						type: "GET",
-					})
-					.done(function(d) {
-						trace("AJAX GOT IT");
-						trace(d);
-						if (type.of(d) == "null" || type.of(d) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(d)
-						}
-						
-					})
-					.fail(function(jqXHR, textStatus) {
-						trace(" getJSONnoP error " + textStatus);
-					})
-					.always(function() {
-						trace(" getJSONnoP complete");
-					});
-					*/
-					   
-				} else if (ie_url.match('^https://')) {
-					trace("RUNNING XDR");
-					ie_url = ie_url.replace("https://","http://");
-					
-					jQuery.ajax({
-						url: ie_url,
-						dataType: 'json',
-						type: "GET",
-					})
-					.done(function(d) {
-						trace("AJAX GOT IT");
-						trace(d);
-						if (type.of(d) == "null" || type.of(d) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(d)
-						}
-						
-					})
-					.fail(function(jqXHR, textStatus) {
-						trace(" getJSONnoP error " + textStatus);
-					})
-					.always(function() {
-						trace(" getJSONnoP complete");
-					});
-					
-					
-					
-
-				} else {
-					return jQuery.getJSON(url, data, callback);
-				}
-				
-			} else {
-				return jQuery.getJSON(url, data, callback);
-			}
-		}
-		
-	};
 	
 	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
-			/* CHECK FOR IE AND USE Use Microsoft XDR
+			/* CHECK FOR IE
 			================================================== */
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-				trace("it's ie");
+				trace("IE JSON");
 				var ie_url = url;
-				
 				if (ie_url.match('^http://')){
-					trace("RUNNING GET JSON");
 					return jQuery.getJSON(ie_url, data, callback);
 				} else if (ie_url.match('^https://')) {
-					trace("RUNNING XDR");
 					ie_url = ie_url.replace("https://","http://");
 					return jQuery.getJSON(ie_url, data, callback);
-					
-					/*
-					trace("RUNNING XDR");
-					ie_url = ie_url.replace("https://","http://");
-					var xdr = new XDomainRequest();
-					xdr.open("get", ie_url);
-					xdr.onload = function() {
-						var ie_json = VMM.parseJSON(xdr.responseText);
-						trace(xdr.responseText);
-						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(ie_json)
-						}								
-								
-					}
-					xdr.send();
-					*/
 				} else {
 					return jQuery.getJSON(url, data, callback);
 				}
@@ -572,14 +463,13 @@ if(typeof VMM != 'undefined') {
 }
 
 if( typeof( jQuery ) != 'undefined' ){
-	// XDR
-	// https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
 	
+	/*	XDR AJAX EXTENTION FOR jQuery
+		https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
+	================================================== */
 	(function( jQuery ) {
-		trace("AJAX CROSS DOMAIN");
 		if ( window.XDomainRequest ) {
 			jQuery.ajaxTransport(function( s ) {
-				trace("USING AJAX CROSS DOMAIN");
 				if ( s.crossDomain && s.async ) {
 					if ( s.timeout ) {
 						s.xdrTimeout = s.timeout;
@@ -620,7 +510,6 @@ if( typeof( jQuery ) != 'undefined' ){
 			});
 		}
 	})( jQuery );
-	
 	
 	/*	jQuery Easing v1.3
 		http://gsgd.co.uk/sandbox/jquery/easing/

@@ -566,74 +566,78 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){
-			
-			var __TitleCase = {
-				__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
+				return t.replace("_", "%20");
+			} else {
+				var __TitleCase = {
+					__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
 
-				init: function() {
-					this.__smallRE = this.__smallWords.join('|');
-					this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
-					this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
-					this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
-				},
+					init: function() {
+						this.__smallRE = this.__smallWords.join('|');
+						this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
+						this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
+						this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
+					},
 
-				toTitleCase: function(string) {
-					var line = '';
+					toTitleCase: function(string) {
+						var line = '';
 
-					var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
+						var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
 
-					for (var i = 0; i < split.length; ++i) {
-						var s = split[i];
+						for (var i = 0; i < split.length; ++i) {
+							var s = split[i];
 
-						s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
+							s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
 
-		 				// lowercase the list of small words
-						s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
+			 				// lowercase the list of small words
+							s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
 
-						// if the first word in the title is a small word then capitalize it
-						s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
+							// if the first word in the title is a small word then capitalize it
+							s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
 
-						// if the last word in the title is a small word, then capitalize it
-						s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
+							// if the last word in the title is a small word, then capitalize it
+							s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
 
-						line += s;
-					}
+							line += s;
+						}
 
-					// special cases
-					line = line.replace(/ V(s?)\. /g, ' v$1. ');
-					line = line.replace(/(['’])S\b/g, '$1s');
-					line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
+						// special cases
+						line = line.replace(/ V(s?)\. /g, ' v$1. ');
+						line = line.replace(/(['’])S\b/g, '$1s');
+						line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
 
-					return line;
-				},
+						return line;
+					},
 
-				__titleCaseDottedWordReplacer: function (w) {
-					return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
-				},
+					__titleCaseDottedWordReplacer: function (w) {
+						return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
+					},
 
-				__lowerReplacer: function (w) { return w.toLowerCase() },
+					__lowerReplacer: function (w) { return w.toLowerCase() },
 
-				__upperReplacer: function (w) { return w.toUpperCase() },
+					__upperReplacer: function (w) { return w.toUpperCase() },
 
-				__firstToUpperCase: function (w) {
-					var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
-					if (split[1]){
-						split[1] = split[1].toUpperCase();
-						return split.join('');
-						
-					} else {
-						return "";
-					}
+					__firstToUpperCase: function (w) {
+						var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
+						if (split[1]) {
+							split[1] = split[1].toUpperCase();
+						}
 					
-				},
-			};
+						return split.join('');
+					
+					
+					},
+				};
 
-			__TitleCase.init();
+				__TitleCase.init();
 			
-			t = t.replace(/_/g," ");
-			t = __TitleCase.toTitleCase(t);
+				t = t.replace(/_/g," ");
+				t = __TitleCase.toTitleCase(t);
 			
-			return t;
+				return t;
+				
+			}
+			
 		},
 		
 	}).init();

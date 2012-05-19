@@ -458,129 +458,20 @@ if(typeof VMM != 'undefined') {
 		}
 		
 	};
-
-	VMM.getJSONnoP = function(url, data, callback) {
-		if( typeof( jQuery ) != 'undefined' ){
-			
-			/* CHECK FOR IE AND USE Use Microsoft XDR
-			================================================== */
-			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-				trace("it's ie");
-				var ie_url = url;
-
-				if (ie_url.match('^http://')){
-					trace("RUNNING getJSONnoP XDR2");
-					var xdr = new XDomainRequest();
-					xdr.open("get", ie_url);
-					xdr.onload = function() {
-						var ie_json = VMM.parseJSON(xdr.responseText);
-						trace(xdr.responseText);
-						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(ie_json)
-						}								
-								
-					}
-					xdr.send();
-					/*
-					jQuery.ajax({
-						url: ie_url,
-						dataType: 'json',
-						type: "GET",
-					})
-					.done(function(d) {
-						trace("AJAX GOT IT");
-						trace(d);
-						if (type.of(d) == "null" || type.of(d) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(d)
-						}
-						
-					})
-					.fail(function(jqXHR, textStatus) {
-						trace(" getJSONnoP error " + textStatus);
-					})
-					.always(function() {
-						trace(" getJSONnoP complete");
-					});
-					*/
-					   
-				} else if (ie_url.match('^https://')) {
-					trace("RUNNING XDR");
-					ie_url = ie_url.replace("https://","http://");
-					
-					jQuery.ajax({
-						url: ie_url,
-						dataType: 'json',
-						type: "GET",
-					})
-					.done(function(d) {
-						trace("AJAX GOT IT");
-						trace(d);
-						if (type.of(d) == "null" || type.of(d) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(d)
-						}
-						
-					})
-					.fail(function(jqXHR, textStatus) {
-						trace(" getJSONnoP error " + textStatus);
-					})
-					.always(function() {
-						trace(" getJSONnoP complete");
-					});
-					
-					
-					
-
-				} else {
-					return jQuery.getJSON(url, data, callback);
-				}
-				
-			} else {
-				return jQuery.getJSON(url, data, callback);
-			}
-		}
-		
-	};
 	
 	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
 			
-			/* CHECK FOR IE AND USE Use Microsoft XDR
+			/* CHECK FOR IE
 			================================================== */
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-				trace("it's ie");
+				trace("IE JSON");
 				var ie_url = url;
-				
 				if (ie_url.match('^http://')){
-					trace("RUNNING GET JSON");
 					return jQuery.getJSON(ie_url, data, callback);
 				} else if (ie_url.match('^https://')) {
-					trace("RUNNING XDR");
 					ie_url = ie_url.replace("https://","http://");
 					return jQuery.getJSON(ie_url, data, callback);
-					
-					/*
-					trace("RUNNING XDR");
-					ie_url = ie_url.replace("https://","http://");
-					var xdr = new XDomainRequest();
-					xdr.open("get", ie_url);
-					xdr.onload = function() {
-						var ie_json = VMM.parseJSON(xdr.responseText);
-						trace(xdr.responseText);
-						if (type.of(ie_json) == "null" || type.of(ie_json) == "undefined") {
-							trace("IE JSON ERROR")
-						} else {
-							return data(ie_json)
-						}								
-								
-					}
-					xdr.send();
-					*/
 				} else {
 					return jQuery.getJSON(url, data, callback);
 				}
@@ -933,14 +824,13 @@ if(typeof VMM != 'undefined') {
 }
 
 if( typeof( jQuery ) != 'undefined' ){
-	// XDR
-	// https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
 	
+	/*	XDR AJAX EXTENTION FOR jQuery
+		https://github.com/jaubourg/ajaxHooks/blob/master/src/ajax/xdr.js
+	================================================== */
 	(function( jQuery ) {
-		trace("AJAX CROSS DOMAIN");
 		if ( window.XDomainRequest ) {
 			jQuery.ajaxTransport(function( s ) {
-				trace("USING AJAX CROSS DOMAIN");
 				if ( s.crossDomain && s.async ) {
 					if ( s.timeout ) {
 						s.xdrTimeout = s.timeout;
@@ -981,7 +871,6 @@ if( typeof( jQuery ) != 'undefined' ){
 			});
 		}
 	})( jQuery );
-	
 	
 	/*	jQuery Easing v1.3
 		http://gsgd.co.uk/sandbox/jquery/easing/
@@ -1436,7 +1325,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			//media.id = d.split("wiki\/")[1];
 			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
 			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
-			trace("WIKIPEDIA " + media.id);
 			success = true;
 		} 	else if (d.indexOf('http://') == 0) {
 			media.type = "website";
@@ -2256,7 +2144,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		wikipedia: {
 			
 			get: function(url, id) {
-				trace("WIKIPEDIA GET");
 				var api_obj = {url: url, id: id};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
@@ -2266,7 +2153,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
 				
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-					VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
+					var temp_text	=	"<h4><a href='http://en.wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
+					temp_text		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+					temp_text	+=	"<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>";
+					VMM.attachElement("#"+api_obj.id, temp_text );
 				}
 				
 				VMM.getJSON(the_url, function(d) {
@@ -2293,8 +2183,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						} else {
 							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
-					} else {
-						VMM.attachElement("#"+api_obj.id, "<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>" );
 					}
 					
 				});
@@ -2973,8 +2861,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.css(navigation.nextBtn, "left", (current_width - config.slider.nav.width));
 			VMM.Lib.height(navigation.prevBtn, config.slider.height);
 			VMM.Lib.height(navigation.nextBtn, config.slider.height);
-			VMM.Lib.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
-			VMM.Lib.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) );
+			VMM.Lib.css(navigation.nextBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) + 10 );
+			VMM.Lib.css(navigation.prevBtnContainer, "top", ( (config.slider.height/2) - (config.slider.nav.height/2) ) + 10 );
 			
 			// Animate Changes
 			VMM.Lib.height($slider_mask, config.slider.height);
@@ -4206,74 +4094,78 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		/* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){
-			
-			var __TitleCase = {
-				__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
+				return t.replace("_", "%20");
+			} else {
+				var __TitleCase = {
+					__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
 
-				init: function() {
-					this.__smallRE = this.__smallWords.join('|');
-					this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
-					this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
-					this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
-				},
+					init: function() {
+						this.__smallRE = this.__smallWords.join('|');
+						this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
+						this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
+						this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
+					},
 
-				toTitleCase: function(string) {
-					var line = '';
+					toTitleCase: function(string) {
+						var line = '';
 
-					var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
+						var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
 
-					for (var i = 0; i < split.length; ++i) {
-						var s = split[i];
+						for (var i = 0; i < split.length; ++i) {
+							var s = split[i];
 
-						s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
+							s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
 
-		 				// lowercase the list of small words
-						s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
+			 				// lowercase the list of small words
+							s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
 
-						// if the first word in the title is a small word then capitalize it
-						s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
+							// if the first word in the title is a small word then capitalize it
+							s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
 
-						// if the last word in the title is a small word, then capitalize it
-						s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
+							// if the last word in the title is a small word, then capitalize it
+							s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
 
-						line += s;
-					}
+							line += s;
+						}
 
-					// special cases
-					line = line.replace(/ V(s?)\. /g, ' v$1. ');
-					line = line.replace(/(['’])S\b/g, '$1s');
-					line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
+						// special cases
+						line = line.replace(/ V(s?)\. /g, ' v$1. ');
+						line = line.replace(/(['’])S\b/g, '$1s');
+						line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
 
-					return line;
-				},
+						return line;
+					},
 
-				__titleCaseDottedWordReplacer: function (w) {
-					return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
-				},
+					__titleCaseDottedWordReplacer: function (w) {
+						return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
+					},
 
-				__lowerReplacer: function (w) { return w.toLowerCase() },
+					__lowerReplacer: function (w) { return w.toLowerCase() },
 
-				__upperReplacer: function (w) { return w.toUpperCase() },
+					__upperReplacer: function (w) { return w.toUpperCase() },
 
-				__firstToUpperCase: function (w) {
-					var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
-					if (split[1]){
-						split[1] = split[1].toUpperCase();
-						return split.join('');
-						
-					} else {
-						return "";
-					}
+					__firstToUpperCase: function (w) {
+						var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
+						if (split[1]) {
+							split[1] = split[1].toUpperCase();
+						}
 					
-				},
-			};
+						return split.join('');
+					
+					
+					},
+				};
 
-			__TitleCase.init();
+				__TitleCase.init();
 			
-			t = t.replace(/_/g," ");
-			t = __TitleCase.toTitleCase(t);
+				t = t.replace(/_/g," ");
+				t = __TitleCase.toTitleCase(t);
 			
-			return t;
+				return t;
+				
+			}
+			
 		},
 		
 	}).init();
@@ -5805,7 +5697,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.30";
+		version = 					"1.35";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -5817,7 +5709,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				data_ready:		"DATAREADY",
 				messege:		"MESSEGE",
 				headline:		"TIMELINE_HEADLINE",
-				slide_change:	"SLIDE_CHANGE"
+				slide_change:	"SLIDE_CHANGE",
+				resize:			"resize"
 			},
 			id: 					timeline_id,
 			type: 					"timeline",
@@ -6062,8 +5955,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
 			
-			VMM.bindEvent(global, onDataReady, "DATAREADY");
-			VMM.bindEvent(global, showMessege, "MESSEGE");
+			VMM.bindEvent(global, onDataReady, config.events.data_ready);
+			VMM.bindEvent(global, showMessege, config.events.messege);
 			
 			/* GET DATA
 			================================================== */
@@ -6140,7 +6033,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.init(_dates, data.era);
 			
 			// RESIZE EVENT LISTENERS
-			VMM.bindEvent(global, reSize, "resize");
+			VMM.bindEvent(global, reSize, config.events.resize);
 			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
 			
 		};
