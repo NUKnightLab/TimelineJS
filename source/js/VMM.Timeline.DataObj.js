@@ -261,6 +261,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 							},
 				            "tags": 							"Optional"
 						};
+						if (dd.gsx$tag.$t) {
+							_date.tag = dd.gsx$tag.$t;
+							trace("TAG " + _date.tag);
+						}
 						_data_obj.timeline.date.push(_date);
 					}
 				};

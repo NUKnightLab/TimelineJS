@@ -63,11 +63,27 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		
 		/* CUSTOM SORT
 		================================================== */
-		
 		customSort: function(a, b) {
 			var a1= a, b1= b;
 			if(a1== b1) return 0;
 			return a1> b1? 1: -1;
+		},
+		
+		/* Remove Duplicates from Array
+		================================================== */
+		deDupeArray: function(arr) {
+			var i,
+				len=arr.length,
+				out=[],
+				obj={};
+
+			for (i=0;i<len;i++) {
+				obj[arr[i]]=0;
+			}
+			for (i in obj) {
+				out.push(i);
+			}
+			return out;
 		},
 		
 		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.

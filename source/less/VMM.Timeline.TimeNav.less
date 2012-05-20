@@ -140,6 +140,48 @@
 				
 			}
 			
+			.timenav-tag {
+				//margin-top:1px;
+				//height:@navigation-time-height - 8;
+				//margin-bottom:7px;
+				height:@navigation-time-height;
+				//background: @color-theme;
+				div {
+					height:@navigation-time-height;
+					display:table;
+					h3 {
+						display:table-cell;
+						vertical-align:middle;
+						padding-left:@navigation-time-height + @base-space;
+						font-size:@base-font;
+						color: darken(@color-background-dark, 30%);
+						//font-weight: bold;
+					}
+					
+				}
+				
+			}
+			.timenav-tag-row-1 {
+				//background:@color-theme-complement;
+				//background: fadeout(desaturate(@color-theme, 70%), 70%);
+				//background: darken(@color-background-dark, 10%); 
+				//background:@color-background-dark;
+				//background: lighten(@color-background-dark, 6%);
+			}
+			.timenav-tag-row-2 {
+				//background: @color-theme-complement-dark;
+				//background: fadeout(@color-theme-complement-dark, 70%); 
+				//background: fadeout(desaturate(@color-theme, 70%), 60%);
+				background: lighten(@color-background-dark, 3%); 
+			}
+			.timenav-tag-row-3 {
+				//background:@color-theme-complement-darker;
+				//background: fadeout(@color-theme-complement-darker, 70%);
+				//background: fadeout(desaturate(@color-theme, 70%), 50%);
+				//background: lighten(@color-background-dark, 10%);
+				background:@color-background-dark;
+			}
+			
 		}
 		
 		.timenav {

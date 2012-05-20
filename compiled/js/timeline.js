@@ -3591,11 +3591,27 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		
 		/* CUSTOM SORT
 		================================================== */
-		
 		customSort: function(a, b) {
 			var a1= a, b1= b;
 			if(a1== b1) return 0;
 			return a1> b1? 1: -1;
+		},
+		
+		/* Remove Duplicates from Array
+		================================================== */
+		deDupeArray: function(arr) {
+			var i,
+				len=arr.length,
+				out=[],
+				obj={};
+
+			for (i=0;i<len;i++) {
+				obj[arr[i]]=0;
+			}
+			for (i in obj) {
+				out.push(i);
+			}
+			return out;
 		},
 		
 		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
@@ -6104,6 +6120,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate			=	_date.startdate.getTime();
 					_date.text				=	data.date[i].text;
 					_date.content			=	"";
+					_date.tag				=	data.date[i].tag;
 					
 					
 					_dates.push(_date);
@@ -6189,7 +6206,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		trace("VMM.Timeline.TimeNav");
 		
 		var events = {}, timespan = {}, layout = parent;
-		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content;
+		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content, tags = [];
 		
 		var current_marker		= 	0;
 		var _active				=	false;
@@ -6794,18 +6811,33 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				// CONTROL ROW POSITION
-				if (pos - lpos < (config.nav.marker.width + config.spacing)) {
-					if (row < config.nav.rows.length - 1) {
-						row ++;
-						
-					} else {
-						row = 0;
-						row_depth ++;
+				if (tags.length > 0) {
+					
+					for (var k = 0; k < tags.length; k++) {
+						trace("TAGS: " + tags[k])
+						if (k < config.nav.rows.length) {
+							if (markers[i].tag == tags[k]) {
+								trace("tag match " + k);
+								row = k;
+							}
+						}
 					}
+					
 				} else {
-					row_depth = 0;
-					row = 0;
+					if (pos - lpos < (config.nav.marker.width + config.spacing)) {
+						if (row < config.nav.rows.length - 1) {
+							row ++;
+						
+						} else {
+							row = 0;
+							row_depth ++;
+						}
+					} else {
+						row_depth = 0;
+						row = 0;
+					}
 				}
+				
 				
 				// SET LAST MARKER POSITION
 				lpos = pos;
@@ -7247,7 +7279,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					marker: 			_marker,
 					flag: 				_marker_flag,
 					lineevent: 			_marker_line_event,
-					type: 				"marker"
+					type: 				"marker",
+					tag:				data[i].tag
 				};
 				
 				
@@ -7257,11 +7290,29 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					_marker_obj.type = "start";
 				}
 				
+				if (data[i].tag) {
+					tags.push(data[i].tag);
+				}
+				
 				markers.push(_marker_obj);
 				
 				
 				
 			}
+			
+			// CREATE TAGS
+			tags = VMM.Util.deDupeArray(tags);
+			
+			for(var k = 0; k < tags.length; k++) {
+				if (k < config.nav.rows.length) {
+					var tag_element = VMM.appendAndGetElement($timebackground, "<div>", "timenav-tag");
+					VMM.Lib.addClass(tag_element, "timenav-tag-row-" + (k+1));
+					VMM.appendElement(tag_element, "<div><h3>" + tags[k] + "</h3></div>");
+				}
+				
+			}
+			
+			
 			
 			// CREATE ERAS
 			for(var j = 0; j < eras.length; j++) {
@@ -7556,6 +7607,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 							},
 				            "tags": 							"Optional"
 						};
+						if (dd.gsx$tag.$t) {
+							_date.tag = dd.gsx$tag.$t;
+							trace("TAG " + _date.tag);
+						}
 						_data_obj.timeline.date.push(_date);
 					}
 				};

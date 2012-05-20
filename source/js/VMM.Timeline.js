@@ -463,6 +463,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.fulldate			=	_date.startdate.getTime();
 					_date.text				=	data.date[i].text;
 					_date.content			=	"";
+					_date.tag				=	data.date[i].tag;
 					
 					
 					_dates.push(_date);

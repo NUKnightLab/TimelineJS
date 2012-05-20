@@ -7,7 +7,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		trace("VMM.Timeline.TimeNav");
 		
 		var events = {}, timespan = {}, layout = parent;
-		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content;
+		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content, tags = [];
 		
 		var current_marker		= 	0;
 		var _active				=	false;
@@ -612,18 +612,33 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				// CONTROL ROW POSITION
-				if (pos - lpos < (config.nav.marker.width + config.spacing)) {
-					if (row < config.nav.rows.length - 1) {
-						row ++;
-						
-					} else {
-						row = 0;
-						row_depth ++;
+				if (tags.length > 0) {
+					
+					for (var k = 0; k < tags.length; k++) {
+						trace("TAGS: " + tags[k])
+						if (k < config.nav.rows.length) {
+							if (markers[i].tag == tags[k]) {
+								trace("tag match " + k);
+								row = k;
+							}
+						}
 					}
+					
 				} else {
-					row_depth = 0;
-					row = 0;
+					if (pos - lpos < (config.nav.marker.width + config.spacing)) {
+						if (row < config.nav.rows.length - 1) {
+							row ++;
+						
+						} else {
+							row = 0;
+							row_depth ++;
+						}
+					} else {
+						row_depth = 0;
+						row = 0;
+					}
 				}
+				
 				
 				// SET LAST MARKER POSITION
 				lpos = pos;
@@ -1065,7 +1080,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					marker: 			_marker,
 					flag: 				_marker_flag,
 					lineevent: 			_marker_line_event,
-					type: 				"marker"
+					type: 				"marker",
+					tag:				data[i].tag
 				};
 				
 				
@@ -1075,11 +1091,29 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					_marker_obj.type = "start";
 				}
 				
+				if (data[i].tag) {
+					tags.push(data[i].tag);
+				}
+				
 				markers.push(_marker_obj);
 				
 				
 				
 			}
+			
+			// CREATE TAGS
+			tags = VMM.Util.deDupeArray(tags);
+			
+			for(var k = 0; k < tags.length; k++) {
+				if (k < config.nav.rows.length) {
+					var tag_element = VMM.appendAndGetElement($timebackground, "<div>", "timenav-tag");
+					VMM.Lib.addClass(tag_element, "timenav-tag-row-" + (k+1));
+					VMM.appendElement(tag_element, "<div><h3>" + tags[k] + "</h3></div>");
+				}
+				
+			}
+			
+			
 			
 			// CREATE ERAS
 			for(var j = 0; j < eras.length; j++) {
