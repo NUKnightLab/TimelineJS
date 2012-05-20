@@ -910,7 +910,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
 				VMM.Lib.css($toolbar, "top", 27);
-				VMM.Lib.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
 				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
@@ -918,9 +918,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Lib.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
+			VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
 			VMM.Lib.attribute($zoomin, "rel", "tooltip");
-			VMM.Lib.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
+			VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
 			VMM.Lib.attribute($zoomout, "rel", "tooltip");
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})

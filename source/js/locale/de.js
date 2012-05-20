@@ -4,6 +4,10 @@
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "de",
+		api: {
+			wikipedia: "de"
+		},
 		date: {
 			month: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
 			month_abbr: ["Jän.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
@@ -25,7 +29,9 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Chronologie wird geladen...",
 			return_to_title: "Zurück zum Anfang",
 			expand_timeline: "Chronologie vergrößern",
-			contract_timeline: "Chronologie verkleinern"
+			contract_timeline: "Chronologie verkleinern",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
 		}
 	}
 }

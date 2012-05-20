@@ -1,7 +1,11 @@
-/* LANGUAGE 
+/* DEFAULT LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 	VMM.Language = {
+		lang: "en",
+		api: {
+			wikipedia: "en"
+		},
 		date: {
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
@@ -23,7 +27,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			loading_timeline: "Loading Timeline... ",
 			return_to_title: "Return to Title",
 			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline"
+			contract_timeline: "Contract Timeline",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
 		}
 	}
 };

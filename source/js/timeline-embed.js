@@ -71,10 +71,10 @@
 	var embed_config = {
 		width: 800,
 		height: 600,
-		source: 'taylor/data.json',
+		source:	'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadFYzRjJPUGktY0NkWXFUWkVIZDNGRHc&output=html',
 		font: 'default',
-		css: 'http://veritetimeline.appspot.com/latest/timeline.css',
-		js: 'http://veritetimeline.appspot.com/latest/timeline-min.js'
+		css: 'http://embed.verite.co/timeline/css/timeline.css',
+		js: 'http://embed.verite.co/timeline/js/timeline-min.js'
 	}
 	
 	if (typeof timeline_config == 'object') {
@@ -101,9 +101,9 @@
 	var cssReady		=	false;
 	var fontCSSReady	=	false;
 	var fontJSReady		=	false;
-	var base_path		=	"http://veritetimeline.appspot.com/latest/";
-	var js_url			=	"http://veritetimeline.appspot.com/latest/";
-	var font_css_url	=	"http://veritetimeline.appspot.com/latest/themes/font/"
+	var base_path		=	"http://embed.verite.co/timeline/";
+	var js_url			=	"http://embed.verite.co/timeline/js/";
+	var font_css_url	=	"http://embed.verite.co/timeline/css/themes/font/"
 	var font_js_url		=	"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
 	var font_google		=	[ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
 	var isReady			=	false;

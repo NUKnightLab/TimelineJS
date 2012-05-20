@@ -4,6 +4,10 @@
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "es",
+		api: {
+			wikipedia: "es"
+		},
 		date: {
 			month: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
 			month_abbr: ["Ene.","Feb.","Mar.","Abr.","May.","Jun.","Jul.","Ago.","Sep.","Oct.","Nov.","Dic."],
@@ -25,7 +29,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Cronología esta cargando",
 		    return_to_title: "Volver al título",
 		    expand_timeline: "Enlargar la cronología",
-		    contract_timeline: "Reducir la cronología"
+		    contract_timeline: "Reducir la cronología",
+			wikipedia: "Desde Wikipedia, la enciclopedia libre",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

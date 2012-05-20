@@ -621,8 +621,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 							}
 						}
 					
-						_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
-						_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+						_wiki		=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
+						_wiki		+=	"<div class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
 						_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
 					
 						if (wiki_extract.match("REDIRECT")) {

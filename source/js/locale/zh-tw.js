@@ -4,6 +4,10 @@
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "zh-tw",
+		api: {
+			wikipedia: "zh"
+		},
 		date: {
 			month: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
 			month_abbr: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
@@ -25,7 +29,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Loading Timeline... ",
 			return_to_title: "Return to Title",
 			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline"
+			contract_timeline: "Contract Timeline",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

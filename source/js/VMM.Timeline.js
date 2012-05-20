@@ -316,9 +316,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			trace('TIMELINE INIT');
 			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
@@ -345,7 +346,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		this.reload = function(_d) {
 			trace("loadNewDates" + _d);
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
 		};

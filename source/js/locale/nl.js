@@ -4,6 +4,10 @@
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "nl",
+		api: {
+			wikipedia: "nl"
+		},
 		date: {
 			month: ["januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"],
 			month_abbr: ["jan", "febr", "ma", "apr", "mei", "juni", "juli", "aug", "sept", "okt", "nov", "dec"],
@@ -25,7 +29,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Tijdlijn laden ... ",
 			return_to_title: "Terug naar het begin",
 			expand_timeline: "Tijdlijn uitzoomen",
-			contract_timeline: "Tijdlijn inzoomen"
+			contract_timeline: "Tijdlijn inzoomen",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

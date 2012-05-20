@@ -4,6 +4,10 @@
 if(typeof VMM != 'undefined') {
 	VMM.debug = false;
 	VMM.Language = {
+		lang: "it",
+		api: {
+			wikipedia: "it"
+		},
 		date: {
 			month: ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settebre","Ottobre","Novembre","Dicembre"],
 			month_abbr: ["Gen","Feb","Mar","Apr","Mag","Giu","Lug","Ago","Set","Ott","Nov","Dic"],
@@ -25,7 +29,10 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "Loading Timeline... ",
 			return_to_title: "Return to Title",
 			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline"
+			contract_timeline: "Contract Timeline",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
+			
 		}
 	}
 }

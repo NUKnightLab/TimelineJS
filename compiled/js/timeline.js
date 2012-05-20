@@ -2174,8 +2174,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 							}
 						}
 					
-						_wiki		=	"<h4><a href='http://en.wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
-						_wiki		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
+						_wiki		=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
+						_wiki		+=	"<div class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
 						_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
 					
 						if (wiki_extract.match("REDIRECT")) {
@@ -3026,7 +3026,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// HANDLE SMALLER SIZES
 			var is_skinny = false;
 			
-			if (current_width <= 600) {
+			if (current_width <= 640) {
 				is_skinny = true;
 			} else if (VMM.Browser.device == "mobile" && VMM.Browser.orientation == "portrait") {
 				is_skinny = true;
@@ -4581,10 +4581,14 @@ if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
      Begin VMM.Language.js 
 ***********************************************/ 
 
-/* LANGUAGE 
+/* DEFAULT LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 	VMM.Language = {
+		lang: "en",
+		api: {
+			wikipedia: "en"
+		},
 		date: {
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
@@ -4606,7 +4610,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			loading_timeline: "Loading Timeline... ",
 			return_to_title: "Return to Title",
 			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline"
+			contract_timeline: "Contract Timeline",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content"
 		}
 	}
 };
@@ -5951,9 +5957,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			trace('TIMELINE INIT');
 			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
@@ -5980,7 +5987,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		this.reload = function(_d) {
 			trace("loadNewDates" + _d);
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.Timeline.Config.language.messages.loading_timeline);
+			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
 		};
@@ -7085,7 +7092,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
 				VMM.Lib.css($toolbar, "top", 27);
-				VMM.Lib.attribute($backhome, "title", VMM.Timeline.Config.language.messages.return_to_title);
+				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
 				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
@@ -7093,9 +7100,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
 			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
-			VMM.Lib.attribute($zoomin, "title", VMM.Timeline.Config.language.messages.expand_timeline);
+			VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
 			VMM.Lib.attribute($zoomin, "rel", "tooltip");
-			VMM.Lib.attribute($zoomout, "title", VMM.Timeline.Config.language.messages.contract_timeline);
+			VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
 			VMM.Lib.attribute($zoomout, "rel", "tooltip");
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
