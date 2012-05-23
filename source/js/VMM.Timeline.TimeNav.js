@@ -855,7 +855,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					_interval.date.setSeconds(_interval.date.getSeconds() + inc_time);
 				}
 				
-				_idd = VMM.Util.date.prettyDate(_interval.date, true);
+				_idd = VMM.Date.prettyDate(_interval.date, true);
 				
 				inc_time = 1;
 				
@@ -1048,7 +1048,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			for(var i = 0; i < data.length; i++) {
 				
-				var _marker, _marker_flag, _marker_content, _marker_dot, _marker_line, _marker_line_event;
+				var _marker, _marker_flag, _marker_content, _marker_dot, _marker_line, _marker_line_event, _marker_title = "";
 				
 				_marker = 				VMM.appendAndGetElement($content, "<div>", "marker");
 				_marker_flag = 			VMM.appendAndGetElement(_marker, "<div>", "flag");
@@ -1067,7 +1067,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				// ADD DATE AND TITLE
-				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
+				if (data[i].title != " ") {
+					_marker_title = VMM.Util.unlinkify(data[i].title);
+				} else {
+					if (typeof data[i].slug != 'undefined') {
+						_marker_title = VMM.Util.unlinkify(data[i].slug);
+					} else {
+						
+					}
+				}
+				VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3><h4>" + data[i].date + "</h4>");
 				
 				// ADD ID
 				VMM.Lib.attr(_marker, "id", (data[i].uniqueid).toString());
