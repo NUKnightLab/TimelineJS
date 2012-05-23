@@ -24,18 +24,38 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			width:			"100%",
 			height:			"100%",
 			source:			'path_to_json/or_link_to_googlespreadsheet',
-			start_at_end: 	false,							//OPTIONAL
-			hash_bookmark:	true,							//OPTIONAL
-			font:			'Bevan-PotanoSans',				//OPTIONAL
-			maptype:		'watercolor',					//OPTIONAL
-			css:			'path_to_css/timeline.css',		//OPTIONAL
-			js:				'path_to_js/timeline-min.js'	//OPTIONAL
+			start_at_end: 	false,							//OPTIONAL START AT LATEST DATE
+			hash_bookmark:	true,							//OPTIONAL LOCATION BAR HASHES
+			font:			'Bevan-PotanoSans',				//OPTIONAL FONT
+			lang:			'fr',							//OPTIONAL LANGUAGE
+			maptype:		'watercolor',					//OPTIONAL MAP STYLE
+			css:			'path_to_css/timeline.css',		//OPTIONAL PATH TO CSS
+			js:				'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
 		}
 	</script>
 	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
 ```
 	
 ## Options
+
+###Language
+`lang`
+Localization
+*default is en*
+Languages available:
+* `en` *English*
+* `fr` *Français*
+* `es` *Español*
+* `de` *Deutsch*
+* `is` *English*
+* `it` *Italiano*
+* `nl` *Nederlands*
+* `kr` *월요일*
+* `pt-br` *Português Brazil *
+* `ja` *日本語*
+* `zh-ch` *中文*
+* `zh-tw` *Taiwanese Mandarin*
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/Timeline/blob/master/source/js/locale/en.js) 
 
 ###Start at End 
 `start_at_end`
@@ -135,6 +155,10 @@ using Google Docs:
   
 	Only one should be labeled "start" (generally, the first one). The title slide
 	must have a start date, headline and text to appear properly.
+	
+### Storify:
+
+Support for Storify is still in it's early stages. It works though. Just paste a link to the storify story as the source.
 
 ## Media
 
