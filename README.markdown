@@ -47,7 +47,7 @@ Languages available:
 * `fr` *Français*
 * `es` *Español*
 * `de` *Deutsch*
-* `is` *English*
+* `is` *Icelandic*
 * `it` *Italiano*
 * `nl` *Nederlands*
 * `kr` *월요일*
