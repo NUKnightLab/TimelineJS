@@ -1,4 +1,3 @@
-// @codekit-prepend "VMM.Timeline.js";
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
