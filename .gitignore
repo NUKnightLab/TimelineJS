@@ -5,6 +5,7 @@ cdn/
 <<<<<<< HEAD
 =======
 VMM.Timeline.CDN.js
+CDN.js
 >>>>>>> Canary
 *.tmproj
 *.tmproject
