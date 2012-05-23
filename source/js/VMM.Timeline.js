@@ -20,20 +20,26 @@
 	http://incident57.com/codekit/
 ================================================== */
 // @codekit-prepend "VMM.Timeline.License.js";
-// @codekit-prepend "VMM.js";
-// @codekit-prepend "VMM.Library.js";
-// @codekit-prepend "VMM.Browser.js";
-// @codekit-prepend "VMM.MediaElement.js";
-// @codekit-prepend "VMM.MediaType.js";
-// @codekit-prepend "VMM.Media.js";
-// @codekit-prepend "VMM.FileExtention.js";
-// @codekit-prepend "VMM.ExternalAPI.js";
-// @codekit-prepend "VMM.TouchSlider.js";
-// @codekit-prepend "VMM.DragSlider.js";
-// @codekit-prepend "VMM.Slider.js";
-// @codekit-prepend "VMM.Slider.Slide.js";
-// @codekit-prepend "VMM.Util.js";
-// @codekit-prepend "VMM.LoadLib.js";
+
+// @codekit-prepend "Core/VMM.js";
+// @codekit-prepend "Core/VMM.Library.js";
+// @codekit-prepend "Core/VMM.Browser.js";
+// @codekit-prepend "Core/VMM.FileExtention.js";
+// @codekit-prepend "Core/VMM.Date.js";
+// @codekit-prepend "Core/VMM.Util.js";
+// @codekit-prepend "Core/VMM.LoadLib.js";
+
+// @codekit-prepend "Media/VMM.ExternalAPI.js";
+// @codekit-prepend "Media/VMM.MediaElement.js";
+// @codekit-prepend "Media/VMM.MediaType.js";
+// @codekit-prepend "Media/VMM.Media.js";
+// @codekit-prepend "Media/VMM.TextElement.js";
+
+// @codekit-prepend "Slider/VMM.TouchSlider.js";
+// @codekit-prepend "Slider/VMM.DragSlider.js";
+// @codekit-prepend "Slider/VMM.Slider.js";
+// @codekit-prepend "Slider/VMM.Slider.Slide.js";
+
 // @codekit-prepend "VMM.Language.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
@@ -62,7 +68,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.35";
+		version = 					"1.45mem";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -315,7 +321,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			createStructure(w,h);
 			
 			trace('TIMELINE INIT');
-			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			VMM.Date.setLanguage(VMM.Timeline.Config.language);
 			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
@@ -381,7 +387,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var build = function() {
 			
 			// START AT END?
-			if (config.start_at_end) {
+			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
 			// CREATE DOM STRUCTURE
@@ -423,9 +429,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		// BUILD DATE OBJECTS
 		var buildDates = function() {
 			
-			updateSize();
 			_dates = [];
 			VMM.fireEvent(global, config.events.messege, "Building Dates");
+			updateSize();
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -437,36 +443,37 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else {
-						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
+						_date.startdate = VMM.Date.parse(data.date[i].startDate);
 					}
 					
-					_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
+					if (!isNaN(_date.startdate)) {
+						
+						_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
 					
-					// END DATE
-					if (data.date[i].endDate != null && data.date[i].endDate != "") {
-						if (data.date[i].type == "tweets") {
-							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+						// END DATE
+						if (data.date[i].endDate != null && data.date[i].endDate != "") {
+							if (data.date[i].type == "tweets") {
+								_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+							} else {
+								_date.enddate = VMM.Date.parse(data.date[i].endDate);
+							}
 						} else {
-							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
+							_date.enddate = _date.startdate;
 						}
-					} else {
-						_date.enddate = _date.startdate;
-					}
 					
-					_date.title				=	data.date[i].headline;
-					_date.headline			=	data.date[i].headline;
-					_date.type				=	data.date[i].type;
-					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
-					_date.asset				=	data.date[i].asset;
-					_date.fulldate			=	_date.startdate.getTime();
-					_date.text				=	data.date[i].text;
-					_date.content			=	"";
-					_date.tag				=	data.date[i].tag;
-					
-					
-					_dates.push(_date);
+						_date.title				=	data.date[i].headline;
+						_date.headline			=	data.date[i].headline;
+						_date.type				=	data.date[i].type;
+						_date.date				=	VMM.Date.prettyDate(_date.startdate);
+						_date.asset				=	data.date[i].asset;
+						_date.fulldate			=	_date.startdate.getTime();
+						_date.text				=	data.date[i].text;
+						_date.content			=	"";
+						_date.tag				=	data.date[i].tag;
+						_date.slug				=	data.date[i].slug;
+						
+						_dates.push(_date);
+					} 
 					
 				}
 				
@@ -482,9 +489,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
-				var _date		=	{};
-				var td_num		=	0;
-				var td			=	_dates[0].startdate;
+				var _date = {}, td_num = 0, td;
+				
+				td = _dates[0].startdate;
 				_date.startdate =	new Date(_dates[0].startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
@@ -510,7 +517,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.headline	=	data.headline;
 				_date.text		=	data.text;
 				_date.type		=	"start";
-				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
+				_date.date		=	VMM.Date.prettyDate(data.startDate);
 				_date.asset		=	data.asset;
 				_date.fulldate	=	_date.startdate.getTime();
 				
