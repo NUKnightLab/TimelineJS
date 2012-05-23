@@ -1064,458 +1064,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 }
 
 /*********************************************** 
-     Begin VMM.MediaElement.js 
-***********************************************/ 
-
-/* MediaElement
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
-	
-	VMM.MediaElement = ({
-		
-		init: function() {
-			return this;
-		},
-		
-		thumbnail: function(data, w, h) {
-			_w = 16;
-			_h = 24;
-			if (w != null && w != "") {_w = w};
-			if (h != null && h != "") {_h = h};
-			
-			if (data.media != null && data.media != "") {
-				_valid				=	true;
-				var mediaElem		=	"";
-				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
-				// CREATE MEDIA CODE 
-				if (m.type == "image") {
-					//mediaElem		=	"<div class='thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
-					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
-					return mediaElem;
-				} else if (m.type	==	"flickr") {
-					mediaElem		=	"<div class='thumbnail thumb-photo' id='flickr_" + m.id + "_thumb'></div>";
-					return mediaElem;
-				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
-					return mediaElem;
-				} else if (m.type	==	"googledoc") {
-					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
-					return mediaElem;
-				} else if (m.type	==	"vimeo") {
-					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
-					return mediaElem;
-				} else if (m.type  ==  "dailymotion") {
-					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
-					return mediaElem;
-				} else if (m.type	==	"twitter"){
-					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
-					return mediaElem;
-				} else if (m.type	==	"twitter-ready") {
-					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
-					return mediaElem;
-				} else if (m.type	==	"soundcloud") {
-					mediaElem		=	"<div class='thumbnail thumb-audio'></div>";
-					return mediaElem;
-				} else if (m.type	==	"google-map") {
-					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
-					return mediaElem;
-				} else if (m.type	==	"wikipedia") {
-					mediaElem		=	"<div class='thumbnail thumb-wikipedia'></div>";
-					return mediaElem;
-				} else if (m.type	==	"unknown") {
-					if (m.id.match("blockquote")) {
-						mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
-					} else {
-						mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
-					}
-					return mediaElem;
-				} else if (m.type	==	"website") {
-					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
-					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
-					return mediaElem;
-				} else {
-					mediaElem = "<div class='thumbnail thumb-plaintext'></div>";
-					return mediaElem;
-				}
-			} 
-		},
-		
-		create: function(data) {
-			//$mediacontainer				=	element;
-			var _valid					=	false;
-			
-			if (data.media != null && data.media != "") {
-				var mediaElem			=	"";
-				var captionElem			=	"";
-				var creditElem			=	"";
-				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
-				var isTextMedia			=	false;
-				var _id					=	"";
-				_valid					=	true;
-				
-			// CREDIT
-				if (data.credit != null && data.credit != "") {
-					creditElem			=	"<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
-				}
-			// CAPTION
-				if (data.caption != null && data.caption != "") {
-					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
-				}
-			// IMAGE
-				if (m.type				==	"image") {
-					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
-			// FLICKR
-				} else if (m.type		==	"flickr") {
-					_id					=	"flickr_" + m.id;
-					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
-					VMM.ExternalAPI.flickr.get(m.id, "#" + _id);
-			// GOOGLE DOCS
-				} else if (m.type		==	"googledoc") {
-					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
-					VMM.ExternalAPI.googledocs.get(m.id, _id);
-			// YOUTUBE
-				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
-					VMM.ExternalAPI.youtube.get(m.id);
-			// VIMEO
-				} else if (m.type		==	"vimeo") {
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
-					VMM.ExternalAPI.vimeo.get(m.id);
-			// DAILYMOTION
-				} else if (m.type		==	"dailymotion") {
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
-			// TWITTER
-				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
-					isTextMedia			=	true;
-					VMM.ExternalAPI.twitter.prettyHTML(m.id);
-			// TWITTER
-				} else if (m.type		==	"twitter-ready") {
-					isTextMedia			=	true;
-					mediaElem			=	m.id;
-			// SOUNDCLOUD
-				} else if (m.type		==	"soundcloud") {
-					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
-					VMM.ExternalAPI.soundcloud.get(m.id, _id);
-			// GOOGLE MAPS
-				} else if (m.type		==	"google-map") {
-					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
-					VMM.ExternalAPI.googlemaps.get(m.id, _id);
-			// WIKIPEDIA
-				} else if (m.type		==	"wikipedia") {
-					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
-					isTextMedia			=	true;
-					VMM.ExternalAPI.wikipedia.get(m.id, _id);
-			// UNKNOWN
-				} else if (m.type		==	"unknown") { 
-					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
-					isTextMedia			=	true;
-					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
-			// WEBSITE
-				} else if (m.type		==	"website") { 
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe></div>";
-					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
-			// NO MATCH
-				} else {
-					trace("NO KNOWN MEDIA TYPE FOUND");
-					trace(m.type);
-				}
-				
-			// WRAP THE MEDIA ELEMENT
-				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
-			// RETURN
-				if (isTextMedia) {
-					return "<div class='text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
-				} else {
-					return "<div class='media-wrapper'>" + mediaElem + "</div>";
-				}
-				
-				/*
-				if (_return) {
-					if (isTextMedia) {
-						return "<div class='media text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
-					} else {
-						return "<div class='media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
-					}
-				} else {
-					VMM.appendElement($mediacontainer, mediaElem);
-					VMM.appendElement($mediacontainer, creditElem);
-					VMM.appendElement($mediacontainer, captionElem);
-				}
-				*/
-			};
-			
-		},
-		
-	}).init();
-}
-
-/*********************************************** 
-     Begin VMM.MediaType.js 
-***********************************************/ 
-
-/* MediaType
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
-	
-	//VMM.mediaType.youtube(d); //should return a true or false
-	// VMM.MediaType(url); //returns an object with .type and .id
-	
-	VMM.MediaType = function(d) {
-		var success = false;
-		var media   = {};
-		
-		if (d.match("div class='twitter'")) {
-			media.type = "twitter-ready";
-		    media.id = d;
-		    success = true;
-		} else if (d.match('(www.)?youtube|youtu\.be')) {
-			if (d.match('v=')) {
-				media.id = VMM.Util.getUrlVars(d)["v"];
-			} else { 
-				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
-			}
-		    media.type = "youtube";
-		    success = true;
-		} else if (d.match('(player.)?vimeo\.com')) {
-		    media.type = "vimeo";
-		    media.id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];;
-		    success = true;
-	    } else if (d.match('(www.)?dailymotion\.com')) {
-			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
-			media.type = "dailymotion";
-			success = true;
-		} else if (d.match('(player.)?soundcloud\.com')) {
-			media.type = "soundcloud";
-			media.id = d;
-			success = true;
-		} else if (d.match('(www.)?twitter\.com')) {
-			if (d.match("status\/")) {
-				media.id = d.split("status\/")[1];
-			} else if (d.match("statuses\/")) {
-				media.id = d.split("statuses\/")[1];
-			} else {
-				media.id = "";
-			}
-			media.type = "twitter";
-			success = true;
-		} else if (d.match("maps.google") && !d.match("staticmap")) {
-			media.type = "google-map";
-		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
-			success = true;
-		} else if (d.match("flickr.com/photos")) {
-			media.type = "flickr";
-			media.id = d.split("photos\/")[1].split("/")[1];
-			media.link = d;
-			success = true;
-		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap")) {
-			media.type = "image";
-			media.id = d;
-			success = true;
-		} else if (VMM.FileExtention.googleDocType(d)) {
-			media.type = "googledoc";
-			media.id = d;
-			success = true;
-		} else if (d.match('(www.)?wikipedia\.org')) {
-			media.type = "wikipedia";
-			//media.id = d.split("wiki\/")[1];
-			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
-			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
-			success = true;
-		} 	else if (d.indexOf('http://') == 0) {
-			media.type = "website";
-			media.id = d;
-			success = true;
-		} else {
-			trace("unknown media");  
-			media.type = "unknown";
-			media.id = d;
-			success = true;
-		}
-		
-		if (success) { 
-			return media;
-		} else {
-			trace("No valid media id detected");
-			trace(d);
-		}
-		return false;
-	}
-}
-
-/*********************************************** 
-     Begin VMM.Media.js 
-***********************************************/ 
-
-/* Media
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Media == 'undefined') {
-	
-	// something = new VMM.Media(parent, w, h, {thedata});
-	VMM.Media = function(parent, w, h, thedata) {  
-		
-		/* PRIVATE VARS
-		================================================== */
-		var data = {}; // HOLDS DATA
-		
-		var _valid = false;
-		
-		var config = {
-			width: 720,
-			height: 400,
-			content_width: 720,
-			content_height: 400,
-			ease: "easeInOutExpo",
-			duration: 1000,
-			spacing: 15
-		};
-		/* ELEMENTS
-		================================================== */
-		var $media = "";
-		var $container = "";
-		var $mediacontainer  = "";
-		var $mediaelement = "";
-		var layout = parent; // expecting media div
-		
-		if (w != null && w != "") {config.width = w};
-		if (h != null && h != "") {config.height = h};
-		/*
-		if (typeof thedata != "undefined") {
-			data = thedata;
-			this.init(data);
-		}
-		*/
-		/* PUBLIC FUNCTIONS
-		================================================== */
-		this.init = function(d) {
-			if(typeof d != 'undefined') {
-				this.setData(d);
-			} else {
-				trace("WAITING ON DATA");
-			}
-		};
-		
-		var build = function(media, caption, credit) {
-			
-			$media = VMM.appendAndGetElement(layout, "<div>", "media");
-			$container = VMM.appendAndGetElement($media, "<div>", "container");
-			$mediacontainer = VMM.appendAndGetElement($container, "<div>", "media-container");
-			
-
-			if (data.media != null && data.media != "") {
-
-				_valid = true;
-				var m = {};
-				
-				m = VMM.MediaType(data.media); //returns an object with .type and .id
-				
-				if (m.type == "image") {
-					VMM.appendElement($mediacontainer, "<img src='" + m.id + "'>");  
-				} else if (m.type == "youtube") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
-				} else if (m.type == "vimeo") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
-				} else {
-					
-				}
-				
-				// CREDIT
-				if (data.credit != null && data.credit != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.credit, "credit"));
-				}
-
-				// CAPTION
-				if (data.caption != null && data.caption != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.caption, "caption"));
-				}
-
-			}
-	    };
-	
-		
-	
-		/* GETTERS AND SETTERS
-		================================================== */
-		
-		this.setData = function(d) {
-			if(typeof d != 'undefined') {
-				data = d;
-				build();
-			} else{
-				trace("NO DATA");
-			}
-		};
-		
-		/* RESIZE
-		================================================== */
-		
-		function reSize() {
-
-		}
-		
-
-
-	}
-	
-	// Less expensive to use prototype
-	
-	VMM.Media.prototype.height = function(h) {
-		if (h != null && h != "") {
-			config.height = h;
-			reSize();
-		} else {
-			return config.height;
-		}
-	};
-	
-	VMM.Media.prototype.width = function(w) {
-		if (w != null && w != "") {
-			config.width = w;
-			reSize();
-		} else {
-			return config.width;
-		}
-	};
-	
-	/* GETTERS AND SETTERS
-	================================================== */
-	
-	VMM.Media.prototype.getData = function() {
-		return data;
-	};
-	
-	VMM.Media.prototype.setConfig = function(d) {
-		if(typeof d != 'undefined') {
-			config = d;
-		} else{
-			trace("NO CONFIG DATA");
-		}
-	};
-	
-	VMM.Media.prototype.getConfig = function() {
-		return config;
-	};
-	
-	VMM.Media.prototype.setSize = function(w, h) {
-		if (w != null) {config.width = w};
-		if (h != null) {config.height = h};
-		if (_active) {
-			reSize();
-		}
-		
-	}
-	
-	VMM.Media.prototype.active = function() {
-		return _active;
-	};
-	
-}
-
-/*********************************************** 
      Begin VMM.FileExtention.js 
 ***********************************************/ 
 
@@ -1546,6 +1094,1091 @@ if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
 		}
 	}
 }
+
+/*********************************************** 
+     Begin VMM.Date.js 
+***********************************************/ 
+
+/* Utilities and Useful Functions
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
+	
+	VMM.Date = ({
+		
+		init: function() {
+			return this;
+		},
+		
+		dateformats: {
+			year: "yyyy",
+			month_short: "mmm",
+			month: "mmmm yyyy",
+			full_short: "mmm d",
+			full: "mmmm d',' yyyy",
+			time_no_seconds_short: "h:MM TT",
+			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+			full_long: "mmm d',' yyyy 'at' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
+		},
+			
+		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
+		day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+		day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
+		hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
+		hour_suffix: ["am"],
+			
+		//B.C.
+		bc_format: {
+			year: "yyyy",
+			month_short: "mmm",
+			month: "mmmm yyyy",
+			full_short: "mmm d",
+			full: "mmmm d',' yyyy",
+			time_no_seconds_short: "h:MM TT",
+			time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+			full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+		},
+			
+		setLanguage: function(lang) {
+			trace("SET DATE LANGUAGE");
+			VMM.Date.dateformats		=	lang.dateformats;	
+			VMM.Date.month				=	lang.date.month;
+			VMM.Date.month_abbr			=	lang.date.month_abbr;
+			VMM.Date.day				=	lang.date.day;
+			VMM.Date.day_abbr			=	lang.date.day_abbr;
+			dateFormat.i18n.dayNames	=	lang.date.day_abbr.concat(lang.date.day);
+			dateFormat.i18n.monthNames	=	lang.date.month_abbr.concat(lang.date.month);
+		},
+			
+		parse: function(d) {
+			if (type.of(d) == "date") {
+				return d;
+			} else {
+				var _date = new Date(0, 0, 1, 0, 0, 0, 0);
+				var _d_array, _t_array;
+				var _time_parse, _times;
+				
+				if ( d.match(/,/gi) ) {
+					_d_array = d.split(",");
+					for(var i = 0; i < _d_array.length; i++) {
+						_d_array[i] = parseInt(_d_array[i]);
+					}
+					if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
+					if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
+					if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
+					if (	_d_array[3]	> 1		) {	_date.setHours(			_d_array[3]);			}
+					if (	_d_array[4]	> 1		) {	_date.setMinutes(		_d_array[4]);			}
+					if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
+					if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
+				} else if (d.match("/")) {
+					if (d.match(" ")) {
+						_time_parse = d.split(" ");
+						if (d.match(":")) {
+							_t_array = _time_parse[1].split(":");
+							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
+							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
+							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
+							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+						}
+						_d_array = _time_parse[0].split("/");
+					} else {
+						_d_array = d.split("/");
+					}
+					if (	_d_array[2]			) {	_date.setFullYear(		_d_array[2]);			}
+					if (	_d_array[0]	> 1		) {	_date.setMonth(			_d_array[0] - 1);		}
+					if (	_d_array[1]	> 1		) {	_date.setDate(			_d_array[1]);			}
+				} else if (d.length <= 5) {
+					_date.setFullYear(parseInt(d));
+					_date.setMonth(0);
+					_date.setDate(1);
+					_date.setHours(0);
+					_date.setMinutes(0);
+					_date.setSeconds(0);
+					_date.setMilliseconds(0);
+				} else if (d.match("T")) {
+					if (navigator.userAgent.match(/MSIE\s(?!9.0)/)) {
+					    // IE 8 < Won't accept dates with a "-" in them.
+						_time_parse = d.split("T");
+						if (d.match(":")) {
+							_t_array = _time_parse[1].split(":");
+							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
+							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
+							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
+							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+						}
+						_d_array = _time_parse[0].split("-");
+						if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
+						if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
+						if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
+						
+					} else {
+						_date = new Date(Date.parse(d));
+					}
+				} else {
+					_date = new Date(
+						parseInt(d.slice(0,4)), 
+						parseInt(d.slice(4,6)) - 1, 
+						parseInt(d.slice(6,8)), 
+						parseInt(d.slice(8,10)), 
+						parseInt(d.slice(10,12))
+					);
+				}
+				return _date;
+			}
+		},
+			
+		prettyDate: function(d, is_abbr, d2) {
+			var _date;
+			var _date2;
+			var format;
+			var bc_check;
+			var is_pair = false;
+				
+			if (d2 != null) {
+				is_pair = true;
+			}
+				
+			if (type.of(d) == "date") {
+				if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
+					// YEAR ONLY
+					format = VMM.Date.dateformats.year;
+				} else if (d.getDate() <= 1 && d.getHours() === 0 && d.getMinutes() === 0) {
+					// YEAR MONTH
+					if (is_abbr) {
+						format = VMM.Date.dateformats.month_short;
+					} else {
+						format = VMM.Date.dateformats.month;
+					}
+				} else if (d.getHours() === 0 && d.getMinutes() === 0) {
+					// YEAR MONTH DAY
+					if (is_abbr) {
+						format = VMM.Date.dateformats.full_short;
+					} else {
+						format = VMM.Date.dateformats.full;
+					}
+				} else  if (d.getMinutes() === 0) {
+					// YEAR MONTH DAY HOUR
+					if (is_abbr) {
+						format = VMM.Date.dateformats.time_no_seconds_short;
+					} else {
+						format = VMM.Date.dateformats.time_no_seconds_small_date;
+					}
+				} else {
+					// YEAR MONTH DAY HOUR MINUTE
+					if (is_abbr){
+						format = VMM.Date.dateformats.time_no_seconds_short; 
+					} else {
+						format = VMM.Date.dateformats.full_long; 
+					}
+				}
+					
+				_date = dateFormat(d, format);
+				bc_check = _date.split(" ");
+					
+				// BC TIME SUPPORT
+				for(var i = 0; i < bc_check.length; i++) {
+					if ( parseInt(bc_check[i]) < 0 ) {
+						trace("YEAR IS BC");
+						var bc_original = 	bc_check[i];
+						var bc_number = 	Math.abs( parseInt(bc_check[i]) );
+						var bc_string = 	bc_number.toString() + " B.C.";
+						_date = _date.replace(bc_original, bc_string);
+					}
+				}
+					
+					
+				if (is_pair) {
+					_date2 = dateFormat(d2, format);
+					bc_check = _date2.split(" ");
+					// BC TIME SUPPORT
+					for(var i = 0; i < bc_check.length; i++) {
+						if ( parseInt(bc_check[i]) < 0 ) {
+							trace("YEAR IS BC");
+							var bc_original = 	bc_check[i];
+							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
+							var bc_string = 	bc_number.toString() + " B.C.";
+							_date2 = _date2.replace(bc_original, bc_string);
+						}
+					}
+						
+				}
+			} else {
+				trace("NOT A VALID DATE?");
+				trace(d);
+			}
+				
+			if (is_pair) {
+				return _date + " &mdash; " + _date2;
+			} else {
+				return _date;
+			}
+		}
+		
+	}).init();
+	
+	/*
+	 * Date Format 1.2.3
+	 * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
+	 * MIT license
+	 *
+	 * Includes enhancements by Scott Trenda <scott.trenda.net>
+	 * and Kris Kowal <cixar.com/~kris.kowal/>
+	 *
+	 * Accepts a date, a mask, or a date and a mask.
+	 * Returns a formatted version of the given date.
+	 * The date defaults to the current date/time.
+	 * The mask defaults to dateFormat.masks.default.
+	 */
+
+	var dateFormat = function () {
+		var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+			timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+			timezoneClip = /[^-+\dA-Z]/g,
+			pad = function (val, len) {
+				val = String(val);
+				len = len || 2;
+				while (val.length < len) val = "0" + val;
+				return val;
+			};
+
+		// Regexes and supporting functions are cached through closure
+		return function (date, mask, utc) {
+			var dF = dateFormat;
+
+			// You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+			if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
+				mask = date;
+				date = undefined;
+			}
+
+			// Passing date through Date applies Date.parse, if necessary
+			date = date ? new Date(date) : new Date;
+			if (isNaN(date)) {
+				trace("invalid date");
+				return "";
+			} 
+
+			mask = String(dF.masks[mask] || mask || dF.masks["default"]);
+
+			// Allow setting the utc argument via the mask
+			if (mask.slice(0, 4) == "UTC:") {
+				mask = mask.slice(4);
+				utc = true;
+			}
+
+			var	_ = utc ? "getUTC" : "get",
+				d = date[_ + "Date"](),
+				D = date[_ + "Day"](),
+				m = date[_ + "Month"](),
+				y = date[_ + "FullYear"](),
+				H = date[_ + "Hours"](),
+				M = date[_ + "Minutes"](),
+				s = date[_ + "Seconds"](),
+				L = date[_ + "Milliseconds"](),
+				o = utc ? 0 : date.getTimezoneOffset(),
+				flags = {
+					d:    d,
+					dd:   pad(d),
+					ddd:  dF.i18n.dayNames[D],
+					dddd: dF.i18n.dayNames[D + 7],
+					m:    m + 1,
+					mm:   pad(m + 1),
+					mmm:  dF.i18n.monthNames[m],
+					mmmm: dF.i18n.monthNames[m + 12],
+					yy:   String(y).slice(2),
+					yyyy: y,
+					h:    H % 12 || 12,
+					hh:   pad(H % 12 || 12),
+					H:    H,
+					HH:   pad(H),
+					M:    M,
+					MM:   pad(M),
+					s:    s,
+					ss:   pad(s),
+					l:    pad(L, 3),
+					L:    pad(L > 99 ? Math.round(L / 10) : L),
+					t:    H < 12 ? "a"  : "p",
+					tt:   H < 12 ? "am" : "pm",
+					T:    H < 12 ? "A"  : "P",
+					TT:   H < 12 ? "AM" : "PM",
+					Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
+					o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
+					S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+				};
+
+			return mask.replace(token, function ($0) {
+				return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+			});
+		};
+	}();
+
+	// Some common format strings
+	dateFormat.masks = {
+		"default":      "ddd mmm dd yyyy HH:MM:ss",
+		shortDate:      "m/d/yy",
+		mediumDate:     "mmm d, yyyy",
+		longDate:       "mmmm d, yyyy",
+		fullDate:       "dddd, mmmm d, yyyy",
+		shortTime:      "h:MM TT",
+		mediumTime:     "h:MM:ss TT",
+		longTime:       "h:MM:ss TT Z",
+		isoDate:        "yyyy-mm-dd",
+		isoTime:        "HH:MM:ss",
+		isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
+		isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+	};
+
+	// Internationalization strings
+	dateFormat.i18n = {
+		dayNames: [
+			"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+			"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+		],
+		monthNames: [
+			"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+			"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+		]
+	};
+
+	// For convenience...
+	Date.prototype.format = function (mask, utc) {
+		return dateFormat(this, mask, utc);
+	};
+	
+}
+
+/*********************************************** 
+     Begin VMM.Util.js 
+***********************************************/ 
+
+/* Utilities and Useful Functions
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
+	
+	VMM.Util = ({
+		
+		init: function() {
+			return this;
+		},
+		
+		/* CORRECT PROTOCOL (DOES NOT WORK)
+		================================================== */
+		correctProtocol: function(url) {
+			var loc = (window.parent.location.protocol).toString();
+			var prefix = "";
+			var _url = url.split("://", 2);
+			
+			if (loc.match("http")) {
+				prefix = loc;
+			} else {
+				prefix = "https";
+			}
+			
+			return prefix + "://" + _url[1];
+			
+		},
+		
+		/* GET OBJECT ATTRIBUTE BY INDEX
+		================================================== */
+		getObjectAttributeByIndex: function(obj, index) {
+			if(typeof obj != 'undefined') {
+				var i = 0;
+				for (var attr in obj){
+					if (index === i){
+						return obj[attr];
+					}
+					i++;
+				}
+				return "";
+			} else {
+				return "";
+			}
+			
+		},
+		/* RANDOM BETWEEN
+		================================================== */
+		//VMM.Util.randomBetween(1, 3)
+		randomBetween: function(min, max) {
+			return Math.floor(Math.random() * (max - min + 1) + min);
+		},
+		
+		/* AVERAGE
+			http://jsfromhell.com/array/average
+			var x = VMM.Util.average([2, 3, 4]);
+			VMM.Util.average([2, 3, 4]).mean
+		================================================== */
+		average: function(a) {
+		    var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
+		    for(var m, s = 0, l = t; l--; s += a[l]);
+		    for(m = r.mean = s / t, l = t, s = 0; l--; s += Math.pow(a[l] - m, 2));
+		    return r.deviation = Math.sqrt(r.variance = s / t), r;
+		},
+		
+		/* CUSTOM SORT
+		================================================== */
+		customSort: function(a, b) {
+			var a1= a, b1= b;
+			if(a1== b1) return 0;
+			return a1> b1? 1: -1;
+		},
+		
+		/* Remove Duplicates from Array
+		================================================== */
+		deDupeArray: function(arr) {
+			var i,
+				len=arr.length,
+				out=[],
+				obj={};
+
+			for (i=0;i<len;i++) {
+				obj[arr[i]]=0;
+			}
+			for (i in obj) {
+				out.push(i);
+			}
+			return out;
+		},
+		
+		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
+		================================================== */
+		number2money: function(n, symbol, padding) {
+			var symbol = (symbol !== null) ? symbol : true; // add $
+			var padding = (padding !== null) ? padding : false; //pad with .00
+			var number = VMM.Math2.floatPrecision(n,2); // rounded correctly to two digits, if decimals passed
+			var formatted = this.niceNumber(number);
+			// no decimal and padding is enabled
+			if (!formatted.split(/\./g)[1] && padding) formatted = formatted + ".00";
+			// add money sign
+			if (symbol) formatted = "$"+formatted;
+			return formatted;
+		},
+		
+		/* Returns a word count number
+		================================================== */
+		wordCount: function(s) {
+			var fullStr = s + " ";
+			var initial_whitespace_rExp = /^[^A-Za-z0-9\'\-]+/gi;
+			var left_trimmedStr = fullStr.replace(initial_whitespace_rExp, "");
+			var non_alphanumerics_rExp = /[^A-Za-z0-9\'\-]+/gi;
+			var cleanedStr = left_trimmedStr.replace(non_alphanumerics_rExp, " ");
+			var splitString = cleanedStr.split(" ");
+			var word_count = splitString.length -1;
+			if (fullStr.length <2) {
+				word_count = 0;
+			}
+			return word_count;
+		},
+		
+		ratio: {
+			fit: function(w, h, ratio_w, ratio_h) {
+				//VMM.Util.ratio.fit(w, h, ratio_w, ratio_h).width;
+				var _fit = {width:0,height:0};
+				// TRY WIDTH FIRST
+				_fit.width = w;
+				//_fit.height = Math.round((h / ratio_h) * ratio_w);
+				_fit.height = Math.round((w / ratio_w) * ratio_h);
+				if (_fit.height > h) {
+					_fit.height = h;
+					//_fit.width = Math.round((w / ratio_w) * ratio_h);
+					_fit.width = Math.round((h / ratio_h) * ratio_w);
+					
+					if (_fit.width > w) {
+						trace("FIT: DIDN'T FIT!!! ")
+					}
+				}
+				
+				return _fit;
+				
+			},
+			r16_9: function(w,h) {
+				//VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
+				if (w !== null && w !== "") {
+					return Math.round((h / 16) * 9);
+				} else if (h !== null && h !== "") {
+					return Math.round((w / 9) * 16);
+				}
+			},
+			r4_3: function(w,h) {
+				if (w !== null && w !== "") {
+					return Math.round((h / 4) * 3);
+				} else if (h !== null && h !== "") {
+					return Math.round((w / 3) * 4);
+				}
+			}
+		},
+		
+		doubledigit: function(n) {
+			return (n < 10 ? '0' : '') + n;
+		},
+		
+		/* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
+		================================================== */
+		truncateWords: function(s, min, max) {
+			
+			if (!min) min = 30;
+			if (!max) max = min;
+			
+			var initial_whitespace_rExp = /^[^A-Za-z0-9\'\-]+/gi;
+			var left_trimmedStr = s.replace(initial_whitespace_rExp, "");
+			var words = left_trimmedStr.split(" ");
+			
+			var result = [];
+			
+			min = Math.min(words.length, min);
+			max = Math.min(words.length, max);
+			
+			for (var i = 0; i<min; i++) {
+				result.push(words[i]);
+			}		
+			
+			for (var j = min; i<max; i++) {
+				var word = words[i];
+				
+				result.push(word);
+				
+				if (word.charAt(word.length-1) == '.') {
+					break;
+				}
+			}		
+			
+			return (result.join(' '));
+		},
+		
+		/* Turns plain text links into real links
+		================================================== */
+		linkify: function(text,targets,is_touch) {
+			
+			// http://, https://, ftp://
+			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+
+			// www. sans http:// or https://
+			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+
+			// Email addresses
+			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
+			
+
+			return text
+				.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
+				.replace(pseudoUrlPattern, "$1<a target='_blank' onclick='void(0)' href='http://$2'>$2</a>")
+				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>");
+		},
+		
+		linkify_with_twitter: function(text,targets,is_touch) {
+			
+			// http://, https://, ftp://
+			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
+			var url_pattern = /(\()((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\))|(\[)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\])|(\{)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\})|(<|&(?:lt|#60|#x3c);)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(>|&(?:gt|#62|#x3e);)|((?:^|[^=\s'"\]])\s*['"]?|[^=\s]\s+)(\b(?:ht|f)tps?:\/\/[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]+(?:(?!&(?:gt|#0*62|#x0*3e);|&(?:amp|apos|quot|#0*3[49]|#x0*2[27]);[.!&',:?;]?(?:[^a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]|$))&[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]*)*[a-z0-9\-_~$()*+=\/#[\]@%])/img;
+			var url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14" class="hyphenate">$2$5$8$11$14</a>$3$6$9$12';
+			
+			// www. sans http:// or https://
+			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+			function replaceURLWithHTMLLinks(text) {
+			    var exp = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@#%?=~_|!:,.;]*)([-A-Z0-9+&@#%?\/=~_|!:,.;]*)[-A-Z0-9+&@#\/%=~_|])/ig;
+			    return text.replace(exp, "<a href='$1' target='_blank'>$3</a>");
+			}
+			// Email addresses
+			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
+			
+			//var twitterHandlePattern = /(@([\w]+))/g;
+			var twitterHandlePattern = /\B@([\w-]+)/gm;
+			var twitterSearchPattern = /(#([\w]+))/g;
+
+			return text
+				//.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
+				.replace(url_pattern, url_replace)
+				.replace(pseudoUrlPattern, "$1<a target='_blank' class='hyphenate' onclick='void(0)' href='http://$2'>$2</a>")
+				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>")
+				.replace(twitterHandlePattern, "<a href='http://twitter.com/$1' target='_blank' onclick='void(0)'>@$1</a>")
+				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank' 'void(0)'>$1</a>");
+		},
+		
+		linkify_wikipedia: function(text) {
+			
+			var urlPattern = /<i[^>]*>(.*?)<\/i>/gim;
+			return text
+				.replace(urlPattern, "<a target='_blank' href='http://en.wikipedia.org/wiki/$&' onclick='void(0)'>$&</a>")
+				.replace(/<i\b[^>]*>/gim, "")
+				.replace(/<\/i>/gim, "")
+				.replace(/<b\b[^>]*>/gim, "")
+				.replace(/<\/b>/gim, "");
+		},
+		
+		/* Turns plain text links into real links
+		================================================== */
+		// VMM.Util.unlinkify();
+		unlinkify: function(text) {
+			if(!text) return text;
+			text = text.replace(/<a\b[^>]*>/i,"");
+			text = text.replace(/<\/a>/i, "");
+			return text;
+		},
+		
+		untagify: function(text) {
+			if (!text) {
+				return text;
+			}
+			text = text.replace(/<\s*\w.*?>/g,"");
+			return text;
+		},
+		
+		/* TK
+		================================================== */
+		nl2br: function(text) {
+			return text.replace(/(\r\n|[\r\n]|\\n|\\r)/g,"<br/>");
+		},
+		
+		/* Generate a Unique ID
+		================================================== */
+		// VMM.Util.unique_ID(size);
+		unique_ID: function(size) {
+			
+			var getRandomNumber = function(range) {
+				return Math.floor(Math.random() * range);
+			};
+
+			var getRandomChar = function() {
+				var chars = "abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";
+				return chars.substr( getRandomNumber(62), 1 );
+			};
+
+			var randomID = function(size) {
+				var str = "";
+				for(var i = 0; i < size; i++) {
+					str += getRandomChar();
+				}
+				return str;
+			};
+			
+			return randomID(size);
+		},
+		/* Tells you if a number is even or not
+		================================================== */
+		// VMM.Util.isEven(n)
+		isEven: function(n){
+			return (n%2 === 0) ? true : false;
+		},
+		/* Get URL Variables
+		================================================== */
+		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
+		getUrlVars: function(string) {
+			
+			var str = string.toString();
+			
+			if (str.match('&#038;')) { 
+				str = str.replace("&#038;", "&");
+			} else if (str.match('&#38;')) {
+				str = str.replace("&#38;", "&");
+			} else if (str.match('&amp;')) {
+				str = str.replace("&amp;", "&");
+			}
+			
+			var vars = [], hash;
+			var hashes = str.slice(str.indexOf('?') + 1).split('&');
+			for(var i = 0; i < hashes.length; i++) {
+				hash = hashes[i].split('=');
+				vars.push(hash[0]);
+				vars[hash[0]] = hash[1];
+			}
+			
+			
+			return vars;
+		},
+
+		/* Cleans up strings to become real HTML
+		================================================== */
+		toHTML: function(text) {
+			
+			text = this.nl2br(text);
+			text = this.linkify(text);
+			
+			return text.replace(/\s\s/g,"&nbsp;&nbsp;");
+		},
+		
+		/* Returns text strings as CamelCase
+		================================================== */
+		toCamelCase: function(s,forceLowerCase) {
+			
+			if(forceLowerCase !== false) forceLowerCase = true;
+			
+			var sps = ((forceLowerCase) ? s.toLowerCase() : s).split(" ");
+			
+			for(var i=0; i<sps.length; i++) {
+				
+				sps[i] = sps[i].substr(0,1).toUpperCase() + sps[i].substr(1);
+			}
+			
+			return sps.join(" ");
+		},
+		
+		/* Replaces dumb quote marks with smart ones
+		================================================== */
+		properQuotes: function(str) {
+			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
+		},
+		/* Given an int or decimal, return a string with pretty commas in the correct spot.
+		================================================== */
+		niceNumber: function(n){
+		
+			var amount = String( Math.abs(Number(n) ) );
+		    
+			var leftOfDecimal = amount.split(/\./g)[0];
+			var rightOfDecimal = amount.split(/\./g)[1];
+		    
+			var formatted_text = '';
+		    
+			var num_a = leftOfDecimal.toArray();
+			num_a.reverse();
+		    
+			for (var i=1; i <= num_a.length; i++) {
+				if ( (i%3 == 0) && (i < num_a.length ) ) {
+					formatted_text = "," + num_a[i-1] + formatted_text;
+				} else {
+					formatted_text = num_a[i-1] + formatted_text;
+				}
+		    }
+			if (rightOfDecimal != null && rightOfDecimal != '' && rightOfDecimal != undefined) {
+				return formatted_text + "." + rightOfDecimal;
+			} else {
+				return formatted_text;
+			}
+		},
+		
+		/* Transform text to Title Case
+		================================================== */
+		toTitleCase: function(t){
+			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
+				return t.replace("_", "%20");
+			} else {
+				var __TitleCase = {
+					__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
+
+					init: function() {
+						this.__smallRE = this.__smallWords.join('|');
+						this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
+						this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
+						this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
+					},
+
+					toTitleCase: function(string) {
+						var line = '';
+
+						var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
+
+						for (var i = 0; i < split.length; ++i) {
+							var s = split[i];
+
+							s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
+
+			 				// lowercase the list of small words
+							s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
+
+							// if the first word in the title is a small word then capitalize it
+							s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
+
+							// if the last word in the title is a small word, then capitalize it
+							s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
+
+							line += s;
+						}
+
+						// special cases
+						line = line.replace(/ V(s?)\. /g, ' v$1. ');
+						line = line.replace(/(['’])S\b/g, '$1s');
+						line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
+
+						return line;
+					},
+
+					__titleCaseDottedWordReplacer: function (w) {
+						return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
+					},
+
+					__lowerReplacer: function (w) { return w.toLowerCase() },
+
+					__upperReplacer: function (w) { return w.toUpperCase() },
+
+					__firstToUpperCase: function (w) {
+						var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
+						if (split[1]) {
+							split[1] = split[1].toUpperCase();
+						}
+					
+						return split.join('');
+					
+					
+					},
+				};
+
+				__TitleCase.init();
+			
+				t = t.replace(/_/g," ");
+				t = __TitleCase.toTitleCase(t);
+			
+				return t;
+				
+			}
+			
+		},
+		
+	}).init();
+	
+}
+
+/*********************************************** 
+     Begin VMM.LoadLib.js 
+***********************************************/ 
+
+/*
+	LoadLib
+	Based on LazyLoad by Ryan Grove
+	https://github.com/rgrove/lazyload/ 
+	Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
+	All rights reserved.
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy of
+	this software and associated documentation files (the 'Software'), to deal in
+	the Software without restriction, including without limitation the rights to
+	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+	the Software, and to permit persons to whom the Software is furnished to do so,
+	subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+================================================== */
+window.loadedJS = [];
+
+
+if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
+	//VMM.LoadLib.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
+	//VMM.LoadLib.css('http://someurl.css', onCSSLoaded);
+	
+	
+	
+	VMM.LoadLib = (function (doc) {
+		var env,
+		head,
+		pending = {},
+		pollCount = 0,
+		queue = {css: [], js: []},
+		styleSheets = doc.styleSheets;
+	
+		var loaded_Array = [];
+	
+		function isLoaded(url) {
+			var has_been_loaded = false;
+			for(var i=0; i<loaded_Array.length; i++) {
+				if (loaded_Array[i] == url) {
+					has_been_loaded = true;
+				}
+			}
+			if (!has_been_loaded) {
+				loaded_Array.push(url);
+			}
+			return has_been_loaded;
+		}
+
+		function createNode(name, attrs) {
+			var node = doc.createElement(name), attr;
+
+			for (attr in attrs) {
+				if (attrs.hasOwnProperty(attr)) {
+					node.setAttribute(attr, attrs[attr]);
+				}
+			}
+
+			return node;
+		}
+
+	  function finish(type) {
+	    var p = pending[type],
+	        callback,
+	        urls;
+
+	    if (p) {
+	      callback = p.callback;
+	      urls     = p.urls;
+	      urls.shift();
+	      pollCount = 0;
+	      if (!urls.length) {
+	        callback && callback.call(p.context, p.obj);
+	        pending[type] = null;
+	        queue[type].length && load(type);
+	      }
+	    }
+	  }
+
+	  function getEnv() {
+	    var ua = navigator.userAgent;
+
+	    env = {
+
+	      async: doc.createElement('script').async === true
+	    };
+
+	    (env.webkit = /AppleWebKit\//.test(ua))
+	      || (env.ie = /MSIE/.test(ua))
+	      || (env.opera = /Opera/.test(ua))
+	      || (env.gecko = /Gecko\//.test(ua))
+	      || (env.unknown = true);
+	  }
+
+	  function load(type, urls, callback, obj, context) {
+	    var _finish = function () { finish(type); },
+	        isCSS   = type === 'css',
+	        nodes   = [],
+	        i, len, node, p, pendingUrls, url;
+
+	    env || getEnv();
+
+	    if (urls) {
+
+	      urls = typeof urls === 'string' ? [urls] : urls.concat();
+
+	      if (isCSS || env.async || env.gecko || env.opera) {
+
+	        queue[type].push({
+	          urls    : urls,
+	          callback: callback,
+	          obj     : obj,
+	          context : context
+	        });
+	      } else {
+	        for (i = 0, len = urls.length; i < len; ++i) {
+	          queue[type].push({
+	            urls    : [urls[i]],
+	            callback: i === len - 1 ? callback : null,
+	            obj     : obj,
+	            context : context
+	          });
+	        }
+	      }
+	    }
+
+	    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
+	      return;
+	    }
+
+	    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
+	    pendingUrls = p.urls;
+
+	    for (i = 0, len = pendingUrls.length; i < len; ++i) {
+	      url = pendingUrls[i];
+
+	      if (isCSS) {
+	          node = env.gecko ? createNode('style') : createNode('link', {
+	            href: url,
+	            rel : 'stylesheet'
+	          });
+	      } else {
+	        node = createNode('script', {src: url});
+	        node.async = false;
+	      }
+
+	      node.className = 'lazyload';
+	      node.setAttribute('charset', 'utf-8');
+
+	      if (env.ie && !isCSS) {
+	        node.onreadystatechange = function () {
+	          if (/loaded|complete/.test(node.readyState)) {
+	            node.onreadystatechange = null;
+	            _finish();
+	          }
+	        };
+	      } else if (isCSS && (env.gecko || env.webkit)) {
+	        if (env.webkit) {
+	          p.urls[i] = node.href; 
+	          pollWebKit();
+	        } else {
+	          node.innerHTML = '@import "' + url + '";';
+	          pollGecko(node);
+	        }
+	      } else {
+	        node.onload = node.onerror = _finish;
+	      }
+
+	      nodes.push(node);
+	    }
+
+	    for (i = 0, len = nodes.length; i < len; ++i) {
+	      head.appendChild(nodes[i]);
+	    }
+	  }
+
+	  function pollGecko(node) {
+	    var hasRules;
+
+	    try {
+
+	      hasRules = !!node.sheet.cssRules;
+	    } catch (ex) {
+	      pollCount += 1;
+
+	      if (pollCount < 200) {
+	        setTimeout(function () { pollGecko(node); }, 50);
+	      } else {
+
+	        hasRules && finish('css');
+	      }
+
+	      return;
+	    }
+
+	    finish('css');
+	  }
+
+	  function pollWebKit() {
+	    var css = pending.css, i;
+
+	    if (css) {
+	      i = styleSheets.length;
+
+	      while (--i >= 0) {
+	        if (styleSheets[i].href === css.urls[0]) {
+	          finish('css');
+	          break;
+	        }
+	      }
+
+	      pollCount += 1;
+
+	      if (css) {
+	        if (pollCount < 200) {
+	          setTimeout(pollWebKit, 50);
+	        } else {
+
+	          finish('css');
+	        }
+	      }
+	    }
+	  }
+
+	  return {
+
+		css: function (urls, callback, obj, context) {
+			if (isLoaded(urls)) {
+				return callback;
+			} else {
+				load('css', urls, callback, obj, context);
+			}
+		},
+
+		js: function (urls, callback, obj, context) {
+			if (isLoaded(urls)) {
+				return callback;
+			} else {
+				load('js', urls, callback, obj, context);
+			}
+		}
+
+	  };
+	})(this.document);
+}
+
+
 
 /*********************************************** 
      Begin VMM.ExternalAPI.js 
@@ -1582,19 +2215,19 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		twitter: {
 			tweetArray: [],
-			// VMM.ExternalAPI.twitter.getHTML(id);
+			
 			getHTML: function(id) {
 				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
 				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.onJSONLoaded);
 			},
+			
 			onJSONLoaded: function(d) {
 				trace("TWITTER JSON LOADED");
 				var id = d.id;
 				VMM.attachElement("#"+id, VMM.Util.linkify_with_twitter(d.html) );
 			},
 			
-			// VMM.ExternalAPI.twitter.parseTwitterDate(date);
 			parseTwitterDate: function(d) {
 				var date = new Date(Date.parse(d));
 				/*
@@ -1608,10 +2241,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			prettyParseTwitterDate: function(d) {
 				var date = new Date(Date.parse(d));
-				return VMM.Util.date.prettyDate(date, true);
+				return VMM.Date.prettyDate(date, true);
 			},
-
-			// VMM.ExternalAPI.twitter.getTweets(tweets_array);
+			
 			getTweets: function(tweets) {
 				var tweetArray = [];
 				var number_of_tweets = tweets.length;
@@ -1668,7 +2300,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			},
 			
-			// VMM.ExternalAPI.twitter.getTweetSearch(search string);
 			getTweetSearch: function(tweets, number_of_tweets) {
 				var _number_of_tweets = 40;
 				if (number_of_tweets != null && number_of_tweets != "") {
@@ -1698,13 +2329,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			},
 			
-			prettyHTML: function(id) {
+			prettyHTML: function(id, secondary) {
 				var id = id.toString();
 				var error_obj = {
 					twitterid: id
 				};
 				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
-				trace("id " + id);
 				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
 				
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
@@ -1713,8 +2343,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
 						VMM.attachElement("#twitter_"+id, "<p>ERROR LOADING TWEET " + id + "</p>" );
 					})
-					.success(function() {
+					.success(function(d) {
 						clearTimeout(twitter_timeout);
+						if (secondary) {
+							VMM.ExternalAPI.twitter.secondaryMedia(d);
+						}
 					});
 			},
 			
@@ -1739,8 +2372,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			formatJSON: function(d) {
-				trace("TWITTER JSON LOADED F");
-				trace(d);
 				var id = d.id_str;
 				
 				var twit = "<blockquote><p>";
@@ -1749,7 +2380,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				//td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2' target='_blank'>$1</a>");
 				twit += td;
 				twit += "</p></blockquote>";
-				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id + "' target='_blank' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
+				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id_str + "' target='_blank' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
+				
 				twit += "<div class='vcard author'>";
 				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "' target='_blank'>";
 				twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
@@ -1758,9 +2390,16 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				twit += "</a>";
 				twit += "</div>";
 				
+				if (typeof d.entities.media != 'undefined') {
+					if (d.entities.media[0].type == "photo") {
+						twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
+					}
+				}
+				
 				VMM.attachElement("#twitter_"+id.toString(), twit );
 				
-			}
+			},
+			
 			
 		},
 		
@@ -2117,6 +2756,29 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 		},
 		
+		instagram: {
+			get: function(mid, thumb) {
+				if (thumb) {
+					return "http://instagr.am/p/" + mid + "/media/?size=t";
+				} else {
+					return "http://instagr.am/p/" + mid + "/media/?size=" + VMM.ExternalAPI.instagram.sizes(VMM.master_config.sizes.api.height);
+				}
+			},
+			
+			sizes: function(s) {
+				var _size = "";
+				if (s <= 150) {
+					_size = "t";
+				} else if (s <= 306) {
+					_size = "m";
+				} else {
+					_size = "l";
+				}
+				
+				return _size;
+			}
+		},
+		
 		soundcloud: {
 			
 			get: function(url, id) {
@@ -2150,12 +2812,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(api_obj) {
-				var the_url = "http://en.wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
-				
+				var the_url = "http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-					var temp_text	=	"<h4><a href='http://en.wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
-					temp_text		+=	"<div class='wiki-source'>From Wikipedia, the free encyclopedia</span>";
-					temp_text	+=	"<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>";
+					var temp_text	=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
+					temp_text		+=	"<span class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
+					temp_text		+=	"<p>Wikipedia entry unable to load using Internet Explorer 8 or below.</p>";
 					VMM.attachElement("#"+api_obj.id, temp_text );
 				}
 				
@@ -2175,7 +2836,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						}
 					
 						_wiki		=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + wiki_title + "' target='_blank'>" + wiki_title + "</a></h4>";
-						_wiki		+=	"<div class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
+						_wiki		+=	"<span class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
 						_wiki		+=	VMM.Util.linkify_wikipedia(wiki_text);
 					
 						if (wiki_extract.match("REDIRECT")) {
@@ -2249,10 +2910,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			createThumb: function(d) {
-		        trace(d.data.id);
-				trace(d.data.thumbnail.sqDefault);
-				var thumb_id = "youtube_" + d.data.id + "_thumb";
-				VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
+				if (typeof d.data != 'undefined') {
+					var thumb_id = "youtube_" + d.data.id + "_thumb";
+					VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
+					
+				}
 			},
 			
 			pushQue: function() {
@@ -2334,6 +2996,600 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 function onYouTubePlayerAPIReady() {
 	trace("GLOBAL YOUTUBE API CALLED")
 	VMM.ExternalAPI.youtube.onAPIReady();
+}
+
+/*********************************************** 
+     Begin VMM.MediaElement.js 
+***********************************************/ 
+
+/* MediaElement
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
+	
+	VMM.MediaElement = ({
+		
+		init: function() {
+			return this;
+		},
+		
+		thumbnail: function(data, w, h) {
+			_w = 16;
+			_h = 24;
+			if (w != null && w != "") {_w = w};
+			if (h != null && h != "") {_h = h};
+			
+			if (data.media != null && data.media != "") {
+				_valid				=	true;
+				var mediaElem		=	"";
+				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
+				// CREATE MEDIA CODE 
+				if (m.type == "image") {
+					//mediaElem		=	"<div class='thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
+					return mediaElem;
+				} else if (m.type	==	"flickr") {
+					mediaElem		=	"<div class='thumbnail thumb-photo' id='flickr_" + m.id + "_thumb'></div>";
+					return mediaElem;
+				} else if (m.type	==	"instagram") {
+					mediaElem		=	"<div class='thumbnail thumb-instagram' id='instagram_" + m.id + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
+					return mediaElem;
+				} else if (m.type	==	"youtube") {
+					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
+					return mediaElem;
+				} else if (m.type	==	"googledoc") {
+					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
+					return mediaElem;
+				} else if (m.type	==	"vimeo") {
+					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
+					return mediaElem;
+				} else if (m.type  ==  "dailymotion") {
+					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
+					return mediaElem;
+				} else if (m.type	==	"twitter"){
+					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
+					return mediaElem;
+				} else if (m.type	==	"twitter-ready") {
+					mediaElem		=	"<div class='thumbnail thumb-twitter'></div>";
+					return mediaElem;
+				} else if (m.type	==	"soundcloud") {
+					mediaElem		=	"<div class='thumbnail thumb-audio'></div>";
+					return mediaElem;
+				} else if (m.type	==	"google-map") {
+					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
+					return mediaElem;
+				} else if (m.type	==	"wikipedia") {
+					mediaElem		=	"<div class='thumbnail thumb-wikipedia'></div>";
+					return mediaElem;
+				} else if (m.type	==	"storify") {
+					mediaElem		=	"<div class='thumbnail thumb-storify'></div>";
+					return mediaElem;
+				} else if (m.type	==	"quote") {
+					mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+					return mediaElem;
+				} else if (m.type	==	"unknown") {
+					if (m.id.match("blockquote")) {
+						mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+					} else {
+						mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
+					}
+					return mediaElem;
+				} else if (m.type	==	"website") {
+					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
+					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
+					return mediaElem;
+				} else {
+					mediaElem = "<div class='thumbnail thumb-plaintext'></div>";
+					return mediaElem;
+				}
+			} 
+		},
+		
+		create: function(data, secondary) {
+			//$mediacontainer				=	element;
+			var _valid					=	false;
+			
+			if (data.media != null && data.media != "") {
+				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false;
+				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
+				_valid					=	true;
+				
+			// CREDIT
+				if (data.credit != null && data.credit != "") {
+					creditElem			=	"<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
+				}
+			// CAPTION
+				if (data.caption != null && data.caption != "") {
+					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
+				}
+			// IMAGE
+				if (m.type				==	"image") {
+					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
+			// FLICKR
+				} else if (m.type		==	"flickr") {
+					_id					=	"flickr_" + m.id;
+					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
+					VMM.ExternalAPI.flickr.get(m.id, "#" + _id);
+			// INSTAGRAM
+				} else if (m.type		==	"instagram") {
+					_id					=	"flickr_" + m.id;
+					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m.id) + "'></a></div>";
+			// GOOGLE DOCS
+				} else if (m.type		==	"googledoc") {
+					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
+					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
+					VMM.ExternalAPI.googledocs.get(m.id, _id);
+			// YOUTUBE
+				} else if (m.type		==	"youtube") {
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
+					VMM.ExternalAPI.youtube.get(m.id);
+			// VIMEO
+				} else if (m.type		==	"vimeo") {
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
+					VMM.ExternalAPI.vimeo.get(m.id);
+			// DAILYMOTION
+				} else if (m.type		==	"dailymotion") {
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
+			// TWITTER
+				} else if (m.type		==	"twitter"){
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
+					isTextMedia			=	true;
+					VMM.ExternalAPI.twitter.prettyHTML(m.id, secondary);
+			// TWITTER
+				} else if (m.type		==	"twitter-ready") {
+					isTextMedia			=	true;
+					mediaElem			=	m.id;
+			// SOUNDCLOUD
+				} else if (m.type		==	"soundcloud") {
+					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
+					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
+					VMM.ExternalAPI.soundcloud.get(m.id, _id);
+			// GOOGLE MAPS
+				} else if (m.type		==	"google-map") {
+					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
+					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
+					VMM.ExternalAPI.googlemaps.get(m.id, _id);
+			// WIKIPEDIA
+				} else if (m.type		==	"wikipedia") {
+					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
+					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
+					isTextMedia			=	true;
+					VMM.ExternalAPI.wikipedia.get(m.id, _id);
+			// STORIFY
+				} else if (m.type		==	"storify") { 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
+			// QUOTE
+				} else if (m.type		==	"quote") { 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
+			// UNKNOWN
+				} else if (m.type		==	"unknown") { 
+					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
+			// WEBSITE
+				} else if (m.type		==	"website") { 
+					//mediaElem			=	"<div class='media-shadow'><iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe></div>";
+					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
+					
+					mediaElem			=	"<div class='media-shadow website'><a href='" + m.id + "' target='_blank'>" + "<img src='http://api1.thumbalizr.com/?url=" + m.id.replace(/[\./]$/g, "") + "&width=300' class='media-image'></a></div>";
+					
+			// NO MATCH
+				} else {
+					trace("NO KNOWN MEDIA TYPE FOUND");
+					trace(m.type);
+				}
+				
+			// WRAP THE MEDIA ELEMENT
+				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
+			// RETURN
+				if (isTextMedia) {
+					return "<div class='text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+				} else {
+					return "<div class='media-wrapper'>" + mediaElem + "</div>";
+				}
+				
+			};
+			
+		}
+		
+	}).init();
+}
+
+/*********************************************** 
+     Begin VMM.MediaType.js 
+***********************************************/ 
+
+/* MediaType
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
+	
+	//VMM.mediaType.youtube(d); //should return a true or false
+	// VMM.MediaType(url); //returns an object with .type and .id
+	
+	VMM.MediaType = function(d) {
+		var success = false;
+		var media   = {};
+		
+		if (d.match("div class='twitter'")) {
+			media.type = "twitter-ready";
+		    media.id = d;
+		    success = true;
+		} else if (d.match('(www.)?youtube|youtu\.be')) {
+			if (d.match('v=')) {
+				media.id = VMM.Util.getUrlVars(d)["v"];
+			} else if (d.match('\/embed\/')) {
+				media.id = d.split("embed\/")[1].split(/[?&]/)[0];
+			} else {
+				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+			}
+		    media.type = "youtube";
+		    success = true;
+		} else if (d.match('(player.)?vimeo\.com')) {
+		    media.type = "vimeo";
+		    media.id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];;
+		    success = true;
+	    } else if (d.match('(www.)?dailymotion\.com')) {
+			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
+			media.type = "dailymotion";
+			success = true;
+		} else if (d.match('(player.)?soundcloud\.com')) {
+			media.type = "soundcloud";
+			media.id = d;
+			success = true;
+		} else if (d.match('(www.)?twitter\.com') && d.match('status') ) {
+			if (d.match("status\/")) {
+				media.id = d.split("status\/")[1];
+			} else if (d.match("statuses\/")) {
+				media.id = d.split("statuses\/")[1];
+			} else {
+				media.id = "";
+			}
+			media.type = "twitter";
+			success = true;
+		} else if (d.match("maps.google") && !d.match("staticmap")) {
+			media.type = "google-map";
+		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
+			success = true;
+		} else if (d.match("flickr.com/photos")) {
+			media.type = "flickr";
+			media.id = d.split("photos\/")[1].split("/")[1];
+			media.link = d;
+			success = true;
+		} else if (d.match("instagr.am/p/")) {
+			media.type = "instagram";
+			media.link = d;
+			media.id = d.split("\/p\/")[1].split("/")[0];
+			success = true;
+		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
+			media.type = "image";
+			media.id = d;
+			success = true;
+		} else if (VMM.FileExtention.googleDocType(d)) {
+			media.type = "googledoc";
+			media.id = d;
+			success = true;
+		} else if (d.match('(www.)?wikipedia\.org')) {
+			media.type = "wikipedia";
+			//media.id = d.split("wiki\/")[1];
+			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
+			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
+			success = true;
+		} else if (d.indexOf('http://') == 0) {
+			media.type = "website";
+			media.id = d;
+			success = true;
+		} else if (d.match('storify')) {
+			media.type = "storify";
+			media.id = d;
+			success = true;
+		} else if (d.match('blockquote')) {
+			media.type = "quote";
+			media.id = d;
+			success = true;
+		} else {
+			trace("unknown media");  
+			media.type = "unknown";
+			media.id = d;
+			success = true;
+		}
+		
+		if (success) { 
+			return media;
+		} else {
+			trace("No valid media id detected");
+			trace(d);
+		}
+		return false;
+	}
+}
+
+/*********************************************** 
+     Begin VMM.Media.js 
+***********************************************/ 
+
+/* Media
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Media == 'undefined') {
+	
+	// something = new VMM.Media(parent, w, h, {thedata});
+	VMM.Media = function(parent, w, h, thedata) {  
+		
+		/* PRIVATE VARS
+		================================================== */
+		var data = {}; // HOLDS DATA
+		
+		var _valid = false;
+		
+		var config = {
+			width: 720,
+			height: 400,
+			content_width: 720,
+			content_height: 400,
+			ease: "easeInOutExpo",
+			duration: 1000,
+			spacing: 15
+		};
+		/* ELEMENTS
+		================================================== */
+		var $media = "";
+		var $container = "";
+		var $mediacontainer  = "";
+		var $mediaelement = "";
+		var layout = parent; // expecting media div
+		
+		if (w != null && w != "") {config.width = w};
+		if (h != null && h != "") {config.height = h};
+		/*
+		if (typeof thedata != "undefined") {
+			data = thedata;
+			this.init(data);
+		}
+		*/
+		/* PUBLIC FUNCTIONS
+		================================================== */
+		this.init = function(d) {
+			if(typeof d != 'undefined') {
+				this.setData(d);
+			} else {
+				trace("WAITING ON DATA");
+			}
+		};
+		
+		var build = function(media, caption, credit) {
+			
+			$media = VMM.appendAndGetElement(layout, "<div>", "media");
+			$container = VMM.appendAndGetElement($media, "<div>", "container");
+			$mediacontainer = VMM.appendAndGetElement($container, "<div>", "media-container");
+			
+
+			if (data.media != null && data.media != "") {
+
+				_valid = true;
+				var m = {};
+				
+				m = VMM.MediaType(data.media); //returns an object with .type and .id
+				
+				if (m.type == "image") {
+					VMM.appendElement($mediacontainer, "<img src='" + m.id + "'>");  
+				} else if (m.type == "youtube") {
+					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
+				} else if (m.type == "vimeo") {
+					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
+				} else {
+					
+				}
+				
+				// CREDIT
+				if (data.credit != null && data.credit != "") {
+					VMM.appendElement($container, VMM.createElement("div", data.credit, "credit"));
+				}
+
+				// CAPTION
+				if (data.caption != null && data.caption != "") {
+					VMM.appendElement($container, VMM.createElement("div", data.caption, "caption"));
+				}
+
+			}
+	    };
+	
+		
+	
+		/* GETTERS AND SETTERS
+		================================================== */
+		
+		this.setData = function(d) {
+			if(typeof d != 'undefined') {
+				data = d;
+				build();
+			} else{
+				trace("NO DATA");
+			}
+		};
+		
+		/* RESIZE
+		================================================== */
+		
+		function reSize() {
+
+		}
+		
+
+
+	}
+	
+	// Less expensive to use prototype
+	
+	VMM.Media.prototype.height = function(h) {
+		if (h != null && h != "") {
+			config.height = h;
+			reSize();
+		} else {
+			return config.height;
+		}
+	};
+	
+	VMM.Media.prototype.width = function(w) {
+		if (w != null && w != "") {
+			config.width = w;
+			reSize();
+		} else {
+			return config.width;
+		}
+	};
+	
+	/* GETTERS AND SETTERS
+	================================================== */
+	
+	VMM.Media.prototype.getData = function() {
+		return data;
+	};
+	
+	VMM.Media.prototype.setConfig = function(d) {
+		if(typeof d != 'undefined') {
+			config = d;
+		} else{
+			trace("NO CONFIG DATA");
+		}
+	};
+	
+	VMM.Media.prototype.getConfig = function() {
+		return config;
+	};
+	
+	VMM.Media.prototype.setSize = function(w, h) {
+		if (w != null) {config.width = w};
+		if (h != null) {config.height = h};
+		if (_active) {
+			reSize();
+		}
+		
+	}
+	
+	VMM.Media.prototype.active = function() {
+		return _active;
+	};
+	
+}
+
+/*********************************************** 
+     Begin VMM.TextElement.js 
+***********************************************/ 
+
+/* TextElement
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
+	
+	VMM.TextElement = ({
+		
+		init: function() {
+			return this;
+		},
+		
+		create: function(data) {
+			
+			return data;
+			
+			//$mediacontainer				=	element;
+			/*
+			var _valid					=	false;
+			
+			if (data.media != null && data.media != "") {
+				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false;
+				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
+				_valid					=	true;
+				
+			// CREDIT
+				if (data.credit != null && data.credit != "") {
+					creditElem			=	"<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
+				}
+			// CAPTION
+				if (data.caption != null && data.caption != "") {
+					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
+				}
+			// IMAGE
+				if (m.type				==	"image") {
+					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
+			// FLICKR
+				} else if (m.type		==	"flickr") {
+					_id					=	"flickr_" + m.id;
+					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
+					VMM.ExternalAPI.flickr.get(m.id, "#" + _id);
+			// GOOGLE DOCS
+				} else if (m.type		==	"googledoc") {
+					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
+					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
+					VMM.ExternalAPI.googledocs.get(m.id, _id);
+			// YOUTUBE
+				} else if (m.type		==	"youtube") {
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
+					VMM.ExternalAPI.youtube.get(m.id);
+			// VIMEO
+				} else if (m.type		==	"vimeo") {
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
+					VMM.ExternalAPI.vimeo.get(m.id);
+			// DAILYMOTION
+				} else if (m.type		==	"dailymotion") {
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
+			// TWITTER
+				} else if (m.type		==	"twitter"){
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
+					isTextMedia			=	true;
+					VMM.ExternalAPI.twitter.prettyHTML(m.id, secondary);
+			// TWITTER
+				} else if (m.type		==	"twitter-ready") {
+					isTextMedia			=	true;
+					mediaElem			=	m.id;
+			// SOUNDCLOUD
+				} else if (m.type		==	"soundcloud") {
+					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
+					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
+					VMM.ExternalAPI.soundcloud.get(m.id, _id);
+			// GOOGLE MAPS
+				} else if (m.type		==	"google-map") {
+					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
+					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
+					VMM.ExternalAPI.googlemaps.get(m.id, _id);
+			// WIKIPEDIA
+				} else if (m.type		==	"wikipedia") {
+					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
+					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
+					isTextMedia			=	true;
+					VMM.ExternalAPI.wikipedia.get(m.id, _id);
+			// UNKNOWN
+				} else if (m.type		==	"quote") { 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
+			// UNKNOWN
+				} else if (m.type		==	"unknown") { 
+					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
+			// WEBSITE
+				} else if (m.type		==	"website") { 
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe></div>";
+					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
+			// NO MATCH
+				} else {
+					trace("NO KNOWN MEDIA TYPE FOUND");
+					trace(m.type);
+				}
+				
+			// WRAP THE MEDIA ELEMENT
+				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
+			// RETURN
+				if (isTextMedia) {
+					return "<div class='text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
+				} else {
+					return "<div class='media-wrapper'>" + mediaElem + "</div>";
+				}
+				
+				
+			};
+			*/
+		}
+		
+	}).init();
 }
 
 /*********************************************** 
@@ -3082,6 +4338,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.height(	layout_text_media + ".media-frame", 						mediasize.text_media.height);
 			VMM.Lib.width(	layout_text_media + ".media-frame", 						mediasize.text_media.width);
 			
+			// WEBSITES
+			//VMM.Lib.css(	layout_both + 		".website", 			"max-width", 	300 );
+			
 			// IMAGES
 			VMM.Lib.css(	layout_text_media + "img", 					"max-height", 	mediasize.text_media.height );
 			VMM.Lib.css(	layout_media + 		"img", 					"max-height", 	mediasize.media.height );
@@ -3116,6 +4375,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// DOCS
 			VMM.Lib.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
 			VMM.Lib.height(	layout_media + 		".doc", 								mediasize.media.height);
+			
+			// IE8 NEEDS THIS
+			VMM.Lib.width(	layout_media + 		".wikipedia", 							mediasize.media.width);
+			VMM.Lib.width(	layout_media + 		".twitter", 							mediasize.media.width);
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
 			for(var i = 0; i < slides.length; i++) {
@@ -3192,7 +4455,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.prevDate, _title);
 						VMM.attachElement(navigation.prevTitle, "");
 					} else {
-						VMM.attachElement(navigation.prevDate, data[current_slide - 1].startdate_str);
+						VMM.attachElement(navigation.prevDate, VMM.Date.prettyDate(data[current_slide - 1].startdate));
 						VMM.attachElement(navigation.prevTitle, _title);
 					}
 				} else {
@@ -3210,7 +4473,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						VMM.attachElement(navigation.nextDate, _title);
 						VMM.attachElement(navigation.nextTitle, "");
 					} else {
-						VMM.attachElement(navigation.nextDate, data[current_slide + 1].startdate_str);
+						VMM.attachElement(navigation.nextDate, VMM.Date.prettyDate(data[current_slide + 1].startdate) );
 						VMM.attachElement(navigation.nextTitle, _title);
 					}
 				} else {
@@ -3451,8 +4714,8 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = data.startdate_str;
-						var en = data.enddate_str;
+						var st = VMM.Date.prettyDate(data.startdate);
+						var en = VMM.Date.prettyDate(data.enddate);
 						if (st != en) {
 							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
 						} else {
@@ -3482,7 +4745,10 @@ if (typeof VMM.Slider != 'undefined') {
 			
 			if (c.has.text || c.has.headline) {
 				c.text			=	VMM.createElement("div", c.text, "container");
-				$text			=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
+				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
+				
+				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
+				
 			}
 			
 			/* MEDIA
@@ -3520,1077 +4786,6 @@ if (typeof VMM.Slider != 'undefined') {
 	}
 	
 };
-
-
-/*********************************************** 
-     Begin VMM.Util.js 
-***********************************************/ 
-
-/* Utilities and Useful Functions
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
-	
-	VMM.Util = ({
-		
-		init: function() {
-			return this;
-		},
-		
-		/* CORRECT PROTOCOL (DOES NOT WORK)
-		================================================== */
-		correctProtocol: function(url) {
-			var loc = (window.parent.location.protocol).toString();
-			var prefix = "";
-			var _url = url.split("://", 2);
-			
-			if (loc.match("http")) {
-				prefix = loc;
-			} else {
-				prefix = "https";
-			}
-			
-			return prefix + "://" + _url[1];
-			
-		},
-		
-		/* GET OBJECT ATTRIBUTE BY INDEX
-		================================================== */
-		getObjectAttributeByIndex: function(obj, index) {
-			if(typeof obj != 'undefined') {
-				var i = 0;
-				for (var attr in obj){
-					if (index === i){
-						return obj[attr];
-					}
-					i++;
-				}
-				return "";
-			} else {
-				return "";
-			}
-			
-		},
-		/* RANDOM BETWEEN
-		================================================== */
-		//VMM.Util.randomBetween(1, 3)
-		randomBetween: function(min, max) {
-			return Math.floor(Math.random() * (max - min + 1) + min);
-		},
-		
-		/* AVERAGE
-			http://jsfromhell.com/array/average
-			var x = VMM.Util.average([2, 3, 4]);
-			VMM.Util.average([2, 3, 4]).mean
-		================================================== */
-		average: function(a) {
-		    var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
-		    for(var m, s = 0, l = t; l--; s += a[l]);
-		    for(m = r.mean = s / t, l = t, s = 0; l--; s += Math.pow(a[l] - m, 2));
-		    return r.deviation = Math.sqrt(r.variance = s / t), r;
-		},
-		
-		/* CUSTOM SORT
-		================================================== */
-		customSort: function(a, b) {
-			var a1= a, b1= b;
-			if(a1== b1) return 0;
-			return a1> b1? 1: -1;
-		},
-		
-		/* Remove Duplicates from Array
-		================================================== */
-		deDupeArray: function(arr) {
-			var i,
-				len=arr.length,
-				out=[],
-				obj={};
-
-			for (i=0;i<len;i++) {
-				obj[arr[i]]=0;
-			}
-			for (i in obj) {
-				out.push(i);
-			}
-			return out;
-		},
-		
-		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
-		================================================== */
-		number2money: function(n, symbol, padding) {
-			var symbol = (symbol !== null) ? symbol : true; // add $
-			var padding = (padding !== null) ? padding : false; //pad with .00
-			var number = VMM.Math2.floatPrecision(n,2); // rounded correctly to two digits, if decimals passed
-			var formatted = this.niceNumber(number);
-			// no decimal and padding is enabled
-			if (!formatted.split(/\./g)[1] && padding) formatted = formatted + ".00";
-			// add money sign
-			if (symbol) formatted = "$"+formatted;
-			return formatted;
-		},
-		
-		
-		/* Returns a word count number
-		================================================== */
-		wordCount: function(s) {
-			var fullStr = s + " ";
-			var initial_whitespace_rExp = /^[^A-Za-z0-9\'\-]+/gi;
-			var left_trimmedStr = fullStr.replace(initial_whitespace_rExp, "");
-			var non_alphanumerics_rExp = /[^A-Za-z0-9\'\-]+/gi;
-			var cleanedStr = left_trimmedStr.replace(non_alphanumerics_rExp, " ");
-			var splitString = cleanedStr.split(" ");
-			var word_count = splitString.length -1;
-			if (fullStr.length <2) {
-				word_count = 0;
-			}
-			return word_count;
-		},
-		
-		ratio: {
-			fit: function(w, h, ratio_w, ratio_h) {
-				//VMM.Util.ratio.fit(w, h, ratio_w, ratio_h).width;
-				var _fit = {width:0,height:0};
-				// TRY WIDTH FIRST
-				_fit.width = w;
-				//_fit.height = Math.round((h / ratio_h) * ratio_w);
-				_fit.height = Math.round((w / ratio_w) * ratio_h);
-				if (_fit.height > h) {
-					_fit.height = h;
-					//_fit.width = Math.round((w / ratio_w) * ratio_h);
-					_fit.width = Math.round((h / ratio_h) * ratio_w);
-					
-					if (_fit.width > w) {
-						trace("FIT: DIDN'T FIT!!! ")
-					}
-				}
-				
-				return _fit;
-				
-			},
-			r16_9: function(w,h) {
-				//VMM.Util.ratio.r16_9(w, h) // Returns corresponding number
-				if (w !== null && w !== "") {
-					return Math.round((h / 16) * 9);
-				} else if (h !== null && h !== "") {
-					return Math.round((w / 9) * 16);
-				}
-			},
-			r4_3: function(w,h) {
-				if (w !== null && w !== "") {
-					return Math.round((h / 4) * 3);
-				} else if (h !== null && h !== "") {
-					return Math.round((w / 3) * 4);
-				}
-			}
-		},
-		
-		date: {
-			
-			dateformats: {
-				year: "yyyy",
-				month_short: "mmm",
-				month: "mmmm yyyy",
-				full_short: "mmm d",
-				full: "mmmm d',' yyyy",
-				time_no_seconds_short: "h:MM TT",
-				time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-				full_long: "mmm d',' yyyy 'at' hh:MM TT",
-				full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
-			},
-			
-			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
-			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
-			hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
-			hour_suffix: ["am"],
-			
-			//B.C.
-			bc_format: {
-				year: "yyyy",
-				month_short: "mmm",
-				month: "mmmm yyyy",
-				full_short: "mmm d",
-				full: "mmmm d',' yyyy",
-				time_no_seconds_short: "h:MM TT",
-				time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-				full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-				full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
-			},
-			
-			setLanguage: function(lang) {
-				trace("SET DATE LANGUAGE");
-				VMM.Util.date.dateformats	=	lang.dateformats;	
-				VMM.Util.date.month			=	lang.date.month;
-				VMM.Util.date.month_abbr	=	lang.date.month_abbr;
-				VMM.Util.date.day			=	lang.date.day;
-				VMM.Util.date.day_abbr		=	lang.date.day_abbr;
-				dateFormat.i18n.dayNames	=	lang.date.day_abbr.concat(lang.date.day);
-				dateFormat.i18n.monthNames	=	lang.date.month_abbr.concat(lang.date.month);
-			},
-			
-			parse: function(d) {
-				if (type.of(d) == "date") {
-					return d;
-				} else {
-					var _date = new Date(0, 0, 1, 0, 0, 0, 0);
-					var _d_array; // DATE ARRAY
-					var _t_array; // TIME ARRAY
-					if ( d.match(/,/gi) ) {
-						_d_array = d.split(",");
-						for(var i = 0; i < _d_array.length; i++) {
-							_d_array[i] = parseInt(_d_array[i]);
-						}
-						if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
-						if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
-						if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
-						if (	_d_array[3]	> 1		) {	_date.setHours(			_d_array[3]);			}
-						if (	_d_array[4]	> 1		) {	_date.setMinutes(		_d_array[4]);			}
-						if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
-						if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
-					} else if (d.match("/")) {
-						var _time_parse;
-						var _times;
-						if (d.match(" ")) {
-							_time_parse = d.split(" ");
-							if (d.match(":")) {
-								_t_array = _time_parse[1].split(":");
-								if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
-								if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
-								if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
-								if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
-							}
-							_d_array = _time_parse[0].split("/");
-						} else {
-							_d_array = d.split("/");
-						}
-						if (	_d_array[2]			) {	_date.setFullYear(		_d_array[2]);			}
-						if (	_d_array[0]	> 1		) {	_date.setMonth(			_d_array[0] - 1);		}
-						if (	_d_array[1]	> 1		) {	_date.setDate(			_d_array[1]);			}
-					} else if (d.length < 5) {
-						_date.setFullYear(parseInt(d));
-						_date.setMonth(0);
-						_date.setDate(1);
-						_date.setHours(0);
-						_date.setMinutes(0);
-						_date.setSeconds(0);
-						_date.setMilliseconds(0);
-					} else {
-						_date = new Date(
-							parseInt(d.slice(0,4)), 
-							parseInt(d.slice(4,6)) - 1, 
-							parseInt(d.slice(6,8)), 
-							parseInt(d.slice(8,10)), 
-							parseInt(d.slice(10,12))
-						);
-					}
-					return _date;
-				}
-			},
-			
-			prettyDate: function(d, is_abbr, d2) {
-				var _date;
-				var _date2;
-				var format;
-				var bc_check;
-				var is_pair = false;
-				
-				if (d2 != null) {
-					is_pair = true;
-				}
-				
-				if (type.of(d) == "date") {
-					if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
-						// YEAR ONLY
-						format = VMM.Util.date.dateformats.year;
-					} else if (d.getDate() <= 1 && d.getHours() === 0 && d.getMinutes() === 0) {
-						// YEAR MONTH
-						if (is_abbr) {
-							format = VMM.Util.date.dateformats.month_short;
-						} else {
-							format = VMM.Util.date.dateformats.month;
-						}
-					} else if (d.getHours() === 0 && d.getMinutes() === 0) {
-						// YEAR MONTH DAY
-						if (is_abbr) {
-							format = VMM.Util.date.dateformats.full_short;
-						} else {
-							format = VMM.Util.date.dateformats.full;
-						}
-					} else  if (d.getMinutes() === 0) {
-						// YEAR MONTH DAY HOUR
-						if (is_abbr) {
-							format = VMM.Util.date.dateformats.time_no_seconds_short;
-						} else {
-							format = VMM.Util.date.dateformats.time_no_seconds_small_date;
-						}
-					} else {
-						// YEAR MONTH DAY HOUR MINUTE
-						if (is_abbr){
-							format = VMM.Util.date.dateformats.time_no_seconds_short; 
-						} else {
-							format = VMM.Util.date.dateformats.full_long; 
-						}
-					}
-					
-					_date = dateFormat(d, format);
-					bc_check = _date.split(" ");
-					
-					// BC TIME SUPPORT
-					for(var i = 0; i < bc_check.length; i++) {
-						if ( parseInt(bc_check[i]) < 0 ) {
-							trace("YEAR IS BC");
-							var bc_original = 	bc_check[i];
-							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-							var bc_string = 	bc_number.toString() + " B.C.";
-							_date = _date.replace(bc_original, bc_string);
-						}
-					}
-					
-					
-					if (is_pair) {
-						_date2 = dateFormat(d2, format);
-						bc_check = _date2.split(" ");
-						// BC TIME SUPPORT
-						for(var i = 0; i < bc_check.length; i++) {
-							if ( parseInt(bc_check[i]) < 0 ) {
-								trace("YEAR IS BC");
-								var bc_original = 	bc_check[i];
-								var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-								var bc_string = 	bc_number.toString() + " B.C.";
-								_date2 = _date2.replace(bc_original, bc_string);
-							}
-						}
-						
-					}
-				} else {
-					trace("NOT A VALID DATE?");
-					trace(d);
-				}
-				
-				if (is_pair) {
-					return _date + " &mdash; " + _date2;
-				} else {
-					return _date;
-				}
-			}
-			
-		},
-		
-		// VMM.Util.doubledigit(number).
-		doubledigit: function(n) {
-			return (n < 10 ? '0' : '') + n;
-		},
-		
-		
-		/* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
-		================================================== */
-		truncateWords: function(s, min, max) {
-			
-			if (!min) min = 30;
-			if (!max) max = min;
-			
-			var initial_whitespace_rExp = /^[^A-Za-z0-9\'\-]+/gi;
-			var left_trimmedStr = s.replace(initial_whitespace_rExp, "");
-			var words = left_trimmedStr.split(" ");
-			
-			var result = [];
-			
-			min = Math.min(words.length, min);
-			max = Math.min(words.length, max);
-			
-			for (var i = 0; i<min; i++) {
-				result.push(words[i]);
-			}		
-			
-			for (var j = min; i<max; i++) {
-				var word = words[i];
-				
-				result.push(word);
-				
-				if (word.charAt(word.length-1) == '.') {
-					break;
-				}
-			}		
-			
-			return (result.join(' '));
-		},
-		
-		/* Turns plain text links into real links
-		================================================== */
-		// VMM.Util.linkify();
-		linkify: function(text,targets,is_touch) {
-			
-			// http://, https://, ftp://
-			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-
-			// www. sans http:// or https://
-			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-
-			// Email addresses
-			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
-			
-
-			return text
-				.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
-				.replace(pseudoUrlPattern, "$1<a target='_blank' onclick='void(0)' href='http://$2'>$2</a>")
-				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>");
-		},
-		
-		linkify_with_twitter: function(text,targets,is_touch) {
-			
-			// http://, https://, ftp://
-			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-			var url_pattern = /(\()((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\))|(\[)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\])|(\{)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(\})|(<|&(?:lt|#60|#x3c);)((?:ht|f)tps?:\/\/[a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]+)(>|&(?:gt|#62|#x3e);)|((?:^|[^=\s'"\]])\s*['"]?|[^=\s]\s+)(\b(?:ht|f)tps?:\/\/[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]+(?:(?!&(?:gt|#0*62|#x0*3e);|&(?:amp|apos|quot|#0*3[49]|#x0*2[27]);[.!&',:?;]?(?:[^a-z0-9\-._~!$&'()*+,;=:\/?#[\]@%]|$))&[a-z0-9\-._~!$'()*+,;=:\/?#[\]@%]*)*[a-z0-9\-_~$()*+=\/#[\]@%])/img;
-			var url_replace = '$1$4$7$10$13<a href="$2$5$8$11$14" class="hyphenate">$2$5$8$11$14</a>$3$6$9$12';
-			
-			// www. sans http:// or https://
-			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-			function replaceURLWithHTMLLinks(text) {
-			    var exp = /(\b(https?|ftp|file):\/\/([-A-Z0-9+&@#%?=~_|!:,.;]*)([-A-Z0-9+&@#%?\/=~_|!:,.;]*)[-A-Z0-9+&@#\/%=~_|])/ig;
-			    return text.replace(exp, "<a href='$1' target='_blank'>$3</a>");
-			}
-			// Email addresses
-			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
-			
-			var twitterHandlePattern = /(@([\w]+))/g;
-			
-			var twitterSearchPattern = /(#([\w]+))/g;
-
-			return text
-				//.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
-				.replace(url_pattern, url_replace)
-				.replace(pseudoUrlPattern, "$1<a target='_blank' class='hyphenate' onclick='void(0)' href='http://$2'>$2</a>")
-				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>")
-				.replace(twitterHandlePattern, "<a href='http://twitter.com/$2' target='_blank' onclick='void(0)'>$1</a>")
-				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank' 'void(0)'>$1</a>");
-		},
-		
-		linkify_wikipedia: function(text) {
-			
-			var urlPattern = /<i[^>]*>(.*?)<\/i>/gim;
-			return text
-				.replace(urlPattern, "<a target='_blank' href='http://en.wikipedia.org/wiki/$&' onclick='void(0)'>$&</a>")
-				.replace(/<i\b[^>]*>/gim, "")
-				.replace(/<\/i>/gim, "")
-				.replace(/<b\b[^>]*>/gim, "")
-				.replace(/<\/b>/gim, "");
-		},
-		/* Turns plain text links into real links
-		================================================== */
-		// VMM.Util.unlinkify();
-		unlinkify: function(text) {
-			if(!text) return text;
-			text = text.replace(/<a\b[^>]*>/i,"");
-			text = text.replace(/<\/a>/i, "");
-			return text;
-		},
-		
-		/* TK
-		================================================== */
-		nl2br: function(text) {
-			return text.replace(/(\r\n|[\r\n]|\\n|\\r)/g,"<br/>");
-		},
-		
-		/* Generate a Unique ID
-		================================================== */
-		// VMM.Util.unique_ID(size);
-		unique_ID: function(size) {
-			
-			var getRandomNumber = function(range) {
-				return Math.floor(Math.random() * range);
-			};
-
-			var getRandomChar = function() {
-				var chars = "abcdefghijklmnopqurstuvwxyzABCDEFGHIJKLMNOPQURSTUVWXYZ";
-				return chars.substr( getRandomNumber(62), 1 );
-			};
-
-			var randomID = function(size) {
-				var str = "";
-				for(var i = 0; i < size; i++) {
-					str += getRandomChar();
-				}
-				return str;
-			};
-			
-			return randomID(size);
-		},
-		/* Tells you if a number is even or not
-		================================================== */
-		// VMM.Util.isEven(n)
-		isEven: function(n){
-			return (n%2 === 0) ? true : false;
-		},
-		/* Get URL Variables
-		================================================== */
-		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
-		getUrlVars: function(string) {
-			
-			var str = string.toString();
-			
-			if (str.match('&#038;')) { 
-				str = str.replace("&#038;", "&");
-			} else if (str.match('&#38;')) {
-				str = str.replace("&#38;", "&");
-			} else if (str.match('&amp;')) {
-				str = str.replace("&amp;", "&");
-			}
-			
-			var vars = [], hash;
-			var hashes = str.slice(str.indexOf('?') + 1).split('&');
-			for(var i = 0; i < hashes.length; i++) {
-				hash = hashes[i].split('=');
-				vars.push(hash[0]);
-				vars[hash[0]] = hash[1];
-			}
-			
-			
-			return vars;
-		},
-
-		/* Cleans up strings to become real HTML
-		================================================== */
-		toHTML: function(text) {
-			
-			text = this.nl2br(text);
-			text = this.linkify(text);
-			
-			return text.replace(/\s\s/g,"&nbsp;&nbsp;");
-		},
-		
-		/* Returns text strings as CamelCase
-		================================================== */
-		toCamelCase: function(s,forceLowerCase) {
-			
-			if(forceLowerCase !== false) forceLowerCase = true;
-			
-			var sps = ((forceLowerCase) ? s.toLowerCase() : s).split(" ");
-			
-			for(var i=0; i<sps.length; i++) {
-				
-				sps[i] = sps[i].substr(0,1).toUpperCase() + sps[i].substr(1);
-			}
-			
-			return sps.join(" ");
-		},
-		
-		/* Replaces dumb quote marks with smart ones
-		================================================== */
-		properQuotes: function(str) {
-			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
-		},
-		/* Given an int or decimal, return a string with pretty commas in the correct spot.
-		================================================== */
-		niceNumber: function(n){
-		
-			var amount = String( Math.abs(Number(n) ) );
-		    
-			var leftOfDecimal = amount.split(/\./g)[0];
-			var rightOfDecimal = amount.split(/\./g)[1];
-		    
-			var formatted_text = '';
-		    
-			var num_a = leftOfDecimal.toArray();
-			num_a.reverse();
-		    
-			for (var i=1; i <= num_a.length; i++) {
-				if ( (i%3 == 0) && (i < num_a.length ) ) {
-					formatted_text = "," + num_a[i-1] + formatted_text;
-				} else {
-					formatted_text = num_a[i-1] + formatted_text;
-				}
-		    }
-			if (rightOfDecimal != null && rightOfDecimal != '' && rightOfDecimal != undefined) {
-				return formatted_text + "." + rightOfDecimal;
-			} else {
-				return formatted_text;
-			}
-		},
-		
-		/* Transform text to Title Case
-		================================================== */
-		toTitleCase: function(t){
-			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
-				return t.replace("_", "%20");
-			} else {
-				var __TitleCase = {
-					__smallWords: ['a', 'an', 'and', 'as', 'at', 'but','by', 'en', 'for', 'if', 'in', 'of', 'on', 'or','the', 'to', 'v[.]?', 'via', 'vs[.]?'],
-
-					init: function() {
-						this.__smallRE = this.__smallWords.join('|');
-						this.__lowerCaseWordsRE = new RegExp('\\b(' + this.__smallRE + ')\\b', 'gi');
-						this.__firstWordRE = new RegExp('^([^a-zA-Z0-9 \\r\\n\\t]*)(' + this.__smallRE + ')\\b', 'gi');
-						this.__lastWordRE = new RegExp('\\b(' + this.__smallRE + ')([^a-zA-Z0-9 \\r\\n\\t]*)$', 'gi');
-					},
-
-					toTitleCase: function(string) {
-						var line = '';
-
-						var split = string.split(/([:.;?!][ ]|(?:[ ]|^)["“])/);
-
-						for (var i = 0; i < split.length; ++i) {
-							var s = split[i];
-
-							s = s.replace(/\b([a-zA-Z][a-z.'’]*)\b/g,this.__titleCaseDottedWordReplacer);
-
-			 				// lowercase the list of small words
-							s = s.replace(this.__lowerCaseWordsRE, this.__lowerReplacer);
-
-							// if the first word in the title is a small word then capitalize it
-							s = s.replace(this.__firstWordRE, this.__firstToUpperCase);
-
-							// if the last word in the title is a small word, then capitalize it
-							s = s.replace(this.__lastWordRE, this.__firstToUpperCase);
-
-							line += s;
-						}
-
-						// special cases
-						line = line.replace(/ V(s?)\. /g, ' v$1. ');
-						line = line.replace(/(['’])S\b/g, '$1s');
-						line = line.replace(/\b(AT&T|Q&A)\b/ig, this.__upperReplacer);
-
-						return line;
-					},
-
-					__titleCaseDottedWordReplacer: function (w) {
-						return (w.match(/[a-zA-Z][.][a-zA-Z]/)) ? w : __TitleCase.__firstToUpperCase(w);
-					},
-
-					__lowerReplacer: function (w) { return w.toLowerCase() },
-
-					__upperReplacer: function (w) { return w.toUpperCase() },
-
-					__firstToUpperCase: function (w) {
-						var split = w.split(/(^[^a-zA-Z0-9]*[a-zA-Z0-9])(.*)$/);
-						if (split[1]) {
-							split[1] = split[1].toUpperCase();
-						}
-					
-						return split.join('');
-					
-					
-					},
-				};
-
-				__TitleCase.init();
-			
-				t = t.replace(/_/g," ");
-				t = __TitleCase.toTitleCase(t);
-			
-				return t;
-				
-			}
-			
-		},
-		
-	}).init();
-	
-	//'string'.linkify();
-	if(!String.linkify) {
-		String.prototype.linkify = function() {
-
-			// http://, https://, ftp://
-			var urlPattern = /\b(?:https?|ftp):\/\/[a-z0-9-+&@#\/%?=~_|!:,.;]*[a-z0-9-+&@#\/%=~_|]/gim;
-
-			// www. sans http:// or https://
-			var pseudoUrlPattern = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-
-			// Email addresses
-			var emailAddressPattern = /(([a-zA-Z0-9_\-\.]+)@[a-zA-Z_]+?(?:\.[a-zA-Z]{2,6}))+/gim;
-			
-			var twitterHandlePattern = /(@([\w]+))/g;
-			
-			var twitterSearchPattern = /(#([\w]+))/g;
-
-			return this
-				.replace(urlPattern, '<a target="_blank" href="$&">$&</a>')
-				.replace(pseudoUrlPattern, '$1<a target="_blank" href="http://$2">$2</a>')
-				.replace(emailAddressPattern, '<a target="_blank" href="mailto:$1">$1</a>')
-				.replace(twitterHandlePattern, "<a href='http://twitter.com/$2' target='_blank'>$1</a>")
-				.replace(twitterSearchPattern, "<a href='http://twitter.com/#search?q=%23$2' target='_blank'>$1</a>");
-	    };
-	};
-	//str.substr(3,4)
-	/*
-	 * Date Format 1.2.3
-	 * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
-	 * MIT license
-	 *
-	 * Includes enhancements by Scott Trenda <scott.trenda.net>
-	 * and Kris Kowal <cixar.com/~kris.kowal/>
-	 *
-	 * Accepts a date, a mask, or a date and a mask.
-	 * Returns a formatted version of the given date.
-	 * The date defaults to the current date/time.
-	 * The mask defaults to dateFormat.masks.default.
-	 */
-
-	var dateFormat = function () {
-		var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
-			timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
-			timezoneClip = /[^-+\dA-Z]/g,
-			pad = function (val, len) {
-				val = String(val);
-				len = len || 2;
-				while (val.length < len) val = "0" + val;
-				return val;
-			};
-
-		// Regexes and supporting functions are cached through closure
-		return function (date, mask, utc) {
-			var dF = dateFormat;
-
-			// You can't provide utc if you skip other args (use the "UTC:" mask prefix)
-			if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
-				mask = date;
-				date = undefined;
-			}
-
-			// Passing date through Date applies Date.parse, if necessary
-			date = date ? new Date(date) : new Date;
-			if (isNaN(date)) throw SyntaxError("invalid date");
-
-			mask = String(dF.masks[mask] || mask || dF.masks["default"]);
-
-			// Allow setting the utc argument via the mask
-			if (mask.slice(0, 4) == "UTC:") {
-				mask = mask.slice(4);
-				utc = true;
-			}
-
-			var	_ = utc ? "getUTC" : "get",
-				d = date[_ + "Date"](),
-				D = date[_ + "Day"](),
-				m = date[_ + "Month"](),
-				y = date[_ + "FullYear"](),
-				H = date[_ + "Hours"](),
-				M = date[_ + "Minutes"](),
-				s = date[_ + "Seconds"](),
-				L = date[_ + "Milliseconds"](),
-				o = utc ? 0 : date.getTimezoneOffset(),
-				flags = {
-					d:    d,
-					dd:   pad(d),
-					ddd:  dF.i18n.dayNames[D],
-					dddd: dF.i18n.dayNames[D + 7],
-					m:    m + 1,
-					mm:   pad(m + 1),
-					mmm:  dF.i18n.monthNames[m],
-					mmmm: dF.i18n.monthNames[m + 12],
-					yy:   String(y).slice(2),
-					yyyy: y,
-					h:    H % 12 || 12,
-					hh:   pad(H % 12 || 12),
-					H:    H,
-					HH:   pad(H),
-					M:    M,
-					MM:   pad(M),
-					s:    s,
-					ss:   pad(s),
-					l:    pad(L, 3),
-					L:    pad(L > 99 ? Math.round(L / 10) : L),
-					t:    H < 12 ? "a"  : "p",
-					tt:   H < 12 ? "am" : "pm",
-					T:    H < 12 ? "A"  : "P",
-					TT:   H < 12 ? "AM" : "PM",
-					Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-					o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-					S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
-				};
-
-			return mask.replace(token, function ($0) {
-				return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
-			});
-		};
-	}();
-
-	// Some common format strings
-	dateFormat.masks = {
-		"default":      "ddd mmm dd yyyy HH:MM:ss",
-		shortDate:      "m/d/yy",
-		mediumDate:     "mmm d, yyyy",
-		longDate:       "mmmm d, yyyy",
-		fullDate:       "dddd, mmmm d, yyyy",
-		shortTime:      "h:MM TT",
-		mediumTime:     "h:MM:ss TT",
-		longTime:       "h:MM:ss TT Z",
-		isoDate:        "yyyy-mm-dd",
-		isoTime:        "HH:MM:ss",
-		isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-		isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
-	};
-
-	// Internationalization strings
-	dateFormat.i18n = {
-		dayNames: [
-			"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
-			"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-		],
-		monthNames: [
-			"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-			"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-		]
-	};
-
-	// For convenience...
-	Date.prototype.format = function (mask, utc) {
-		return dateFormat(this, mask, utc);
-	};
-	
-}
-
-/*********************************************** 
-     Begin VMM.LoadLib.js 
-***********************************************/ 
-
-/*
-	LoadLib
-	Based on LazyLoad by Ryan Grove
-	https://github.com/rgrove/lazyload/ 
-	Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
-	All rights reserved.
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of
-	this software and associated documentation files (the 'Software'), to deal in
-	the Software without restriction, including without limitation the rights to
-	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-	the Software, and to permit persons to whom the Software is furnished to do so,
-	subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-================================================== */
-window.loadedJS = [];
-
-
-if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
-	//VMM.LoadLib.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onJQueryLoaded);
-	//VMM.LoadLib.css('http://someurl.css', onCSSLoaded);
-	
-	
-	
-	VMM.LoadLib = (function (doc) {
-		var env,
-		head,
-		pending = {},
-		pollCount = 0,
-		queue = {css: [], js: []},
-		styleSheets = doc.styleSheets;
-	
-		var loaded_Array = [];
-	
-		function isLoaded(url) {
-			var has_been_loaded = false;
-			for(var i=0; i<loaded_Array.length; i++) {
-				if (loaded_Array[i] == url) {
-					has_been_loaded = true;
-				}
-			}
-			if (!has_been_loaded) {
-				loaded_Array.push(url);
-			}
-			return has_been_loaded;
-		}
-
-		function createNode(name, attrs) {
-			var node = doc.createElement(name), attr;
-
-			for (attr in attrs) {
-				if (attrs.hasOwnProperty(attr)) {
-					node.setAttribute(attr, attrs[attr]);
-				}
-			}
-
-			return node;
-		}
-
-	  function finish(type) {
-	    var p = pending[type],
-	        callback,
-	        urls;
-
-	    if (p) {
-	      callback = p.callback;
-	      urls     = p.urls;
-	      urls.shift();
-	      pollCount = 0;
-	      if (!urls.length) {
-	        callback && callback.call(p.context, p.obj);
-	        pending[type] = null;
-	        queue[type].length && load(type);
-	      }
-	    }
-	  }
-
-	  function getEnv() {
-	    var ua = navigator.userAgent;
-
-	    env = {
-
-	      async: doc.createElement('script').async === true
-	    };
-
-	    (env.webkit = /AppleWebKit\//.test(ua))
-	      || (env.ie = /MSIE/.test(ua))
-	      || (env.opera = /Opera/.test(ua))
-	      || (env.gecko = /Gecko\//.test(ua))
-	      || (env.unknown = true);
-	  }
-
-	  function load(type, urls, callback, obj, context) {
-	    var _finish = function () { finish(type); },
-	        isCSS   = type === 'css',
-	        nodes   = [],
-	        i, len, node, p, pendingUrls, url;
-
-	    env || getEnv();
-
-	    if (urls) {
-
-	      urls = typeof urls === 'string' ? [urls] : urls.concat();
-
-	      if (isCSS || env.async || env.gecko || env.opera) {
-
-	        queue[type].push({
-	          urls    : urls,
-	          callback: callback,
-	          obj     : obj,
-	          context : context
-	        });
-	      } else {
-	        for (i = 0, len = urls.length; i < len; ++i) {
-	          queue[type].push({
-	            urls    : [urls[i]],
-	            callback: i === len - 1 ? callback : null,
-	            obj     : obj,
-	            context : context
-	          });
-	        }
-	      }
-	    }
-
-	    if (pending[type] || !(p = pending[type] = queue[type].shift())) {
-	      return;
-	    }
-
-	    head || (head = doc.head || doc.getElementsByTagName('head')[0]);
-	    pendingUrls = p.urls;
-
-	    for (i = 0, len = pendingUrls.length; i < len; ++i) {
-	      url = pendingUrls[i];
-
-	      if (isCSS) {
-	          node = env.gecko ? createNode('style') : createNode('link', {
-	            href: url,
-	            rel : 'stylesheet'
-	          });
-	      } else {
-	        node = createNode('script', {src: url});
-	        node.async = false;
-	      }
-
-	      node.className = 'lazyload';
-	      node.setAttribute('charset', 'utf-8');
-
-	      if (env.ie && !isCSS) {
-	        node.onreadystatechange = function () {
-	          if (/loaded|complete/.test(node.readyState)) {
-	            node.onreadystatechange = null;
-	            _finish();
-	          }
-	        };
-	      } else if (isCSS && (env.gecko || env.webkit)) {
-	        if (env.webkit) {
-	          p.urls[i] = node.href; 
-	          pollWebKit();
-	        } else {
-	          node.innerHTML = '@import "' + url + '";';
-	          pollGecko(node);
-	        }
-	      } else {
-	        node.onload = node.onerror = _finish;
-	      }
-
-	      nodes.push(node);
-	    }
-
-	    for (i = 0, len = nodes.length; i < len; ++i) {
-	      head.appendChild(nodes[i]);
-	    }
-	  }
-
-	  function pollGecko(node) {
-	    var hasRules;
-
-	    try {
-
-	      hasRules = !!node.sheet.cssRules;
-	    } catch (ex) {
-	      pollCount += 1;
-
-	      if (pollCount < 200) {
-	        setTimeout(function () { pollGecko(node); }, 50);
-	      } else {
-
-	        hasRules && finish('css');
-	      }
-
-	      return;
-	    }
-
-	    finish('css');
-	  }
-
-	  function pollWebKit() {
-	    var css = pending.css, i;
-
-	    if (css) {
-	      i = styleSheets.length;
-
-	      while (--i >= 0) {
-	        if (styleSheets[i].href === css.urls[0]) {
-	          finish('css');
-	          break;
-	        }
-	      }
-
-	      pollCount += 1;
-
-	      if (css) {
-	        if (pollCount < 200) {
-	          setTimeout(pollWebKit, 50);
-	        } else {
-
-	          finish('css');
-	        }
-	      }
-	    }
-	  }
-
-	  return {
-
-		css: function (urls, callback, obj, context) {
-			if (isLoaded(urls)) {
-				return callback;
-			} else {
-				load('css', urls, callback, obj, context);
-			}
-		},
-
-		js: function (urls, callback, obj, context) {
-			if (isLoaded(urls)) {
-				return callback;
-			} else {
-				load('js', urls, callback, obj, context);
-			}
-		}
-
-	  };
-	})(this.document);
-}
-
 
 
 /*********************************************** 
@@ -5677,20 +5872,26 @@ Utf8.decode = function(strUtf) {
 	http://incident57.com/codekit/
 ================================================== */
 // @codekit-prepend "VMM.Timeline.License.js";
-// @codekit-prepend "VMM.js";
-// @codekit-prepend "VMM.Library.js";
-// @codekit-prepend "VMM.Browser.js";
-// @codekit-prepend "VMM.MediaElement.js";
-// @codekit-prepend "VMM.MediaType.js";
-// @codekit-prepend "VMM.Media.js";
-// @codekit-prepend "VMM.FileExtention.js";
-// @codekit-prepend "VMM.ExternalAPI.js";
-// @codekit-prepend "VMM.TouchSlider.js";
-// @codekit-prepend "VMM.DragSlider.js";
-// @codekit-prepend "VMM.Slider.js";
-// @codekit-prepend "VMM.Slider.Slide.js";
-// @codekit-prepend "VMM.Util.js";
-// @codekit-prepend "VMM.LoadLib.js";
+
+// @codekit-prepend "Core/VMM.js";
+// @codekit-prepend "Core/VMM.Library.js";
+// @codekit-prepend "Core/VMM.Browser.js";
+// @codekit-prepend "Core/VMM.FileExtention.js";
+// @codekit-prepend "Core/VMM.Date.js";
+// @codekit-prepend "Core/VMM.Util.js";
+// @codekit-prepend "Core/VMM.LoadLib.js";
+
+// @codekit-prepend "Media/VMM.ExternalAPI.js";
+// @codekit-prepend "Media/VMM.MediaElement.js";
+// @codekit-prepend "Media/VMM.MediaType.js";
+// @codekit-prepend "Media/VMM.Media.js";
+// @codekit-prepend "Media/VMM.TextElement.js";
+
+// @codekit-prepend "Slider/VMM.TouchSlider.js";
+// @codekit-prepend "Slider/VMM.DragSlider.js";
+// @codekit-prepend "Slider/VMM.Slider.js";
+// @codekit-prepend "Slider/VMM.Slider.Slide.js";
+
 // @codekit-prepend "VMM.Language.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
@@ -5719,7 +5920,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.35";
+		version = 					"1.45mem";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -5972,7 +6173,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			createStructure(w,h);
 			
 			trace('TIMELINE INIT');
-			VMM.Util.date.setLanguage(VMM.Timeline.Config.language);
+			VMM.Date.setLanguage(VMM.Timeline.Config.language);
 			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
@@ -6038,7 +6239,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var build = function() {
 			
 			// START AT END?
-			if (config.start_at_end) {
+			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
 			// CREATE DOM STRUCTURE
@@ -6080,9 +6281,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		// BUILD DATE OBJECTS
 		var buildDates = function() {
 			
-			updateSize();
 			_dates = [];
 			VMM.fireEvent(global, config.events.messege, "Building Dates");
+			updateSize();
 			
 			for(var i = 0; i < data.date.length; i++) {
 				
@@ -6094,36 +6295,37 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					if (data.date[i].type == "tweets") {
 						_date.startdate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].startDate);
 					} else {
-						_date.startdate = VMM.Util.date.parse(data.date[i].startDate);
+						_date.startdate = VMM.Date.parse(data.date[i].startDate);
 					}
 					
-					_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
+					if (!isNaN(_date.startdate)) {
+						
+						_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
 					
-					// END DATE
-					if (data.date[i].endDate != null && data.date[i].endDate != "") {
-						if (data.date[i].type == "tweets") {
-							_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+						// END DATE
+						if (data.date[i].endDate != null && data.date[i].endDate != "") {
+							if (data.date[i].type == "tweets") {
+								_date.enddate = VMM.ExternalAPI.twitter.parseTwitterDate(data.date[i].endDate);
+							} else {
+								_date.enddate = VMM.Date.parse(data.date[i].endDate);
+							}
 						} else {
-							_date.enddate = VMM.Util.date.parse(data.date[i].endDate);
+							_date.enddate = _date.startdate;
 						}
-					} else {
-						_date.enddate = _date.startdate;
-					}
 					
-					_date.title				=	data.date[i].headline;
-					_date.headline			=	data.date[i].headline;
-					_date.type				=	data.date[i].type;
-					_date.date				=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.startdate_str		=	VMM.Util.date.prettyDate(_date.startdate);
-					_date.enddate_str		=	VMM.Util.date.prettyDate(_date.enddate);
-					_date.asset				=	data.date[i].asset;
-					_date.fulldate			=	_date.startdate.getTime();
-					_date.text				=	data.date[i].text;
-					_date.content			=	"";
-					_date.tag				=	data.date[i].tag;
-					
-					
-					_dates.push(_date);
+						_date.title				=	data.date[i].headline;
+						_date.headline			=	data.date[i].headline;
+						_date.type				=	data.date[i].type;
+						_date.date				=	VMM.Date.prettyDate(_date.startdate);
+						_date.asset				=	data.date[i].asset;
+						_date.fulldate			=	_date.startdate.getTime();
+						_date.text				=	data.date[i].text;
+						_date.content			=	"";
+						_date.tag				=	data.date[i].tag;
+						_date.slug				=	data.date[i].slug;
+						
+						_dates.push(_date);
+					} 
 					
 				}
 				
@@ -6139,9 +6341,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
 				trace("HAS STARTPAGE");
-				var _date		=	{};
-				var td_num		=	0;
-				var td			=	_dates[0].startdate;
+				var _date = {}, td_num = 0, td;
+				
+				td = _dates[0].startdate;
 				_date.startdate =	new Date(_dates[0].startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
@@ -6167,7 +6369,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_date.headline	=	data.headline;
 				_date.text		=	data.text;
 				_date.type		=	"start";
-				_date.date		=	VMM.Util.date.prettyDate(data.startDate);
+				_date.date		=	VMM.Date.prettyDate(data.startDate);
 				_date.asset		=	data.asset;
 				_date.fulldate	=	_date.startdate.getTime();
 				
@@ -7054,7 +7256,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					_interval.date.setSeconds(_interval.date.getSeconds() + inc_time);
 				}
 				
-				_idd = VMM.Util.date.prettyDate(_interval.date, true);
+				_idd = VMM.Date.prettyDate(_interval.date, true);
 				
 				inc_time = 1;
 				
@@ -7247,7 +7449,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			for(var i = 0; i < data.length; i++) {
 				
-				var _marker, _marker_flag, _marker_content, _marker_dot, _marker_line, _marker_line_event;
+				var _marker, _marker_flag, _marker_content, _marker_dot, _marker_line, _marker_line_event, _marker_title = "";
 				
 				_marker = 				VMM.appendAndGetElement($content, "<div>", "marker");
 				_marker_flag = 			VMM.appendAndGetElement(_marker, "<div>", "flag");
@@ -7266,7 +7468,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				// ADD DATE AND TITLE
-				VMM.appendElement(_marker_content, "<h3>" + VMM.Util.unlinkify(data[i].title) + "</h3><h4>" + data[i].date + "</h4>");
+				if (data[i].title != " ") {
+					_marker_title = VMM.Util.unlinkify(data[i].title);
+				} else {
+					if (typeof data[i].slug != 'undefined') {
+						_marker_title = VMM.Util.unlinkify(data[i].slug);
+					} else {
+						
+					}
+				}
+				VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3><h4>" + data[i].date + "</h4>");
 				
 				// ADD ID
 				VMM.Lib.attr(_marker, "id", (data[i].uniqueid).toString());
@@ -7358,24 +7569,24 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		getData: function(raw_data) {
 			VMM.Timeline.DataObj.data_obj = {};
 			data = VMM.Timeline.DataObj.data_obj;
-
+			VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
+			
 			if (type.of(raw_data) == "object") {
 				trace("DATA SOURCE: JSON OBJECT");
 				VMM.Timeline.DataObj.parseJSON(raw_data);
 			} else if (type.of(raw_data) == "string") {
 				if (raw_data.match("%23")) {
 					trace("DATA SOURCE: TWITTER SEARCH");
-					VMM.Timeline.DataObj.model_Tweets.getData("%23medill");
-					
+					VMM.Timeline.DataObj.model.tweets.getData("%23medill");
 				} else if (	raw_data.match("spreadsheet") ) {
-					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: GOOGLE SPREADSHEET");
-					VMM.Timeline.DataObj.model_GoogleSpreadsheet.getData(raw_data);
-					
+					VMM.Timeline.DataObj.model.googlespreadsheet.getData(raw_data);
+				} else if (raw_data.match("storify.com")) {
+					trace("DATA SOURCE: STORIFY");
+					VMM.Timeline.DataObj.model.storify.getData(raw_data);
+					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
 				} else {
-					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
 					trace("DATA SOURCE: JSON");
-					trace("raw data" + raw_data);
 					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
 				}
 			} else if (type.of(raw_data) == "html") {
@@ -7488,20 +7699,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		
 		parseJSON: function(d) {
 			if (d.timeline.type == "default") {
-				
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
 				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, d);
-				
 			} else if (d.timeline.type == "twitter") {
-				
 				trace("DATA SOURCE: JSON TWEETS");
 				VMM.Timeline.DataObj.model_Tweets.buildData(d);
 				
 			} else {
-				
 				trace("DATA SOURCE: UNKNOWN JSON");
 				trace(type.of(d.timeline));
-				
 			};
 		},
 		
@@ -7509,116 +7715,316 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			New Types of Data can be formatted for the timeline here
 		================================================== */
 		
-		model_Tweets: {
+		model: {
 			
-			type: "twitter",
-			
-			buildData: function(raw_data) {
-				VMM.bindEvent(global, VMM.Timeline.DataObj.model_Tweets.onTwitterDataReady, "TWEETSLOADED");
-				VMM.ExternalAPI.twitter.getTweets(raw_data.timeline.tweets);
-			},
-			
-			getData: function(raw_data) {
-				VMM.bindEvent(global, VMM.Timeline.DataObj.model_Tweets.onTwitterDataReady, "TWEETSLOADED");
-				VMM.ExternalAPI.twitter.getTweetSearch(raw_data);
-			},
-			
-			onTwitterDataReady: function(e, d) {
-				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
-
-				for(var i = 0; i < d.tweetdata.length; i++) {
-
-					var _date = {
-						"type":"tweets",
-						"startDate":"",
-			            "headline":"",
-			            "text":"",
-			            "asset":
-			            {
-			                "media":"",
-			                "credit":"",
-			                "caption":""
-			            },
-			            "tags":"Optional"
-					};
-					// pass in the 'created_at' string returned from twitter //
-					// stamp arrives formatted as Tue Apr 07 22:52:51 +0000 2009 //
-					
-					//var twit_date = VMM.ExternalAPI.twitter.parseTwitterDate(d.tweetdata[i].raw.created_at);
-					//trace(twit_date);
-					
-					_date.startDate = d.tweetdata[i].raw.created_at;
-					
-					if (type.of(d.tweetdata[i].raw.from_user_name)) {
-						_date.headline = d.tweetdata[i].raw.from_user_name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.from_user + "'>" + "@" + d.tweetdata[i].raw.from_user + "</a>)" ;						
-					} else {
-						_date.headline = d.tweetdata[i].raw.user.name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.user.screen_name + "'>" + "@" + d.tweetdata[i].raw.user.screen_name + "</a>)" ;
-					}
-					
-					_date.asset.media = d.tweetdata[i].content;
-					_data_obj.timeline.date.push(_date);
-					
-				};
+			googlespreadsheet: {
 				
-				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+				getData: function(raw) {
+					var _key = VMM.Util.getUrlVars(raw)["key"];
+					var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
+					VMM.getJSON(_url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData);
+				},
+				
+				buildData: function(d) {
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
+					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
+
+					for(var i = 0; i < d.feed.entry.length; i++) {
+						var dd = d.feed.entry[i];
+					
+						if (dd.gsx$titleslide.$t.match("start")) {
+							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
+							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
+							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
+							_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
+							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
+							_data_obj.timeline.text = 				dd.gsx$text.$t;
+							_data_obj.timeline.type = 				"google spreadsheet";
+						} else {
+							var _date = {
+								"type": 							"google spreadsheet",
+								"startDate": 						dd.gsx$startdate.$t,
+								"endDate": 							dd.gsx$enddate.$t,
+					            "headline": 						dd.gsx$headline.$t,
+					            "text": 							dd.gsx$text.$t,
+					            "asset": {
+									"media": 						dd.gsx$media.$t, 
+									"credit": 						dd.gsx$mediacredit.$t, 
+									"caption": 						dd.gsx$mediacaption.$t 
+								},
+					            "tags": 							"Optional"
+							};
+							if (typeof dd.gsx$tag != 'undefined') {
+								_date.tag = dd.gsx$tag.$t;
+							}
+							_data_obj.timeline.date.push(_date);
+						}
+					};
+				
+					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+				}
+				
+			},
+			
+			storify: {
+				
+				getData: function(raw) {
+					//http://storify.com/number10gov/g8-and-nato-chicago-summit
+					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
+					
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
+					var _key = raw.split("storify.com\/")[1];
+					var _url = "http://api.storify.com/v1/stories/" + _key + "?per_page=300&callback=?";
+					
+					var storify_timeout = setTimeout(function() {
+						trace("STORIFY timeout");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Storify is not responding");
+					}, 6000);
+					
+					VMM.getJSON(_url, VMM.Timeline.DataObj.model.storify.buildData)
+						.error(function(jqXHR, textStatus, errorThrown) {
+							trace("STORIFY error");
+							trace("STORIFY ERROR: " + textStatus + " " + jqXHR.responseText);
+						})
+						.success(function(d) {
+							clearTimeout(storify_timeout);
+						});
+					
+				},
+				
+				buildData: function(d) {
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
+					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
+					
+					_data_obj.timeline.startDate	= 	new Date(d.content.date.created);;
+					_data_obj.timeline.headline		= 	d.content.title;
+					
+					
+					//d.permalink
+					var tt			=	"";
+					if (typeof d.content.description != 'undefined' && d.content.description != null) {
+						tt			+=	d.content.description;
+					}
+					tt				+=	"<div class='storify'><div class='vcard author'><a class='screen-name url' href='" + d.content.author.permalink + "' target='_blank'>";
+					tt				+=	"<span class='avatar'><img src='" + d.content.author.avatar + "' style='max-width: 32px; max-height: 32px;'></span>"
+					tt				+=	"<span class='fn'>" + d.content.author.username + "</span>";
+					tt				+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+					tt				+=	"</a>";
+					//tt				+=	"<span class='nickname'>" + d.content.author.stats.stories + " Stories</span>";
+					//tt				+=	"<span class='nickname'>" + d.content.author.stats.subscribers + " Subscribers</span>";
+					tt				+=	"</div></div>";
+					
+					_data_obj.timeline.text = tt;
+					_data_obj.timeline.asset.media = d.content.thumbnail;
+					
+					//_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
+					//_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
+					//_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
+					_data_obj.timeline.type = 				"storify";
+					
+					for(var i = 0; i < d.content.elements.length; i++) {
+						var dd = d.content.elements[i];
+						var is_text = false;
+						var d_date = new Date(dd.posted_at);
+						//trace(tempdat);
+						trace(dd.type);
+						//trace(dd);
+						var _date = {
+							"type": 		"storify",
+							"startDate": 	dd.posted_at,
+							"endDate": 		dd.posted_at,
+				            "headline": 	" ",
+							"slug": 		"", 
+				            "text": 		"",
+				            "asset": {
+								"media": 	"", 
+								"credit": 	"", 
+								"caption": 	"" 
+							}
+						};
+						
+						/*	MEDIA
+						================================================== */
+						if (dd.type == "image") {
+							
+							if (typeof dd.source.name != 'undefined') {
+								if (dd.source.name == "flickr") {
+									_date.asset.media		=	"http://flickr.com/photos/" + dd.meta.pathalias + "/" + dd.meta.id + "/";
+									_date.asset.credit		=	"<a href='" + _date.asset.media + "'>" + dd.attribution.name + "</a>";
+									_date.asset.credit		+=	" on <a href='" + dd.source.href + "'>" + dd.source.name + "</a>";
+								} else if (dd.source.name	==	"instagram") {
+									_date.asset.media		=	dd.permalink;
+									_date.asset.credit		=	"<a href='" + dd.permalink + "'>" + dd.attribution.name + "</a>";
+									_date.asset.credit		+=	" on <a href='" + dd.source.href + "'>" + dd.source.name + "</a>";
+								} else {
+									_date.asset.credit		=	"<a href='" + dd.permalink + "'>" + dd.attribution.name + "</a>";
+									
+									if (typeof dd.source.href != 'undefined') {
+										_date.asset.credit	+=	" on <a href='" + dd.source.href + "'>" + dd.source.name + "</a>";
+									}
+									
+									_date.asset.media		=	dd.data.image.src;
+								}
+							} else {
+								_date.asset.credit			=	"<a href='" + dd.permalink + "'>" + dd.attribution.name + "</a>";
+								_date.asset.media			=	dd.data.image.src;
+							}
+							
+							_date.slug	 					=	dd.attribution.name;
+							if (typeof dd.data.image.caption != 'undefined') {
+								if (dd.data.image.caption != 'undefined') {
+									_date.asset.caption				=	dd.data.image.caption;
+									_date.slug	 					=	dd.data.image.caption;
+								}
+							}
+							
+						} else if (dd.type == "quote") {
+							if (dd.permalink.match("twitter")) {
+								_date.asset.media	=	dd.permalink; 
+								_date.slug = VMM.Util.untagify(dd.data.quote.text);
+							} else if (dd.permalink.match("storify")) {
+								is_text = true;
+								_date.asset.media	=	"<blockquote>" + dd.data.quote.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</blockquote>";
+							}
+						} else if (dd.type == "link") {
+							_date.headline		=	dd.data.link.title;
+							_date.text			=	dd.data.link.description;
+							if (dd.data.link.thumbnail != 'undefined' && dd.data.link.thumbnail != '') {
+								_date.asset.media	=	dd.data.link.thumbnail;
+							} else {
+								_date.asset.media	=	dd.permalink;
+							}
+							//_date.asset.media	=	dd.permalink;
+							_date.asset.caption	=	"<a href='" + dd.permalink + "' target='_blank'>" + dd.data.link.title + "</a>"
+							_date.slug			=	dd.data.link.title;
+							
+						} else if (dd.type == "text") {
+							if (dd.permalink.match("storify")) {
+								is_text = true;
+								var asset_text	=	"<div class='storify'><blockquote><p>" + dd.data.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</p></blockquote>";
+								asset_text		+=	"<div class='vcard author'><a class='screen-name url' href='" + dd.attribution.href + "' target='_blank'>";
+								asset_text		+=	"<span class='avatar'><img src='" + dd.attribution.thumbnail + "' style='max-width: 32px; max-height: 32px;'></span>"
+								asset_text		+=	"<span class='fn'>" + dd.attribution.username + "</span>";
+								asset_text		+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+								asset_text		+=	"</a></div></div>";
+								_date.text		=	asset_text;
+								
+								// Try and put it before the element where it is expected on storify
+								if ( (i+1) >= d.content.elements.length ) {
+									_date.startDate = d.content.elements[i-1].posted_at;
+									
+								} else {
+									if (d.content.elements[i+1].type == "text" && d.content.elements[i+1].permalink.match("storify")) {
+										if ( (i+2) >= d.content.elements.length ) {
+											_date.startDate = d.content.elements[i-1].posted_at;
+										} else {
+											if (d.content.elements[i+2].type == "text" && d.content.elements[i+2].permalink.match("storify")) {
+												if ( (i+3) >= d.content.elements.length ) {
+													_date.startDate = d.content.elements[i-1].posted_at;
+												} else {
+													if (d.content.elements[i+3].type == "text" && d.content.elements[i+3].permalink.match("storify")) {
+														_date.startDate = d.content.elements[i-1].posted_at;
+													} else {
+														trace("LEVEL 3");
+														_date.startDate = d.content.elements[i+3].posted_at;
+													}
+												}
+											} else {
+												trace("LEVEL 2");
+												_date.startDate = d.content.elements[i+2].posted_at;
+											}
+										}
+									} else {
+										trace("LEVEL 1");
+										_date.startDate = d.content.elements[i+1].posted_at;
+									}
+									
+								}
+								_date.endDate = _date.startDate
+							}
+							
+							
+						} else if (dd.type == "video") {
+							_date.headline		=	dd.data.video.title;
+							_date.asset.caption	=	dd.data.video.description;
+							_date.asset.caption	=	dd.source.username;
+							_date.asset.media	=	dd.data.video.src;
+						} else {
+							trace("NO MATCH ");
+							trace(dd);
+						}
+						
+						if (is_text) {
+							_date.slug = VMM.Util.untagify(dd.data.text);
+						}
+						
+						_data_obj.timeline.date.push(_date);
+						
+						
+					};
+				
+					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+				}
+				
+			},
+			
+			tweets: {
+				
+				type: "twitter",
+			
+				buildData: function(raw_data) {
+					VMM.bindEvent(global, VMM.Timeline.DataObj.model.tweets.onTwitterDataReady, "TWEETSLOADED");
+					VMM.ExternalAPI.twitter.getTweets(raw_data.timeline.tweets);
+				},
+			
+				getData: function(raw_data) {
+					VMM.bindEvent(global, VMM.Timeline.DataObj.model.tweets.onTwitterDataReady, "TWEETSLOADED");
+					VMM.ExternalAPI.twitter.getTweetSearch(raw_data);
+				},
+			
+				onTwitterDataReady: function(e, d) {
+					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
+
+					for(var i = 0; i < d.tweetdata.length; i++) {
+
+						var _date = {
+							"type":"tweets",
+							"startDate":"",
+				            "headline":"",
+				            "text":"",
+				            "asset":
+				            {
+				                "media":"",
+				                "credit":"",
+				                "caption":""
+				            },
+				            "tags":"Optional"
+						};
+						// pass in the 'created_at' string returned from twitter //
+						// stamp arrives formatted as Tue Apr 07 22:52:51 +0000 2009 //
+					
+						//var twit_date = VMM.ExternalAPI.twitter.parseTwitterDate(d.tweetdata[i].raw.created_at);
+						//trace(twit_date);
+					
+						_date.startDate = d.tweetdata[i].raw.created_at;
+					
+						if (type.of(d.tweetdata[i].raw.from_user_name)) {
+							_date.headline = d.tweetdata[i].raw.from_user_name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.from_user + "'>" + "@" + d.tweetdata[i].raw.from_user + "</a>)" ;						
+						} else {
+							_date.headline = d.tweetdata[i].raw.user.name + " (<a href='https://twitter.com/" + d.tweetdata[i].raw.user.screen_name + "'>" + "@" + d.tweetdata[i].raw.user.screen_name + "</a>)" ;
+						}
+					
+						_date.asset.media = d.tweetdata[i].content;
+						_data_obj.timeline.date.push(_date);
+					
+					};
+				
+					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+				}
+				
 			}
 		},
 		
-		model_GoogleSpreadsheet: {
-			//	TEMPLATE CAN BE FOUND HERE
-			//	https://docs.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public
-			type: "google spreadsheet",
-			
-			
-			getData: function(raw_data) {
-				
-				var _key = VMM.Util.getUrlVars(raw_data)["key"];
-				var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-				
-				VMM.getJSON(_url, VMM.Timeline.DataObj.model_GoogleSpreadsheet.buildData);
-			},
-			
-			buildData: function(d) {
-				VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
-				var _data_obj = VMM.Timeline.DataObj.data_template_obj;
-
-				for(var i = 0; i < d.feed.entry.length; i++) {
-					var dd = d.feed.entry[i];
-					
-					if (dd.gsx$titleslide.$t.match("start")) {
-						_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
-						_data_obj.timeline.headline = 			dd.gsx$headline.$t;
-						_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
-						_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
-						_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
-						_data_obj.timeline.text = 				dd.gsx$text.$t;
-						_data_obj.timeline.type = 				"google spreadsheet";
-					} else {
-						var _date = {
-							"type": 							"google spreadsheet",
-							"startDate": 						dd.gsx$startdate.$t,
-							"endDate": 							dd.gsx$enddate.$t,
-				            "headline": 						dd.gsx$headline.$t,
-				            "text": 							dd.gsx$text.$t,
-				            "asset": {
-								"media": 						dd.gsx$media.$t, 
-								"credit": 						dd.gsx$mediacredit.$t, 
-								"caption": 						dd.gsx$mediacaption.$t 
-							},
-				            "tags": 							"Optional"
-						};
-						if (typeof dd.gsx$tag != 'undefined') {
-							_date.tag = dd.gsx$tag.$t;
-						}
-						_data_obj.timeline.date.push(_date);
-					}
-				};
-				
-				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
-				
-			}
-			
-		},
 		
 		/*	TEMPLATE OBJECTS
 		================================================== */
