@@ -211,6 +211,7 @@
 					min-width:50%;
 					float: left;
 					.media-wrapper {
+						display:inline-block;
 						margin-left: auto;
 						margin-right: auto;
 						.media-container {
@@ -295,15 +296,15 @@
 									}
 								}
 							}
-							.twitter {
+							.twitter, .plain-text-quote {
 								text-align:left;
 								margin-left: auto;
 								margin-right: auto;
 								margin-bottom:@base-space;
 								clear:both;
 								blockquote {
-									font-size: @base-font;
-									line-height: @base-line;
+									//font-size: @base-font;
+									//line-height: @base-line;
 									color:@color-feature-description;
 									p {
 										font-size: 28px;
@@ -331,49 +332,7 @@
 								.created-at:hover {
 									.opacity(100);
 								}
-								.vcard {
-									float:right;
-									margin-bottom:@base-space;
-									//position: relative;
-									a {
-										color: @color-dark-second;
-									}
-									a:hover {
-										text-decoration: none;
-										.fn {
-											text-decoration: underline;
-										}
-									}
-									.fn, .nickname {
-				
-										padding-left: 42px;
-									}
-									.fn {
-										display:block;
-										//display:inline;
-										font-weight: bold;
-
-									}
-									.nickname {
-										margin-top:3px;
-										display:block;
-										color: @color-dark-third;
-									}
-			
-									.avatar {
-										float:left;
-										//position: absolute;
-										display: block;
-										width: 32px;
-										height: 32px;
-										img {
-											//border: 0px solid #999;
-											-moz-border-radius: 5px;
-											-webkit-border-radius: 5px;
-											border-radius: 5px;
-										}
-									}
-								}
+								
 							}
 							.wikipedia {
 								font-size: @base-font;
@@ -474,6 +433,7 @@
 								color: @color-caption;
 								.text-font(@base-font-small);
 								text-rendering: optimizeLegibility;
+								word-wrap: break-word;
 								//max-height:45px;
 								//overflow-x:hidden;
 								//overflow-y:auto;
@@ -555,7 +515,7 @@
 					min-width:50%;
 					float: none;
 					.media-wrapper {
-						display:block;
+						//display:block;
 						.media-container {
 							margin-left: auto;
 							margin-right: auto;
