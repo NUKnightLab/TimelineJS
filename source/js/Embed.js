@@ -30,7 +30,7 @@
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.43",
+		timeline_js_version = "1.44",
 		ready = {
 			timeout:	"",
 			checks:		0,
