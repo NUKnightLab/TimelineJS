@@ -2380,13 +2380,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				//td = td.replace(/(#([\w]+))/g,"<a href='http://twitter.com/#search?q=%23$2' target='_blank'>$1</a>");
 				twit += td;
 				twit += "</p></blockquote>";
-				twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id_str + "' target='_blank' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
+				//twit += " <a href='https://twitter.com/" + d.user.screen_name + "/status/" + d.id_str + "' target='_blank' alt='link to original tweet' title='link to original tweet'>" + "<span class='created-at'></span>" + " </a>";
 				
 				twit += "<div class='vcard author'>";
 				twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "' target='_blank'>";
 				twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
 				twit += "<span class='fn'>" + d.user.name + "</span>";
-				twit += "<span class='nickname'>@" + d.user.screen_name + "</span>";
+				twit += "<span class='nickname'>@" + d.user.screen_name + "<span class='thumbnail-inline'></span></span>";
 				twit += "</a>";
 				twit += "</div>";
 				
@@ -2805,14 +2805,15 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		wikipedia: {
 			
-			get: function(url, id) {
-				var api_obj = {url: url, id: id};
+			get: function(url, id, lang) {
+				var api_obj = {url: url, id: id, lang: lang};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
 			},
 			
 			create: function(api_obj) {
-				var the_url = "http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
+				var the_url = "http://" + api_obj.lang + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
+
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
 					var temp_text	=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
 					temp_text		+=	"<span class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
@@ -2822,12 +2823,21 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				VMM.getJSON(the_url, function(d) {
 					if (d.query) {
-						var wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
-						var wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
-						var _wiki = "";
-						var wiki_text = "";
-						var wiki_text_array = wiki_extract.split("<p>");
-						var wiki_number_of_paragraphs = 1;
+						var wiki_extract,
+							wiki_title, 
+							_wiki = "", 
+							wiki_text = "", 
+							wiki_number_of_paragraphs = 1, 
+							wiki_text_array = [];
+						
+						wiki_extract = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).extract;
+						wiki_title = VMM.Util.getObjectAttributeByIndex(d.query.pages, 0).title;
+						
+						if (wiki_extract.match("<p>")) {
+							wiki_text_array = wiki_extract.split("<p>");
+						} else {
+							wiki_text_array.push(wiki_extract);
+						}
 					
 						for(var i = 0; i < wiki_text_array.length; i++) {
 							if (i+1 <= wiki_number_of_paragraphs && i+1 < wiki_text_array.length) {
@@ -3153,7 +3163,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
 					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
 					isTextMedia			=	true;
-					VMM.ExternalAPI.wikipedia.get(m.id, _id);
+					VMM.ExternalAPI.wikipedia.get(m.id, _id, m.lang);
 			// STORIFY
 				} else if (m.type		==	"storify") { 
 					isTextMedia			=	true;
@@ -3273,7 +3283,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "wikipedia";
 			//media.id = d.split("wiki\/")[1];
 			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
-			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
+			media.id = wiki_id.replace(" ", "%20");
+			media.lang = d.split("//")[1].split(".wikipedia")[0];
 			success = true;
 		} else if (d.indexOf('http://') == 0) {
 			media.type = "website";
@@ -7802,17 +7813,29 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					
 					//d.permalink
 					var tt			=	"";
+					var t_name		=	d.content.author.username;
+					var t_nickname	=	"";
+					if (typeof d.content.author.name != 'undefined') {
+						t_name		=	d.content.author.name;
+						t_nickname	=	d.content.author.username + "&nbsp;";
+					}
 					if (typeof d.content.description != 'undefined' && d.content.description != null) {
 						tt			+=	d.content.description;
 					}
-					tt				+=	"<div class='storify'><div class='vcard author'><a class='screen-name url' href='" + d.content.author.permalink + "' target='_blank'>";
+					
+					tt				+=	"<div class='storify'>"
+					//tt				 += " <a href='" + d.content.permalink + "' target='_blank' alt='link to original story' title='link to original story'>" + "<span class='created-at'></span>" + " </a>";
+					
+					tt				+=	"<div class='vcard author'><a class='screen-name url' href='" + d.content.author.permalink + "' target='_blank'>";
+					
 					tt				+=	"<span class='avatar'><img src='" + d.content.author.avatar + "' style='max-width: 32px; max-height: 32px;'></span>"
-					tt				+=	"<span class='fn'>" + d.content.author.username + "</span>";
-					tt				+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+					tt				+=	"<span class='fn'>" + t_name + "</span>";
+					tt				+=	"<span class='nickname'>" + t_nickname + "<span class='thumbnail-inline'></span></span>";
 					tt				+=	"</a>";
 					//tt				+=	"<span class='nickname'>" + d.content.author.stats.stories + " Stories</span>";
 					//tt				+=	"<span class='nickname'>" + d.content.author.stats.subscribers + " Subscribers</span>";
-					tt				+=	"</div></div>";
+					tt				+=	"</div>"
+					tt				+=	"</div>";
 					
 					_data_obj.timeline.text = tt;
 					_data_obj.timeline.asset.media = d.content.thumbnail;
@@ -7901,11 +7924,21 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 						} else if (dd.type == "text") {
 							if (dd.permalink.match("storify")) {
 								is_text = true;
-								var asset_text	=	"<div class='storify'><blockquote><p>" + dd.data.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</p></blockquote>";
+								var d_name		=	d.content.author.username;
+								var d_nickname	=	"";
+								if (typeof dd.attribution.name != 'undefined') {
+									t_name		=	dd.attribution.name;
+									t_nickname	=	dd.attribution.username + "&nbsp;";
+								}
+								
+								var asset_text	=	"<div class='storify'>"
+								asset_text		+=	"<blockquote><p>" + dd.data.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</p></blockquote>";
+								//asset_text		+=	" <a href='" + dd.attribution.href + "' target='_blank' alt='link to author' title='link to author'>" + "<span class='created-at'></span>" + " </a>";
+
 								asset_text		+=	"<div class='vcard author'><a class='screen-name url' href='" + dd.attribution.href + "' target='_blank'>";
 								asset_text		+=	"<span class='avatar'><img src='" + dd.attribution.thumbnail + "' style='max-width: 32px; max-height: 32px;'></span>"
-								asset_text		+=	"<span class='fn'>" + dd.attribution.username + "</span>";
-								asset_text		+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+								asset_text		+=	"<span class='fn'>" + t_name + "</span>";
+								asset_text		+=	"<span class='nickname'>" + t_nickname + "<span class='thumbnail-inline'></span></span>";
 								asset_text		+=	"</a></div></div>";
 								_date.text		=	asset_text;
 								

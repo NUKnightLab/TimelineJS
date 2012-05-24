@@ -296,44 +296,9 @@
 									}
 								}
 							}
-							.twitter, .plain-text-quote {
-								text-align:left;
-								margin-left: auto;
-								margin-right: auto;
-								margin-bottom:@base-space;
-								clear:both;
-								blockquote {
-									//font-size: @base-font;
-									//line-height: @base-line;
-									color:@color-feature-description;
-									p {
-										font-size: 28px;
-										line-height: 36px;
-										margin-bottom: 6px;
-										padding-top: 10px;
-										background-color:@white;
-										color:@color-feature-title;
-										//margin-left:10px;
-									}
-									.quote-mark {
-										color:@color-dark-third;
-									}
-								}
-								.created-at {
-									.icon-twitter();
-									width:24px;
-									height:24px;
-									overflow:hidden;
-									margin-left:@base-space;
-									display:inline-block;
-									float:right;
-									.opacity(25);
-								}
-								.created-at:hover {
-									.opacity(100);
-								}
-								
-							}
+							
+							
+							
 							.wikipedia {
 								font-size: @base-font;
 								line-height: @base-line;
@@ -449,6 +414,54 @@
 						}
 					}
 				}
+				.created-at {
+					width:24px;
+					height:24px;
+					overflow:hidden;
+					margin-left:@base-space/2;
+					margin-top:2px;
+					display:inline-block;
+					float:right;
+					.opacity(25);
+				}
+				.created-at:hover {
+					.opacity(100);
+				}
+				.storify {
+					.created-at {
+						.icon-storify();
+					}
+				}
+				.twitter {
+					.created-at {
+						.icon-twitter();
+					}
+				}
+				.twitter, .plain-text-quote, .storify {
+					text-align:left;
+					margin-left: auto;
+					margin-right: auto;
+					margin-bottom:@base-space;
+					clear:both;
+					blockquote {
+						//font-size: @base-font;
+						//line-height: @base-line;
+						color:@color-feature-description;
+						p {
+							font-size: 28px;
+							line-height: 36px;
+							margin-bottom: 6px;
+							padding-top: 10px;
+							background-color:@white;
+							color:@color-feature-title;
+						}
+						.quote-mark {
+							color:@color-dark-third;
+						}
+					}
+				}
+				
+				
 			}
 			
 			

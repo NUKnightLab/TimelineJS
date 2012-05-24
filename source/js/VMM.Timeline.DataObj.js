@@ -245,17 +245,29 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					
 					//d.permalink
 					var tt			=	"";
+					var t_name		=	d.content.author.username;
+					var t_nickname	=	"";
+					if (typeof d.content.author.name != 'undefined') {
+						t_name		=	d.content.author.name;
+						t_nickname	=	d.content.author.username + "&nbsp;";
+					}
 					if (typeof d.content.description != 'undefined' && d.content.description != null) {
 						tt			+=	d.content.description;
 					}
-					tt				+=	"<div class='storify'><div class='vcard author'><a class='screen-name url' href='" + d.content.author.permalink + "' target='_blank'>";
+					
+					tt				+=	"<div class='storify'>"
+					//tt				 += " <a href='" + d.content.permalink + "' target='_blank' alt='link to original story' title='link to original story'>" + "<span class='created-at'></span>" + " </a>";
+					
+					tt				+=	"<div class='vcard author'><a class='screen-name url' href='" + d.content.author.permalink + "' target='_blank'>";
+					
 					tt				+=	"<span class='avatar'><img src='" + d.content.author.avatar + "' style='max-width: 32px; max-height: 32px;'></span>"
-					tt				+=	"<span class='fn'>" + d.content.author.username + "</span>";
-					tt				+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+					tt				+=	"<span class='fn'>" + t_name + "</span>";
+					tt				+=	"<span class='nickname'>" + t_nickname + "<span class='thumbnail-inline'></span></span>";
 					tt				+=	"</a>";
 					//tt				+=	"<span class='nickname'>" + d.content.author.stats.stories + " Stories</span>";
 					//tt				+=	"<span class='nickname'>" + d.content.author.stats.subscribers + " Subscribers</span>";
-					tt				+=	"</div></div>";
+					tt				+=	"</div>"
+					tt				+=	"</div>";
 					
 					_data_obj.timeline.text = tt;
 					_data_obj.timeline.asset.media = d.content.thumbnail;
@@ -344,11 +356,21 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 						} else if (dd.type == "text") {
 							if (dd.permalink.match("storify")) {
 								is_text = true;
-								var asset_text	=	"<div class='storify'><blockquote><p>" + dd.data.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</p></blockquote>";
+								var d_name		=	d.content.author.username;
+								var d_nickname	=	"";
+								if (typeof dd.attribution.name != 'undefined') {
+									t_name		=	dd.attribution.name;
+									t_nickname	=	dd.attribution.username + "&nbsp;";
+								}
+								
+								var asset_text	=	"<div class='storify'>"
+								asset_text		+=	"<blockquote><p>" + dd.data.text.replace(/<\s*\/?\s*b\s*.*?>/g,"") + "</p></blockquote>";
+								//asset_text		+=	" <a href='" + dd.attribution.href + "' target='_blank' alt='link to author' title='link to author'>" + "<span class='created-at'></span>" + " </a>";
+
 								asset_text		+=	"<div class='vcard author'><a class='screen-name url' href='" + dd.attribution.href + "' target='_blank'>";
 								asset_text		+=	"<span class='avatar'><img src='" + dd.attribution.thumbnail + "' style='max-width: 32px; max-height: 32px;'></span>"
-								asset_text		+=	"<span class='fn'>" + dd.attribution.username + "</span>";
-								asset_text		+=	"<span class='nickname'><div class='thumb-storify-full'></div></span>";
+								asset_text		+=	"<span class='fn'>" + t_name + "</span>";
+								asset_text		+=	"<span class='nickname'>" + t_nickname + "<span class='thumbnail-inline'></span></span>";
 								asset_text		+=	"</a></div></div>";
 								_date.text		=	asset_text;
 								
