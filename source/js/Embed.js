@@ -56,6 +56,7 @@
 			}
 		},
 		embed_config = {
+			version:	timeline_js_version,
 			debug:		false,
 			embed:		true,
 			width:		'100%',
@@ -192,7 +193,7 @@
 	if (!ready.jquery) {
 		LazyLoad.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onloaded_jquery);
 	} else {
-		onJQueryLoaded();
+		onloaded_jquery();
 	}
 	
 	/* On Loaded
