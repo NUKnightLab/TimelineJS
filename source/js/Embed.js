@@ -56,6 +56,7 @@
 			}
 		},
 		embed_config = {
+			debug:		false,
 			embed:		true,
 			width:		'100%',
 			height:		'650',
@@ -99,6 +100,11 @@
 		}
 	}
 	
+	// Check for old installs still using the old method of language
+	if (embed_config.js.match("locale")) {
+		embed_config.lang = embed_config.js.split("locale/")[1].replace(".js", "");
+		embed_config.js = path.js + 'timeline-min.js?'+timeline_js_version;
+	}
 	/* PREPARE
 	================================================== */
 	timeline_config = embed_config;
@@ -270,6 +276,7 @@
 	}
 	
 	function buildTimeline() {
+		VMM.debug = embed_config.debug;
 		timelinejs = new VMM.Timeline();
 		timelinejs.init(embed_config.source);
 		if (isCDN) {
