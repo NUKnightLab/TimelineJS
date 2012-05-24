@@ -71,7 +71,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "wikipedia";
 			//media.id = d.split("wiki\/")[1];
 			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
-			media.id = VMM.Util.toTitleCase(wiki_id).replace(" ", "%20");
+			media.id = wiki_id.replace(" ", "%20");
+			media.lang = d.split("//")[1].split(".wikipedia")[0];
 			success = true;
 		} else if (d.indexOf('http://') == 0) {
 			media.type = "website";

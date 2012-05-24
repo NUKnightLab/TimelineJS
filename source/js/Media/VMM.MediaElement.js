@@ -149,7 +149,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
 					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
 					isTextMedia			=	true;
-					VMM.ExternalAPI.wikipedia.get(m.id, _id);
+					VMM.ExternalAPI.wikipedia.get(m.id, _id, m.lang);
 			// STORIFY
 				} else if (m.type		==	"storify") { 
 					isTextMedia			=	true;
