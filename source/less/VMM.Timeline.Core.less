@@ -141,6 +141,8 @@
 		color:@color-theme-dark;
 		text-decoration: underline;
 	}
+	
+	
 	.vcard {
 		float:right;
 		margin-bottom:@base-space;
@@ -165,7 +167,7 @@
 
 		}
 		.nickname {
-			margin-top:3px;
+			margin-top:1px;
 			display:block;
 			color: @color-dark-third;
 		}
@@ -185,35 +187,32 @@
 		}
 	}
 	
-	
-	
-	
-	
 	.thumbnail {
 		width:@base-thumb;
 		height:@base-thumb;
 		overflow:hidden;
 		float:left;
+		margin:0;
 		margin-right:1px;
 		margin-top:6px;
-		//margin-left:6px;
-		/*
-		border: 0px solid @color-line;
-		border-bottom-width: 1px;
-		border-right-width: 1px;
-		//background:#E9E9E9;
-		-webkit-border-bottom-right-radius:3px;
-		   -moz-border-bottom-right-radius:3px;
-		        border-bottom-right-radius:3px;
-		-webkit-border-top-left-radius:3px;
-		   -moz-border-top-left-radius:3px;
-		        border-top-left-radius:3px;
 		
-		-moz-box-shadow: 1px 1px 0 @color-base;
-		-webkit-box-shadow: 1px 1px 0 @color-base;
-		box-shadow: 1px 1px 0 @color-base;
-		*/
+		//Fixes for bootstrap sites
+		border:0;
+		padding:0;
+	    -webkit-border-radius: 0;
+	       -moz-border-radius: 0;
+	            border-radius: 0;
+	    -webkit-box-shadow: none;
+	       -moz-box-shadow: none;
+	            box-shadow: none;
 	}
+	// fixes for bootstrap sites
+	a.thumbnail:hover {
+		-webkit-box-shadow: none;
+		   -moz-box-shadow: none;
+		        box-shadow: none;
+	}
+	
 	.thumbnail.thumb-plaintext {
 		.icon-plaintext();
 	}
@@ -261,6 +260,8 @@
 		.icon-storify();
 	}
 	.thumb-storify-full {
+		//display:inline-block;
+		height:12px;
 		.icon-storify-full();
 	}
 	thumbnail.thumb-instagram {
@@ -269,6 +270,29 @@
 	thumbnail.thumb-instagram-full {
 		.icon-instagram-full();
 	}
+	
+	.thumbnail-inline {
+		width:16px;
+		height:14px;
+		overflow:hidden;
+		display:inline-block;
+		margin-right:1px;
+		margin-left:3px;
+		margin-top:2px;
+		//float:left;
+		.opacity(25);
+	}
+	.twitter {
+		.thumbnail-inline {
+			.icon-twitter-inline();
+		}
+	}
+	.storify {
+		.thumbnail-inline {
+			.icon-storify-inline();
+		}
+	}
+
 	
 	
 	.zFront {
