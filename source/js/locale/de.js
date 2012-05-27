@@ -7,10 +7,10 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "de"
 		},
 		date: {
-			month: ["Jänner", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
-			month_abbr: ["Jän.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
+			month: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+			month_abbr: ["Jan.", "Feb.", "März", "Apr.", "Mai", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dez."],
 			day: ["Sonntag","Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
-			day_abbr: ["So.","Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."],
+			day_abbr: ["So.","Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."]
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -21,7 +21,7 @@ if(typeof VMM != 'undefined') {
 			time_no_seconds_short: "HH:MM",
 			time_no_seconds_small_date: "HH:MM'<br/><small>'d. mmmm yyyy'</small>'",
 			full_long: "dddd',' d. mmm yyyy 'um' HH:MM",
-			full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'",
+			full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Chronologie wird geladen...",
