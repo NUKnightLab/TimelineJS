@@ -129,11 +129,11 @@ if(typeof VMM != 'undefined') {
 	
 	// ADD ELEMENT AND RETURN IT
 	VMM.appendAndGetElement = function(append_to_element, tag, cName, content) {
-		var e;
-		var _tag = "<div>";
-		var _class = "";
-		var _content = "";
-
+		var e,
+			_tag		= "<div>",
+			_class		= "",
+			_content	= "",
+			_id			= "";
 		
 		if (tag != null && tag != "") {
 			_tag = tag;
@@ -399,11 +399,31 @@ if(typeof VMM != 'undefined') {
 			}
 		},
 		
-		animate: function(element, duration, ease, att, callback_function) {
+		delay_animate: function(delay, element, duration, ease, att, callback_function) {
+			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+				var _tdd		= Math.round((duration/1500)*10)/10,
+					__duration	= _tdd + 's';
+					
+				VMM.Lib.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-moz-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-o-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, '-ms-transition', 'all '+ __duration + ' ease');
+				VMM.Lib.css(element, 'transition', 'all '+ __duration + ' ease');
+				VMM.Lib.cssmultiple(element, _att);
+			} else {
+				if( typeof( jQuery ) != 'undefined' ){
+					jQuery(element).delay(delay).animate(att, {duration:duration, easing:ease} );
+				}
+			}
 			
-			var _ease = "easein";
-			var _duration = 1000;
-			var _att = {};
+		},
+		
+		animate: function(element, duration, ease, att, que, callback_function) {
+			
+			var _ease		= "easein",
+				_que		= false,
+				_duration	= 1000,
+				_att		= {};
 			
 			if (duration != null) {
 				if (duration < 1) {
@@ -418,6 +438,11 @@ if(typeof VMM != 'undefined') {
 				_ease = ease;
 			}
 			
+			if (que != null && que != "") {
+				_que = que;
+			}
+			
+			
 			if (att != null) {
 				_att = att
 			} else {
@@ -427,8 +452,9 @@ if(typeof VMM != 'undefined') {
 			
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
 				
-				var _tdd = Math.round((_duration/1500)*10)/10
-				var __duration = _tdd + 's';
+				var _tdd		= Math.round((_duration/1500)*10)/10,
+					__duration	= _tdd + 's';
+					
 				VMM.Lib.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
 				VMM.Lib.css(element, '-moz-transition', 'all '+ __duration + ' ease');
 				VMM.Lib.css(element, '-o-transition', 'all '+ __duration + ' ease');
@@ -450,9 +476,9 @@ if(typeof VMM != 'undefined') {
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
 					if (callback_function != null && callback_function != "") {
-						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
+						jQuery(element).animate(_att, {queue:_que, duration:_duration, easing:_ease, complete:callback_function} );
 					} else {
-						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
+						jQuery(element).animate(_att, {queue:_que, duration:_duration, easing:_ease} );
 					}
 				}
 			}
