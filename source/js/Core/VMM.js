@@ -155,6 +155,13 @@ if (typeof VMM == 'undefined') {
 			que:			[]
 		},
 		
+		googleplus: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		wikipedia: {
 			active:			false,
 			array:			[],
