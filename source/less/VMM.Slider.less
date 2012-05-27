@@ -202,7 +202,6 @@
 							    -ms-hyphens:auto;
 							        hyphens:auto;
 							word-wrap:break-word;
-							
 						}
 					}
 				}
@@ -269,8 +268,6 @@
 								right: 10px;
 								left: auto;
 							}
-							
-							
 							span.messege {
 								display:block;
 								vertical-align:middle;
@@ -296,9 +293,6 @@
 									}
 								}
 							}
-							
-							
-							
 							.wikipedia {
 								font-size: @base-font;
 								line-height: @base-line;
@@ -437,7 +431,87 @@
 						.icon-twitter();
 					}
 				}
-				.twitter, .plain-text-quote, .storify {
+				.googleplus {
+					.googleplus-content {
+						font-size: 13px;
+						line-height: 19px;
+						
+						margin-bottom: 6px;
+						padding-top: 10px;
+						background-color:@white;
+						color: @color-feature-description;
+						p {
+							font-size: 13px;
+							line-height: 19px;
+						}
+						.googleplus-title {
+							font-size: @base-font-large;
+							line-height: @base-line-large;
+							margin-bottom: 6px;
+							padding-top: 10px;
+							background-color:@white;
+							color:@color-feature-title;
+						}
+						.googleplus-annotation {
+							font-size: @base-font;
+							line-height: @base-line;
+							color: @color-feature-title;
+							border-bottom: 1px solid @color-dark-fifth;
+							padding-bottom: @base-space/2;
+							margin-bottom: @base-space/2;
+						}
+						.googleplus-attachments {
+							border-top: 1px solid @color-dark-fifth;
+							padding-top: @base-space;
+							margin-top: @base-space;
+							border-bottom: 1px solid @color-dark-fifth;
+							padding-bottom: @base-space;
+							margin-bottom: @base-space;
+							.clearfix();
+							h5 {
+								margin-bottom:5px;
+							}
+							a:hover {
+								text-decoration: none;
+								h5 {
+									text-decoration: underline;
+								}
+							}
+							div {
+								width: 50%;
+								padding-left: @base-space;
+								display:inline-block;
+							}
+
+							p {
+								.text-font(@base-font-small);
+								margin-bottom: 5px;
+								//float:left;
+							}
+							img {
+								float:left;
+								display: block;
+								bottom: 0;
+								left: 0;
+								margin: auto;
+								position: relative;
+								right: 0;
+								top: 0;
+								width: 40%;
+								//display:inline-block;
+							}
+							
+						}
+					}
+					.proflinkPrefix {
+						color:@color-theme;
+					}
+					.created-at {
+						.icon-googleplus();
+					}
+				}
+				
+				.twitter, .plain-text-quote, .storify, .googleplus {
 					text-align:left;
 					margin-left: auto;
 					margin-right: auto;
@@ -448,8 +522,8 @@
 						//line-height: @base-line;
 						color:@color-feature-description;
 						p {
-							font-size: 28px;
-							line-height: 36px;
+							font-size: @base-font-large;
+							line-height: @base-line-large;
 							margin-bottom: 6px;
 							padding-top: 10px;
 							background-color:@white;
@@ -540,9 +614,10 @@
 						
 					}
 				}
-				.twitter, .wikipedia {
+				.twitter, .wikipedia, .googleplus {
 					max-width:70%;
 				}
+				
 			}
 		}
 	}

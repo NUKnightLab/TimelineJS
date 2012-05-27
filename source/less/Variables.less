@@ -50,11 +50,16 @@
 
 /* BASE SIZES
 ================================================== */
-@base-font: 					15px;
-@base-line: 					20px;
-@base-space: 					15px;
 @base-font-small: 				11px;
+@base-font: 					15px;
+@base-font-large:				28px;
+
+@base-line: 					20px;
+@base-line-large: 				36px;
+
+@base-space: 					15px;
 @base-thumb: 					24px;
+
 
 /* FEATURE SIZES
 ================================================== */
@@ -90,4 +95,15 @@
 	font-size: @fontsize;
 	line-height: round((@fontsize/100) * 130);
 }
+.clearfix() {
+  *zoom: 1;
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+  }
+  &:after {
+    clear: both;
+  }
+} 
 
