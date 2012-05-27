@@ -18,6 +18,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.googledocs.active) {
 				VMM.ExternalAPI.googledocs.pushQue();
 			}
+			if (VMM.master_config.googleplus.active) {
+				VMM.ExternalAPI.googleplus.pushQue();
+			}
 			if (VMM.master_config.wikipedia.active) {
 				VMM.ExternalAPI.wikipedia.pushQue();
 			}
@@ -211,6 +214,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				VMM.attachElement("#twitter_"+id.toString(), twit );
+				VMM.attachElement("#text_thumb_"+id.toString(), d.text );
 				
 			},
 			
@@ -220,9 +224,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		googlemaps: {
 			
 			get: function(url, id) {
-				var timer;
-				var map_vars = VMM.Util.getUrlVars(url);
-				var api_key;
+				var timer, api_key, map_vars;
+				
+				map_vars = VMM.Util.getUrlVars(url);
 				
 				if (VMM.master_config.Timeline.api_keys.google != "") {
 					api_key = VMM.master_config.Timeline.api_keys.google;
@@ -476,9 +480,121 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
 				}
+			}
+		},
+		
+		googleplus: {
+			
+			get: function(user, activity) {
+				var api_key, gplus;
+				
+				
+				var gplus = {user: user, activity: activity};
+				VMM.master_config.googleplus.que.push(gplus);
+				VMM.master_config.googleplus.active = true;
 			},
 			
+			create: function(gplus) {
+				var mediaElem = "", api_key = "", gperson_api_url, gactivity_api_url, g_activity = "", g_content = "", g_attachments = ""; 
+				
+				if (VMM.master_config.Timeline.api_keys.google != "") {
+					api_key = VMM.master_config.Timeline.api_keys.google;
+				} else {
+					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.google, VMM.master_config.vp, 256);
+				}
+				
+				gperson_api_url = "https://www.googleapis.com/plus/v1/people/" + gplus.user + "/activities/public?alt=json&maxResults=100&fields=items(id,url)&key=" + api_key;
+				
+				//mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + gplus.url + "&amp;embedded=true'></iframe>";
+				mediaElem = "GOOGLE PLUS API CALL";
+				
+				VMM.getJSON(gperson_api_url, function(p_data) {
+					for(var i = 0; i < p_data.items.length; i++) {
+						trace("loop");
+						if (p_data.items[i].url.split("posts/")[1] == gplus.activity) {
+							trace("FOUND IT!!");
+							
+							g_activity = p_data.items[i].id;
+							gactivity_api_url = "https://www.googleapis.com/plus/v1/activities/" + g_activity + "?alt=json&key=" + api_key;
+							
+							VMM.getJSON(gactivity_api_url, function(a_data) {
+								trace(a_data);
+								//a_data.url
+								//a_data.image.url
+								//a_data.actor.displayName
+								//a_data.provider.title
+								//a_data.object.content
+								
+								//g_content		+=	"<h4>" + a_data.title + "</h4>";
+								
+								if (typeof a_data.annotation != 'undefined') {
+									g_content	+=	"<div class='googleplus-annotation'>'" + a_data.annotation + "</div>";
+									g_content	+=	a_data.object.content;
+								} else {
+									g_content	+=	a_data.object.content;
+								}
+								
+								if (typeof a_data.object.attachments != 'undefined') {
+									
+									//g_attachments	+=	"<div class='googleplus-attachemnts'>";
+									
+									for(var k = 0; k < a_data.object.attachments.length; k++) {
+										if (a_data.object.attachments[k].objectType == "photo") {
+											g_attachments	=	"<a href='" + a_data.object.url + "' target='_blank'>" + "<img src='" + a_data.object.attachments[k].image.url + "' class='article-thumb'></a>" + g_attachments;
+										} else if (a_data.object.attachments[k].objectType == "video") {
+											g_attachments	=	"<img src='" + a_data.object.attachments[k].image.url + "' class='article-thumb'>" + g_attachments;
+											g_attachments	+=	"<div>";
+											g_attachments	+=	"<a href='" + a_data.object.attachments[k].url + "' target='_blank'>"
+											g_attachments	+=	"<h5>" + a_data.object.attachments[k].displayName + "</h5>";
+											//g_attachments	+=	"<p>" + a_data.object.attachments[k].content + "</p>";
+											g_attachments	+=	"</a>";
+											g_attachments	+=	"</div>";
+										} else if (a_data.object.attachments[k].objectType == "article") {
+											g_attachments	+=	"<div>";
+											g_attachments	+=	"<a href='" + a_data.object.attachments[k].url + "' target='_blank'>"
+											g_attachments	+=	"<h5>" + a_data.object.attachments[k].displayName + "</h5>";
+											g_attachments	+=	"<p>" + a_data.object.attachments[k].content + "</p>";
+											g_attachments	+=	"</a>";
+											g_attachments	+=	"</div>";
+										}
+										
+										trace(a_data.object.attachments[k]);
+									}
+									
+									g_attachments	=	"<div class='googleplus-attachments'>" + g_attachments + "</div>";
+								}
+								
+								//mediaElem		=	"<div class='googleplus'>";
+								mediaElem		=	"<div class='googleplus-content'>" + g_content + g_attachments + "</div>";
+
+								mediaElem		+=	"<div class='vcard author'><a class='screen-name url' href='" + a_data.url + "' target='_blank'>";
+								mediaElem		+=	"<span class='avatar'><img src='" + a_data.actor.image.url + "' style='max-width: 32px; max-height: 32px;'></span>"
+								mediaElem		+=	"<span class='fn'>" + a_data.actor.displayName + "</span>";
+								mediaElem		+=	"<span class='nickname'><span class='thumbnail-inline'></span></span>";
+								mediaElem		+=	"</a></div>";
+								
+								VMM.attachElement("#googleplus_" + gplus.activity, mediaElem);
+								
+								
+							});
+							
+							break;
+						}
+					}
+					
+					
+					
+				});
+				
+				
+			},
 			
+			pushQue: function() {
+				for(var i = 0; i < VMM.master_config.googleplus.que.length; i++) {
+					VMM.ExternalAPI.googleplus.create(VMM.master_config.googleplus.que[i]);
+				}
+				VMM.master_config.googleplus.que = [];
+			}
 			
 		},
 		
