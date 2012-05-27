@@ -279,23 +279,44 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (skip) {
 				preloadTimeOutSlides();
 			} else {
+				for(var k = 0; k < slides.length; k++) {
+					slides[k].clearTimers();
+				}
 				timer = setTimeout(preloadTimeOutSlides, config.duration);
+				
 			}
 		}
 		
 		var preloadTimeOutSlides = function() {
+			for(var k = 0; k < slides.length; k++) {
+				slides[k].enqueue = true;
+			}
+			
 			for(var j = 0; j < config.preload; j++) {
 				if ( !((current_slide + j) > slides.length - 1)) {
 					slides[current_slide + j].show();
+					slides[current_slide + j].enqueue = false;
 				}
 				if ( !( (current_slide - j) < 0 ) ) {
 					slides[current_slide - j].show();
+					slides[current_slide - j].enqueue = false;
+				}
+			}
+			
+			if (slides.length > 50) {
+				for(var i = 0; i < slides.length; i++) {
+					if (slides[i].enqueue) {
+						slides[i].hide();
+					}
 				}
 			}
 			
 			sizeSlides();
 		}
 		
+		var sizeSlide = function(slide_id) {
+			
+		}
 		/* SIZE SLIDES
 		================================================== */
 		var sizeSlides = function() {
@@ -402,10 +423,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// FIX FOR NON-WEBKIT BROWSERS
 			VMM.Lib.css(	layout_text_media + "img", 					"max-width", 	mediasize.text_media.width );
-			VMM.Lib.css(	layout_text_media + ".twitter .avatar img", "max-width", 	32 );
-			VMM.Lib.css(	layout_text_media + ".twitter .avatar img", "max-height", 	32 );
-			VMM.Lib.css(	layout_media + 		".twitter .avatar img", "max-width", 	32 );
-			VMM.Lib.css(	layout_media + 		".twitter .avatar img", "max-height", 	32 );
+			VMM.Lib.css(	layout_text_media + ".avatar img", "max-width", 			32 );
+			VMM.Lib.css(	layout_text_media + ".avatar img", "max-height", 			32 );
+			VMM.Lib.css(	layout_media + 		".avatar img", "max-width", 			32 );
+			VMM.Lib.css(	layout_media + 		".avatar img", "max-height", 			32 );
+			
+			VMM.Lib.css(	layout_text_media + ".article-thumb", "max-width", 			"50%" );
+			//VMM.Lib.css(	layout_text_media + ".article-thumb", "max-height", 		100 );
+			VMM.Lib.css(	layout_media + 		".article-thumb", "max-width", 			200 );
+			//VMM.Lib.css(	layout_media + 		".article-thumb", "max-height", 		100 );
+			
 			
 			// IFRAME FULL SIZE VIDEO
 			VMM.Lib.width(	layout_text_media + ".media-frame", 						mediasize.text_media.video.width);
@@ -434,6 +461,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// IE8 NEEDS THIS
 			VMM.Lib.width(	layout_media + 		".wikipedia", 							mediasize.media.width);
 			VMM.Lib.width(	layout_media + 		".twitter", 							mediasize.media.width);
+			VMM.Lib.width(	layout_media + 		".plain-text-quote", 					mediasize.media.width);
+			VMM.Lib.width(	layout_media + 		".plain-text", 							mediasize.media.width);
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
 			for(var i = 0; i < slides.length; i++) {

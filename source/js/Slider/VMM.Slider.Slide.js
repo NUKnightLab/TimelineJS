@@ -1,24 +1,41 @@
 /* Slider Slide 
 ================================================== */
 if (typeof VMM.Slider != 'undefined') {
-	// VMM.Slider.Slide(element, data)
 	VMM.Slider.Slide = function(d, _parent) {
 		
-		var data		=	d;
-		var slide		=	{};
-		var media		=	"";
-		var loaded		=	false;
-		var preloaded	=	false;
-		var is_skinny	=	false;
-		var element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
-		var c = {slide:"", text: "", media: "", media_element: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
-		var $media, $text, $slide, $wrap;
+		var $media, $text, $slide, $wrap, element, c,
+			data		= d,
+			slide		= {},
+			element		= "",
+			media		= "",
+			loaded		= false,
+			preloaded	= false,
+			is_skinny	= false,
+			_enqueue	= true,
+			_removeque	= false,
+			_id			= "slide_",
+			timer		= {pushque:"", render:"", relayout:"", remove:"", skinny:false},
+			times		= {pushque:500, render:100, relayout:100, remove:30000};
+		
+		_id				= _id + data.uniqueid;
+		this.enqueue	= _enqueue;
+		this.id			= _id;
+		
+		element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
+		c = {slide:"", text: "", media: "", media_element: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
+		
 		/* PUBLIC
 		================================================== */
 		this.show = function(skinny) {
+			_enqueue = false;
+			timer.skinny = skinny;
+			_removeque = false;
+			clearTimeout(timer.remove);
+			
 			if (!loaded) {
 				if (preloaded) {
-					reLayout(skinny);
+					clearTimeout(timer.relayout);
+					timer.relayout = setTimeout(reloadLayout, times.relayout);
 				} else {
 					render(skinny);
 				}
@@ -26,9 +43,18 @@ if (typeof VMM.Slider != 'undefined') {
 		};
 		
 		this.hide = function() {
-			if (loaded) {
-				removeSlide();
+			if (loaded && !_removeque) {
+				_removeque = true;
+				clearTimeout(timer.remove);
+				timer.remove = setTimeout(removeSlide, times.remove);
 			}
+		};
+		
+		this.clearTimers = function() {
+			//clearTimeout(timer.remove);
+			clearTimeout(timer.relayout);
+			clearTimeout(timer.pushque);
+			clearTimeout(timer.render);
 		};
 		
 		this.layout = function(skinny) {
@@ -86,39 +112,68 @@ if (typeof VMM.Slider != 'undefined') {
 		/* PRIVATE
 		================================================== */
 		var render = function(skinny) {
-			buildSlide(skinny);
+			trace("RENDER " + _id);
+			
 			loaded = true;
 			preloaded = true;
-			var timer = setTimeout(VMM.ExternalAPI.pushQues, 500);
+			timer.skinny = skinny;
+			
+			buildSlide();
+			
+			clearTimeout(timer.pushque);
+			clearTimeout(timer.render);
+			timer.pushque = setTimeout(VMM.ExternalAPI.pushQues, times.pushque);
+			
 		};
 		
 		var removeSlide = function() {
 			//VMM.attachElement(element, "");
+			trace("REMOVE SLIDE TIMER FINISHED");
 			loaded = false;
-		}
-		
-		var reLayout = function(skinny) {
+			VMM.Lib.detach($text);
+			VMM.Lib.detach($media);
 			
+		};
+		
+		var reloadLayout = function() {
+			loaded = true;
+			reLayout(timer.skinny, true);
+		};
+		
+		var reLayout = function(skinny, reload) {
 			if (c.has.text)	{
 				if (skinny) {
-					if (!is_skinny) {
+					if (!is_skinny || reload) {
 						VMM.Lib.removeClass($slide, "pad-left");
 						VMM.Lib.detach($text);
-						VMM.Lib.prepend($slide, $text);
+						VMM.Lib.detach($media);
+						VMM.Lib.append($slide, $text);
+						VMM.Lib.append($slide, $media);
 						is_skinny = true;
-					}
+					} 
 				} else {
-					if (is_skinny) {
+					if (is_skinny || reload) {
 						VMM.Lib.addClass($slide, "pad-left");
 						VMM.Lib.detach($text);
+						VMM.Lib.detach($media);
+						VMM.Lib.append($slide, $media);
 						VMM.Lib.append($slide, $text);
-						is_skinny = false
-					}
+						is_skinny = false;
+						
+					} 
 				}
-			} 
+			} else if (reload) {
+				if (c.has.headline) {
+					VMM.Lib.detach($text);
+					VMM.Lib.append($slide, $text);
+				}
+				VMM.Lib.detach($media);
+				VMM.Lib.append($slide, $media);
+			}
 		}
 		
-		var buildSlide = function(skinny) {
+		var buildSlide = function() {
+			trace("BUILDSLIDE");
 			$wrap	=	VMM.appendAndGetElement(element, "<div>", "content");
 			$slide	=	VMM.appendAndGetElement($wrap, "<div>");
 			
@@ -141,7 +196,7 @@ if (typeof VMM.Slider != 'undefined') {
 			/* HEADLINE
 			================================================== */
 			if (data.headline != null && data.headline != "") {
-				c.has.headline		=	true;
+				c.has.headline	=	true;
 				if (data.type == "start") {
 					c.text		+=	VMM.createElement("h2", VMM.Util.linkify_with_twitter(data.headline, "_blank"), "start");
 				} else { 
@@ -164,6 +219,12 @@ if (typeof VMM.Slider != 'undefined') {
 				
 			}
 			
+			/* SLUG
+			================================================== */
+			if (data.needs_slug) {
+				
+			}
+			
 			/* MEDIA
 			================================================== */
 			if (data.asset != null && data.asset != "") {
@@ -179,7 +240,7 @@ if (typeof VMM.Slider != 'undefined') {
 			if (c.has.media){ c.layout		+=	"-media"	};
 
 			if (c.has.text)	{
-				if (skinny) {
+				if (timer.skinny) {
 					VMM.Lib.addClass($slide, c.layout);
 					is_skinny = true;
 				} else {
