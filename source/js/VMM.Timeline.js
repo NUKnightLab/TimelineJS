@@ -68,7 +68,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.45mem";
+		version = 					"1.48";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -111,6 +111,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				interval_width: 	200,
 				density: 			4,
 				minor_width: 		0,
+				minor_left:			0,
 				multiplier: {
 					current: 		6,
 					min: 			.1,
@@ -448,7 +449,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					
 					if (!isNaN(_date.startdate)) {
 						
-						_date.uniqueid = (data.date[i].startDate).toString() + "-" + i.toString();
 					
 						// END DATE
 						if (data.date[i].endDate != null && data.date[i].endDate != "") {
@@ -460,17 +460,26 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						} else {
 							_date.enddate = _date.startdate;
 						}
+						
+						_date.needs_slug = false;
+						
+						if (data.date[i].headline == "") {
+							if (data.date[i].slug != null && data.date[i].slug != "") {
+								_date.needs_slug = true;
+							}
+						}
 					
-						_date.title				=	data.date[i].headline;
-						_date.headline			=	data.date[i].headline;
-						_date.type				=	data.date[i].type;
-						_date.date				=	VMM.Date.prettyDate(_date.startdate);
-						_date.asset				=	data.date[i].asset;
-						_date.fulldate			=	_date.startdate.getTime();
-						_date.text				=	data.date[i].text;
-						_date.content			=	"";
-						_date.tag				=	data.date[i].tag;
-						_date.slug				=	data.date[i].slug;
+						_date.title				= data.date[i].headline;
+						_date.headline			= data.date[i].headline;
+						_date.type				= data.date[i].type;
+						_date.date				= VMM.Date.prettyDate(_date.startdate);
+						_date.asset				= data.date[i].asset;
+						_date.fulldate			= _date.startdate.getTime();
+						_date.text				= data.date[i].text;
+						_date.content			= "";
+						_date.tag				= data.date[i].tag;
+						_date.slug				= data.date[i].slug;
+						_date.uniqueid			= VMM.Util.unique_ID(7);
 						
 						_dates.push(_date);
 					} 
@@ -481,9 +490,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* CUSTOM SORT
 			================================================== */
-			_dates.sort(function(a, b){
-				return a.fulldate - b.fulldate
-			});
+			if (data.type != "storify") {
+				_dates.sort(function(a, b){
+					return a.fulldate - b.fulldate
+				});
+			}
 			
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
@@ -492,7 +503,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				var _date = {}, td_num = 0, td;
 				
 				td = _dates[0].startdate;
-				_date.startdate =	new Date(_dates[0].startdate);
+				_date.startdate = new Date(_dates[0].startdate);
 				
 				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
 					// trace("YEAR ONLY");
@@ -511,28 +522,32 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate.setMinutes(td.getMinutes() - 1);
 				}
 				
-				_date.uniqueid	=	VMM.Util.unique_ID(5);
-				_date.enddate	=	_date.startdate;
-				_date.title		=	data.headline;
-				_date.headline	=	data.headline;
-				_date.text		=	data.text;
-				_date.type		=	"start";
-				_date.date		=	VMM.Date.prettyDate(data.startDate);
-				_date.asset		=	data.asset;
-				_date.fulldate	=	_date.startdate.getTime();
+				_date.uniqueid		= VMM.Util.unique_ID(7);
+				_date.enddate		= _date.startdate;
+				_date.title			= data.headline;
+				_date.headline		= data.headline;
+				_date.text			= data.text;
+				_date.type			= "start";
+				_date.date			= VMM.Date.prettyDate(data.startDate);
+				_date.asset			= data.asset;
+				_date.slug			= false;
+				_date.needs_slug	= false;
+				_date.fulldate		= _date.startdate.getTime();
 				
 				if (config.embed) {
 					VMM.fireEvent(global, config.events.headline, _date.headline);
 				}
 				
-				_dates.push(_date);
+				_dates.unshift(_date);
 			}
 			
 			/* CUSTOM SORT
 			================================================== */
-			_dates.sort(function(a, b){
-				return a.fulldate - b.fulldate
-			});
+			if (data.type != "storify") {
+				_dates.sort(function(a, b){
+					return a.fulldate - b.fulldate
+				});
+			}
 			
 			onDatesProcessed();
 		}
