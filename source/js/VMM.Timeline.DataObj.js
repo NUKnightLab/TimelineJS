@@ -242,7 +242,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					_data_obj.timeline.startDate	= 	new Date(d.content.date.created);;
 					_data_obj.timeline.headline		= 	d.content.title;
 					
-					
+					trace(d);
 					//d.permalink
 					var tt			=	"";
 					var t_name		=	d.content.author.username;
