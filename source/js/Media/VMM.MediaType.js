@@ -49,6 +49,17 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "google-map";
 		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
 			success = true;
+		} else if (d.match("plus.google")) {
+			media.type = "googleplus";
+		    media.id = d.split("/posts/")[1];
+			//https://plus.google.com/u/0/112374836634096795698/posts/bRJSvCb5mUU
+			//https://plus.google.com/107096716333816995401/posts/J5iMpEDHWNL
+			if (d.split("/posts/")[0].match("u/0/")) {
+				media.user = d.split("u/0/")[1].split("/posts")[0];
+			} else {
+				media.user = d.split("google.com/")[1].split("/posts/")[0];
+			}
+			success = true;
 		} else if (d.match("flickr.com/photos")) {
 			media.type = "flickr";
 			media.id = d.split("photos\/")[1].split("/")[1];

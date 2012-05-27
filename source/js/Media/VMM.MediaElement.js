@@ -8,19 +8,22 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			return this;
 		},
 		
-		thumbnail: function(data, w, h) {
-			_w = 16;
-			_h = 24;
+		thumbnail: function(data, w, h, uid) {
+			var _w		= 16,
+				_h		= 24,
+				_uid	= "";
+				
 			if (w != null && w != "") {_w = w};
 			if (h != null && h != "") {_h = h};
+			if (uid != null && uid != "") {_uid = uid};
 			
 			if (data.media != null && data.media != "") {
-				_valid				=	true;
-				var mediaElem		=	"";
-				var m				=	VMM.MediaType(data.media); //returns an object with .type and .id
+				var _valid		= true,
+					mediaElem	= "",
+					m			= VMM.MediaType(data.media); //returns an object with .type and .id
+						
 				// CREATE MEDIA CODE 
 				if (m.type == "image") {
-					//mediaElem		=	"<div class='thumbnail thumb-photo'><img src='" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
@@ -53,6 +56,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type	==	"google-map") {
 					mediaElem		=	"<div class='thumbnail thumb-map'></div>";
 					return mediaElem;
+				} else if (m.type		==	"googleplus") {
+					mediaElem		=	"<div class='thumbnail thumb-googleplus'></div>";
+					return mediaElem;
 				} else if (m.type	==	"wikipedia") {
 					mediaElem		=	"<div class='thumbnail thumb-wikipedia'></div>";
 					return mediaElem;
@@ -64,14 +70,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					return mediaElem;
 				} else if (m.type	==	"unknown") {
 					if (m.id.match("blockquote")) {
-						mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
+						mediaElem	=	"<div class='thumbnail thumb-quote'></div>";
 					} else {
-						mediaElem		=	"<div class='thumbnail thumb-plaintext'></div>";
+						mediaElem	=	"<div class='thumbnail thumb-plaintext'></div>";
 					}
 					return mediaElem;
 				} else if (m.type	==	"website") {
 					mediaElem		=	"<div class='thumbnail thumb-website'></div>";
-					//mediaElem		=	"<div class='thumbnail'><img src='http://api.snapito.com/free/sc?url=" + m.id + "' width='" + _w + "px' height='" + _h + "px'></div>";
 					return mediaElem;
 				} else {
 					mediaElem = "<div class='thumbnail thumb-plaintext'></div>";
@@ -81,13 +86,14 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 		},
 		
 		create: function(data, secondary) {
-			//$mediacontainer				=	element;
-			var _valid					=	false;
+			var _valid = false,
+				loading_messege			=	"<span class='messege'><p>" + VMM.master_config.language.messages.loading + "</p></span>";
 			
 			if (data.media != null && data.media != "") {
-				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false;
-				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
-				_valid					=	true;
+				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false, m;
+				
+				m = VMM.MediaType(data.media); //returns an object with .type and .id
+				_valid = true;
 				
 			// CREDIT
 				if (data.credit != null && data.credit != "") {
@@ -112,11 +118,11 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'>" + loading_messege + "</div>";
 					VMM.ExternalAPI.googledocs.get(m.id, _id);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'>" + loading_messege + "</div></div>";
 					VMM.ExternalAPI.youtube.get(m.id);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
@@ -127,7 +133,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
+					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'>" + loading_messege + "</div>";
 					isTextMedia			=	true;
 					VMM.ExternalAPI.twitter.prettyHTML(m.id, secondary);
 			// TWITTER
@@ -137,17 +143,23 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// SOUNDCLOUD
 				} else if (m.type		==	"soundcloud") {
 					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'>" + loading_messege + "</div>";
 					VMM.ExternalAPI.soundcloud.get(m.id, _id);
 			// GOOGLE MAPS
 				} else if (m.type		==	"google-map") {
 					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
+					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'>" + loading_messege + "</div>";
 					VMM.ExternalAPI.googlemaps.get(m.id, _id);
+			// GOOGLE PLUS
+				} else if (m.type		==	"googleplus") {
+					_id					=	"googleplus_" + m.id;
+					mediaElem			=	"<div class='googleplus' id='" + _id + "'>" + loading_messege + "</div>";
+					isTextMedia			=	true;
+					VMM.ExternalAPI.googleplus.get(m.user, m.id);
 			// WIKIPEDIA
 				} else if (m.type		==	"wikipedia") {
 					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
+					mediaElem			=	"<div class='wikipedia' id='" + _id + "'>" + loading_messege + "</div>";
 					isTextMedia			=	true;
 					VMM.ExternalAPI.wikipedia.get(m.id, _id, m.lang);
 			// STORIFY
