@@ -30,7 +30,9 @@
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.44",
+		timeline_js_version = "1.48",
+		jquery_version_required = "1.7.1",
+		jquery_version = "",
 		ready = {
 			timeout:	"",
 			checks:		0,
@@ -38,6 +40,7 @@
 			js:			false,
 			css:		false,
 			jquery:		false,
+			has_jquery:	false,
 			language:	false,
 			font: {
 				css:	false,
@@ -49,6 +52,7 @@
 			css:		"http://embed.verite.co/timeline/css/",
 			js:			"http://embed.verite.co/timeline/js/",
 			locale:		"http://embed.verite.co/timeline/js/locale/",
+			jquery:		"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",
 			font: {
 				css:	"http://embed.verite.co/timeline/css/themes/font/",
 				js:		"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",
@@ -185,13 +189,23 @@
 	
 	//	Load jQuery
 	try {
-	    ready.jquery = jQuery;
-	    ready.jquery = true;
+	    ready.has_jquery = jQuery;
+	    ready.has_jquery = true;
+		if (ready.has_jquery) {
+			var jquery_version = parseFloat(jQuery.fn.jquery);
+			if (jquery_version < parseFloat(jquery_version_required) ) {
+				//console.log("NOT THE REQUIRED VERSION OF JQUERY, LOADING THE REQUIRED VERSION");
+				//console.log("YOU HAVE VERSION " + jQuery.fn.jquery + ", JQUERY VERSION " + jquery_version_required + " OR ABOVE NEEDED");
+				ready.jquery = false;
+			} else {
+				ready.jquery = true;
+			}
+		}
 	} catch(err) {
 	    ready.jquery = false;
 	}
 	if (!ready.jquery) {
-		LazyLoad.js('http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js', onloaded_jquery);
+		LazyLoad.js(path.jquery, onloaded_jquery);
 	} else {
 		onloaded_jquery();
 	}
