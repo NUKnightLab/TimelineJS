@@ -1,7 +1,6 @@
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
-	VMM.debug = false;
 	VMM.Language = {
 		lang: "es",
 		api: {
@@ -30,7 +29,8 @@ if(typeof VMM != 'undefined') {
 		    expand_timeline: "Enlargar la cronología",
 		    contract_timeline: "Reducir la cronología",
 			wikipedia: "Desde Wikipedia, la enciclopedia libre",
-			loading_content: "Loading Content"
+			loading_content: "cargando",
+			loading: "cargando"
 			
 		}
 	}

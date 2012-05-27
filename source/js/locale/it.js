@@ -1,7 +1,6 @@
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
-	VMM.debug = false;
 	VMM.Language = {
 		lang: "it",
 		api: {
@@ -29,8 +28,9 @@ if(typeof VMM != 'undefined') {
 			return_to_title: "Return to Title",
 			expand_timeline: "Expand Timeline",
 			contract_timeline: "Contract Timeline",
-			wikipedia: "From Wikipedia, the free encyclopedia",
-			loading_content: "Loading Content"
+			wikipedia: "Wikipedia, L’enciclopedia libera",
+			loading_content: "Loading Content",
+			loading: "Loading"
 			
 		}
 	}

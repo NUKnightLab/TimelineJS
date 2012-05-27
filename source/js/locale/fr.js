@@ -1,7 +1,6 @@
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
-	VMM.debug = false;
 	VMM.Language = {
 		lang: "fr",
 		api: {
@@ -30,7 +29,8 @@ if(typeof VMM != 'undefined') {
 		    expand_timeline: "Elargir la frise",
 		    contract_timeline: "Réduire la frise",
 			wikipedia: "Extrait de Wikipedia, l'encyclopédie libre",
-			loading_content: "Loading Content"
+			loading_content: "Chargement",
+			loading: "Chargement"
 			
 		}
 	}

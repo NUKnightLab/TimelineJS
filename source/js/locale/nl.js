@@ -1,7 +1,6 @@
 /* LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
-	VMM.debug = false;
 	VMM.Language = {
 		lang: "nl",
 		api: {
@@ -30,7 +29,8 @@ if(typeof VMM != 'undefined') {
 			expand_timeline: "Tijdlijn uitzoomen",
 			contract_timeline: "Tijdlijn inzoomen",
 			wikipedia: "From Wikipedia, the free encyclopedia",
-			loading_content: "Loading Content"
+			loading_content: "Loading Content",
+			loading: "Loading"
 			
 		}
 	}
