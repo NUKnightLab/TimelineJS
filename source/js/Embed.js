@@ -105,6 +105,13 @@
 		}
 	}
 	
+	/* PREPARE LANGUAGE
+	================================================== */
+	if (embed_config.lang.match("/")) {
+		//embed_config.lang = ;
+	} else {
+		
+	}
 	// Check for old installs still using the old method of language
 	if (embed_config.js.match("locale")) {
 		embed_config.lang = embed_config.js.split("locale/")[1].replace(".js", "");
