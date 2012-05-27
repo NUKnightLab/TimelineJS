@@ -469,5 +469,4 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		},
 		
 	}).init();
-	
 }
