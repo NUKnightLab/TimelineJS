@@ -108,9 +108,9 @@
 	/* PREPARE LANGUAGE
 	================================================== */
 	if (embed_config.lang.match("/")) {
-		//embed_config.lang = ;
+		path.locale = embed_config.lang;
 	} else {
-		
+		path.locale = path.locale + embed_config.lang + ".js?" + timeline_js_version;
 	}
 	// Check for old installs still using the old method of language
 	if (embed_config.js.match("locale")) {
@@ -136,7 +136,7 @@
 		if (embed_config.font.match("/")) {
 			path.font.css = embed_config.font;
 		} else {
-			path.font.css = path.font.css + embed_config.font + ".css";
+			path.font.css = path.font.css + embed_config.font + ".css?" + timeline_js_version;
 		}
 		LazyLoad.css(path.font.css, onloaded_font_css);
 		
@@ -226,7 +226,7 @@
 	function onloaded_js() {
 		ready.js = true;
 		if (embed_config.lang != "en") {
-			LazyLoad.js(path.locale + embed_config.lang + ".js?" + timeline_js_version, onloaded_language);
+			LazyLoad.js(path.locale, onloaded_language);
 		} else {
 			ready.language = true;
 		}
