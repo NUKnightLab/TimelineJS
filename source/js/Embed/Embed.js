@@ -1,7 +1,7 @@
 /*!
-	VéritéCo Timeline Loader 0.3
+	VéritéCo Timeline Loader 0.6
 	Designed and built by Zach Wise digitalartwork.net
-	Date: May 22, 2012
+	Date: May 27, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,8 +20,11 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "lib/Embed.LoadLib.js";
+// @codekit-prepend "../lib/Embed.LoadLib.js";
 
+/* REPLACE THIS WITH YOUR BASE PATH FOR TIMELINE
+================================================== */
+var timeline_path = "http://embed.verite.co/timeline/";
 
 /* TIMELINE LOADER
 ================================================== */
@@ -30,7 +33,7 @@
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.48",
+		timeline_js_version = "1.49",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
@@ -48,13 +51,13 @@
 			}
 		},
 		path = {
-			base:		"http://embed.verite.co/timeline/",
-			css:		"http://embed.verite.co/timeline/css/",
-			js:			"http://embed.verite.co/timeline/js/",
-			locale:		"http://embed.verite.co/timeline/js/locale/",
+			base:		timeline_path,
+			css:		timeline_path + "css/",
+			js:			timeline_path + "js/",
+			locale:		timeline_path + "js/locale/",
 			jquery:		"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",
 			font: {
-				css:	"http://embed.verite.co/timeline/css/themes/font/",
+				css:	timeline_path + "css/themes/font/",
 				js:		"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",
 				google:	[ 'Bevan::latin', 'Pontano+Sans::latin' ]
 			}
@@ -71,6 +74,8 @@
 			css:		path.css + 'timeline.css?'+timeline_js_version,
 			js:			path.js + 'timeline-min.js?'+timeline_js_version
 		};
+	
+	
 	
 	/* BUILD CONFIG
 	================================================== */

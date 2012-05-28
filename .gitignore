@@ -2,16 +2,13 @@
 .DS_Store*
 dev_examples/
 cdn/
-<<<<<<< HEAD
-=======
-VMM.Timeline.CDN.js
-CDN.js
->>>>>>> Canary
+Embed.CDN.js
+Embed.CDN.Generator.js
+compiled/generator.html
+compiled/index.html
+compiled/js/timeline-embed-cdn.js
+compiled/js/timeline-embed-generator.js
 *.tmproj
 *.tmproject
-<<<<<<< HEAD
-VMM.Timeline.CDN.js
-=======
->>>>>>> Canary
 tmtags
 source/gfx/Sprites/
