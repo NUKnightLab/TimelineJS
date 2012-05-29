@@ -6726,7 +6726,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		/* ADD to Config
 		================================================== */
 		var config				= 	VMM.Timeline.Config;
-		config.nav.rows			= 	[config.nav.marker.height, config.nav.marker.height*2, 1];
+		config.nav.rows			= 	[1, config.nav.marker.height, config.nav.marker.height*2];
 		
 		if (content_width != null && content_width != "") {
 			config.nav.width	= 	content_width;
@@ -7310,10 +7310,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (tags.length > 0) {
 					
 					for (var k = 0; k < tags.length; k++) {
-						trace("TAGS: " + tags[k])
 						if (k < config.nav.rows.length) {
 							if (markers[i].tag == tags[k]) {
-								trace("tag match " + k);
 								row = k;
 							}
 						}
@@ -7329,8 +7327,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 							row_depth ++;
 						}
 					} else {
-						row_depth = 0;
-						row = 0;
+						row_depth = 1;
+						row = 1;
 					}
 				}
 				
