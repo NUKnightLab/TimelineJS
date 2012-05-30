@@ -29,7 +29,8 @@ if (typeof VMM != "undefined") {
 			expand_timeline:"Увеличить",
 			contract_timeline:"Уменьшить",
 			wikipedia:"Из Wikipedia",
-			loading_content:"Загрузка контента"
+			loading_content:"Загрузка контента",
+			loading: "Загрузка"
 		}
 	}
 };
