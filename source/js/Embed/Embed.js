@@ -1,7 +1,7 @@
 /*!
-	VéritéCo Timeline Loader 0.6
+	VéritéCo Timeline Loader 0.61
 	Designed and built by Zach Wise digitalartwork.net
-	Date: May 27, 2012
+	Date: May 29, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -22,18 +22,32 @@
 ================================================== */
 // @codekit-prepend "../lib/Embed.LoadLib.js";
 
-/* REPLACE THIS WITH YOUR BASE PATH FOR TIMELINE
-================================================== */
-var timeline_path = "http://embed.verite.co/timeline/";
+var WebFontConfig;
+
+if(typeof timeline_path == 'undefined' || typeof timeline_path == 'undefined') {
+	// REPLACE WITH YOUR BASEPATH IF YOU WANT OTHERWISE IT WILL TRY AND FIGURE IT OUT
+	var timeline_path = getScriptPath("timeline-embed.js").split("js/")[0];
+}
+function getScriptPath(scriptname) {
+	var scriptTags = document.getElementsByTagName('script'),
+		script_path = "";
+	for(var i = 0; i < scriptTags.length; i++) {
+		if (scriptTags[i].src.match(scriptname)) {
+			script_path = scriptTags[i].src;
+		}
+	}
+	return script_path.split('?')[0].split('/').slice(0, -1).join('/') + '/';
+}
 
 /* TIMELINE LOADER
 ================================================== */
 (function() {
 	
+	
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.49",
+		timeline_js_version = "1.51",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
@@ -57,9 +71,9 @@ var timeline_path = "http://embed.verite.co/timeline/";
 			locale:		timeline_path + "js/locale/",
 			jquery:		"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",
 			font: {
+				google:	false,
 				css:	timeline_path + "css/themes/font/",
-				js:		"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js",
-				google:	[ 'Bevan::latin', 'Pontano+Sans::latin' ]
+				js:		"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"
 			}
 		},
 		embed_config = {
@@ -73,8 +87,23 @@ var timeline_path = "http://embed.verite.co/timeline/";
 			font:		'default',
 			css:		path.css + 'timeline.css?'+timeline_js_version,
 			js:			path.js + 'timeline-min.js?'+timeline_js_version
-		};
-	
+		},
+		font_presets = [
+			{ name:	"Merriweather-NewsCycle",		google:	[ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] },
+			{ name:	"PoiretOne-Molengo",			google:	[ 'Poiret+One::latin', 'Molengo::latin' ] },
+			{ name:	"Arvo-PTSans",					google:	[ 'Arvo:400,700,400italic:latin', 'PT+Sans:400,700,400italic:latin' ] },
+			{ name:	"PTSerif-PTSans",				google:	[ 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ] },
+			{ name:	"DroidSerif-DroidSans",			google:	[ 'Droid+Sans:400,700:latin', 'Droid+Serif:400,700,400italic:latin' ] },
+			{ name:	"Lekton-Molengo",				google:	[ 'Lekton:400,700,400italic:latin', 'Molengo::latin' ] },
+			{ name:	"NixieOne-Ledger",				google:	[ 'Nixie+One::latin', 'Ledger::latin' ] },
+			{ name:	"AbrilFatface-Average",			google:	[ 'Average::latin', 'Abril+Fatface::latin' ] },
+			{ name:	"PlayfairDisplay-Muli",			google:	[ 'Playfair+Display:400,400italic:latin', 'Muli:300,400,300italic,400italic:latin' ] },
+			{ name:	"Rancho-Gudea",					google:	[ 'Rancho::latin', 'Gudea:400,700,400italic:latin' ] },
+			{ name:	"Bevan-PotanoSans",				google:	[ 'Bevan::latin', 'Pontano+Sans::latin' ] },
+			{ name:	"BreeSerif-OpenSans",			google:	[ 'Bree+Serif::latin', 'Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800:latin' ] },
+			{ name:	"SansitaOne-Kameron",			google:	[ 'Sansita+One::latin', 'Kameron:400,700:latin' ] },
+			{ name:	"Pacifico-Arimo",				google:	[ 'Pacifico::latin', 'Arimo:400,700,400italic,700italic:latin' ] }
+		];
 	
 	
 	/* BUILD CONFIG
@@ -127,79 +156,45 @@ var timeline_path = "http://embed.verite.co/timeline/";
 	timeline_config = embed_config;
 	createTimelineDiv();
 	
-	/* Load 
+	/* Load CSS
 	================================================== */
 	LazyLoad.css(embed_config.css, onloaded_css);
 	
-	//	Load Font
+	/* Load FONT
+	================================================== */
 	if (embed_config.font == "default") {
-		ready.font.js = true;
-		ready.font.css = true;
+		ready.font.js		= true;
+		ready.font.css		= true;
 	} else {
-		
-		//	Load Font CSS
+		// FONT CSS
+		var fn;
 		if (embed_config.font.match("/")) {
-			path.font.css = embed_config.font;
+			fn				= embed_config.font.split(".css")[0].split("/");
+			path.font.name	= fn[fn.length -1];
+			path.font.css	= embed_config.font;
 		} else {
-			path.font.css = path.font.css + embed_config.font + ".css?" + timeline_js_version;
+			path.font.css	= path.font.css + embed_config.font + ".css?" + timeline_js_version;
 		}
 		LazyLoad.css(path.font.css, onloaded_font_css);
 		
-		//	Load Font JS
-		switch (embed_config.font) {
-			case "Merriweather-NewsCycle":
-				path.font.google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
-				break;
-			case "PoiretOne-Molengo":
-				path.font.google = [ 'Poiret+One::latin', 'Molengo::latin' ];
-				break;
-			case "Arvo-PTSans":
-				path.font.google = [ 'Arvo:400,700,400italic:latin', 'PT+Sans:400,700,400italic:latin' ];
-				break;
-			case "PTSerif-PTSans":
-				path.font.google = [ 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ];
-				break;
-			case "DroidSerif-DroidSans":
-				path.font.google = [ 'Droid+Sans:400,700:latin', 'Droid+Serif:400,700,400italic:latin' ] ;
-				break;
-			case "Lekton-Molengo":
-				path.font.google = [ 'Lekton:400,700,400italic:latin', 'Molengo::latin' ];
-				break;
-			case "NixieOne-Ledger":
-				path.font.google = [ 'Nixie+One::latin', 'Ledger::latin' ];
-				break;
-			case "AbrilFatface-Average":
-				path.font.google = [ 'Average::latin', 'Abril+Fatface::latin' ];
-				break;
-			case "PlayfairDisplay-Muli":
-				path.font.google = [ 'Playfair+Display:400,400italic:latin', 'Muli:300,400,300italic,400italic:latin' ];
-				break;
-			case "Rancho-Gudea":
-				path.font.google = [ 'Rancho::latin', 'Gudea:400,700,400italic:latin' ];
-				break;
-			case "Bevan-PotanoSans":
-				path.font.google = [ 'Bevan::latin', 'Pontano+Sans::latin' ];
-				break;
-			case "BreeSerif-OpenSans":
-				path.font.google = [ 'Bree+Serif::latin', 'Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800:latin' ];
-				break;
-			case "SansitaOne-Kameron":
-				path.font.google = [ 'Sansita+One::latin', 'Kameron:400,700:latin' ];
-				break;
-			case "Pacifico-Arimo":
-				path.font.google = [ 'Pacifico::latin', 'Arimo:400,700,400italic,700italic:latin' ];
-				break;
-			default:
-				path.font.google = [ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ];
+		// FONT GOOGLE JS
+		for(var i = 0; i < font_presets.length; i++) {
+			if (path.font.name == font_presets[i].name) {
+				path.font.google = true;
+				WebFontConfig = {google: { families: font_presets[i].google }};
+			}
 		}
 		
-		WebFontConfig = {google: { families: path.font.google }};
-		
-		LazyLoad.js(path.font.js, onloaded_font_js);
+		if (path.font.google) {
+			LazyLoad.js(path.font.js, onloaded_font_js);
+		} else {
+			ready.font.js		= true;
+		}
 		
 	}
 	
-	//	Load jQuery
+	/* Load jQuery
+	================================================== */
 	try {
 	    ready.has_jquery = jQuery;
 	    ready.has_jquery = true;
