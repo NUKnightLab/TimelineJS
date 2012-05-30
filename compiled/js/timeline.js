@@ -1387,10 +1387,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			}
 
 			// Passing date through Date applies Date.parse, if necessary
-			date = date ? new Date(date) : new Date;
+			// Caused problems in IE
+			// date = date ? new Date(date) : new Date;
 			if (isNaN(date)) {
-				trace("invalid date");
-				return "";
+				trace("invalid date " + date);
+				//return "";
 			} 
 
 			mask = String(dF.masks[mask] || mask || dF.masks["default"]);
@@ -8113,6 +8114,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		},
 		
 		parseJSON: function(d) {
+			trace(d);
 			if (d.timeline.type == "default") {
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
 				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, d);

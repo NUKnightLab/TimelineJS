@@ -253,10 +253,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			}
 
 			// Passing date through Date applies Date.parse, if necessary
-			date = date ? new Date(date) : new Date;
+			// Caused problems in IE
+			// date = date ? new Date(date) : new Date;
 			if (isNaN(date)) {
-				trace("invalid date");
-				return "";
+				trace("invalid date " + date);
+				//return "";
 			} 
 
 			mask = String(dF.masks[mask] || mask || dF.masks["default"]);
