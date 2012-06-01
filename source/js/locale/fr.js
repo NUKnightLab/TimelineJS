@@ -9,8 +9,8 @@ if(typeof VMM != 'undefined') {
 		date: {
 			month: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
 			month_abbr: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "dec."],
-			day: ["dimanche","lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
-			day_abbr: ["dim.","lu.", "ma.", "me.", "jeu.", "vend.", "sam."],
+			day: ["Dimanche","Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+			day_abbr: ["Dim.","Lu.", "Ma.", "Me.", "Jeu.", "Vend.", "Sam."],
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -20,7 +20,7 @@ if(typeof VMM != 'undefined') {
 		    full: "d mmmm yyyy",
 		    time_no_seconds_short: "HH:MM",
 		    time_no_seconds_small_date: "HH:MM'<br/><small>'d mmmm yyyy'</small>'",
-		    full_long: "dddd',' d mmm yyyy 'um' HH:MM",
+		    full_long: "dddd',' d mmm yyyy 'à' HH:MM",
 		    full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
 		},
 		messages: {
