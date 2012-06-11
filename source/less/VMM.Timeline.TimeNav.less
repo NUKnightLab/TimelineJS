@@ -154,8 +154,13 @@
 						vertical-align:middle;
 						padding-left:@navigation-time-height + @base-space;
 						font-size:@base-font;
-						color: darken(@color-background-dark, 30%);
-						//font-weight: bold;
+						color: darken(@color-background-dark, 10%);
+						//text-shadow: 0px -1px 0px darken(@color-background-dark, 30%);
+						//text-shadow: darken(@color-background-dark, 30%) -1px -1px 0px;
+						font-weight: bold;
+						text-shadow: 0px 1px 1px lighten(@color-background-dark, 30%);
+						text-transform: uppercase;
+						//font-size:18px;
 					}
 					
 				}
@@ -167,11 +172,18 @@
 				//background: darken(@color-background-dark, 10%); 
 				//background:@color-background-dark;
 				//background: lighten(@color-background-dark, 6%);
+				h3 {
+					//color: @color-background-dark;
+				}
 			}
 			.timenav-tag-row-2 {
 				//background: @color-theme-complement-dark;
 				//background: fadeout(@color-theme-complement-dark, 70%); 
 				//background: fadeout(desaturate(@color-theme, 70%), 60%);
+				h3 {
+					//color: lighten(@color-background-dark, 3%); 
+				}
+				 
 				background: lighten(@color-background-dark, 3%); 
 			}
 			.timenav-tag-row-3 {
@@ -179,6 +191,10 @@
 				//background: fadeout(@color-theme-complement-darker, 70%);
 				//background: fadeout(desaturate(@color-theme, 70%), 50%);
 				//background: lighten(@color-background-dark, 10%);
+				h3 {
+					//color: @color-background-dark;
+				}
+
 				background:@color-background-dark;
 			}
 			
