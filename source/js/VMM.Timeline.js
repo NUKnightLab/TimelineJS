@@ -49,6 +49,19 @@
 // @codekit-prepend "lib/bootstrap-tooltip.js";
 
 
+/*	Timeline TO DO
+	6 row timeline
+	fix google plus on IE
+	Better Storify integration
+	More design tweaks
+	multiple media on each slide / slideshows
+	StoryJS
+	SliderJS
+	PhudioJS
+	MapsJS
+	ChartsJS
+	TimelineJS
+================================================== */
 
 
 /* Timeline
@@ -68,7 +81,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.51";
+		version = 					"1.55";
 		
 		trace("TIMELINE VERSION " + version);
 		
