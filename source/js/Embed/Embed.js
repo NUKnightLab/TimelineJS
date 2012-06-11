@@ -1,7 +1,6 @@
 /*!
 	VéritéCo Timeline Loader 0.61
 	Designed and built by Zach Wise digitalartwork.net
-	Date: May 29, 2012
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -47,7 +46,7 @@ function getScriptPath(scriptname) {
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.51",
+		timeline_js_version = "1.55",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
@@ -93,6 +92,7 @@ function getScriptPath(scriptname) {
 			{ name:	"PoiretOne-Molengo",			google:	[ 'Poiret+One::latin', 'Molengo::latin' ] },
 			{ name:	"Arvo-PTSans",					google:	[ 'Arvo:400,700,400italic:latin', 'PT+Sans:400,700,400italic:latin' ] },
 			{ name:	"PTSerif-PTSans",				google:	[ 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ] },
+			{ name:	"PT",							google:	[ 'PT+Sans+Narrow:400,700:latin', 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ] },
 			{ name:	"DroidSerif-DroidSans",			google:	[ 'Droid+Sans:400,700:latin', 'Droid+Serif:400,700,400italic:latin' ] },
 			{ name:	"Lekton-Molengo",				google:	[ 'Lekton:400,700,400italic:latin', 'Molengo::latin' ] },
 			{ name:	"NixieOne-Ledger",				google:	[ 'Nixie+One::latin', 'Ledger::latin' ] },
@@ -102,9 +102,10 @@ function getScriptPath(scriptname) {
 			{ name:	"Bevan-PotanoSans",				google:	[ 'Bevan::latin', 'Pontano+Sans::latin' ] },
 			{ name:	"BreeSerif-OpenSans",			google:	[ 'Bree+Serif::latin', 'Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800:latin' ] },
 			{ name:	"SansitaOne-Kameron",			google:	[ 'Sansita+One::latin', 'Kameron:400,700:latin' ] },
+			{ name:	"Lora-Istok",					google:	[ 'Lora:400,700,400italic,700italic:latin', 'Istok+Web:400,700,400italic,700italic:latin' ] },
 			{ name:	"Pacifico-Arimo",				google:	[ 'Pacifico::latin', 'Arimo:400,700,400italic,700italic:latin' ] }
 		];
-	
+
 	
 	/* BUILD CONFIG
 	================================================== */
@@ -173,6 +174,7 @@ function getScriptPath(scriptname) {
 			path.font.name	= fn[fn.length -1];
 			path.font.css	= embed_config.font;
 		} else {
+			path.font.name	= embed_config.font;
 			path.font.css	= path.font.css + embed_config.font + ".css?" + timeline_js_version;
 		}
 		LazyLoad.css(path.font.css, onloaded_font_css);
@@ -275,7 +277,7 @@ function getScriptPath(scriptname) {
 		te = document.getElementById("timeline-embed");
 		te.appendChild(t);
 		t.setAttribute("id", 'timeline');
-	
+		
 		if (embed_config.width.toString().match("%") ) {
 			te.style.width = embed_config.width;
 			te.setAttribute("class", "full-embed ");
