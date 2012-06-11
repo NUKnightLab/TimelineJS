@@ -9,8 +9,8 @@ if(typeof VMM != 'undefined') {
 		date: {
 			month: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "Marts", "April", "Maj", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dec."],
-			day: ["S?ndag","Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L?rdag"],
-			day_abbr: ["S?.","Ma.", "Ti.", "On.", "To.", "Fr.", "L?."],
+			day: ["Søndag","Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
+			day_abbr: ["Sø.","Ma.", "Ti.", "On.", "To.", "Fr.", "L?."],
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -26,8 +26,8 @@ if(typeof VMM != 'undefined') {
 		messages: {
 			loading_timeline: "Henter timeline... ",
 			return_to_title: "Tilbage til titel",
-			expand_timeline: "Forst?r timeline",
-			contract_timeline: "Minim?r timeline",
+			expand_timeline: "Forstør timeline",
+			contract_timeline: "Minimør timeline",
 			wikipedia: "Fra Wikipedia",
 			loading_content: "Henter indhold",
 			loading: "Arbejder"
