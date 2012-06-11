@@ -6,8 +6,14 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	// VMM.MediaType(url); //returns an object with .type and .id
 	
 	VMM.MediaType = function(d) {
-		var success = false;
-		var media   = {};
+		var success	= false,
+			media	= {
+				type:		"unknown",
+				id:			"",
+				link:		"",
+				lang:		"",
+				uniqueid:	VMM.Util.unique_ID(6)
+			};
 		
 		if (d.match("div class='twitter'")) {
 			media.type = "twitter-ready";

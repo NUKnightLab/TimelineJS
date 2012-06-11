@@ -118,6 +118,22 @@ if (typeof VMM == 'undefined') {
 			twitter:	""
 		},
 		
+		timers: {
+			api:			7000
+		},
+		
+		api:	{
+			pushques:		[],
+			
+		},
+		
+		twitter: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		flickr: {
 			active:			false,
 			array:			[],
@@ -166,7 +182,8 @@ if (typeof VMM == 'undefined') {
 			active:			false,
 			array:			[],
 			api_loaded:		false,
-			que:			[]
+			que:			[],
+			tries:			0
 		},
 		
 		soundcloud: {
@@ -292,6 +309,15 @@ function trace( msg ) {
 			//alert(msg);
 		}
 	}
+}
+
+/*	Array Remove - By John Resig (MIT Licensed)
+	http://ejohn.org/blog/javascript-array-remove/
+================================================== */
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
 }
 
 /* Extending Date to include Week

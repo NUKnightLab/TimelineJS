@@ -100,7 +100,9 @@ if(typeof VMM != 'undefined') {
 	
 	VMM.getJSON = function(url, data, callback) {
 		if( typeof( jQuery ) != 'undefined' ){
-			
+			jQuery.ajaxSetup({
+			     timeout: 3000
+			});
 			/* CHECK FOR IE
 			================================================== */
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
@@ -117,6 +119,7 @@ if(typeof VMM != 'undefined') {
 				
 			} else {
 				return jQuery.getJSON(url, data, callback);
+
 			}
 		}
 	}

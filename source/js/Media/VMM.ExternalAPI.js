@@ -27,11 +27,106 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.vimeo.active) {
 				VMM.ExternalAPI.vimeo.pushQue();
 			}
-			
+			if (VMM.master_config.twitter.active) {
+				VMM.ExternalAPI.twitter.pushQue();
+			}
+			if (VMM.master_config.flickr.active) {
+				VMM.ExternalAPI.flickr.pushQue();
+			}
 		},
 		
 		twitter: {
 			tweetArray: [],
+			
+			get: function(mid, id) {
+				var tweet = {mid: mid, id: id};
+				VMM.master_config.twitter.que.push(tweet);
+				VMM.master_config.twitter.active = true;
+				//VMM.master_config.api.pushques.push(VMM.ExternalAPI.twitter.pushQue);
+				
+			},
+			
+			create: function(tweet, callback) {
+				
+				var id				= tweet.mid.toString(),
+					error_obj		= { twitterid: tweet.mid },
+					the_url			= "http://api.twitter.com/1/statuses/show.json?id=" + tweet.mid + "&include_entities=true&callback=?",
+					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, tweet),
+					callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
+				
+				VMM.getJSON(the_url, function(d) {
+					var id		= d.id_str,
+						twit	= "<blockquote><p>",
+						td		= VMM.Util.linkify_with_twitter(d.text, "_blank");
+					
+					//	TWEET CONTENT	
+					twit += td;
+					twit += "</p></blockquote>";
+					
+					//	TWEET MEDIA
+					if (typeof d.entities.media != 'undefined') {
+						if (d.entities.media[0].type == "photo") {
+							twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
+						}
+					}
+					
+					//	TWEET AUTHOR
+					twit += "<div class='vcard author'>";
+					twit += "<a class='screen-name url' href='https://twitter.com/" + d.user.screen_name + "' data-screen-name='" + d.user.screen_name + "' target='_blank'>";
+					twit += "<span class='avatar'><img src=' " + d.user.profile_image_url + "'  alt=''></span>";
+					twit += "<span class='fn'>" + d.user.name + "</span>";
+					twit += "<span class='nickname'>@" + d.user.screen_name + "<span class='thumbnail-inline'></span></span>";
+					twit += "</a>";
+					twit += "</div>";
+				
+					
+				
+					VMM.attachElement("#tweet_"+tweet.id.toString(), twit );
+					VMM.attachElement("#text_thumb_"+tweet.id.toString(), d.text );
+					
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+					trace("TWITTER error");
+					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
+					VMM.attachElement("#tweet_"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
+				})
+				.success(function(d) {
+					clearTimeout(twitter_timeout);
+					clearTimeout(callback_timeout);
+					callback();
+				});
+				
+			},
+			
+			errorTimeOut: function(tweet) {
+				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
+				VMM.attachElement("#tweet_" + tweet.id, "<span class='messege'><p>Still waiting on Twitter: " + tweet.mid + "</p></span>"  );
+				
+				// CHECK RATE STATUS
+				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
+					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
+					trace("TWITTER RATE LIMIT WILL RESET AT " + d.reset_time);
+					var mes = "";
+					if (d.remaining_hits == 0) {
+						mes		= 	"<p>You've reached the maximum number of tweets you can load in an hour.</p>";
+						mes 	+=	"<p>You can view tweets again starting at: <br/>" + d.reset_time + "</p>";
+					} else {
+						mes		=	"<p>Still waiting on Twitter. " + id + "</p>";
+						//mes 	= 	"<p>Tweet " + id + " was not found.</p>";
+					}
+					VMM.attachElement("#twitter_" + id, "<span class='messege'>" + mes + "</span>" );
+				});
+				
+			},
+			
+			pushQue: function() {
+				if (VMM.master_config.twitter.que.length > 0) {
+					VMM.ExternalAPI.twitter.create(VMM.master_config.twitter.que[0], VMM.ExternalAPI.twitter.pushQue);
+					VMM.master_config.twitter.que.remove(0);
+				}
+			},
+			
+			
 			
 			getHTML: function(id) {
 				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
@@ -152,7 +247,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					twitterid: id
 				};
 				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
-				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.notFoundError, 4000, id);
+				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, id);
 				
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
 					.error(function(jqXHR, textStatus, errorThrown) {
@@ -168,25 +263,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					});
 			},
 			
-			notFoundError: function(id) {
-				trace("TWITTER JSON ERROR TIMEOUT " + id);
-				VMM.attachElement("#twitter_" + id, "<span class='messege'><p>Error loading tweet: " + id + "</p></span>"  );
-				
-				// CHECK RATE STATUS
-				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
-					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
-					trace("TWITTER RATE LIMIT WILL RESET AT " + d.reset_time);
-					var mes = "";
-					if (d.remaining_hits == 0) {
-						mes		= 	"<p>You've reached the maximum number of tweets you can load in an hour.</p>";
-						mes 	+=	"<p>You can view tweets again starting at: <br/>" + d.reset_time + "</p>";
-					} else {
-						mes 	= 	"<p>Tweet " + id + " was not found.</p>";
-					}
-					VMM.attachElement("#twitter_" + id, "<span class='messege'>" + mes + "</span>" );
-				});
-				
-			},
+			
 			
 			formatJSON: function(d) {
 				var id = d.id_str;
@@ -486,16 +563,24 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		googleplus: {
 			
 			get: function(user, activity) {
-				var api_key, gplus;
-				
-				
+				var api_key;
 				var gplus = {user: user, activity: activity};
+				
 				VMM.master_config.googleplus.que.push(gplus);
 				VMM.master_config.googleplus.active = true;
 			},
 			
-			create: function(gplus) {
-				var mediaElem = "", api_key = "", gperson_api_url, gactivity_api_url, g_activity = "", g_content = "", g_attachments = ""; 
+			create: function(gplus, callback) {
+				var mediaElem			= "",
+					api_key				= "",
+					g_activity			= "",
+					g_content			= "",
+					g_attachments		= "",
+					gperson_api_url,
+					gactivity_api_url;
+					googleplus_timeout	= setTimeout(VMM.ExternalAPI.googleplus.errorTimeOut, VMM.master_config.timers.api, gplus),
+					callback_timeout	= setTimeout(callback, VMM.master_config.timers.api, gplus);
+					
 				
 				if (VMM.master_config.Timeline.api_keys.google != "") {
 					api_key = VMM.master_config.Timeline.api_keys.google;
@@ -584,16 +669,39 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					
 					
 					
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+					var error_obj = VMM.parseJSON(jqXHR.responseText);
+					trace(error_obj.error.message);
+					VMM.attachElement("#googleplus_" + gplus.activity, "<p>ERROR LOADING GOOGLE+ </p><p>" + error_obj.error.message + "</p>");
+				})
+				.success(function(d) {
+					clearTimeout(googleplus_timeout);
+					clearTimeout(callback_timeout);
+					callback();
 				});
+				
 				
 				
 			},
 			
 			pushQue: function() {
+				if (VMM.master_config.googleplus.que.length > 0) {
+					VMM.ExternalAPI.googleplus.create(VMM.master_config.googleplus.que[0], VMM.ExternalAPI.googleplus.pushQue);
+					VMM.master_config.googleplus.que.remove(0);
+				}
+				/*
 				for(var i = 0; i < VMM.master_config.googleplus.que.length; i++) {
 					VMM.ExternalAPI.googleplus.create(VMM.master_config.googleplus.que[i]);
 				}
 				VMM.master_config.googleplus.que = [];
+				*/
+			},
+			
+			errorTimeOut: function(gplus) {
+				trace("GOOGLE+ JSON ERROR TIMEOUT " + gplus.activity);
+				VMM.attachElement("#googleplus_" + gplus.activity, "<p>Still waiting on GOOGLE+ </p><p>" + gplus.activity + "</p>");
+				
 			}
 			
 		},
@@ -617,6 +725,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			pushQue: function() {
+				
 				for(var i = 0; i < VMM.master_config.googledocs.que.length; i++) {
 					VMM.ExternalAPI.googledocs.create(VMM.master_config.googledocs.que[i]);
 				}
@@ -628,39 +737,67 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		flickr: {
 			
 			get: function(mid, id) {
-				var api_key;
+				var flick = {mid: mid, id: id};
+				VMM.master_config.flickr.que.push(flick);
+				VMM.master_config.flickr.active = true;
+			},
+			
+			create: function(flick, callback) {
+				var api_key,
+					callback_timeout= setTimeout(callback, VMM.master_config.timers.api, flick);
+					
 				if (VMM.master_config.Timeline.api_keys.flickr != "") {
 					api_key = VMM.master_config.Timeline.api_keys.flickr;
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + mid + "&format=json&jsoncallback=?";
-				VMM.getJSON(the_url, VMM.ExternalAPI.flickr.create);
+				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + flick.mid + "&format=json&jsoncallback=?";
+				
+				VMM.getJSON(the_url, function(d) {
+					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
+				
+					var flickr_large_id = "flickr_" + flick.id + "_large",
+						flickr_thumb_id = "flickr_" + flick.id + "_thumb";
+						//flickr_thumb_id = "flickr_" + uid + "_thumb";
+				
+					var flickr_img_size,
+						flickr_img_thumb,
+						flickr_size_found = false,
+						flickr_best_size = "Large";
+				
+					flickr_best_size = VMM.ExternalAPI.flickr.sizes(VMM.master_config.sizes.api.height);
+				
+					for(var i = 0; i < d.sizes.size.length; i++) {
+						if (d.sizes.size[i].label == flickr_best_size) {
+							flickr_size_found = true;
+							flickr_img_size = d.sizes.size[i].source;
+						}
+					}
+					if (!flickr_size_found) {
+						flickr_img_size = d.sizes.size[d.sizes.size.length - 1].source;
+					}
+				
+					flickr_img_thumb = d.sizes.size[0].source;
+					VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
+					VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+					
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+					trace("FLICKR error");
+					trace("FLICKR ERROR: " + textStatus + " " + jqXHR.responseText);
+				})
+				.success(function(d) {
+					clearTimeout(callback_timeout);
+					callback();
+				});
+				
 			},
 			
-			create: function(d) {
-				var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
-				var id = "flickr_" + flickr_id;
-				var flickr_large_id = id + "_large";
-				var flickr_thumb_id = id + "_thumb";
-				var flickr_img_size, flickr_img_thumb, flickr_size_found = false;
-				var flickr_best_size = "Large";
-				
-				flickr_best_size = VMM.ExternalAPI.flickr.sizes(VMM.master_config.sizes.api.height);
-				
-				for(var i = 0; i < d.sizes.size.length; i++) {
-					if (d.sizes.size[i].label == flickr_best_size) {
-						flickr_size_found = true;
-						flickr_img_size = d.sizes.size[i].source;
-					}
+			pushQue: function() {
+				if (VMM.master_config.flickr.que.length > 0) {
+					VMM.ExternalAPI.flickr.create(VMM.master_config.flickr.que[0], VMM.ExternalAPI.flickr.pushQue);
+					VMM.master_config.flickr.que.remove(0);
 				}
-				if (!flickr_size_found) {
-					flickr_img_size = d.sizes.size[d.sizes.size.length - 1].source;
-				}
-				
-				flickr_img_thumb = d.sizes.size[0].source;
-				VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
-				VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
 			},
 			
 			sizes: function(s) {
@@ -717,19 +854,20 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.soundcloud.active = true;
 			},
 			
-			create: function(sound) {
+			create: function(sound, callback) {
 				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+sound.id, d.html);
+					callback();
 				});
 			},
 			
 			pushQue: function() {
-				for(var i = 0; i < VMM.master_config.soundcloud.que.length; i++) {
-					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[i]);
+				if (VMM.master_config.soundcloud.que.length > 0) {
+					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[0], VMM.ExternalAPI.soundcloud.pushQue);
+					VMM.master_config.soundcloud.que.remove(0);
 				}
-				VMM.master_config.soundcloud.que = [];
-			},
+			}
 			
 		},
 		
@@ -741,9 +879,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.wikipedia.active = true;
 			},
 			
-			create: function(api_obj) {
+			create: function(api_obj, callback) {
 				var the_url = "http://" + api_obj.lang + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + api_obj.url + "&exintro=1&format=json&callback=?";
-
+				callback_timeout= setTimeout(callback, VMM.master_config.timers.api, api_obj);
+				
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
 					var temp_text	=	"<h4><a href='http://" + VMM.master_config.language.api.wikipedia + ".wikipedia.org/wiki/" + api_obj.url + "' target='_blank'>" + api_obj.url + "</a></h4>";
 					temp_text		+=	"<span class='wiki-source'>" + VMM.master_config.language.messages.wikipedia + "</span>";
@@ -785,17 +924,43 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 							VMM.attachElement("#"+api_obj.id, _wiki );
 						}
 					}
+					//callback();
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+					trace("WIKIPEDIA error");
+					trace("WIKIPEDIA ERROR: " + textStatus + " " + jqXHR.responseText);
+					trace(errorThrown);
 					
+					VMM.attachElement("#"+api_obj.id, "<span class='messege'>" + "<p>Wikipedia is not responding</p>" + "</span>" );
+					// TRY AGAIN?
+					clearTimeout(callback_timeout);
+					if (VMM.master_config.wikipedia.tries < 4) {
+						trace("WIKIPEDIA ATTEMPT " + VMM.master_config.wikipedia.tries);
+						trace(api_obj);
+						VMM.master_config.wikipedia.tries++;
+						VMM.ExternalAPI.wikipedia.create(api_obj, callback);
+					} else {
+						callback();
+					}
+					
+				})
+				.success(function(d) {
+					VMM.master_config.wikipedia.tries = 0;
+					clearTimeout(callback_timeout);
+					callback();
 				});
+				
 				
 			},
 			
 			pushQue: function() {
-				trace("WIKIPEDIA PUSH QUE");
-				for(var i = 0; i < VMM.master_config.wikipedia.que.length; i++) {
-					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[i]);
+				
+				if (VMM.master_config.wikipedia.que.length > 0) {
+					trace("WIKIPEDIA PUSH QUE " + VMM.master_config.wikipedia.que.length);
+					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[0], VMM.ExternalAPI.wikipedia.pushQue);
+					VMM.master_config.wikipedia.que.remove(0);
 				}
-				VMM.master_config.wikipedia.que = [];
+
 			},
 			
 		},
@@ -903,11 +1068,15 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.vimeo.active = true;
 			},
 			
-			create: function(d) {
+			create: function(d, callback) {
 				trace("VIMEO CREATE");
 				// THUMBNAIL
 				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
-				VMM.getJSON(url, VMM.ExternalAPI.vimeo.createThumb);
+				VMM.getJSON(url, function(d) {
+					VMM.ExternalAPI.vimeo.createThumb(d);
+					callback();
+				});
+				
 			},
 			
 			createThumb: function(d) {
@@ -917,10 +1086,16 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			pushQue: function() {
+				if (VMM.master_config.vimeo.que.length > 0) {
+					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[0], VMM.ExternalAPI.vimeo.pushQue);
+					VMM.master_config.vimeo.que.remove(0);
+				}
+				/*
 				for(var i = 0; i < VMM.master_config.vimeo.que.length; i++) {
 					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[i]);
 				}
 				VMM.master_config.vimeo.que = [];
+				*/
 			}
 			
 		}
