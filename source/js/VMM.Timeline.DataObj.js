@@ -141,7 +141,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		},
 		
 		parseJSON: function(d) {
-			trace(d);
+			trace("parseJSON");
 			if (d.timeline.type == "default") {
 				trace("DATA SOURCE: JSON STANDARD TIMELINE");
 				VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, d);

@@ -56,6 +56,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				return d;
 			} else {
 				var _date = new Date(0, 0, 1, 0, 0, 0, 0);
+				//var _date = new Date("January 1, 0000 00:00:00")
 				var _d_array, _t_array;
 				var _time_parse, _times;
 				
