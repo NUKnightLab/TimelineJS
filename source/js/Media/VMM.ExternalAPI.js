@@ -967,13 +967,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		youtube: {
 			
-			get: function(id) {
-				var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=jsonc&callback=?";
+			get: function(mid, id) {
+				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + mid + "?v=2&alt=jsonc&callback=?",
+					vid = {mid: mid, id: id};
+					
+				VMM.master_config.youtube.que.push(vid);
 				
-				if (VMM.master_config.youtube.active) {
-					VMM.master_config.youtube.que.push(id);
-				} else {
-					VMM.master_config.youtube.que.push(id);
+				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
 						VMM.LoadLib.js('http://www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
@@ -982,19 +982,22 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				// THUMBNAIL
-				VMM.getJSON(url, VMM.ExternalAPI.youtube.createThumb);
+				VMM.getJSON(the_url, function(d) {
+					VMM.ExternalAPI.youtube.createThumb(d, vid)
+				});
+				
 			},
 			
-			create: function(id) {
+			create: function(vid) {
 				
 				var p = {
 					active: 				false,
 					player: 				{},
-					name:					'youtube_'+id,
+					name:					'youtube_'+vid.id,
 					playing:				false
 				};
 				
-				p.player['youtube_'+id] = new YT.Player('youtube_'+id, {
+				p.player['youtube_'+vid.id] = new YT.Player('youtube_'+vid.id, {
 					height: 				'390',
 					width: 					'640',
 					playerVars: {
@@ -1004,7 +1007,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						theme:				'light',
 						rel:				0
 					},
-					videoId: id,
+					videoId: vid.mid,
 					events: {
 						'onReady': 			VMM.ExternalAPI.youtube.onPlayerReady,
 						'onStateChange': 	VMM.ExternalAPI.youtube.onStateChange
@@ -1014,9 +1017,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.youtube.array.push(p);
 			},
 			
-			createThumb: function(d) {
+			createThumb: function(d, vid) {
+				trace("CREATE THUMB");
+				trace(d);
+				trace(vid);
 				if (typeof d.data != 'undefined') {
-					var thumb_id = "youtube_" + d.data.id + "_thumb";
+					var thumb_id = "youtube_" + vid.id + "_thumb";
 					VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 					
 				}
