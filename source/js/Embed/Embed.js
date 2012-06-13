@@ -46,7 +46,7 @@ function getScriptPath(scriptname) {
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.55",
+		timeline_js_version = "1.56",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {

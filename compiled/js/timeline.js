@@ -1302,7 +1302,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			if (d2 != null) {
 				is_pair = true;
 			}
-				
+			
+			
 			if (type.of(d) == "date") {
 				if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
 					// YEAR ONLY
@@ -1336,8 +1337,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						format = VMM.Date.dateformats.full_long; 
 					}
 				}
-					
-				_date = dateFormat(d, format);
+				
+				_date = dateFormat(d, format, false);
 				bc_check = _date.split(" ");
 					
 				// BC TIME SUPPORT
@@ -3216,13 +3217,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		youtube: {
 			
-			get: function(id) {
-				var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?v=2&alt=jsonc&callback=?";
+			get: function(mid, id) {
+				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + mid + "?v=2&alt=jsonc&callback=?",
+					vid = {mid: mid, id: id};
+					
+				VMM.master_config.youtube.que.push(vid);
 				
-				if (VMM.master_config.youtube.active) {
-					VMM.master_config.youtube.que.push(id);
-				} else {
-					VMM.master_config.youtube.que.push(id);
+				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
 						VMM.LoadLib.js('http://www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
@@ -3231,19 +3232,22 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				// THUMBNAIL
-				VMM.getJSON(url, VMM.ExternalAPI.youtube.createThumb);
+				VMM.getJSON(the_url, function(d) {
+					VMM.ExternalAPI.youtube.createThumb(d, vid)
+				});
+				
 			},
 			
-			create: function(id) {
+			create: function(vid) {
 				
 				var p = {
 					active: 				false,
 					player: 				{},
-					name:					'youtube_'+id,
+					name:					'youtube_'+vid.id,
 					playing:				false
 				};
 				
-				p.player['youtube_'+id] = new YT.Player('youtube_'+id, {
+				p.player['youtube_'+vid.id] = new YT.Player('youtube_'+vid.id, {
 					height: 				'390',
 					width: 					'640',
 					playerVars: {
@@ -3253,7 +3257,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						theme:				'light',
 						rel:				0
 					},
-					videoId: id,
+					videoId: vid.mid,
 					events: {
 						'onReady': 			VMM.ExternalAPI.youtube.onPlayerReady,
 						'onStateChange': 	VMM.ExternalAPI.youtube.onStateChange
@@ -3263,9 +3267,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.master_config.youtube.array.push(p);
 			},
 			
-			createThumb: function(d) {
+			createThumb: function(d, vid) {
+				trace("CREATE THUMB");
+				trace(d);
+				trace(vid);
 				if (typeof d.data != 'undefined') {
-					var thumb_id = "youtube_" + d.data.id + "_thumb";
+					var thumb_id = "youtube_" + vid.id + "_thumb";
 					VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 					
 				}
@@ -3401,7 +3408,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-instagram' id='instagram_" + m.id + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + m.id + "_thumb'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"googledoc") {
 					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
@@ -3488,8 +3495,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					VMM.ExternalAPI.googledocs.get(m.id, uid);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'>" + loading_messege + "</div></div>";
-					VMM.ExternalAPI.youtube.get(m.id);
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + uid + "'>" + loading_messege + "</div></div>";
+					VMM.ExternalAPI.youtube.get(m.id, uid);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
@@ -3571,12 +3578,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
      Begin VMM.MediaType.js 
 ***********************************************/ 
 
-/* MediaType
+/*	MediaType
+	Determines the type of media the url string is.
+	returns an object with .type and .id
+	the id is a key piece of information needed to make
+	the request of the api.
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
-	
-	//VMM.mediaType.youtube(d); //should return a true or false
-	// VMM.MediaType(url); //returns an object with .type and .id
 	
 	VMM.MediaType = function(d) {
 		var success	= false,
@@ -6413,7 +6421,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.55";
+		version = 					"1.56";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6907,7 +6915,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
      Begin VMM.Timeline.TimeNav.js 
 ***********************************************/ 
 
-/* 	TIMELINE NAVIGATION
+/* 	TimeNav
+	This class handles the bottom timeline navigation.
+	It requires the VMM.Util class and VMM.Date class
 ================================================== */
 
 if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefined') {
@@ -7362,7 +7372,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			return _time;
 		}
 		
-		/* POSITION
+		/*	POSITION
+			Positions elements on the timeline based on date
+			relative to the calculated interval
 		================================================== */
 		var positionRelative = function(_interval, first, last) {
 			var _first,
@@ -7623,9 +7635,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			
 			for(var i = 0; i < the_intervals.length; i++) {
-				var _interval			= the_intervals[i].interval_element,
-					_interval_date		= the_intervals[i].interval_date,
-					_interval_visible	= the_intervals[i].interval_visible,
+				var _interval			= the_intervals[i].element,
+					_interval_date		= the_intervals[i].date,
+					_interval_visible	= the_intervals[i].visible,
 					_pos				= positionOnTimeline(interval, the_intervals[i].relative_pos),
 					pos					= _pos.begin,
 					_animation			= the_intervals[i].animation,
@@ -7744,150 +7756,206 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			*/
 		}
 		
+		/* Interval Elements
+		================================================== */
 		var createIntervalElements = function(_interval, _array, _element_parent) {
 			
-			var inc_time = 0,
-				_first_run = true,
-				_last_pos = 0,
-				_largest_pos = 0;
+			var inc_time			= 0,
+				_first_run			= true,
+				_last_pos			= 0,
+				_largest_pos		= 0,
+				_timezone_offset,
+				_first_date,
+				firefox = {
+					flag:			false,
+					offset:			0
+				};
 			
 			VMM.attachElement(_element_parent, "");
 			
 			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
+			_timezone_offset = _interval.date.getTimezoneOffset();
 			
-			for(var i = 0; i < Math.ceil(_interval.number) + 1; i++) {
-				var _idd,
-					_pos,
-					pos,
-					_date,
-					_visible = false,
-					_relative_pos,
-					_element = VMM.appendAndGetElement(_element_parent, "<div>", _interval.classname);
+			for(var i = 0; i < Math.ceil(_interval.number) + 2; i++) {
+				var _is_year			= false,
+					int_obj = {
+						element: 		VMM.appendAndGetElement(_element_parent, "<div>", _interval.classname),
+						date: 			new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0),
+						visible: 		false,
+						date_string:	"",
+						type: 			_interval.interval_type,
+						relative_pos:	0,
+						is_detached:	false,
+						animation: {
+							animate:	false,
+							pos:		"",
+							opacity:	"100"
+						
+						}
+					};
+				
+				//int_obj.date.setFullYear(	data[0].startdate.getFullYear()	);
+				//int_obj.date.setMonth(		data[0].startdate.getMonth()	);
+				//int_obj.date.setDate(		data[0].startdate.getDate()		);
+				//int_obj.date.setHours(		data[0].startdate.getHours()	);
+				//int_obj.date.setMinutes(	data[0].startdate.getMinutes()	);
+				//int_obj.date.setSeconds(	data[0].startdate.getSeconds()	);
+				//int_obj.date.setMilliseconds(0);
+				
 				
 				if (_interval.type == "eon") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 500000000) * 500000000	);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 500000000) * 500000000;
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 500000000));
+					int_obj.date.setFullYear(_first_date + (inc_time * 500000000));
+					_is_year = true;
 				} else if (_interval.type == "era") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100000000) * 100000000	);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 100000000) * 100000000;
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 100000000));
+					int_obj.date.setFullYear(_first_date + (inc_time * 100000000));
+					_is_year = true;
 				} else if (_interval.type == "epoch") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10000000) * 10000000	);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 10000000) * 10000000
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 10000000));
+					int_obj.date.setFullYear(_first_date + (inc_time * 10000000));
+					_is_year = true;
 				} else if (_interval.type == "age") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 1000000) * 1000000	);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 1000000) * 1000000
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 1000000));
+					int_obj.date.setFullYear(_first_date + (inc_time * 1000000));
+					_is_year = true;
 				} else if (_interval.type == "millenium") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 1000) * 1000	);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 1000) * 1000;
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 1000));
+					int_obj.date.setFullYear(_first_date + (inc_time * 1000));
+					_is_year = true;
 				} else if (_interval.type == "century") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 100) * 100		);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 100) * 100
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 100));
+					int_obj.date.setFullYear(_first_date + (inc_time * 100));
+					_is_year = true;
 				} else if (_interval.type == "decade") {
 					if (_first_run) {
-						_interval.date.setFullYear(		Math.floor(data[0].startdate.getFullYear() / 10) * 10		);
+						_first_date = Math.floor(data[0].startdate.getFullYear() / 10) * 10;
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + (inc_time * 10));
+					int_obj.date.setFullYear(_first_date + (inc_time * 10));
+					_is_year = true;
 				} else if (interval.type == "year") {
 					if (_first_run) {
-						
+						_first_date = data[0].startdate.getFullYear();
 					}
-					_interval.date.setFullYear(_interval.date.getFullYear() + inc_time);
+					int_obj.date.setFullYear(_first_date + inc_time);
+					_is_year = true;
 				} else if (_interval.type == "month") {
 					if (_first_run) {
-						_interval.date.setMonth(data[0].startdate.getMonth());
+						_first_date = data[0].startdate.getMonth();
 					}
-					_interval.date.setMonth(_interval.date.getMonth() + inc_time);
+					int_obj.date.setMonth(_first_date + inc_time);
 				} else if (_interval.type == "week") {
 					if (_first_run) {
-						_interval.date.setMonth(		data[0].startdate.getMonth()		);
-						_interval.date.setDate(		Math.floor(data[0].startdate.getDate() *7)			);
+						_first_date = data[0].startdate.getMonth();
 					}
-					_interval.date.setDate(_interval.date.getDate() + (inc_time * 7) );
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(_first_date + (inc_time * 7) );
 				} else if (_interval.type == "day") {
 					if (_first_run) {
-						_interval.date.setMonth(		data[0].startdate.getMonth()			);
-						_interval.date.setDate(		data[0].startdate.getDate()				);
+						_first_date = data[0].startdate.getDate();
 					}
-					_interval.date.setDate(_interval.date.getDate() + inc_time);
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(_first_date + inc_time);
 				} else if (_interval.type == "hour") {
 					if (_first_run) {
-						_interval.date.setMonth(		data[0].startdate.getMonth()			);
-						_interval.date.setDate(		data[0].startdate.getDate()				);
-						_interval.date.setHours(		data[0].startdate.getHours()			);
+						_first_date = data[0].startdate.getHours();
 					}
-					_interval.date.setHours(_interval.date.getHours() + inc_time);
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(data[0].startdate.getDate());
+					int_obj.date.setHours(_first_date + inc_time);
 				} else if (_interval.type == "minute") {
 					if (_first_run) {
-						_interval.date.setMonth(		data[0].startdate.getMonth()			);
-						_interval.date.setDate(		data[0].startdate.getDate()				);
-						_interval.date.setHours(		data[0].startdate.getHours()			);
-						_interval.date.setMinutes(	data[0].startdate.getMinutes()			);
+						_first_date = data[0].startdate.getMinutes();
 					}
-					_interval.date.setMinutes(_interval.date.getMinutes() + inc_time);
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(data[0].startdate.getDate());
+					int_obj.date.setHours(data[0].startdate.getHours());
+					int_obj.date.setMinutes(_first_date + inc_time);
 				} else if (_interval.type == "second") {
 					if (_first_run) {
-						_interval.date.setMonth(		data[0].startdate.getMonth()			);
-						_interval.date.setDate(		data[0].startdate.getDate()				);
-						_interval.date.setHours(		data[0].startdate.getHours()			);
-						_interval.date.setMinutes(	data[0].startdate.getMinutes()			);
-						_interval.date.setSeconds(	data[0].startdate.getSeconds()			);
+						_first_date = data[0].startdate.getSeconds();
 					}
-					_interval.date.setSeconds(_interval.date.getSeconds() + inc_time);
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(data[0].startdate.getDate());
+					int_obj.date.setHours(data[0].startdate.getHours());
+					int_obj.date.setMinutes(data[0].startdate.getMinutes());
+					int_obj.date.setSeconds(_first_date + inc_time);
+				}	else if (_interval.type == "millisecond") {
+					if (_first_run) {
+						_first_date = data[0].startdate.getMilliseconds();
+					}
+					int_obj.date.setMonth(data[0].startdate.getMonth());
+					int_obj.date.setDate(data[0].startdate.getDate());
+					int_obj.date.setHours(data[0].startdate.getHours());
+					int_obj.date.setMinutes(data[0].startdate.getMinutes());
+					int_obj.date.setSeconds(data[0].startdate.getSeconds());
+					int_obj.date.setMilliseconds(_first_date + inc_time);
 				}
 				
-				_idd = VMM.Date.prettyDate(_interval.date, true);
+				// FIX WEIRD FIREFOX BUG FOR GMT TIME FORMATTING
+				if (VMM.Browser.browser == "Firefox") {
+					if (int_obj.date.getFullYear() == "1970" && int_obj.date.getTimezoneOffset() != _timezone_offset) {
+						
+						trace("FIREFOX 1970 TIMEZONE OFFSET " + int_obj.date.getTimezoneOffset() + " SHOULD BE " + _timezone_offset);
+						trace(_interval.type + " " + _interval.date);
+						
+						// try and fix firefox bug, if not the flag will catch it
+						firefox.offset = (int_obj.date.getTimezoneOffset()/60);
+						firefox.flag = true;
+						int_obj.date.setHours(int_obj.date.getHours() + firefox.offset );
+						
+					} else if (firefox.flag) {
+						// catch the bug the second time around
+						firefox.flag = false;
+						int_obj.date.setHours(int_obj.date.getHours() + firefox.offset );
+						if (_is_year) {
+							firefox.flag = true;
+						}
+					}
+					
+				}
 				
-				inc_time = 1;
+				if (_is_year) {
+					if ( int_obj.date.getFullYear() < 0 ) {
+						int_obj.date_string = 	Math.abs( int_obj.date.getFullYear() ).toString() + " B.C.";
+					} else {
+						int_obj.date_string = int_obj.date.getFullYear();
+					}
+				} else {
+					int_obj.date_string = VMM.Date.prettyDate(int_obj.date, true);
+				}
 				
+				// Increment Time
+				inc_time++;
+				
+				// No longer first run
 				_first_run = false;
 				
-				_relative_pos = positionRelative(interval, _interval.date);
-				
-				//_pos = positionOnTimeline(_interval, _interval.date);
-				//pos = _pos.begin;
-				pos = _relative_pos.begin;
-				
-				VMM.appendElement(_element, _idd);
-				
-				VMM.Lib.css(_element, "text-indent", -(VMM.Lib.width(_element)/2));
-				VMM.Lib.css(_element, "opacity", "0");
-
-				_last_pos = pos;
-				
-				if (pos > _largest_pos) {
-					_largest_pos = pos;
+				int_obj.relative_pos = positionRelative(interval, int_obj.date);
+				_last_pos = int_obj.relative_pos.begin;
+				if (int_obj.relative_pos.begin > _largest_pos) {
+					_largest_pos = int_obj.relative_pos.begin;
 				}
 				
-				_date = new Date(_interval.date);
+				// Add the time string to the element and position it.
+				VMM.appendElement(int_obj.element, int_obj.date_string);
+				VMM.Lib.css(int_obj.element, "text-indent", -(VMM.Lib.width(int_obj.element)/2));
+				VMM.Lib.css(int_obj.element, "opacity", "0");
 				
-				var _obj = {
-					interval_element: 	_element,
-					interval_date: 		_date,
-					interval_visible: 	_visible, 
-					type: 				_interval.interval_type,
-					relative_pos:		_relative_pos,
-					is_detached:		false,
-					animation: {
-						animate: false,
-						pos: "",
-						opacity: "100"
-						
-					}
-				};
-				
-				_array.push(_obj);
+				// add the interval element to the array
+				_array.push(int_obj);
 			}
 			
 			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
