@@ -1,9 +1,10 @@
-/* MediaType
+/*	MediaType
+	Determines the type of media the url string is.
+	returns an object with .type and .id
+	the id is a key piece of information needed to make
+	the request of the api.
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
-	
-	//VMM.mediaType.youtube(d); //should return a true or false
-	// VMM.MediaType(url); //returns an object with .type and .id
 	
 	VMM.MediaType = function(d) {
 		var success	= false,
