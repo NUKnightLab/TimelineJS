@@ -139,7 +139,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			if (d2 != null) {
 				is_pair = true;
 			}
-				
+			
+			
 			if (type.of(d) == "date") {
 				if (d.getMonth() === 0 && d.getDate() == 1 && d.getHours() === 0 && d.getMinutes() === 0 ) {
 					// YEAR ONLY
@@ -173,8 +174,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						format = VMM.Date.dateformats.full_long; 
 					}
 				}
-					
-				_date = dateFormat(d, format);
+				
+				_date = dateFormat(d, format, false);
 				bc_check = _date.split(" ");
 					
 				// BC TIME SUPPORT
