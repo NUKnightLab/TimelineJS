@@ -145,7 +145,7 @@ if (typeof VMM == 'undefined') {
 		},
 		
 		api:	{
-			pushques:		[],
+			pushques:		[]
 			
 		},
 		
@@ -880,7 +880,7 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 			
-		},
+		}
 		
 	}
 }
@@ -966,7 +966,7 @@ if( typeof( jQuery ) != 'undefined' ){
 		easeInOutQuad: function (x, t, b, c, d) {
 			if ((t/=d/2) < 1) return c/2*t*t + b;
 			return -c/2 * ((--t)*(t-2) - 1) + b;
-		},
+		}
 	});
 }
 
@@ -1180,7 +1180,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
 		},
 			
 		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -1200,7 +1200,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'"
 		},
 			
 		setLanguage: function(lang) {
@@ -1974,7 +1974,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						return split.join('');
 					
 					
-					},
+					}
 				};
 
 				__TitleCase.init();
@@ -1986,7 +1986,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				
 			}
 			
-		},
+		}
 		
 	}).init();
 }
@@ -2316,7 +2316,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					//	TWEET MEDIA
 					if (typeof d.entities.media != 'undefined') {
 						if (d.entities.media[0].type == "photo") {
-							twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
+							//twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
 						}
 					}
 					
@@ -2331,14 +2331,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 					
 				
-					VMM.attachElement("#tweet_"+tweet.id.toString(), twit );
+					VMM.attachElement("#"+tweet.id.toString(), twit );
 					VMM.attachElement("#text_thumb_"+tweet.id.toString(), d.text );
 					
 				})
 				.error(function(jqXHR, textStatus, errorThrown) {
 					trace("TWITTER error");
 					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
-					VMM.attachElement("#tweet_"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
+					VMM.attachElement("#"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
 				})
 				.success(function(d) {
 					clearTimeout(twitter_timeout);
@@ -2543,7 +2543,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.attachElement("#twitter_"+id.toString(), twit );
 				VMM.attachElement("#text_thumb_"+id.toString(), d.text );
 				
-			},
+			}
 			
 			
 		},
@@ -3006,8 +3006,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.getJSON(the_url, function(d) {
 					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
 				
-					var flickr_large_id = "flickr_" + flick.id + "_large",
-						flickr_thumb_id = "flickr_" + flick.id + "_thumb";
+					var flickr_large_id = "#" + flick.id,
+						flickr_thumb_id = "#" + flick.id + "_thumb";
 						//flickr_thumb_id = "flickr_" + uid + "_thumb";
 				
 					var flickr_img_size,
@@ -3028,8 +3028,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					}
 				
 					flickr_img_thumb = d.sizes.size[0].source;
-					VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
-					VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+					VMM.Lib.attr(flickr_large_id, "src", flickr_img_size);
+					VMM.attachElement(flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
 					
 				})
 				.error(function(jqXHR, textStatus, errorThrown) {
@@ -3098,14 +3098,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		soundcloud: {
 			
-			get: function(url, id) {
-				var sound = {url: url, id: id};
+			get: function(mid, id) {
+				var sound = {mid: mid, id: id};
 				VMM.master_config.soundcloud.que.push(sound);
 				VMM.master_config.soundcloud.active = true;
 			},
 			
 			create: function(sound, callback) {
-				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
+				var the_url = "http://soundcloud.com/oembed?url=" + sound.mid + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+sound.id, d.html);
 					callback();
@@ -3211,7 +3211,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					VMM.master_config.wikipedia.que.remove(0);
 				}
 
-			},
+			}
 			
 		},
 		
@@ -3243,11 +3243,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var p = {
 					active: 				false,
 					player: 				{},
-					name:					'youtube_'+vid.id,
+					name:					vid.id,
 					playing:				false
 				};
 				
-				p.player['youtube_'+vid.id] = new YT.Player('youtube_'+vid.id, {
+				p.player[vid.id] = new YT.Player(vid.id, {
 					height: 				'390',
 					width: 					'640',
 					playerVars: {
@@ -3272,8 +3272,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace(d);
 				trace(vid);
 				if (typeof d.data != 'undefined') {
-					var thumb_id = "youtube_" + vid.id + "_thumb";
-					VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
+					var thumb_id = "#" + vid.id + "_thumb";
+					VMM.attachElement(thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 					
 				}
 			},
@@ -3319,26 +3319,27 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		vimeo: {
 			
-			get: function(id) {
-				VMM.master_config.vimeo.que.push(id);
+			get: function(mid, id) {
+				var vid = {mid: mid, id: id};
+				VMM.master_config.vimeo.que.push(vid);
 				VMM.master_config.vimeo.active = true;
 			},
 			
-			create: function(d, callback) {
+			create: function(vid, callback) {
 				trace("VIMEO CREATE");
 				// THUMBNAIL
-				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
-				VMM.getJSON(url, function(d) {
-					VMM.ExternalAPI.vimeo.createThumb(d);
+				var the_url = "http://vimeo.com/api/v2/video/" + vid.mid + ".json";
+				VMM.getJSON(the_url, function(d) {
+					VMM.ExternalAPI.vimeo.createThumb(d, vid);
 					callback();
 				});
 				
 			},
 			
-			createThumb: function(d) {
+			createThumb: function(d, vid) {
 				trace("VIMEO CREATE THUMB");
-				var thumb_id = "vimeo_" + d[0].id + "_thumb";
-				VMM.attachElement("#" + thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
+				var thumb_id = "#" + vid.id + "_thumb";
+				VMM.attachElement(thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
 			},
 			
 			pushQue: function() {
@@ -3402,19 +3403,19 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
-					mediaElem		=	"<div class='thumbnail thumb-photo' id='flickr_" + uid + "_thumb'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-photo' id='" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"instagram") {
-					mediaElem		=	"<div class='thumbnail thumb-instagram' id='instagram_" + m.id + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-instagram' id='" + uid + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
-					mediaElem		=	"<div class='thumbnail thumb-youtube' id='youtube_" + uid + "_thumb'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-youtube' id='" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"googledoc") {
 					mediaElem		=	"<div class='thumbnail thumb-document'></div>";
 					return mediaElem;
 				} else if (m.type	==	"vimeo") {
-					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='vimeo_" + m.id + "_thumb'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type  ==  "dailymotion") {
 					mediaElem		=  "<div class='thumbnail thumb-video'></div>";
@@ -3483,30 +3484,30 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
 			// FLICKR
 				} else if (m.type		==	"flickr") {
-					_id					=	"flickr_" + uid;
-					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
+					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + uid + "'></a></div>";
 					VMM.ExternalAPI.flickr.get(m.id, uid);
 			// INSTAGRAM
 				} else if (m.type		==	"instagram") {
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m.id) + "'></a></div>";
+					//VMM.ExternalAPI.instagram.get(m.id, uid);
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + uid + "'>" + loading_messege + "</div>";
 					VMM.ExternalAPI.googledocs.get(m.id, uid);
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + uid + "'>" + loading_messege + "</div></div>";
+					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='" + uid + "'>" + loading_messege + "</div></div>";
 					VMM.ExternalAPI.youtube.get(m.id, uid);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
-					VMM.ExternalAPI.vimeo.get(m.id);
+					VMM.ExternalAPI.vimeo.get(m.id, uid);
 			// DAILYMOTION
 				} else if (m.type		==	"dailymotion") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
 			// TWITTER
 				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "tweet_" + uid + "'>" + loading_messege + "</div>";
+					mediaElem			=	"<div class='twitter' id='" + uid + "'>" + loading_messege + "</div>";
 					isTextMedia			=	true;
 					VMM.ExternalAPI.twitter.get(m.id, uid);
 			// TWITTER
@@ -3526,12 +3527,12 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					_id					=	"googleplus_" + m.id;
 					mediaElem			=	"<div class='googleplus' id='" + _id + "'>" + loading_messege + "</div>";
 					isTextMedia			=	true;
-					VMM.ExternalAPI.googleplus.get(m.user, m.id);
+					VMM.ExternalAPI.googleplus.get(m.user, m.id, uid);
 			// WIKIPEDIA
 				} else if (m.type		==	"wikipedia") {
-					mediaElem			=	"<div class='wikipedia' id='" + m.uniqueid + "'>" + loading_messege + "</div>";
+					mediaElem			=	"<div class='wikipedia' id='" + uid + "'>" + loading_messege + "</div>";
 					isTextMedia			=	true;
-					VMM.ExternalAPI.wikipedia.get(m.id, m.uniqueid, m.lang);
+					VMM.ExternalAPI.wikipedia.get(m.id, uid, m.lang);
 			// STORIFY
 				} else if (m.type		==	"storify") { 
 					isTextMedia			=	true;
@@ -5291,7 +5292,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
+			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -5302,7 +5303,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Loading Timeline... ",
@@ -6421,7 +6422,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.56";
+		version = 					"1.58";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6488,7 +6489,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		130,
+					padding: 		130
 				},
 				nav: {
 					width: 			100,
@@ -6686,10 +6687,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* GET DATA
 			================================================== */
+			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
+				if ( parseInt(VMM.Browser.version, 10) <= 7 ) {
+					ie7 = true;
+				}
+			}
 			
-			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
+			if (ie7) {
 				ie7 = true;
-				VMM.fireEvent(global, config.events.messege, "Internet Explorer 7 is not supported by #Timeline.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
 					VMM.Timeline.DataObj.getData(_data);

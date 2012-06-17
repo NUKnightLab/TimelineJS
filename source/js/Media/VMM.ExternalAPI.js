@@ -66,7 +66,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					//	TWEET MEDIA
 					if (typeof d.entities.media != 'undefined') {
 						if (d.entities.media[0].type == "photo") {
-							twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
+							//twit += "<img src=' " + d.entities.media[0].media_url + "'  alt=''>"
 						}
 					}
 					
@@ -81,14 +81,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 					
 				
-					VMM.attachElement("#tweet_"+tweet.id.toString(), twit );
+					VMM.attachElement("#"+tweet.id.toString(), twit );
 					VMM.attachElement("#text_thumb_"+tweet.id.toString(), d.text );
 					
 				})
 				.error(function(jqXHR, textStatus, errorThrown) {
 					trace("TWITTER error");
 					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
-					VMM.attachElement("#tweet_"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
+					VMM.attachElement("#"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
 				})
 				.success(function(d) {
 					clearTimeout(twitter_timeout);
@@ -293,7 +293,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.attachElement("#twitter_"+id.toString(), twit );
 				VMM.attachElement("#text_thumb_"+id.toString(), d.text );
 				
-			},
+			}
 			
 			
 		},
@@ -756,8 +756,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.getJSON(the_url, function(d) {
 					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
 				
-					var flickr_large_id = "flickr_" + flick.id + "_large",
-						flickr_thumb_id = "flickr_" + flick.id + "_thumb";
+					var flickr_large_id = "#" + flick.id,
+						flickr_thumb_id = "#" + flick.id + "_thumb";
 						//flickr_thumb_id = "flickr_" + uid + "_thumb";
 				
 					var flickr_img_size,
@@ -778,8 +778,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					}
 				
 					flickr_img_thumb = d.sizes.size[0].source;
-					VMM.Lib.attr("#"+flickr_large_id, "src", flickr_img_size);
-					VMM.attachElement("#"+flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
+					VMM.Lib.attr(flickr_large_id, "src", flickr_img_size);
+					VMM.attachElement(flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
 					
 				})
 				.error(function(jqXHR, textStatus, errorThrown) {
@@ -848,14 +848,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		soundcloud: {
 			
-			get: function(url, id) {
-				var sound = {url: url, id: id};
+			get: function(mid, id) {
+				var sound = {mid: mid, id: id};
 				VMM.master_config.soundcloud.que.push(sound);
 				VMM.master_config.soundcloud.active = true;
 			},
 			
 			create: function(sound, callback) {
-				var the_url = "http://soundcloud.com/oembed?url=" + sound.url + "&format=js&callback=?";
+				var the_url = "http://soundcloud.com/oembed?url=" + sound.mid + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+sound.id, d.html);
 					callback();
@@ -961,7 +961,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					VMM.master_config.wikipedia.que.remove(0);
 				}
 
-			},
+			}
 			
 		},
 		
@@ -993,11 +993,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var p = {
 					active: 				false,
 					player: 				{},
-					name:					'youtube_'+vid.id,
+					name:					vid.id,
 					playing:				false
 				};
 				
-				p.player['youtube_'+vid.id] = new YT.Player('youtube_'+vid.id, {
+				p.player[vid.id] = new YT.Player(vid.id, {
 					height: 				'390',
 					width: 					'640',
 					playerVars: {
@@ -1022,8 +1022,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace(d);
 				trace(vid);
 				if (typeof d.data != 'undefined') {
-					var thumb_id = "youtube_" + vid.id + "_thumb";
-					VMM.attachElement("#" + thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
+					var thumb_id = "#" + vid.id + "_thumb";
+					VMM.attachElement(thumb_id, "<img src='" + d.data.thumbnail.sqDefault + "'>");
 					
 				}
 			},
@@ -1069,26 +1069,27 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		vimeo: {
 			
-			get: function(id) {
-				VMM.master_config.vimeo.que.push(id);
+			get: function(mid, id) {
+				var vid = {mid: mid, id: id};
+				VMM.master_config.vimeo.que.push(vid);
 				VMM.master_config.vimeo.active = true;
 			},
 			
-			create: function(d, callback) {
+			create: function(vid, callback) {
 				trace("VIMEO CREATE");
 				// THUMBNAIL
-				var url = "http://vimeo.com/api/v2/video/" + d + ".json";
-				VMM.getJSON(url, function(d) {
-					VMM.ExternalAPI.vimeo.createThumb(d);
+				var the_url = "http://vimeo.com/api/v2/video/" + vid.mid + ".json";
+				VMM.getJSON(the_url, function(d) {
+					VMM.ExternalAPI.vimeo.createThumb(d, vid);
 					callback();
 				});
 				
 			},
 			
-			createThumb: function(d) {
+			createThumb: function(d, vid) {
 				trace("VIMEO CREATE THUMB");
-				var thumb_id = "vimeo_" + d[0].id + "_thumb";
-				VMM.attachElement("#" + thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
+				var thumb_id = "#" + vid.id + "_thumb";
+				VMM.attachElement(thumb_id, "<img src='" + d[0].thumbnail_small + "'>");
 			},
 			
 			pushQue: function() {

@@ -123,7 +123,7 @@ if (typeof VMM == 'undefined') {
 		},
 		
 		api:	{
-			pushques:		[],
+			pushques:		[]
 			
 		},
 		

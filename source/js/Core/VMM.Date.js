@@ -17,7 +17,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
 		},
 			
 		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
@@ -37,7 +37,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "dddd', 'h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
 			full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'"
 		},
 			
 		setLanguage: function(lang) {

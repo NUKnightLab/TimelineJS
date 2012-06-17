@@ -10,7 +10,7 @@ if(typeof VMM != 'undefined') {
 			month: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
 			month_abbr: ["Jan.", "Fev.", "Mar.", "Abr.", "Mai.", "Jun.", "Jul.", "Ago.", "Set.", "Out.", "Nov.", "Dez."],
 			day: ["Domingo","Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
-			day_abbr: ["Dom.","Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."],
+			day_abbr: ["Dom.","Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."]
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -21,7 +21,7 @@ if(typeof VMM != 'undefined') {
 			time_no_seconds_short: "hh:MM TT",
 			time_no_seconds_small_date: "hh:MM TT'<br/><small>'d 'de' mmmm',' yyyy'</small>'",
 			full_long: "dddd',' d 'de' mmm',' yyyy 'às' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' d 'de' mmm',' yyyy'</small>'",
+			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' d 'de' mmm',' yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Carregando Timeline... ",

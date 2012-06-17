@@ -454,7 +454,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 						return split.join('');
 					
 					
-					},
+					}
 				};
 
 				__TitleCase.init();
@@ -466,7 +466,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				
 			}
 			
-		},
+		}
 		
 	}).init();
 }

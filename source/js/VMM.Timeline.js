@@ -81,7 +81,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.56";
+		version = 					"1.58";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -148,7 +148,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		130,
+					padding: 		130
 				},
 				nav: {
 					width: 			100,
@@ -346,10 +346,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			/* GET DATA
 			================================================== */
+			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
+				if ( parseInt(VMM.Browser.version, 10) <= 7 ) {
+					ie7 = true;
+				}
+			}
 			
-			if (VMM.Browser.browser == "MSIE" && parseInt(VMM.Browser.version, 10) == 7) {
+			if (ie7) {
 				ie7 = true;
-				VMM.fireEvent(global, config.events.messege, "Internet Explorer 7 is not supported by #Timeline.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
 			} else {
 				if (type.of(_data) == "string" || type.of(_data) == "object") {
 					VMM.Timeline.DataObj.getData(_data);

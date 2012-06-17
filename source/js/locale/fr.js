@@ -10,7 +10,7 @@ if(typeof VMM != 'undefined') {
 			month: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
 			month_abbr: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "dec."],
 			day: ["dimanche","lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
-			day_abbr: ["dim.","lu.", "ma.", "me.", "jeu.", "vend.", "sam."],
+			day_abbr: ["dim.","lu.", "ma.", "me.", "jeu.", "vend.", "sam."]
 		}, 
 		dateformats: {
 			year: "yyyy",

@@ -10,7 +10,7 @@ if(typeof VMM != 'undefined') {
 			month: ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"],
 			month_abbr: ["Jan.", "Feb.", "Maret", "April", "Mei", "Juni", "July", "Agus.", "Sept.", "Okt.", "Nov.", "Des."],
 			day: ["Ahad","Senin", "Selasa", "Rabu", "Kamis", "Jum'at", "Sabtu"],
-			day_abbr: ["Ahad","Sen.", "Sel.", "Rabu", "Kamis", "Jum.", "Sab."],
+			day_abbr: ["Ahad","Sen.", "Sel.", "Rabu", "Kamis", "Jum.", "Sab."]
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -21,7 +21,7 @@ if(typeof VMM != 'undefined') {
 			time_no_seconds_short: "HH:MM",
 			time_no_seconds_small_date: "HH:MM'<br/><small>'d mmmm yyyy'</small>'",
 			full_long: "dddd',' d mmm yyyy 'pukul' HH:MM",
-			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'",
+			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Memuat Timeline... ",

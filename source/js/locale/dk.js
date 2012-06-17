@@ -10,7 +10,7 @@ if(typeof VMM != 'undefined') {
 			month: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"],
 			month_abbr: ["Jan.", "Feb.", "Marts", "April", "Maj", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Dec."],
 			day: ["Søndag","Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
-			day_abbr: ["Sø.","Ma.", "Ti.", "On.", "To.", "Fr.", "L?."],
+			day_abbr: ["Sø.","Ma.", "Ti.", "On.", "To.", "Fr.", "L?."]
 		}, 
 		dateformats: {
 			year: "yyyy",
@@ -21,7 +21,7 @@ if(typeof VMM != 'undefined') {
 			time_no_seconds_short: "HH:MM",
 			time_no_seconds_small_date: "HH:MM'<br/><small>'d mmmm',' yyyy'</small>'",
 			full_long: "dddd',' d. mmm',' yyyy 'um' HH:MM",
-			full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'",
+			full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Henter timeline... ",

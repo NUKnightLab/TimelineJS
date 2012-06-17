@@ -10,7 +10,7 @@ if(typeof VMM != 'undefined') {
 			month: ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
 			month_abbr: ["Ene.","Feb.","Mar.","Abr.","May.","Jun.","Jul.","Ago.","Sep.","Oct.","Nov.","Dic."],
 			day: ["Domingo","Lunes","Martes","iércoles","Jueves","Viernes","Sábado"],
-			day_abbr: ["Dom.","Lun.","Mar.","Mié.","Jue.","Vie.","Sáb."],
+			day_abbr: ["Dom.","Lun.","Mar.","Mié.","Jue.","Vie.","Sáb."]
 		}, 
 		dateformats: {
 			year: "yyyy",
