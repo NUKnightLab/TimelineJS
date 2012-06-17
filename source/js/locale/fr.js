@@ -9,13 +9,8 @@ if(typeof VMM != 'undefined') {
 		date: {
 			month: ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"],
 			month_abbr: ["janv.", "févr.", "mars", "avril", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "dec."],
-<<<<<<< HEAD
-			day: ["dimanche","lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"],
-			day_abbr: ["dim.","lu.", "ma.", "me.", "jeu.", "vend.", "sam."]
-=======
 			day: ["Dimanche","Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
 			day_abbr: ["Dim.","Lu.", "Ma.", "Me.", "Jeu.", "Vend.", "Sam."],
->>>>>>> 2777d46deba49aa37730e2d31bcd2fb1e1112acf
 		}, 
 		dateformats: {
 			year: "yyyy",
