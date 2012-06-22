@@ -2,10 +2,9 @@
 {
     "timeline":
     {
-        "headline":"The Kitchen Sink",
+        "headline":"Sh*t People Say",
         "type":"default",
-		"startDate":"2011,9,1",
-		"text":"An example of the different kinds of stuff you can do.",
+		"text":"People say stuff",
         "date": [
             {
                 "startDate":"2012,1,26",
