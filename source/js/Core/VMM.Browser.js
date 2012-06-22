@@ -1,4 +1,4 @@
-/* DEVICE AND BROWSER DETECTION
+/*	* DEVICE AND BROWSER DETECTION
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 	
@@ -13,36 +13,43 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.orientation = this.searchOrientation(window.orientation);
 		},
 		searchOrientation: function(orientation) {
+			var orient = "";
 			if ( orientation == 0  || orientation == 180) {  
-				return "portrait";
+				orient = "portrait";
 			} else if ( orientation == 90 || orientation == -90) {  
-				return "landscape";
+				orient = "landscape";
 			} else {
-				return "normal";
+				orient = "normal";
 			}
+			return orient;
 		},
 		searchDevice: function(d) {
+			var device = "";
 			if (d.match(/Android/i) || d.match(/iPhone|iPod/i)) {
-				return "mobile";
+				device = "mobile";
 			} else if (d.match(/iPad/i)) {
-				return "tablet";
+				device = "tablet";
 			} else if (d.match(/BlackBerry/i) || d.match(/IEMobile/i)) {
-				return "other mobile";
+				device = "other mobile";
 			} else {
-				return "desktop";
+				device = "desktop";
 			}
+			return device;
 		},
 		searchString: function (data) {
 			for (var i=0;i<data.length;i++)	{
-				var dataString = data[i].string;
-				var dataProp = data[i].prop;
+				var dataString	= data[i].string,
+					dataProp	= data[i].prop;
+					
 				this.versionSearchString = data[i].versionSearch || data[i].identity;
+				
 				if (dataString) {
-					if (dataString.indexOf(data[i].subString) != -1)
+					if (dataString.indexOf(data[i].subString) != -1) {
 						return data[i].identity;
-				}
-				else if (dataProp)
+					}
+				} else if (dataProp) {
 					return data[i].identity;
+				}
 			}
 		},
 		searchVersion: function (dataString) {

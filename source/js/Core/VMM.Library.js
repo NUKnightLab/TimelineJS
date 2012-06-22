@@ -1,4 +1,4 @@
-/* LIBRARY ABSTRACTION
+/*	* LIBRARY ABSTRACTION
 ================================================== */
 if(typeof VMM != 'undefined') {
 	
