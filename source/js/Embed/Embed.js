@@ -1,18 +1,17 @@
-/*!
-	VéritéCo Timeline Loader 0.61
-	Designed and built by Zach Wise digitalartwork.net
+/*	* VéritéCo Timeline Loader 0.8
+	* Designed and built by Zach Wise digitalartwork.net
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    * This program is free software: you can redistribute it and/or modify
+    * it under the terms of the GNU General Public License as published by
+    * the Free Software Foundation, either version 3 of the License, or
+    * (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
 
-    http://www.gnu.org/licenses/
+    * http://www.gnu.org/licenses/
 
 */  
 
@@ -29,13 +28,17 @@ if(typeof timeline_path == 'undefined' || typeof timeline_path == 'undefined') {
 }
 function getScriptPath(scriptname) {
 	var scriptTags = document.getElementsByTagName('script'),
-		script_path = "";
+		script_path = "",
+		script_path_end = "";
 	for(var i = 0; i < scriptTags.length; i++) {
 		if (scriptTags[i].src.match(scriptname)) {
 			script_path = scriptTags[i].src;
 		}
 	}
-	return script_path.split('?')[0].split('/').slice(0, -1).join('/') + '/';
+	if (script_path != "") {
+		script_path_end = "/"
+	}
+	return script_path.split('?')[0].split('/').slice(0, -1).join('/') + script_path_end;
 }
 
 /* TIMELINE LOADER
@@ -46,7 +49,7 @@ function getScriptPath(scriptname) {
 	/* VARS
 	================================================== */
 	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.58",
+		timeline_js_version = "1.59",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
