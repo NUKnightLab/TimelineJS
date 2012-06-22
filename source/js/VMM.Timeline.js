@@ -81,7 +81,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.61";
+		version = 					"1.62";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -125,6 +125,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				density: 			4,
 				minor_width: 		0,
 				minor_left:			0,
+				contstraint: {
+					left:			0,
+					right:			0,
+					right_min:		0
+				},
 				multiplier: {
 					current: 		6,
 					min: 			.1,

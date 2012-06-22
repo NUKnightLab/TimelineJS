@@ -124,6 +124,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function reSize(firstrun) {
+			config.nav.contstraint.left = (config.width/2);
+			config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
 			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
 			VMM.Lib.css($timenavindicator, "left", Math.round(config.width/2)-8);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
@@ -193,14 +195,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				e = e.originalEvent;
 			}
 			if (e.wheelDelta) {
-				trace("wheelDelta " + e.wheelDelta);
 				delta = e.wheelDelta/6;
-				trace("wheelDelta1 " + delta);
-				
 			} else if (e.detail) {
-				trace("detail " + e.detail);
 				delta = -e.detail*12;
-				trace("detail");
 			}
 			if (delta) {
 				if (e.preventDefault) {
@@ -211,16 +208,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// Webkit
 			if (typeof e.wheelDeltaY != 'undefined' ) { 
 				delta = e.wheelDeltaY/6;
-				trace("deltaY " + e.wheelDeltaY);
 			}
-			trace(delta);
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
-			if (scroll_to > 0) {
-				
-			} else if (scoll_to < 0) {
-				
+			if (scroll_to > config.nav.contstraint.left) {
+				scroll_to = config.width/2;
+			} else if (scroll_to < config.nav.contstraint.right) {
+				scroll_to = config.nav.contstraint.right;
 			}
 			
 			VMM.Lib.stop($timenav);
@@ -990,11 +985,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 					if (pos > config.nav.minor_width) {
 						config.nav.minor_width = pos;
+						
 					}
 					
 					if (pos < config.nav.minor_left) {
 						config.nav.minor_left = pos;
-						trace("MINOR " + pos);
+						config.nav.contstraint.right_min = pos;
+						config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
 					}
 					
 				}
@@ -1293,33 +1290,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
 			VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
 			
-			/*
-			function handle(delta) {
-				if (delta < 0)
-					
-				else
-					
-			}
-
-			function wheel(event){
-				var delta = 0;
-				if (!event) event = window.event;
-				if (event.wheelDelta) {
-					delta = event.wheelDelta/120; 
-				} else if (event.detail) {
-					delta = -event.detail/3;
-				}
-				if (delta)
-					handle(delta);
-			        if (event.preventDefault)
-			                event.preventDefault();
-			        event.returnValue = false;
-			}
-			
-			if (window.addEventListener)
-				window.addEventListener('DOMMouseScroll', wheel, false);
-			window.onmousewheel = document.onmousewheel = wheel;
-			*/
 			VMM.fireEvent(layout, "LOADED");
 			_active = true;
 			
