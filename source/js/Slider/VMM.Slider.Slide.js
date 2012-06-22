@@ -182,12 +182,19 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = VMM.Date.prettyDate(data.startdate);
-						var en = VMM.Date.prettyDate(data.enddate);
+						var st	= VMM.Date.prettyDate(data.startdate);
+						var en	= VMM.Date.prettyDate(data.enddate);
+						var tag	= "";
+						/* TAG / CATEGORY
+						================================================== */
+						if (data.tag != null && data.tag != "") {
+							tag		= VMM.createElement("span", data.tag, "slide-tag");
+						}
+						
 						if (st != en) {
-							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
+							c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
 						} else {
-							c.text += VMM.createElement("h2", st, "date");
+							c.text += VMM.createElement("h2", st + tag, "date");
 						}
 					}
 				}
