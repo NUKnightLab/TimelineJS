@@ -20,19 +20,18 @@
      Begin VMM.js 
 ***********************************************/ 
 
-/* Verite
- * Verite JS Master
- * Version: 0.6
- * Date: April 26, 2012
- * Copyright 2012 Verite unless part of Verite Timeline, 
- * if part of Timeline then it inherits Timeline's license.
- * Designed and built by Zach Wise digitalartwork.net
- * ----------------------------------------------------- */
+/*	VéritéCo JS Master
+	Version: 0.6
+	Date: June 19, 2012
+	Copyright 2012 VéritéCo unless part of TimelineJS, 
+	if part of TimelineJS then it inherits TimelineJS's license.
+	Designed and built by Zach Wise digitalartwork.net
+================================================== */
 
 
-/* Simple JavaScript Inheritance
- * By John Resig http://ejohn.org/
- * MIT Licensed.
+/*	Simple JavaScript Inheritance
+	By John Resig http://ejohn.org/
+	MIT Licensed.
 ================================================== */
 (function() {
 	var initializing = false,
@@ -96,8 +95,8 @@
     };
 })();
 
-/* Access to the Global Object
- * access the global object without hard-coding the identifier window
+/*	Access to the Global Object
+	access the global object without hard-coding the identifier window
 ================================================== */
 var global = (function () {
    return this || (1,eval)('this');
@@ -392,7 +391,7 @@ var type={
      Begin VMM.Library.js 
 ***********************************************/ 
 
-/* LIBRARY ABSTRACTION
+/*	* LIBRARY ABSTRACTION
 ================================================== */
 if(typeof VMM != 'undefined') {
 	
@@ -975,7 +974,7 @@ if( typeof( jQuery ) != 'undefined' ){
      Begin VMM.Browser.js 
 ***********************************************/ 
 
-/* DEVICE AND BROWSER DETECTION
+/*	* DEVICE AND BROWSER DETECTION
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 	
@@ -990,36 +989,43 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.orientation = this.searchOrientation(window.orientation);
 		},
 		searchOrientation: function(orientation) {
+			var orient = "";
 			if ( orientation == 0  || orientation == 180) {  
-				return "portrait";
+				orient = "portrait";
 			} else if ( orientation == 90 || orientation == -90) {  
-				return "landscape";
+				orient = "landscape";
 			} else {
-				return "normal";
+				orient = "normal";
 			}
+			return orient;
 		},
 		searchDevice: function(d) {
+			var device = "";
 			if (d.match(/Android/i) || d.match(/iPhone|iPod/i)) {
-				return "mobile";
+				device = "mobile";
 			} else if (d.match(/iPad/i)) {
-				return "tablet";
+				device = "tablet";
 			} else if (d.match(/BlackBerry/i) || d.match(/IEMobile/i)) {
-				return "other mobile";
+				device = "other mobile";
 			} else {
-				return "desktop";
+				device = "desktop";
 			}
+			return device;
 		},
 		searchString: function (data) {
 			for (var i=0;i<data.length;i++)	{
-				var dataString = data[i].string;
-				var dataProp = data[i].prop;
+				var dataString	= data[i].string,
+					dataProp	= data[i].prop;
+					
 				this.versionSearchString = data[i].versionSearch || data[i].identity;
+				
 				if (dataString) {
-					if (dataString.indexOf(data[i].subString) != -1)
+					if (dataString.indexOf(data[i].subString) != -1) {
 						return data[i].identity;
-				}
-				else if (dataProp)
+					}
+				} else if (dataProp) {
 					return data[i].identity;
+				}
 			}
 		},
 		searchVersion: function (dataString) {
@@ -1129,30 +1135,24 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
      Begin VMM.FileExtention.js 
 ***********************************************/ 
 
-/* File Extention
+/*	* File Extention
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
-	//VMM.FileExtention.googleDocType(url);
 	VMM.FileExtention = {
 		googleDocType: function(url) {
-			var fileName = url;
-			var fileExtension = "";
-			//fileExtension = fileName.substr(5);
+			var fileName			= url,
+				fileExtension		= "",
+				validFileExtensions = ["DOC","DOCX","XLS","XLSX","PPT","PPTX","PDF","PAGES","AI","PSD","TIFF","DXF","SVG","EPS","PS","TTF","XPS","ZIP","RAR"],
+				flag				= false;
+				
 			fileExtension = fileName.substr(fileName.length - 5, 5);
-			var validFileExtensions = ["DOC","DOCX","XLS","XLSX","PPT","PPTX","PDF","PAGES","AI","PSD","TIFF","DXF","SVG","EPS","PS","TTF","XPS","ZIP","RAR"];
-			var flag = false;
 			
 			for (var i = 0; i < validFileExtensions.length; i++) {
-
-				
 				if (fileExtension.toLowerCase().match(validFileExtensions[i].toString().toLowerCase()) || fileName.match("docs.google.com") ) {
 					flag = true;
 				}
-				
 			}
-			
 			return flag;
-
 		}
 	}
 }
@@ -1161,13 +1161,14 @@ if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
      Begin VMM.Date.js 
 ***********************************************/ 
 
-/* Utilities and Useful Functions
+/*	* Utilities and Useful Functions
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	
 	VMM.Date = ({
 		
 		init: function() {
+			"use strict";
 			return this;
 		},
 		
@@ -1204,6 +1205,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		setLanguage: function(lang) {
+			"use strict";
 			trace("SET DATE LANGUAGE");
 			VMM.Date.dateformats		=	lang.dateformats;	
 			VMM.Date.month				=	lang.date.month;
@@ -1215,72 +1217,75 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		parse: function(d) {
+			"use strict";
+			var date,
+				date_array,
+				time_array,
+				time_parse;
+			
 			if (type.of(d) == "date") {
-				return d;
+				date = d;
 			} else {
-				var _date = new Date(0, 0, 1, 0, 0, 0, 0);
-				//var _date = new Date("January 1, 0000 00:00:00")
-				var _d_array, _t_array;
-				var _time_parse, _times;
+				date = new Date(0, 0, 1, 0, 0, 0, 0);
 				
 				if ( d.match(/,/gi) ) {
-					_d_array = d.split(",");
-					for(var i = 0; i < _d_array.length; i++) {
-						_d_array[i] = parseInt(_d_array[i]);
+					date_array = d.split(",");
+					for(var i = 0; i < date_array.length; i++) {
+						date_array[i] = parseInt(date_array[i]);
 					}
-					if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
-					if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
-					if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
-					if (	_d_array[3]	> 1		) {	_date.setHours(			_d_array[3]);			}
-					if (	_d_array[4]	> 1		) {	_date.setMinutes(		_d_array[4]);			}
-					if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
-					if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
+					if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
+					if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
+					if (	date_array[2]	> 1		) {	date.setDate(			date_array[2]);			}
+					if (	date_array[3]	> 1		) {	date.setHours(			date_array[3]);			}
+					if (	date_array[4]	> 1		) {	date.setMinutes(		date_array[4]);			}
+					if (	date_array[5]	> 1		) {	date.setSeconds(		date_array[5]);			}
+					if (	date_array[6]	> 1		) {	date.setMilliseconds(	date_array[6]);			}
 				} else if (d.match("/")) {
 					if (d.match(" ")) {
-						_time_parse = d.split(" ");
+						time_parse = d.split(" ");
 						if (d.match(":")) {
-							_t_array = _time_parse[1].split(":");
-							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
-							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
-							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
-							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+							time_array = time_parse[1].split(":");
+							if (	time_array[0]	>= 1	) {		date.setHours(			time_array[0]);	}
+							if (	time_array[1]	>= 1	) {		date.setMinutes(		time_array[1]);	}
+							if (	time_array[2]	>= 1	) {		date.setSeconds(		time_array[2]);	}
+							if (	time_array[3]	>= 1	) {		date.setMilliseconds(	time_array[3]);	}
 						}
-						_d_array = _time_parse[0].split("/");
+						date_array = time_parse[0].split("/");
 					} else {
-						_d_array = d.split("/");
+						date_array = d.split("/");
 					}
-					if (	_d_array[2]			) {	_date.setFullYear(		_d_array[2]);			}
-					if (	_d_array[0]	> 1		) {	_date.setMonth(			_d_array[0] - 1);		}
-					if (	_d_array[1]	> 1		) {	_date.setDate(			_d_array[1]);			}
+					if (	date_array[2]			) {	date.setFullYear(		date_array[2]);			}
+					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
+					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
 				} else if (d.length <= 5) {
-					_date.setFullYear(parseInt(d));
-					_date.setMonth(0);
-					_date.setDate(1);
-					_date.setHours(0);
-					_date.setMinutes(0);
-					_date.setSeconds(0);
-					_date.setMilliseconds(0);
+					date.setFullYear(parseInt(d));
+					date.setMonth(0);
+					date.setDate(1);
+					date.setHours(0);
+					date.setMinutes(0);
+					date.setSeconds(0);
+					date.setMilliseconds(0);
 				} else if (d.match("T")) {
 					if (navigator.userAgent.match(/MSIE\s(?!9.0)/)) {
 					    // IE 8 < Won't accept dates with a "-" in them.
-						_time_parse = d.split("T");
+						time_parse = d.split("T");
 						if (d.match(":")) {
-							_t_array = _time_parse[1].split(":");
-							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
-							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
-							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
-							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+							time_array = _time_parse[1].split(":");
+							if (	time_array[0]	>= 1	) {		date.setHours(			time_array[0]);	}
+							if (	time_array[1]	>= 1	) {		date.setMinutes(		time_array[1]);	}
+							if (	time_array[2]	>= 1	) {		date.setSeconds(		time_array[2]);	}
+							if (	time_array[3]	>= 1	) {		date.setMilliseconds(	time_array[3]);	}
 						}
-						_d_array = _time_parse[0].split("-");
-						if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
-						if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
-						if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
+						_d_array = time_parse[0].split("-");
+						if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
+						if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
+						if (	date_array[2]	> 1		) {	date.setDate(			date_array[2]);			}
 						
 					} else {
-						_date = new Date(Date.parse(d));
+						date = new Date(Date.parse(d));
 					}
 				} else {
-					_date = new Date(
+					date = new Date(
 						parseInt(d.slice(0,4)), 
 						parseInt(d.slice(4,6)) - 1, 
 						parseInt(d.slice(6,8)), 
@@ -1288,16 +1293,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						parseInt(d.slice(10,12))
 					);
 				}
-				return _date;
+				
 			}
+			return date;
 		},
 			
 		prettyDate: function(d, is_abbr, d2) {
-			var _date;
-			var _date2;
-			var format;
-			var bc_check;
-			var is_pair = false;
+			var _date,
+				_date2,
+				format,
+				bc_check,
+				is_pair = false;
 				
 			if (d2 != null) {
 				is_pair = true;
@@ -1345,10 +1351,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				for(var i = 0; i < bc_check.length; i++) {
 					if ( parseInt(bc_check[i]) < 0 ) {
 						trace("YEAR IS BC");
-						var bc_original = 	bc_check[i];
-						var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-						var bc_string = 	bc_number.toString() + " B.C.";
-						_date = _date.replace(bc_original, bc_string);
+						var bc_original	= bc_check[i];
+						var bc_number	= Math.abs( parseInt(bc_check[i]) );
+						var bc_string	= bc_number.toString() + " B.C.";
+						_date			= _date.replace(bc_original, bc_string);
 					}
 				}
 					
@@ -1360,10 +1366,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					for(var i = 0; i < bc_check.length; i++) {
 						if ( parseInt(bc_check[i]) < 0 ) {
 							trace("YEAR IS BC");
-							var bc_original = 	bc_check[i];
-							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-							var bc_string = 	bc_number.toString() + " B.C.";
-							_date2 = _date2.replace(bc_original, bc_string);
+							var bc_original	= bc_check[i];
+							var bc_number	= Math.abs( parseInt(bc_check[i]) );
+							var bc_string	= bc_number.toString() + " B.C.";
+							_date2			= _date2.replace(bc_original, bc_string);
 						}
 					}
 						
@@ -1518,7 +1524,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
      Begin VMM.Util.js 
 ***********************************************/ 
 
-/* Utilities and Useful Functions
+/*	* Utilities and Useful Functions
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 	
@@ -1528,12 +1534,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return this;
 		},
 		
-		/* CORRECT PROTOCOL (DOES NOT WORK)
+		/*	* CORRECT PROTOCOL (DOES NOT WORK)
 		================================================== */
 		correctProtocol: function(url) {
-			var loc = (window.parent.location.protocol).toString();
-			var prefix = "";
-			var _url = url.split("://", 2);
+			var loc = (window.parent.location.protocol).toString(),
+				prefix = "",
+				the_url = url.split("://", 2);
 			
 			if (loc.match("http")) {
 				prefix = loc;
@@ -1541,11 +1547,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				prefix = "https";
 			}
 			
-			return prefix + "://" + _url[1];
+			return prefix + "://" + the_url[1];
 			
 		},
 		
-		/* GET OBJECT ATTRIBUTE BY INDEX
+		/*	* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
 			if(typeof obj != 'undefined') {
@@ -1562,17 +1568,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 			
 		},
-		/* RANDOM BETWEEN
+		/*	* RANDOM BETWEEN
 		================================================== */
 		//VMM.Util.randomBetween(1, 3)
 		randomBetween: function(min, max) {
 			return Math.floor(Math.random() * (max - min + 1) + min);
 		},
 		
-		/* AVERAGE
-			http://jsfromhell.com/array/average
-			var x = VMM.Util.average([2, 3, 4]);
-			VMM.Util.average([2, 3, 4]).mean
+		/*	* AVERAGE
+			* http://jsfromhell.com/array/average
+			* var x = VMM.Util.average([2, 3, 4]);
+			* VMM.Util.average([2, 3, 4]).mean
 		================================================== */
 		average: function(a) {
 		    var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
@@ -1581,7 +1587,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		    return r.deviation = Math.sqrt(r.variance = s / t), r;
 		},
 		
-		/* CUSTOM SORT
+		/*	* CUSTOM SORT
 		================================================== */
 		customSort: function(a, b) {
 			var a1= a, b1= b;
@@ -1589,7 +1595,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return a1> b1? 1: -1;
 		},
 		
-		/* Remove Duplicates from Array
+		/*	* Remove Duplicates from Array
 		================================================== */
 		deDupeArray: function(arr) {
 			var i,
@@ -1606,7 +1612,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return out;
 		},
 		
-		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
+		/*	* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
 		================================================== */
 		number2money: function(n, symbol, padding) {
 			var symbol = (symbol !== null) ? symbol : true; // add $
@@ -1620,7 +1626,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return formatted;
 		},
 		
-		/* Returns a word count number
+		/*	* Returns a word count number
 		================================================== */
 		wordCount: function(s) {
 			var fullStr = s + " ";
@@ -1678,7 +1684,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return (n < 10 ? '0' : '') + n;
 		},
 		
-		/* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
+		/*	* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
 		================================================== */
 		truncateWords: function(s, min, max) {
 			
@@ -1711,7 +1717,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return (result.join(' '));
 		},
 		
-		/* Turns plain text links into real links
+		/*	* Turns plain text links into real links
 		================================================== */
 		linkify: function(text,targets,is_touch) {
 			
@@ -1771,7 +1777,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				.replace(/<\/b>/gim, "");
 		},
 		
-		/* Turns plain text links into real links
+		/*	* Turns plain text links into real links
 		================================================== */
 		// VMM.Util.unlinkify();
 		unlinkify: function(text) {
@@ -1789,13 +1795,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text;
 		},
 		
-		/* TK
+		/*	* TK
 		================================================== */
 		nl2br: function(text) {
 			return text.replace(/(\r\n|[\r\n]|\\n|\\r)/g,"<br/>");
 		},
 		
-		/* Generate a Unique ID
+		/*	* Generate a Unique ID
 		================================================== */
 		// VMM.Util.unique_ID(size);
 		unique_ID: function(size) {
@@ -1819,13 +1825,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 			return randomID(size);
 		},
-		/* Tells you if a number is even or not
+		/*	* Tells you if a number is even or not
 		================================================== */
 		// VMM.Util.isEven(n)
 		isEven: function(n){
 			return (n%2 === 0) ? true : false;
 		},
-		/* Get URL Variables
+		/*	* Get URL Variables
 		================================================== */
 		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
 		getUrlVars: function(string) {
@@ -1852,7 +1858,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return vars;
 		},
 
-		/* Cleans up strings to become real HTML
+		/*	* Cleans up strings to become real HTML
 		================================================== */
 		toHTML: function(text) {
 			
@@ -1862,7 +1868,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text.replace(/\s\s/g,"&nbsp;&nbsp;");
 		},
 		
-		/* Returns text strings as CamelCase
+		/*	* Returns text strings as CamelCase
 		================================================== */
 		toCamelCase: function(s,forceLowerCase) {
 			
@@ -1878,12 +1884,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return sps.join(" ");
 		},
 		
-		/* Replaces dumb quote marks with smart ones
+		/*	* Replaces dumb quote marks with smart ones
 		================================================== */
 		properQuotes: function(str) {
 			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
 		},
-		/* Given an int or decimal, return a string with pretty commas in the correct spot.
+		/*	* Given an int or decimal, return a string with pretty commas in the correct spot.
 		================================================== */
 		niceNumber: function(n){
 		
@@ -1911,7 +1917,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 		},
 		
-		/* Transform text to Title Case
+		/*	* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
@@ -1995,22 +2001,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
      Begin VMM.LoadLib.js 
 ***********************************************/ 
 
-/*
-	LoadLib
-	Based on LazyLoad by Ryan Grove
-	https://github.com/rgrove/lazyload/ 
-	Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
-	All rights reserved.
+/*	* LoadLib Based on LazyLoad by Ryan Grove
+	* https://github.com/rgrove/lazyload/ 
+	* Copyright (c) 2011 Ryan Grove <ryan@wonko.com>
+	* All rights reserved.
 
-	Permission is hereby granted, free of charge, to any person obtaining a copy of
-	this software and associated documentation files (the 'Software'), to deal in
-	the Software without restriction, including without limitation the rights to
-	use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-	the Software, and to permit persons to whom the Software is furnished to do so,
-	subject to the following conditions:
+	* Permission is hereby granted, free of charge, to any person obtaining a copy of
+	* this software and associated documentation files (the 'Software'), to deal in
+	* the Software without restriction, including without limitation the rights to
+	* use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+	* the Software, and to permit persons to whom the Software is furnished to do so,
+	* subject to the following conditions:
 
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
+	* The above copyright notice and this permission notice shall be included in all
+	* copies or substantial portions of the Software.
 
 ================================================== */
 window.loadedJS = [];
@@ -2338,7 +2342,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				.error(function(jqXHR, textStatus, errorThrown) {
 					trace("TWITTER error");
 					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
-					VMM.attachElement("#"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
+					VMM.attachElement("#"+tweet.id, VMM.MediaElement.loadingmessage("ERROR LOADING TWEET " + tweet.mid) );
 				})
 				.success(function(d) {
 					clearTimeout(twitter_timeout);
@@ -2364,7 +2368,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						mes		=	"<p>Still waiting on Twitter. " + id + "</p>";
 						//mes 	= 	"<p>Tweet " + id + " was not found.</p>";
 					}
-					VMM.attachElement("#twitter_" + id, "<span class='messege'>" + mes + "</span>" );
+					VMM.attachElement("#twitter_" + id, VMM.MediaElement.loadingmessage(mes) );
 				});
 				
 			},
@@ -2923,7 +2927,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				.error(function(jqXHR, textStatus, errorThrown) {
 					var error_obj = VMM.parseJSON(jqXHR.responseText);
 					trace(error_obj.error.message);
-					VMM.attachElement("#googleplus_" + gplus.activity, "<p>ERROR LOADING GOOGLE+ </p><p>" + error_obj.error.message + "</p>");
+					VMM.attachElement("#googleplus_" + gplus.activity, VMM.MediaElement.loadingmessage("<p>ERROR LOADING GOOGLE+ </p><p>" + error_obj.error.message + "</p>"));
 				})
 				.success(function(d) {
 					clearTimeout(googleplus_timeout);
@@ -2950,7 +2954,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			errorTimeOut: function(gplus) {
 				trace("GOOGLE+ JSON ERROR TIMEOUT " + gplus.activity);
-				VMM.attachElement("#googleplus_" + gplus.activity, "<p>Still waiting on GOOGLE+ </p><p>" + gplus.activity + "</p>");
+				VMM.attachElement("#googleplus_" + gplus.activity, VMM.MediaElement.loadingmessage("<p>Still waiting on GOOGLE+ </p><p>" + gplus.activity + "</p>"));
 				
 			}
 			
@@ -2986,8 +2990,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		flickr: {
 			
-			get: function(mid, id) {
-				var flick = {mid: mid, id: id};
+			get: function(mid, id, link) {
+				var flick = {mid: mid, id: id, link:link};
 				VMM.master_config.flickr.que.push(flick);
 				VMM.master_config.flickr.active = true;
 			},
@@ -3029,6 +3033,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 					flickr_img_thumb = d.sizes.size[0].source;
 					VMM.Lib.attr(flickr_large_id, "src", flickr_img_size);
+					//VMM.attachElement(flickr_large_id, "<a href='" + flick.link + "' target='_blank'><img src='" + flickr_img_size + "'></a>");
 					VMM.attachElement(flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
 					
 				})
@@ -3181,7 +3186,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					trace("WIKIPEDIA ERROR: " + textStatus + " " + jqXHR.responseText);
 					trace(errorThrown);
 					
-					VMM.attachElement("#"+api_obj.id, "<span class='messege'>" + "<p>Wikipedia is not responding</p>" + "</span>" );
+					VMM.attachElement("#"+api_obj.id, VMM.MediaElement.loadingmessage("<p>Wikipedia is not responding</p>"));
 					// TRY AGAIN?
 					clearTimeout(callback_timeout);
 					if (VMM.master_config.wikipedia.tries < 4) {
@@ -3384,6 +3389,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			return this;
 		},
 		
+		loadingmessage: function(m) {
+			return "<div class='loading'><div class='loading-container'><div class='loading-icon'></div>" + "<div class='message'><p>" + m + "</p></div></div></div>";
+		},
+		
 		thumbnail: function(data, w, h, uid) {
 			var _w		= 16,
 				_h		= 24,
@@ -3463,7 +3472,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 		
 		create: function(data, uid) {
 			var _valid = false,
-				loading_messege			=	"<span class='messege'><p>" + VMM.master_config.language.messages.loading + "</p></span>";
+				//loading_messege			=	"<span class='messege'><p>" + VMM.master_config.language.messages.loading + "</p></span>";
+				loading_messege			=	VMM.MediaElement.loadingmessage(VMM.master_config.language.messages.loading + "...");
 			
 			if (data.media != null && data.media != "") {
 				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false, m;
@@ -3484,8 +3494,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
 			// FLICKR
 				} else if (m.type		==	"flickr") {
+					//mediaElem			=	"<div class='media-image media-shadow' id='" + uid + "'>" + loading_messege + "</div>";
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + uid + "'></a></div>";
-					VMM.ExternalAPI.flickr.get(m.id, uid);
+					VMM.ExternalAPI.flickr.get(m.id, uid, m.link);
 			// INSTAGRAM
 				} else if (m.type		==	"instagram") {
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m.id) + "'></a></div>";
@@ -3885,106 +3896,7 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 		},
 		
 		create: function(data) {
-			
 			return data;
-			
-			//$mediacontainer				=	element;
-			/*
-			var _valid					=	false;
-			
-			if (data.media != null && data.media != "") {
-				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false;
-				var m					=	VMM.MediaType(data.media); //returns an object with .type and .id
-				_valid					=	true;
-				
-			// CREDIT
-				if (data.credit != null && data.credit != "") {
-					creditElem			=	"<div class='credit'>" + VMM.Util.linkify_with_twitter(data.credit, "_blank") + "</div>";
-				}
-			// CAPTION
-				if (data.caption != null && data.caption != "") {
-					captionElem			=	"<div class='caption'>" + VMM.Util.linkify_with_twitter(data.caption, "_blank") + "</div>";
-				}
-			// IMAGE
-				if (m.type				==	"image") {
-					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
-			// FLICKR
-				} else if (m.type		==	"flickr") {
-					_id					=	"flickr_" + m.id;
-					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + _id + "_large" + "'></a></div>";
-					VMM.ExternalAPI.flickr.get(m.id, "#" + _id);
-			// GOOGLE DOCS
-				} else if (m.type		==	"googledoc") {
-					_id					=	"googledoc_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + _id + "'><span class='messege'><p>Loading Document</p></span></div>";
-					VMM.ExternalAPI.googledocs.get(m.id, _id);
-			// YOUTUBE
-				} else if (m.type		==	"youtube") {
-					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='youtube_" + m.id + "'><span class='messege'><p>Loading YouTube video</p></span></div></div>";
-					VMM.ExternalAPI.youtube.get(m.id);
-			// VIMEO
-				} else if (m.type		==	"vimeo") {
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
-					VMM.ExternalAPI.vimeo.get(m.id);
-			// DAILYMOTION
-				} else if (m.type		==	"dailymotion") {
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
-			// TWITTER
-				} else if (m.type		==	"twitter"){
-					mediaElem			=	"<div class='twitter' id='" + "twitter_" + m.id + "'><span class='messege'><p>Loading Tweet</p></span></div>";
-					isTextMedia			=	true;
-					VMM.ExternalAPI.twitter.prettyHTML(m.id, secondary);
-			// TWITTER
-				} else if (m.type		==	"twitter-ready") {
-					isTextMedia			=	true;
-					mediaElem			=	m.id;
-			// SOUNDCLOUD
-				} else if (m.type		==	"soundcloud") {
-					_id					=	"soundcloud_" + VMM.Util.unique_ID(5);
-					mediaElem			=	"<div class='media-frame media-shadow soundcloud' id='" + _id + "'><span class='messege'><p>Loading Sound</p></span></div>";
-					VMM.ExternalAPI.soundcloud.get(m.id, _id);
-			// GOOGLE MAPS
-				} else if (m.type		==	"google-map") {
-					_id					=	"googlemap_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='media-frame media-shadow map' id='" + _id + "'><span class='messege'><p>Loading Map</p></span></div>";
-					VMM.ExternalAPI.googlemaps.get(m.id, _id);
-			// WIKIPEDIA
-				} else if (m.type		==	"wikipedia") {
-					_id					=	"wikipedia_" + VMM.Util.unique_ID(7);
-					mediaElem			=	"<div class='wikipedia' id='" + _id + "'><span class='messege'><p>Loading Wikipedia</p></span></div>";
-					isTextMedia			=	true;
-					VMM.ExternalAPI.wikipedia.get(m.id, _id);
-			// UNKNOWN
-				} else if (m.type		==	"quote") { 
-					isTextMedia			=	true;
-					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
-			// UNKNOWN
-				} else if (m.type		==	"unknown") { 
-					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 
-					isTextMedia			=	true;
-					mediaElem			=	"<div class='plain-text'><div class='container'>" + VMM.Util.properQuotes(m.id) + "</div></div>";
-			// WEBSITE
-				} else if (m.type		==	"website") { 
-					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame website' frameborder='0' autostart='false' width='100%' height='100%' scrolling='yes' marginheight='0' marginwidth='0' src='" + m.id + "'></iframe></div>";
-					//mediaElem			=	"<a href='" + m.id + "' target='_blank'>" + "<img src='http://api.snapito.com/free/lc?url=" + m.id + "'></a>";
-			// NO MATCH
-				} else {
-					trace("NO KNOWN MEDIA TYPE FOUND");
-					trace(m.type);
-				}
-				
-			// WRAP THE MEDIA ELEMENT
-				mediaElem				=	"<div class='media-container' >" + mediaElem + creditElem + captionElem + "</div>";
-			// RETURN
-				if (isTextMedia) {
-					return "<div class='text-media'><div class='media-wrapper'>" + mediaElem + "</div></div>";
-				} else {
-					return "<div class='media-wrapper'>" + mediaElem + "</div>";
-				}
-				
-				
-			};
-			*/
 		}
 		
 	}).init();
@@ -4954,6 +4866,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.bindEvent(".nav-next", onNextClick);
 			VMM.bindEvent(".nav-previous", onPrevClick);
 			VMM.bindEvent(window, onKeypressNav, 'keydown');
+			
 		}
 		
 		/* BUILD
@@ -5196,12 +5109,19 @@ if (typeof VMM.Slider != 'undefined') {
 			if (data.startdate != null && data.startdate != "") {
 				if (type.of(data.startdate) == "date") {
 					if (data.type != "start") {
-						var st = VMM.Date.prettyDate(data.startdate);
-						var en = VMM.Date.prettyDate(data.enddate);
+						var st	= VMM.Date.prettyDate(data.startdate);
+						var en	= VMM.Date.prettyDate(data.enddate);
+						var tag	= "";
+						/* TAG / CATEGORY
+						================================================== */
+						if (data.tag != null && data.tag != "") {
+							tag		= VMM.createElement("span", data.tag, "slide-tag");
+						}
+						
 						if (st != en) {
-							c.text += VMM.createElement("h2", st + " &mdash; " + en + "", "date");
+							c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
 						} else {
-							c.text += VMM.createElement("h2", st, "date");
+							c.text += VMM.createElement("h2", st + tag, "date");
 						}
 					}
 				}
@@ -6339,26 +6259,26 @@ Utf8.decode = function(strUtf) {
      Begin VMM.Timeline.js 
 ***********************************************/ 
 
-/*!
-	Timeline
-	Designed and built by Zach Wise at VéritéCo
+/**
+	* Timeline
+	* Designed and built by Zach Wise at VéritéCo
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	* This program is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	* This program is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
 
-    http://www.gnu.org/licenses/
+	* http://www.gnu.org/licenses/
 
 */  
 
-/* 	CodeKit Import
-	http://incident57.com/codekit/
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
 ================================================== */
 // @codekit-prepend "VMM.Timeline.License.js";
 
@@ -6412,7 +6332,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	VMM.Timeline = function(w, h, conf, _timeline_id) {
 		
-		var $timeline, $feedback, $messege, slider, timenav, version, timeline_id;
+		var $timeline, $feedback, slider, timenav, version, timeline_id;
 		var events = {}, data = {}, _dates = [], config = {};
 		var has_width = false, has_height = false, ie7 = false, is_moving = false;
 		
@@ -6422,7 +6342,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.58";
+		version = 					"1.61";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6476,7 +6396,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				height: 			200,
 				marker: {
 					width: 			150,
-					height: 		48
+					height: 		50
 				}
 			},
 			feature: {
@@ -6568,7 +6488,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.Lib.addClass(timeline_id, "vmm-timeline");
 			
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
 			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
 			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
@@ -6680,11 +6599,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
 			
+			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
 			/* GET DATA
 			================================================== */
 			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
@@ -6712,7 +6631,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		this.reload = function(_d) {
 			trace("loadNewDates" + _d);
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
+			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
 		};
@@ -6731,7 +6650,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var showMessege = function(e, msg) {
 			trace("showMessege " + msg);
-			VMM.attachElement($messege, msg);
+			//VMM.attachElement($messege, msg);
+			VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg)); 
 		};
 		
 		var hideMessege = function() {
@@ -6931,21 +6851,34 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 	VMM.Timeline.TimeNav = function(parent, content_width, content_height) {
 		trace("VMM.Timeline.TimeNav");
 		
-		var events = {}, timespan = {}, layout = parent;
-		var timeouts = {
-			interval_position: ""
-		};
-		var data = [], era_markers = [], markers = [], interval_array = [], interval_major_array = [], eras, content, tags = []; 
-		var timenav_pos = {
-				left:"",
+		var events					= {},
+			timespan				= {},
+			layout					= parent,
+			data					= [],
+			era_markers				= [],
+			markers					= [],
+			interval_array			= [],
+			interval_major_array	= [],
+			tags					= [],
+			current_marker			= 0,
+			_active					= false,
+			eras,
+			content,
+			timeouts = {
+				interval_position:	""
+			},
+			timenav_pos = {
+				left:				"",
 				visible: {
-					left:"",
-					right:""
+					left:			"",
+					right:			""
 				}
-			};
+			},
+			$timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
+			$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+			
 		
-		var current_marker		= 	0;
-		var _active				=	false;
+
 		var timelookup			= 	{day: 24, month: 12, year: 10, hour: 60, minute: 60, second: 1000, decade: 10, century: 100, millenium: 1000, age: 1000000, epoch: 10000000, era: 100000000, eon: 500000000, week: 4.34812141, days_in_month: 30.4368499, days_in_week: 7, weeks_in_month:4.34812141, weeks_in_year:52.177457, days_in_year: 365.242199, hours_in_day: 24 };
 		var dateFractionBrowser	= 	{day: 86400000, week: 7, month: 30.4166666667, year: 12, hour: 24, minute: 1440, second: 86400, decade: 10, century: 100, millenium: 1000, age: 1000000, epoch: 10000000, era: 100000000, eon: 500000000 };
 		
@@ -6954,15 +6887,17 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		var interval_macro		= 	{type: "year", number: 10, first: 1970, last: 2011, multiplier: 100, classname:"_dd_minor", interval_type:"interval minor"};
 		var interval_calc		= 	{day: {},month: {},year: {},hour: {},minute: {}, second: {},decade: {},century: {},millenium: {},week: {}, age: {}, epoch: {}, era: {}, eon: {} };
 		
-		/* ELEMENTS
-		================================================== */
-		var $timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
-		$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
 		
 		/* ADD to Config
 		================================================== */
 		var config				= 	VMM.Timeline.Config;
-		config.nav.rows			= 	[1, config.nav.marker.height, config.nav.marker.height*2];
+		var row_height			=	config.nav.marker.height/2;
+		//config.nav.rows			= 	[1, config.nav.marker.height, config.nav.marker.height*2];
+		config.nav.rows = {
+			full:				[1, row_height*2, row_height*4],
+			half:				[1, row_height, row_height*2, row_height*3, row_height*4, row_height*5],
+			current:			[]
+		}
 		
 		if (content_width != null && content_width != "") {
 			config.nav.width	= 	content_width;
@@ -7091,9 +7026,55 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			upDate();
 		}
 		
+		function onMouseScroll(e) {
+			var delta		= 0,
+				scroll_to	= 0;
+			if (!e) {
+				e = window.event;
+			}
+			if (e.originalEvent) {
+				e = e.originalEvent;
+			}
+			if (e.wheelDelta) {
+				trace("wheelDelta " + e.wheelDelta);
+				delta = e.wheelDelta/6;
+				trace("wheelDelta1 " + delta);
+				
+			} else if (e.detail) {
+				trace("detail " + e.detail);
+				delta = -e.detail*12;
+				trace("detail");
+			}
+			if (delta) {
+				if (e.preventDefault) {
+					 e.preventDefault();
+				}
+				e.returnValue = false;
+			}
+			// Webkit
+			if (typeof e.wheelDeltaY != 'undefined' ) { 
+				delta = e.wheelDeltaY/6;
+				trace("deltaY " + e.wheelDeltaY);
+			}
+			trace(delta);
+			// Stop from scrolling too far
+			scroll_to = VMM.Lib.position($timenav).left + delta;
+			
+			if (scroll_to > 0) {
+				
+			} else if (scoll_to < 0) {
+				
+			}
+			
+			VMM.Lib.stop($timenav);
+			//VMM.Lib.animate($timenav, config.duration/2, "linear", {"left": scroll_to});
+			VMM.Lib.css($timenav, "left", scroll_to);	
+		}
+		
 		var refreshTimeline = function() {
 			trace("config.nav.multiplier " + config.nav.multiplier.current);
 			positionMarkers(true);
+			positionEras(true);
 			positionInterval($timeinterval, interval_array, true, true);
 			positionInterval($timeintervalmajor, interval_major_array, true);
 		};
@@ -7474,15 +7455,17 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		var positionMarkers = function(is_animated) {
 			
-			var _type					= interval.type,
-				_multiplier				= interval.multiplier,
-				row						= 2,
-				lpos					= 0,
+			var row						= 2,
+				previous_pos			= 0,
+				pos_offset				= -2,
 				row_depth				= 0,
-				_line_last_height_pos	= 150,
-				_line_height			= 6,
+				row_depth_sub			= 0,
+				line_last_height_pos	= 150,
+				line_height				= 6,
 				cur_mark				= 0,
 				in_view_margin			= config.width,
+				pos_cache_array			= [],
+				pos_cache_max			= 6,
 				in_view = {
 					left:			timenav_pos.visible.left - in_view_margin,
 					right:			timenav_pos.visible.right + in_view_margin
@@ -7496,21 +7479,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			for(var i = 0; i < markers.length; i++) {
 				
-				var _line,
-					_marker				= markers[i].marker,
-					_marker_flag		= markers[i].flag,
-					_marker_line_event	= markers[i].lineevent,
-					_pos				= positionOnTimeline(interval, markers[i].relative_pos),
-					_pos_offset			= -2,
-					is_in_view			= false;
+				var line,
+					marker				= markers[i],
+					pos					= positionOnTimeline(interval, markers[i].relative_pos),
+					row_pos				= 0,
+					is_in_view			= false,
+					pos_cache_obj		= {id: i, pos: 0, row: 0},
+					pos_cache_close		= 0;
 				
-				pos						= _pos.begin;
-				_pos_end				= _pos.end;
 				
 				// COMPENSATE FOR DATES BEING POITIONED IN THE MIDDLE
-				pos						= Math.round(pos +  _pos_offset);
-				_pos_end				= Math.round(_pos_end + _pos_offset);
-				_line					= Math.round(_pos_end - pos);
+				pos.begin				= Math.round(pos.begin +  pos_offset);
+				pos.end					= Math.round(pos.end + pos_offset);
+				line					= Math.round(pos.end - pos.begin);
 				
 				if (current_marker == i) {
 					timenav_pos.left			= (config.width/2) - pos;
@@ -7520,44 +7501,110 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					in_view.right				= timenav_pos.visible.right + in_view_margin;
 				}
 				
-				if (Math.abs(pos) >= in_view.left && Math.abs(pos) <= in_view.right ) {
+				if (Math.abs(pos.begin) >= in_view.left && Math.abs(pos.begin) <= in_view.right ) {
 					is_in_view = true;
 				}
 				
 				// APPLY POSITION TO MARKER
 				if (is_animated) {
-					VMM.Lib.stop(_marker);
-					VMM.Lib.animate(_marker, config.duration/2, config.ease, {"left": pos});
+					VMM.Lib.stop(marker.marker);
+					VMM.Lib.animate(marker.marker, config.duration/2, config.ease, {"left": pos.begin});
 				} else {
-					VMM.Lib.stop(_marker);
-					VMM.Lib.css(_marker, "left", pos);
+					VMM.Lib.stop(marker.marker);
+					VMM.Lib.css(marker.marker, "left", pos.begin);
 				}
 				
 				if (i == current_marker) {
-					cur_mark = pos;
+					cur_mark = pos.begin;
 				}
 				
 				// EVENT LENGTH LINE
-				if (_line > 5) {
-					VMM.Lib.css(_marker_line_event, "height", _line_height);
-					VMM.Lib.css(_marker_line_event, "width", _line);
-					VMM.Lib.css(_marker_line_event, "top", _line_last_height_pos);
+				if (line > 5) {
+					VMM.Lib.css(marker.lineevent, "height", line_height);
+					VMM.Lib.css(marker.lineevent, "top", line_last_height_pos);
+					if (is_animated) {
+						VMM.Lib.animate(marker.lineevent, config.duration/2, config.ease, {"width": line});
+					} else {
+						VMM.Lib.css(marker.lineevent, "width", line);
+					}
 				}
 				
 				// CONTROL ROW POSITION
 				if (tags.length > 0) {
 					
 					for (var k = 0; k < tags.length; k++) {
-						if (k < config.nav.rows.length) {
-							if (markers[i].tag == tags[k]) {
+						if (k < config.nav.rows.current.length) {
+							if (marker.tag == tags[k]) {
 								row = k;
+								if (k == config.nav.rows.current.length - 1) {
+									trace("ON LAST ROW");
+									VMM.Lib.addClass(marker.flag, "flag-small-last");
+								}
 							}
 						}
 					}
-					
+					row_pos = config.nav.rows.current[row];
 				} else {
-					if (pos - lpos < (config.nav.marker.width + config.spacing)) {
-						if (row < config.nav.rows.length - 1) {
+					/*
+					pos_cache_close = 0;
+					for (var l = 0; l < pos_cache_array.length; l++) {
+						if (pos.begin - pos_cache_array[l].pos.begin < ((config.nav.marker.width/2))) {
+							pos_cache_close++;
+							trace("POS CACHE TOO CLOSE");
+
+							markers[pos_cache_array[l].id].full = false;
+							VMM.Lib.addClass(markers[pos_cache_array[l].id].flag, "flag-small");
+							
+						}
+					}
+					if (pos_cache_close > 3) {
+						trace("POS CACHE TOO CLOSE GRATER THAN 2");
+						marker.full = false;
+						VMM.Lib.addClass(marker.flag, "flag-small");
+						
+						if (row < config.nav.rows.current.length - 1) {
+							row ++;
+						} else {
+							row = 0;
+							row_depth ++;
+						}
+						
+						if (config.nav.rows.current == config.nav.rows.full) {
+							if (row_depth_sub == 0) {
+								row_depth_sub = 1;
+							} else {
+								row_depth_sub = 0;
+							}
+							
+							row_pos = config.nav.rows.half[ (row*2) + row_depth_sub ];
+						} else {
+							row_pos = config.nav.rows.half[row];
+						}
+						
+						
+					} else {
+						if (!marker.full) {
+							VMM.Lib.removeClass(markers[i].flag, "flag-small");
+							marker.full = true;
+						}
+						if (pos.begin - previous_pos.begin < (config.nav.marker.width + config.spacing)) {
+							if (row < config.nav.rows.full.length - 1) {
+								row ++;
+							} else {
+								row = 0;
+								row_depth ++;
+							}
+						} else {
+							row_depth = 1;
+							row = 1;
+						}
+						row_pos = config.nav.rows.full[row];
+						
+					}
+					*/
+					
+					if (pos.begin - previous_pos.begin < (config.nav.marker.width + config.spacing)) {
+						if (row < config.nav.rows.current.length - 1) {
 							row ++;
 						
 						} else {
@@ -7568,23 +7615,52 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 						row_depth = 1;
 						row = 1;
 					}
+					row_pos = config.nav.rows.current[row];
+					/*
+					if (row_depth > 2) {
+						marker.full = false;
+						VMM.Lib.addClass(marker.flag, "flag-small");
+						trace(config.nav.rows.current);
+						trace(config.nav.rows.full);
+						if (row_depth_sub == 0) {
+							row_depth_sub = 1;
+						} else {
+							row_depth_sub = 0;
+						}
+						if (config.nav.rows.current == config.nav.rows.full) {
+							trace(config.nav.rows.half[(row*2) + 1]);
+							trace(config.nav.rows.full[row]);
+							row_pos = config.nav.rows.half[ (row*2) + row_depth_sub ];
+						}
+						
+					} 
+					*/
 				}
 				
-				
 				// SET LAST MARKER POSITION
-				lpos = pos;
+				previous_pos = pos;
 				
-				if (is_animated && is_in_view) {
-					VMM.Lib.stop(_marker_flag);
-					VMM.Lib.animate(_marker_flag, config.duration, config.ease, {"top": config.nav.rows[row]});
+				// POSITION CACHE
+				pos_cache_obj.pos = pos;
+				pos_cache_obj.row = row;
+				pos_cache_array.push(pos_cache_obj);
+				if (pos_cache_array.length > pos_cache_max) {
+					pos_cache_array.remove(0);
+				}
+				
+				//if (is_animated && is_in_view) {
+				if (is_animated) {
+					VMM.Lib.stop(marker.flag);
+					VMM.Lib.animate(marker.flag, config.duration, config.ease, {"top": row_pos});
 				} else {
-					VMM.Lib.stop(_marker_flag);
-					VMM.Lib.css(_marker_flag, "top", config.nav.rows[row]);
+					VMM.Lib.stop(marker.flag);
+					VMM.Lib.css(marker.flag, "top", row_pos);
 				}
 				
 				// IS THE MARKER A REPRESENTATION OF A START SCREEN?
 				if (config.start_page && markers[i].type == "start") {
-					VMM.Lib.visible(_marker, false);
+					VMM.Lib.visible(marker.marker, false);
+					
 				}
 				
 				if (pos > config.nav.minor_width) {
@@ -7597,19 +7673,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			for(var j = 0; j < era_markers.length; j++) {
-				var _line,
-					era			= era_markers[j],
-					era_elem	= era.content,
-					pos			= positionOnTimeline(interval, era.relative_pos),
-					era_length	= pos.end - pos.begin,
-					era_height	= 25;
-				// APPLY POSITION TO MARKER
-				VMM.Lib.css(era_elem, "left", pos.begin);
-				VMM.Lib.css(era_elem, "width", era_length);
-			}
-			
-			
 			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
 			VMM.Lib.stop($timenav);
 			VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
@@ -7618,11 +7681,53 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		}
 		
+		var positionEras = function(is_animated) {
+			for(var i = 0; i < era_markers.length; i++) {
+				var era			= era_markers[i],
+					pos			= positionOnTimeline(interval, era.relative_pos),
+					row_pos		= 0,
+					era_height	= config.nav.marker.height * config.nav.rows.full.length,
+					era_length	= pos.end - pos.begin;
+					
+				// CONTROL ROW POSITION
+				if (era.tag != "") {
+					era_height = (config.nav.marker.height * config.nav.rows.full.length) / config.nav.rows.current.length;
+					for (var p = 0; p < tags.length; p++) {
+						if (p < config.nav.rows.current.length) {
+							if (era.tag == tags[p]) {
+								row = p;
+							}
+						}
+					}
+					row_pos = config.nav.rows.current[row];
+					
+				} else {
+					row_pos = -1;
+				}
+				
+				// APPLY POSITION TO MARKER
+				if (is_animated) {
+					VMM.Lib.stop(era.content);
+					VMM.Lib.stop(era.text_content);
+					VMM.Lib.animate(era.content, config.duration/2, config.ease, {"top": row_pos, "left": pos.begin, "width": era_length, "height":era_height});
+					VMM.Lib.animate(era.text_content, config.duration/2, config.ease, {"left": pos.begin});
+				} else {
+					VMM.Lib.stop(era.content);
+					VMM.Lib.stop(era.text_content);
+					VMM.Lib.css(era.content, "left", pos.begin);
+					VMM.Lib.css(era.content, "width", era_length);
+					VMM.Lib.css(era.content, "height", era_height);
+					VMM.Lib.css(era.content, "top", row_pos);
+					VMM.Lib.css(era.text_content, "left", pos.begin);
+					
+				}
+
+			}
+		}
+		
 		var positionInterval = function(the_main_element, the_intervals, is_animated, is_minor) {
 			
-			var _type				= interval.type,
-				_multiplier			= interval.multiplier,
-				last_position		= 0,
+			var last_position		= 0,
 				last_position_major	= 0,
 				//in_view_margin		= (config.nav.minor_width/config.nav.multiplier.current)/2,
 				in_view_margin		= config.width,
@@ -7772,6 +7877,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_largest_pos		= 0,
 				_timezone_offset,
 				_first_date,
+				_last_date,
+				int_number			= Math.ceil(_interval.number) + 2,
 				firefox = {
 					flag:			false,
 					offset:			0
@@ -7782,7 +7889,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			_timezone_offset = _interval.date.getTimezoneOffset();
 			
-			for(var i = 0; i < Math.ceil(_interval.number) + 2; i++) {
+			for(var i = 0; i < int_number; i++) {
+				trace(_interval.type);
 				var _is_year			= false,
 					int_obj = {
 						element: 		VMM.appendAndGetElement(_element_parent, "<div>", _interval.classname),
@@ -7799,15 +7907,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 						
 						}
 					};
-				
-				//int_obj.date.setFullYear(	data[0].startdate.getFullYear()	);
-				//int_obj.date.setMonth(		data[0].startdate.getMonth()	);
-				//int_obj.date.setDate(		data[0].startdate.getDate()		);
-				//int_obj.date.setHours(		data[0].startdate.getHours()	);
-				//int_obj.date.setMinutes(	data[0].startdate.getMinutes()	);
-				//int_obj.date.setSeconds(	data[0].startdate.getSeconds()	);
-				//int_obj.date.setMilliseconds(0);
-				
 				
 				if (_interval.type == "eon") {
 					if (_first_run) {
@@ -7851,7 +7950,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					}
 					int_obj.date.setFullYear(_first_date + (inc_time * 10));
 					_is_year = true;
-				} else if (interval.type == "year") {
+				} else if (_interval.type == "year") {
 					if (_first_run) {
 						_first_date = data[0].startdate.getFullYear();
 					}
@@ -7944,7 +8043,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				// Increment Time
-				inc_time++;
+				inc_time = inc_time + 1;
 				
 				// No longer first run
 				_first_run = false;
@@ -7962,6 +8061,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// add the interval element to the array
 				_array.push(int_obj);
+				
 			}
 			
 			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
@@ -7993,8 +8093,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			buildInterval();
 			buildMarkers();
+			buildEras();
 			calculateMultiplier();
 			positionMarkers();
+			positionEras();
 			
 			
 			positionInterval($timeinterval, interval_array, false, true);
@@ -8031,6 +8133,36 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
 			VMM.bindEvent(".zoom-out", onZoomOut, "click");
+			VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
+			VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
+			
+			/*
+			function handle(delta) {
+				if (delta < 0)
+					
+				else
+					
+			}
+
+			function wheel(event){
+				var delta = 0;
+				if (!event) event = window.event;
+				if (event.wheelDelta) {
+					delta = event.wheelDelta/120; 
+				} else if (event.detail) {
+					delta = -event.detail/3;
+				}
+				if (delta)
+					handle(delta);
+			        if (event.preventDefault)
+			                event.preventDefault();
+			        event.returnValue = false;
+			}
+			
+			if (window.addEventListener)
+				window.addEventListener('DOMMouseScroll', wheel, false);
+			window.onmousewheel = document.onmousewheel = wheel;
+			*/
 			VMM.fireEvent(layout, "LOADED");
 			_active = true;
 			
@@ -8116,6 +8248,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			createIntervalElements(interval, interval_array, $timeinterval);
 			createIntervalElements(interval_major, interval_major_array, $timeintervalmajor);
 			
+			// Cleanup duplicate interval elements between normal and major
+			for(var i = 0; i < interval_array.length; i++) {
+				for(var j = 0; j < interval_major_array.length; j++) {
+					if (interval_array[i].date_string == interval_major_array[j].date_string) {
+						VMM.attachElement(interval_array[i].element, "");
+					}
+				}
+			}
 		}
 		
 		var buildMarkers = function() {
@@ -8191,6 +8331,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					flag: 				_marker_flag,
 					lineevent: 			_marker_line_event,
 					type: 				"marker",
+					full:				true,
 					relative_pos:		_marker_relative_pos,
 					tag:				data[i].tag
 				};
@@ -8219,36 +8360,84 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// CREATE TAGS
 			tags = VMM.Util.deDupeArray(tags);
-			
+			if (tags.length > 2) {
+				config.nav.rows.current = config.nav.rows.half;
+			} else {
+				config.nav.rows.current = config.nav.rows.full;
+			}
 			for(var k = 0; k < tags.length; k++) {
-				if (k < config.nav.rows.length) {
+				if (k < config.nav.rows.current.length) {
 					var tag_element = VMM.appendAndGetElement($timebackground, "<div>", "timenav-tag");
 					VMM.Lib.addClass(tag_element, "timenav-tag-row-" + (k+1));
+					if (tags.length > 2) {
+						VMM.Lib.addClass(tag_element, "timenav-tag-size-half");
+					} else {
+						VMM.Lib.addClass(tag_element, "timenav-tag-size-full");
+					}
 					VMM.appendElement(tag_element, "<div><h3>" + tags[k] + "</h3></div>");
 				}
 				
 			}
 			
+			// RESIZE FLAGS IF NEEDED
+			if (tags.length > 2) {
+				for(var l = 0; l < markers.length; l++) {
+					VMM.Lib.addClass(markers[l].flag, "flag-small");
+					markers[l].full = false;
+				}
+			}
+
 			
-			
+		}
+		
+		var buildEras = function() {
+			var number_of_colors	= 6,
+				current_color		= 0;
 			// CREATE ERAS
 			for(var j = 0; j < eras.length; j++) {
-				
 				var era = {
-					content: 			VMM.appendAndGetElement($content, "<div>", "era"),
-					startdate: 			VMM.Util.parseDate(eras[j].startDate),
-					enddate: 			VMM.Util.parseDate(eras[j].endDate),
-					title: 				eras[j].headline,
-					uniqueid: 			VMM.Util.unique_ID(4),
-					color: 				eras[j].color,
-					relative_pos:	 	""
-				};
-				
-				era.relative_pos = positionRelative(interval, eras[j].startdate, eras[j].enddate);
+						content: 			VMM.appendAndGetElement($content, "<div>", "era"),
+						text_content: 		VMM.appendAndGetElement($timeinterval, "<div>", "era"),
+						startdate: 			VMM.Date.parse(eras[j].startDate),
+						enddate: 			VMM.Date.parse(eras[j].endDate),
+						title: 				eras[j].headline,
+						uniqueid: 			VMM.Util.unique_ID(6),
+						tag:				"",
+						relative_pos:	 	""
+					},
+					st						= VMM.Date.prettyDate(era.startdate),
+					en						= VMM.Date.prettyDate(era.enddate),
+					era_text				= "";
+					
+				if (typeof eras[j].tag != "undefined") {
+					era.tag = eras[j].tag;
+				}
+				era.relative_pos = positionRelative(interval, era.startdate, era.enddate);
 				
 				VMM.Lib.attr(era.content, "id", era.uniqueid);
-				VMM.Lib.css(era.content, "background", era.color);
-				VMM.appendElement(era.content, "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>");
+				VMM.Lib.attr(era.text_content, "id", era.uniqueid + "_text");
+				//VMM.Lib.css(era.content, "background", era.color);
+				
+				era_text		+= "<div>&nbsp;";
+				//era_text		+= "<h3>" + VMM.Util.unlinkify(era.title) + "</h3>"
+				if (st != en) {
+					//era_text	+= "<h4>" + st + " &mdash; " + en + "</h4>";
+				} else {
+					//era_text	+= "<h4>" + st + "</h4>";
+				}
+				era_text		+= "</div>";
+				
+				// Background Color
+				VMM.Lib.addClass(era.content, "era"+(current_color+1));
+				VMM.Lib.addClass(era.text_content, "era"+(current_color+1));
+				if (current_color < number_of_colors) {
+					current_color++;
+				} else {
+					current_color = 0;
+				}
+				
+				VMM.appendElement(era.content, era_text);
+				VMM.appendElement(era.text_content, VMM.Util.unlinkify(era.title));
 				
 				era_markers.push(era);
 				
@@ -8440,9 +8629,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 					for(var i = 0; i < d.feed.entry.length; i++) {
-						var dd = d.feed.entry[i];
-					
-						if (dd.gsx$titleslide.$t.match("start")) {
+						var dd		= d.feed.entry[i],
+							dd_type	= "";
+						
+						if (typeof dd.gsx$type != 'undefined') {
+							dd_type = dd.gsx$type.$t;
+						} else if (typeof dd.gsx$titleslide != 'undefined') {
+							dd_type = dd.gsx$titleslide.$t;
+						}
+						
+						if (dd_type.match("start") || dd_type.match("title") ) {
 							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
 							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
 							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
@@ -8450,6 +8646,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
 							_data_obj.timeline.text = 				dd.gsx$text.$t;
 							_data_obj.timeline.type = 				"google spreadsheet";
+						} else if (dd_type.match("era")) {
+							var _era = {
+								"startDate": 						dd.gsx$startdate.$t,
+								"endDate": 							dd.gsx$enddate.$t,
+								"headline": 						dd.gsx$headline.$t,
+								"text": 							dd.gsx$text.$t,
+								"tag": 								""
+								
+							};
+							if (typeof dd.gsx$tag != 'undefined') {
+								_era.tag = dd.gsx$tag.$t;
+							}
+							_data_obj.timeline.era.push(_era);
 						} else {
 							var _date = {
 								"type": 							"google spreadsheet",
@@ -8462,7 +8671,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 									"credit": 						dd.gsx$mediacredit.$t, 
 									"caption": 						dd.gsx$mediacaption.$t 
 								},
-					            "tags": 							"Optional"
+					            "tag": 								""
 							};
 							if (typeof dd.gsx$tag != 'undefined') {
 								_date.tag = dd.gsx$tag.$t;
@@ -8760,7 +8969,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		
 		/*	TEMPLATE OBJECTS
 		================================================== */
-		data_template_obj: {  "timeline": { "headline":"", "description":"", "asset": { "media":"", "credit":"", "caption":"" }, "date": [] } },
+		data_template_obj: {  "timeline": { "headline":"", "description":"", "asset": { "media":"", "credit":"", "caption":"" }, "date": [], "era":[] } },
 		date_obj: {"startDate":"2012,2,2,11,30", "headline":"", "text":"", "asset": {"media":"http://youtu.be/vjVfu8-Wp6s", "credit":"", "caption":"" }, "tags":"Optional"}
 	
 	};
