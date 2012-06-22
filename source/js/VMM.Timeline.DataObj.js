@@ -174,9 +174,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
 
 					for(var i = 0; i < d.feed.entry.length; i++) {
-						var dd = d.feed.entry[i];
-					
-						if (dd.gsx$titleslide.$t.match("start")) {
+						var dd		= d.feed.entry[i],
+							dd_type	= "";
+						
+						if (typeof dd.gsx$type != 'undefined') {
+							dd_type = dd.gsx$type.$t;
+						} else if (typeof dd.gsx$titleslide != 'undefined') {
+							dd_type = dd.gsx$titleslide.$t;
+						}
+						
+						if (dd_type.match("start") || dd_type.match("title") ) {
 							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
 							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
 							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
@@ -184,6 +191,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
 							_data_obj.timeline.text = 				dd.gsx$text.$t;
 							_data_obj.timeline.type = 				"google spreadsheet";
+						} else if (dd_type.match("era")) {
+							var _era = {
+								"startDate": 						dd.gsx$startdate.$t,
+								"endDate": 							dd.gsx$enddate.$t,
+								"headline": 						dd.gsx$headline.$t,
+								"text": 							dd.gsx$text.$t,
+								"tag": 								""
+								
+							};
+							if (typeof dd.gsx$tag != 'undefined') {
+								_era.tag = dd.gsx$tag.$t;
+							}
+							_data_obj.timeline.era.push(_era);
 						} else {
 							var _date = {
 								"type": 							"google spreadsheet",
@@ -196,7 +216,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 									"credit": 						dd.gsx$mediacredit.$t, 
 									"caption": 						dd.gsx$mediacaption.$t 
 								},
-					            "tags": 							"Optional"
+					            "tag": 								""
 							};
 							if (typeof dd.gsx$tag != 'undefined') {
 								_date.tag = dd.gsx$tag.$t;
@@ -494,7 +514,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 		
 		/*	TEMPLATE OBJECTS
 		================================================== */
-		data_template_obj: {  "timeline": { "headline":"", "description":"", "asset": { "media":"", "credit":"", "caption":"" }, "date": [] } },
+		data_template_obj: {  "timeline": { "headline":"", "description":"", "asset": { "media":"", "credit":"", "caption":"" }, "date": [], "era":[] } },
 		date_obj: {"startDate":"2012,2,2,11,30", "headline":"", "text":"", "asset": {"media":"http://youtu.be/vjVfu8-Wp6s", "credit":"", "caption":"" }, "tags":"Optional"}
 	
 	};
