@@ -88,7 +88,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				.error(function(jqXHR, textStatus, errorThrown) {
 					trace("TWITTER error");
 					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
-					VMM.attachElement("#"+tweet.id, "<p>ERROR LOADING TWEET " + tweet.mid + "</p>" );
+					VMM.attachElement("#"+tweet.id, VMM.MediaElement.loadingmessage("ERROR LOADING TWEET " + tweet.mid) );
 				})
 				.success(function(d) {
 					clearTimeout(twitter_timeout);
@@ -114,7 +114,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						mes		=	"<p>Still waiting on Twitter. " + id + "</p>";
 						//mes 	= 	"<p>Tweet " + id + " was not found.</p>";
 					}
-					VMM.attachElement("#twitter_" + id, "<span class='messege'>" + mes + "</span>" );
+					VMM.attachElement("#twitter_" + id, VMM.MediaElement.loadingmessage(mes) );
 				});
 				
 			},
@@ -673,7 +673,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				.error(function(jqXHR, textStatus, errorThrown) {
 					var error_obj = VMM.parseJSON(jqXHR.responseText);
 					trace(error_obj.error.message);
-					VMM.attachElement("#googleplus_" + gplus.activity, "<p>ERROR LOADING GOOGLE+ </p><p>" + error_obj.error.message + "</p>");
+					VMM.attachElement("#googleplus_" + gplus.activity, VMM.MediaElement.loadingmessage("<p>ERROR LOADING GOOGLE+ </p><p>" + error_obj.error.message + "</p>"));
 				})
 				.success(function(d) {
 					clearTimeout(googleplus_timeout);
@@ -700,7 +700,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			errorTimeOut: function(gplus) {
 				trace("GOOGLE+ JSON ERROR TIMEOUT " + gplus.activity);
-				VMM.attachElement("#googleplus_" + gplus.activity, "<p>Still waiting on GOOGLE+ </p><p>" + gplus.activity + "</p>");
+				VMM.attachElement("#googleplus_" + gplus.activity, VMM.MediaElement.loadingmessage("<p>Still waiting on GOOGLE+ </p><p>" + gplus.activity + "</p>"));
 				
 			}
 			
@@ -736,8 +736,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		flickr: {
 			
-			get: function(mid, id) {
-				var flick = {mid: mid, id: id};
+			get: function(mid, id, link) {
+				var flick = {mid: mid, id: id, link:link};
 				VMM.master_config.flickr.que.push(flick);
 				VMM.master_config.flickr.active = true;
 			},
@@ -779,6 +779,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 					flickr_img_thumb = d.sizes.size[0].source;
 					VMM.Lib.attr(flickr_large_id, "src", flickr_img_size);
+					//VMM.attachElement(flickr_large_id, "<a href='" + flick.link + "' target='_blank'><img src='" + flickr_img_size + "'></a>");
 					VMM.attachElement(flickr_thumb_id, "<img src='" + flickr_img_thumb + "'>");
 					
 				})
@@ -931,7 +932,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					trace("WIKIPEDIA ERROR: " + textStatus + " " + jqXHR.responseText);
 					trace(errorThrown);
 					
-					VMM.attachElement("#"+api_obj.id, "<span class='messege'>" + "<p>Wikipedia is not responding</p>" + "</span>" );
+					VMM.attachElement("#"+api_obj.id, VMM.MediaElement.loadingmessage("<p>Wikipedia is not responding</p>"));
 					// TRY AGAIN?
 					clearTimeout(callback_timeout);
 					if (VMM.master_config.wikipedia.tries < 4) {
