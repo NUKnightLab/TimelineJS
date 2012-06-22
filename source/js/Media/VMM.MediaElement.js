@@ -8,6 +8,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			return this;
 		},
 		
+		loadingmessage: function(m) {
+			return "<div class='loading'><div class='loading-container'><div class='loading-icon'></div>" + "<div class='message'><p>" + m + "</p></div></div></div>";
+		},
+		
 		thumbnail: function(data, w, h, uid) {
 			var _w		= 16,
 				_h		= 24,
@@ -87,7 +91,8 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 		
 		create: function(data, uid) {
 			var _valid = false,
-				loading_messege			=	"<span class='messege'><p>" + VMM.master_config.language.messages.loading + "</p></span>";
+				//loading_messege			=	"<span class='messege'><p>" + VMM.master_config.language.messages.loading + "</p></span>";
+				loading_messege			=	VMM.MediaElement.loadingmessage(VMM.master_config.language.messages.loading + "...");
 			
 			if (data.media != null && data.media != "") {
 				var mediaElem = "", captionElem = "", creditElem = "", _id = "", isTextMedia = false, m;
@@ -108,8 +113,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
 			// FLICKR
 				} else if (m.type		==	"flickr") {
+					//mediaElem			=	"<div class='media-image media-shadow' id='" + uid + "'>" + loading_messege + "</div>";
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img id='" + uid + "'></a></div>";
-					VMM.ExternalAPI.flickr.get(m.id, uid);
+					VMM.ExternalAPI.flickr.get(m.id, uid, m.link);
 			// INSTAGRAM
 				} else if (m.type		==	"instagram") {
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m.id) + "'></a></div>";
