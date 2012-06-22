@@ -1,10 +1,11 @@
-/* Utilities and Useful Functions
+/*	* Utilities and Useful Functions
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	
 	VMM.Date = ({
 		
 		init: function() {
+			"use strict";
 			return this;
 		},
 		
@@ -41,6 +42,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		setLanguage: function(lang) {
+			"use strict";
 			trace("SET DATE LANGUAGE");
 			VMM.Date.dateformats		=	lang.dateformats;	
 			VMM.Date.month				=	lang.date.month;
@@ -52,72 +54,75 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		parse: function(d) {
+			"use strict";
+			var date,
+				date_array,
+				time_array,
+				time_parse;
+			
 			if (type.of(d) == "date") {
-				return d;
+				date = d;
 			} else {
-				var _date = new Date(0, 0, 1, 0, 0, 0, 0);
-				//var _date = new Date("January 1, 0000 00:00:00")
-				var _d_array, _t_array;
-				var _time_parse, _times;
+				date = new Date(0, 0, 1, 0, 0, 0, 0);
 				
 				if ( d.match(/,/gi) ) {
-					_d_array = d.split(",");
-					for(var i = 0; i < _d_array.length; i++) {
-						_d_array[i] = parseInt(_d_array[i]);
+					date_array = d.split(",");
+					for(var i = 0; i < date_array.length; i++) {
+						date_array[i] = parseInt(date_array[i]);
 					}
-					if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
-					if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
-					if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
-					if (	_d_array[3]	> 1		) {	_date.setHours(			_d_array[3]);			}
-					if (	_d_array[4]	> 1		) {	_date.setMinutes(		_d_array[4]);			}
-					if (	_d_array[5]	> 1		) {	_date.setSeconds(		_d_array[5]);			}
-					if (	_d_array[6]	> 1		) {	_date.setMilliseconds(	_d_array[6]);			}
+					if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
+					if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
+					if (	date_array[2]	> 1		) {	date.setDate(			date_array[2]);			}
+					if (	date_array[3]	> 1		) {	date.setHours(			date_array[3]);			}
+					if (	date_array[4]	> 1		) {	date.setMinutes(		date_array[4]);			}
+					if (	date_array[5]	> 1		) {	date.setSeconds(		date_array[5]);			}
+					if (	date_array[6]	> 1		) {	date.setMilliseconds(	date_array[6]);			}
 				} else if (d.match("/")) {
 					if (d.match(" ")) {
-						_time_parse = d.split(" ");
+						time_parse = d.split(" ");
 						if (d.match(":")) {
-							_t_array = _time_parse[1].split(":");
-							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
-							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
-							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
-							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+							time_array = time_parse[1].split(":");
+							if (	time_array[0]	>= 1	) {		date.setHours(			time_array[0]);	}
+							if (	time_array[1]	>= 1	) {		date.setMinutes(		time_array[1]);	}
+							if (	time_array[2]	>= 1	) {		date.setSeconds(		time_array[2]);	}
+							if (	time_array[3]	>= 1	) {		date.setMilliseconds(	time_array[3]);	}
 						}
-						_d_array = _time_parse[0].split("/");
+						date_array = time_parse[0].split("/");
 					} else {
-						_d_array = d.split("/");
+						date_array = d.split("/");
 					}
-					if (	_d_array[2]			) {	_date.setFullYear(		_d_array[2]);			}
-					if (	_d_array[0]	> 1		) {	_date.setMonth(			_d_array[0] - 1);		}
-					if (	_d_array[1]	> 1		) {	_date.setDate(			_d_array[1]);			}
+					if (	date_array[2]			) {	date.setFullYear(		date_array[2]);			}
+					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
+					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
 				} else if (d.length <= 5) {
-					_date.setFullYear(parseInt(d));
-					_date.setMonth(0);
-					_date.setDate(1);
-					_date.setHours(0);
-					_date.setMinutes(0);
-					_date.setSeconds(0);
-					_date.setMilliseconds(0);
+					date.setFullYear(parseInt(d));
+					date.setMonth(0);
+					date.setDate(1);
+					date.setHours(0);
+					date.setMinutes(0);
+					date.setSeconds(0);
+					date.setMilliseconds(0);
 				} else if (d.match("T")) {
 					if (navigator.userAgent.match(/MSIE\s(?!9.0)/)) {
 					    // IE 8 < Won't accept dates with a "-" in them.
-						_time_parse = d.split("T");
+						time_parse = d.split("T");
 						if (d.match(":")) {
-							_t_array = _time_parse[1].split(":");
-							if (	_t_array[0]	>= 1	) {		_date.setHours(			_t_array[0]);	}
-							if (	_t_array[1]	>= 1	) {		_date.setMinutes(		_t_array[1]);	}
-							if (	_t_array[2]	>= 1	) {		_date.setSeconds(		_t_array[2]);	}
-							if (	_t_array[3]	>= 1	) {		_date.setMilliseconds(	_t_array[3]);	}
+							time_array = _time_parse[1].split(":");
+							if (	time_array[0]	>= 1	) {		date.setHours(			time_array[0]);	}
+							if (	time_array[1]	>= 1	) {		date.setMinutes(		time_array[1]);	}
+							if (	time_array[2]	>= 1	) {		date.setSeconds(		time_array[2]);	}
+							if (	time_array[3]	>= 1	) {		date.setMilliseconds(	time_array[3]);	}
 						}
-						_d_array = _time_parse[0].split("-");
-						if (	_d_array[0]			) {	_date.setFullYear(		_d_array[0]);			}
-						if (	_d_array[1]	> 1		) {	_date.setMonth(			_d_array[1] - 1);		}
-						if (	_d_array[2]	> 1		) {	_date.setDate(			_d_array[2]);			}
+						_d_array = time_parse[0].split("-");
+						if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
+						if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
+						if (	date_array[2]	> 1		) {	date.setDate(			date_array[2]);			}
 						
 					} else {
-						_date = new Date(Date.parse(d));
+						date = new Date(Date.parse(d));
 					}
 				} else {
-					_date = new Date(
+					date = new Date(
 						parseInt(d.slice(0,4)), 
 						parseInt(d.slice(4,6)) - 1, 
 						parseInt(d.slice(6,8)), 
@@ -125,16 +130,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						parseInt(d.slice(10,12))
 					);
 				}
-				return _date;
+				
 			}
+			return date;
 		},
 			
 		prettyDate: function(d, is_abbr, d2) {
-			var _date;
-			var _date2;
-			var format;
-			var bc_check;
-			var is_pair = false;
+			var _date,
+				_date2,
+				format,
+				bc_check,
+				is_pair = false;
 				
 			if (d2 != null) {
 				is_pair = true;
@@ -182,10 +188,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				for(var i = 0; i < bc_check.length; i++) {
 					if ( parseInt(bc_check[i]) < 0 ) {
 						trace("YEAR IS BC");
-						var bc_original = 	bc_check[i];
-						var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-						var bc_string = 	bc_number.toString() + " B.C.";
-						_date = _date.replace(bc_original, bc_string);
+						var bc_original	= bc_check[i];
+						var bc_number	= Math.abs( parseInt(bc_check[i]) );
+						var bc_string	= bc_number.toString() + " B.C.";
+						_date			= _date.replace(bc_original, bc_string);
 					}
 				}
 					
@@ -197,10 +203,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					for(var i = 0; i < bc_check.length; i++) {
 						if ( parseInt(bc_check[i]) < 0 ) {
 							trace("YEAR IS BC");
-							var bc_original = 	bc_check[i];
-							var bc_number = 	Math.abs( parseInt(bc_check[i]) );
-							var bc_string = 	bc_number.toString() + " B.C.";
-							_date2 = _date2.replace(bc_original, bc_string);
+							var bc_original	= bc_check[i];
+							var bc_number	= Math.abs( parseInt(bc_check[i]) );
+							var bc_string	= bc_number.toString() + " B.C.";
+							_date2			= _date2.replace(bc_original, bc_string);
 						}
 					}
 						

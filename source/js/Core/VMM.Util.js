@@ -1,4 +1,4 @@
-/* Utilities and Useful Functions
+/*	* Utilities and Useful Functions
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 	
@@ -8,12 +8,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return this;
 		},
 		
-		/* CORRECT PROTOCOL (DOES NOT WORK)
+		/*	* CORRECT PROTOCOL (DOES NOT WORK)
 		================================================== */
 		correctProtocol: function(url) {
-			var loc = (window.parent.location.protocol).toString();
-			var prefix = "";
-			var _url = url.split("://", 2);
+			var loc = (window.parent.location.protocol).toString(),
+				prefix = "",
+				the_url = url.split("://", 2);
 			
 			if (loc.match("http")) {
 				prefix = loc;
@@ -21,11 +21,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				prefix = "https";
 			}
 			
-			return prefix + "://" + _url[1];
+			return prefix + "://" + the_url[1];
 			
 		},
 		
-		/* GET OBJECT ATTRIBUTE BY INDEX
+		/*	* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
 			if(typeof obj != 'undefined') {
@@ -42,17 +42,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 			
 		},
-		/* RANDOM BETWEEN
+		/*	* RANDOM BETWEEN
 		================================================== */
 		//VMM.Util.randomBetween(1, 3)
 		randomBetween: function(min, max) {
 			return Math.floor(Math.random() * (max - min + 1) + min);
 		},
 		
-		/* AVERAGE
-			http://jsfromhell.com/array/average
-			var x = VMM.Util.average([2, 3, 4]);
-			VMM.Util.average([2, 3, 4]).mean
+		/*	* AVERAGE
+			* http://jsfromhell.com/array/average
+			* var x = VMM.Util.average([2, 3, 4]);
+			* VMM.Util.average([2, 3, 4]).mean
 		================================================== */
 		average: function(a) {
 		    var r = {mean: 0, variance: 0, deviation: 0}, t = a.length;
@@ -61,7 +61,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		    return r.deviation = Math.sqrt(r.variance = s / t), r;
 		},
 		
-		/* CUSTOM SORT
+		/*	* CUSTOM SORT
 		================================================== */
 		customSort: function(a, b) {
 			var a1= a, b1= b;
@@ -69,7 +69,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return a1> b1? 1: -1;
 		},
 		
-		/* Remove Duplicates from Array
+		/*	* Remove Duplicates from Array
 		================================================== */
 		deDupeArray: function(arr) {
 			var i,
@@ -86,7 +86,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return out;
 		},
 		
-		/* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
+		/*	* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
 		================================================== */
 		number2money: function(n, symbol, padding) {
 			var symbol = (symbol !== null) ? symbol : true; // add $
@@ -100,7 +100,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return formatted;
 		},
 		
-		/* Returns a word count number
+		/*	* Returns a word count number
 		================================================== */
 		wordCount: function(s) {
 			var fullStr = s + " ";
@@ -158,7 +158,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return (n < 10 ? '0' : '') + n;
 		},
 		
-		/* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
+		/*	* Returns a truncated segement of a long string of between min and max words. If possible, ends on a period (otherwise goes to max).
 		================================================== */
 		truncateWords: function(s, min, max) {
 			
@@ -191,7 +191,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return (result.join(' '));
 		},
 		
-		/* Turns plain text links into real links
+		/*	* Turns plain text links into real links
 		================================================== */
 		linkify: function(text,targets,is_touch) {
 			
@@ -251,7 +251,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				.replace(/<\/b>/gim, "");
 		},
 		
-		/* Turns plain text links into real links
+		/*	* Turns plain text links into real links
 		================================================== */
 		// VMM.Util.unlinkify();
 		unlinkify: function(text) {
@@ -269,13 +269,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text;
 		},
 		
-		/* TK
+		/*	* TK
 		================================================== */
 		nl2br: function(text) {
 			return text.replace(/(\r\n|[\r\n]|\\n|\\r)/g,"<br/>");
 		},
 		
-		/* Generate a Unique ID
+		/*	* Generate a Unique ID
 		================================================== */
 		// VMM.Util.unique_ID(size);
 		unique_ID: function(size) {
@@ -299,13 +299,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 			return randomID(size);
 		},
-		/* Tells you if a number is even or not
+		/*	* Tells you if a number is even or not
 		================================================== */
 		// VMM.Util.isEven(n)
 		isEven: function(n){
 			return (n%2 === 0) ? true : false;
 		},
-		/* Get URL Variables
+		/*	* Get URL Variables
 		================================================== */
 		//	var somestring = VMM.Util.getUrlVars(str_url)["varname"];
 		getUrlVars: function(string) {
@@ -332,7 +332,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return vars;
 		},
 
-		/* Cleans up strings to become real HTML
+		/*	* Cleans up strings to become real HTML
 		================================================== */
 		toHTML: function(text) {
 			
@@ -342,7 +342,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return text.replace(/\s\s/g,"&nbsp;&nbsp;");
 		},
 		
-		/* Returns text strings as CamelCase
+		/*	* Returns text strings as CamelCase
 		================================================== */
 		toCamelCase: function(s,forceLowerCase) {
 			
@@ -358,12 +358,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return sps.join(" ");
 		},
 		
-		/* Replaces dumb quote marks with smart ones
+		/*	* Replaces dumb quote marks with smart ones
 		================================================== */
 		properQuotes: function(str) {
 			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
 		},
-		/* Given an int or decimal, return a string with pretty commas in the correct spot.
+		/*	* Given an int or decimal, return a string with pretty commas in the correct spot.
 		================================================== */
 		niceNumber: function(n){
 		
@@ -391,7 +391,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 		},
 		
-		/* Transform text to Title Case
+		/*	* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7) {
