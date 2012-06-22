@@ -1,23 +1,23 @@
-/*!
-	Timeline
-	Designed and built by Zach Wise at VéritéCo
+/**
+	* Timeline
+	* Designed and built by Zach Wise at VéritéCo
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	* This program is free software: you can redistribute it and/or modify
+	* it under the terms of the GNU General Public License as published by
+	* the Free Software Foundation, either version 3 of the License, or
+	* (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	* This program is distributed in the hope that it will be useful,
+	* but WITHOUT ANY WARRANTY; without even the implied warranty of
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	* GNU General Public License for more details.
 
-    http://www.gnu.org/licenses/
+	* http://www.gnu.org/licenses/
 
 */  
 
-/* 	CodeKit Import
-	http://incident57.com/codekit/
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
 ================================================== */
 // @codekit-prepend "VMM.Timeline.License.js";
 
@@ -71,7 +71,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 	VMM.Timeline = function(w, h, conf, _timeline_id) {
 		
-		var $timeline, $feedback, $messege, slider, timenav, version, timeline_id;
+		var $timeline, $feedback, slider, timenav, version, timeline_id;
 		var events = {}, data = {}, _dates = [], config = {};
 		var has_width = false, has_height = false, ie7 = false, is_moving = false;
 		
@@ -81,7 +81,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.58";
+		version = 					"1.61";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -135,7 +135,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				height: 			200,
 				marker: {
 					width: 			150,
-					height: 		48
+					height: 		50
 				}
 			},
 			feature: {
@@ -227,7 +227,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.Lib.addClass(timeline_id, "vmm-timeline");
 			
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = 				VMM.appendAndGetElement($feedback, "<div>", "messege", "Timeline");
 			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
 			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
@@ -339,11 +338,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.master_config.language = VMM.Timeline.Config.language;
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
 			
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
 			
+			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
 			/* GET DATA
 			================================================== */
 			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
@@ -371,7 +370,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		this.reload = function(_d) {
 			trace("loadNewDates" + _d);
-			$messege = VMM.appendAndGetElement($feedback, "<div>", "messege", VMM.master_config.language.messages.loading_timeline);
+			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
 		};
@@ -390,7 +389,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		var showMessege = function(e, msg) {
 			trace("showMessege " + msg);
-			VMM.attachElement($messege, msg);
+			//VMM.attachElement($messege, msg);
+			VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg)); 
 		};
 		
 		var hideMessege = function() {
