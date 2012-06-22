@@ -1,16 +1,15 @@
-/* Verite
- * Verite JS Master
- * Version: 0.6
- * Date: April 26, 2012
- * Copyright 2012 Verite unless part of Verite Timeline, 
- * if part of Timeline then it inherits Timeline's license.
- * Designed and built by Zach Wise digitalartwork.net
- * ----------------------------------------------------- */
+/*	VéritéCo JS Master
+	Version: 0.6
+	Date: June 19, 2012
+	Copyright 2012 VéritéCo unless part of TimelineJS, 
+	if part of TimelineJS then it inherits TimelineJS's license.
+	Designed and built by Zach Wise digitalartwork.net
+================================================== */
 
 
-/* Simple JavaScript Inheritance
- * By John Resig http://ejohn.org/
- * MIT Licensed.
+/*	Simple JavaScript Inheritance
+	By John Resig http://ejohn.org/
+	MIT Licensed.
 ================================================== */
 (function() {
 	var initializing = false,
@@ -74,8 +73,8 @@
     };
 })();
 
-/* Access to the Global Object
- * access the global object without hard-coding the identifier window
+/*	Access to the Global Object
+	access the global object without hard-coding the identifier window
 ================================================== */
 var global = (function () {
    return this || (1,eval)('this');
