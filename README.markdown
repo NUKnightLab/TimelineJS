@@ -111,6 +111,47 @@ The thing about JSON is it is picky. A misplaced comma or quotation mark can
 prevent the timeline from loading properly. Instructions on actually using the
 JSON file are included in the example data.JSON file.
 
+Here is the full model:
+```javascript
+
+{
+	"timeline":
+	{
+		"headline":"The Main Timeline Headline Goes here",
+		"type":"default",
+		"text":"<p>Intro body text goes here, some HTML is ok</p>",
+		"asset": {
+			"media":"http://yourdomain_or_socialmedialink_goes_here.jpg",
+			"credit":"Credit Name Goes Here",
+			"caption":"Caption text goes here"
+		},
+		"date": [
+			{
+				"startDate":"2011,12,10",
+				"endDate":"2011,12,11",
+				"headline":"Headline Goes Here",
+				"text":"<p>Body text goes here, some HTML is OK</p>",
+				"tag":"This is Optional",
+				"asset": {
+					"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+					"credit":"Credit Name Goes Here",
+					"caption":"Caption text goes here"
+				}
+			}
+		],
+		"era": [
+			{
+				"startDate":"2011,12,10",
+				"endDate":"2011,12,11",
+				"headline":"Headline Goes Here",
+				"text":"<p>Body text goes here, some HTML is OK</p>",
+				"tag":"This is Optional"
+			}
+			
+		]
+	}
+}
+```
 ### Google Docs:
 
 If you don’t want to mess with JSON, fire up Google Docs and build your
@@ -164,14 +205,11 @@ Support for Storify is still in it's early stages. It works though. Just paste a
 
 Included in the zip file is a kitchen sink example. This timeline shows how to
 incorporate the different media types from different services like Twitter,
-YouTube, Flickr, SoundCloud and Vimeo.
+YouTube, Flickr, Instagram, TwitPic, Wikipedia, Dailymotion, SoundCloud and Vimeo.
 
-Twitter: Just copy and paste the address of the tweet from the browser bar
-into the media parameter. TimelineJS will auto-magically pull in the tweet and
-format it so that it looks beautiful.
-
-For Flickr, SoundCloud, YouTube, and Vimeo just copy the URL and paste it into
-the media parameter.
+Just copy and paste the address of the media from the browser bar
+into the media parameter. TimelineJS will auto-magically pull in the media via their api and
+format it.
 
 ## Best practices
 
