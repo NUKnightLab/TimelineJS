@@ -11,6 +11,26 @@
             "credit":"",
             "caption":""
         },
+		"era": [
+			{
+				"startDate":"1895,1,1",
+				"endDate":"1910,1,1",
+				"headline":"Georges Méliès",
+				"text":"Example of an era"
+	        },
+			{
+				"startDate":"1980,1,1",
+				"endDate":"1995,1,1",
+				"headline":"Another Era",
+				"text":"Example of an era"
+	        },
+			{
+				"startDate":"1990,1,1",
+				"endDate":"2013,1,1",
+				"headline":"Yet Another Era",
+				"text":"Example of an era"
+	        }
+		],
         "date": [
             {
                 "startDate":"2012,1,18",
