@@ -100,21 +100,43 @@
 		width: 100%;
 		height:100%;
 		background-color: @color-base;
-		//.opacity(80);
-		.messege {
+	}
+	div.loading {
+		display:table;
+		text-align:center;
+		min-width: 100px;
+		margin-top:@base-space;
+		height:100%;
+		width:100%;
+		background-color: @color-background;
+		.loading-container {
 			display:table-cell;
 			vertical-align:middle;
-			font-size: @base-font;
-			font-weight: normal;
-			line-height: @base-line;
-			width:75%;
-			margin-left:auto;
-			margin-right:auto;
-			margin-top:auto;
-			margin-bottom:auto;
-			text-align: center;
-			
+			.loading-icon {
+				display:block;
+				background-repeat:no-repeat;
+				vertical-align:middle;
+				margin-left:auto;
+				margin-right:auto;
+				text-align:center;
+				.loading-sprite();
+				width:28px;
+				height:28px;
+			}
+			.message {
+				display:block;
+			}
+			.message, .message p {
+				text-align:center;
+				font-size: @base-font-small;
+				line-height:@base-font-small + 2;
+				text-transform: uppercase;
+				margin-top:@base-space/2;
+				margin-bottom:@base-space/2;
+			}
+									
 		}
+								
 	}
 	
 	/* Container
@@ -274,17 +296,17 @@
 	.thumbnail.thumb-googleplus {
 		.icon-googleplus();
 	}
+	thumbnail.thumb-instagram {
+		.icon-instagram();
+	}
 	
+	thumbnail.thumb-instagram-full {
+		.icon-instagram-full();
+	}
 	.thumb-storify-full {
 		//display:inline-block;
 		height:12px;
 		.icon-storify-full();
-	}
-	thumbnail.thumb-instagram {
-		.icon-instagram();
-	}
-	thumbnail.thumb-instagram-full {
-		.icon-instagram-full();
 	}
 	
 	.thumbnail-inline {
