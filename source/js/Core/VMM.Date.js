@@ -68,7 +68,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
-						date_array[i] = parseInt(date_array[i]);
+						// Note that the radix is specified in parseInt. This
+						// causes all numbers to be recognized as decimal. In
+						// the time 12:04, for example, "04" should be parsed
+						// to "4" but if the radix is not specified it's
+						// considered a hexadecimal (`0x`).
+						// http://www.w3schools.com/jsref/jsref_parseint.asp
+						date_array[i] = parseInt(date_array[i], 10); // `10` is the radix
 					}
 					if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
 					if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
