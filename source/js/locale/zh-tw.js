@@ -24,13 +24,13 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
 		},
 		messages: {
-			loading_timeline: "Loading Timeline... ",
-			return_to_title: "Return to Title",
-			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline",
-			wikipedia: "From Wikipedia, the free encyclopedia",
-			loading_content: "Loading Content",
-			loading: "Loading"
+			loading_timeline: "載入時間線... ",
+			return_to_title: "回到開頭",
+			expand_timeline: "展開時間",
+			contract_timeline: "縮短時間",
+			wikipedia: "擷取至維基百科, 自由之百科全書",
+			loading_content: "載入內容",
+			loading: "載入中"
 			
 		}
 	}
