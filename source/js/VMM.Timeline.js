@@ -103,6 +103,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			current_slide:			0,
 			hash_bookmark:			false,
 			start_at_end: 			false,
+			start_at_slide:			0,
 			start_page: 			false,
 			api_keys: {
 				google:				"",
@@ -125,10 +126,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				density: 			4,
 				minor_width: 		0,
 				minor_left:			0,
-				contstraint: {
+				constraint: {
 					left:			0,
 					right:			0,
-					right_min:		0
+					right_min:		0,
+					right_max:		0
 				},
 				multiplier: {
 					current: 		6,
@@ -178,18 +180,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		if(window.location.hash) {
 			 var hash					=	window.location.hash.substring(1);
 			 if (!isNaN(hash)) {
-			 	 config.current_slide		=	parseInt(hash);
+			 	 config.current_slide	=	parseInt(hash);
 			 }
 		}
 		
 		window.onhashchange = function () {
+			var hash					=	window.location.hash.substring(1);
 			if (config.hash_bookmark) {
 				if (is_moving) {
-					var hash					=	window.location.hash.substring(1);
 					goToEvent(parseInt(hash));
 				} else {
 					is_moving = false;
 				}
+			} else {
+				goToEvent(parseInt(hash));
 			}
 		}
 		
@@ -356,16 +360,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			if (ie7) {
-				ie7 = true;
-				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
+			if (type.of(_data) == "string" || type.of(_data) == "object") {
+				VMM.Timeline.DataObj.getData(_data);
 			} else {
-				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					VMM.Timeline.DataObj.getData(_data);
-				} else {
-					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
-				}
+				VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
 			}
+			
 			
 		};
 		
@@ -414,24 +414,59 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
-			// CREATE DOM STRUCTURE
-			VMM.attachElement($timeline, "");
-			VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
+			// START AT END?
+			if (parseInt(config.start_at_slide) > 0) {
+				config.current_slide = parseInt(config.start_at_slide); 
+			}
 			
-			reSize();
+			// IE7
+			if (ie7) {
+				ie7 = true;
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
+			} else {
+				// CREATE DOM STRUCTURE
+				VMM.attachElement($timeline, "");
+				VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
 			
-			VMM.bindEvent("div.slider", onSliderLoaded, "LOADED");
-			VMM.bindEvent("div.navigation", onTimeNavLoaded, "LOADED");
-			VMM.bindEvent("div.slider", onSlideUpdate, "UPDATE");
-			VMM.bindEvent("div.navigation", onMarkerUpdate, "UPDATE");
+				reSize();
 			
-			slider.init(_dates);
-			timenav.init(_dates, data.era);
+				VMM.bindEvent("div.slider", onSliderLoaded, "LOADED");
+				VMM.bindEvent("div.navigation", onTimeNavLoaded, "LOADED");
+				VMM.bindEvent("div.slider", onSlideUpdate, "UPDATE");
+				VMM.bindEvent("div.navigation", onMarkerUpdate, "UPDATE");
 			
-			// RESIZE EVENT LISTENERS
-			VMM.bindEvent(global, reSize, config.events.resize);
-			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+				slider.init(_dates);
+				timenav.init(_dates, data.era);
 			
+				// RESIZE EVENT LISTENERS
+				VMM.bindEvent(global, reSize, config.events.resize);
+				//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+				
+			}
+			
+			
+		};
+		
+		var ie7Build = function() {
+			trace("IE7 or lower");
+			for(var i = 0; i < _dates.length; i++) {
+				trace(_dates[i]);
+				/*
+				var st	= VMM.Date.prettyDate(data.startdate);
+				var en	= VMM.Date.prettyDate(data.enddate);
+				var tag	= "";
+				if (data.tag != null && data.tag != "") {
+					tag		= VMM.createElement("span", data.tag, "slide-tag");
+				}
+						
+				if (st != en) {
+					c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
+				} else {
+					c.text += VMM.createElement("h2", st + tag, "date");
+				}
+				*/
+				
+			}
 		};
 		
 		var updateSize = function() {
