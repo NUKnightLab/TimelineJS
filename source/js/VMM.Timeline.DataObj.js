@@ -1,19 +1,13 @@
-/* 	TIMELINE SOURCE DATA PROCESSOR
+/*	TIMELINE SOURCE DATA PROCESSOR
 ================================================== */
 
-if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
-	
+if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
 	VMM.Timeline.DataObj = {
-		
 		data_obj: {},
-		
 		model_array: [],
-		
-		getData: function(raw_data) {
+		getData: function (raw_data) {
 			VMM.Timeline.DataObj.data_obj = {};
-			data = VMM.Timeline.DataObj.data_obj;
 			VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
-			
 			if (type.of(raw_data) == "object") {
 				trace("DATA SOURCE: JSON OBJECT");
 				VMM.Timeline.DataObj.parseJSON(raw_data);
@@ -41,7 +35,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 		},
 		
-		parseHTML: function(d) {
+		parseHTML: function (d) {
 			trace("parseHTML");
 			trace("WARNING: THIS IS STILL ALPHA AND WILL NOT WORK WITH ID's other than #timeline");
 			var _data_obj = VMM.Timeline.DataObj.data_template_obj;
