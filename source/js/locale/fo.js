@@ -24,11 +24,11 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'d'.' mmm yyyy'</small>'"
 		},
 		messages: {
-			loading_timeline: "Lesur inn tÌarr·s... ",
-			return_to_title: "Aftur til byrjan",
-			expand_timeline: "VÌka tÌarr·s",
-			contract_timeline: "Minka tÌarr·s",
-			wikipedia: "Fr· Wikipedia, tann frÊlsa alfr¯in",
+			loading_timeline: "Lesur inn t&iacute;&eth;arr&aacute;s...",
+			return_to_title: "V&iacute;&eth;ka t&iacute;&eth;arr&aacute;s...",
+			expand_timeline: "Minka t&iacute;&eth;arr&aacute;s...",
+			contract_timeline: "Minka t&iacute;&eth;arr&aacute;s",
+			wikipedia: "Fr· Wikipedia",
 			loading_content: "Lesur inn tilfar",
 			loading: "Lesur inn"
 		}
