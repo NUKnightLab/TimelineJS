@@ -25,6 +25,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			height:			"100%",
 			source:			'path_to_json/or_link_to_googlespreadsheet',
 			start_at_end: 	false,							//OPTIONAL START AT LATEST DATE
+			start_at_slide:	'4',							//OPTIONAL START AT SPECIFIC SLIDE
 			hash_bookmark:	true,							//OPTIONAL LOCATION BAR HASHES
 			font:			'Bevan-PotanoSans',				//OPTIONAL FONT
 			lang:			'fr',							//OPTIONAL LANGUAGE
