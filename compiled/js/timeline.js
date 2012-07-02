@@ -1168,7 +1168,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	VMM.Date = ({
 		
 		init: function() {
-			"use strict";
 			return this;
 		},
 		
@@ -1187,8 +1186,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 		month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 		day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-		day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
-		hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
+		day_abbr: ["Sun.", "Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
+		hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 		hour_suffix: ["am"],
 			
 		//B.C.
@@ -1205,7 +1204,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		setLanguage: function(lang) {
-			"use strict";
 			trace("SET DATE LANGUAGE");
 			VMM.Date.dateformats		=	lang.dateformats;	
 			VMM.Date.month				=	lang.date.month;
@@ -1231,7 +1229,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
-						date_array[i] = parseInt(date_array[i]);
+						date_array[i] = parseInt(date_array[i], 10);
 					}
 					if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
 					if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
@@ -1258,7 +1256,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
 					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
 				} else if (d.length <= 5) {
-					date.setFullYear(parseInt(d));
+					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
 					date.setDate(1);
 					date.setHours(0);
@@ -1286,11 +1284,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					}
 				} else {
 					date = new Date(
-						parseInt(d.slice(0,4)), 
-						parseInt(d.slice(4,6)) - 1, 
-						parseInt(d.slice(6,8)), 
-						parseInt(d.slice(8,10)), 
-						parseInt(d.slice(10,12))
+						parseInt(d.slice(0,4), 10), 
+						parseInt(d.slice(4,6), 10) - 1, 
+						parseInt(d.slice(6,8), 10), 
+						parseInt(d.slice(8,10), 10), 
+						parseInt(d.slice(10,12), 10)
 					);
 				}
 				
@@ -1303,7 +1301,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				_date2,
 				format,
 				bc_check,
-				is_pair = false;
+				is_pair = false,
+				bc_original,
+				bc_number,
+				bc_string;
 				
 			if (d2 != null) {
 				is_pair = true;
@@ -1349,12 +1350,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					
 				// BC TIME SUPPORT
 				for(var i = 0; i < bc_check.length; i++) {
-					if ( parseInt(bc_check[i]) < 0 ) {
+					if ( parseInt(bc_check[i], 10) < 0 ) {
 						trace("YEAR IS BC");
-						var bc_original	= bc_check[i];
-						var bc_number	= Math.abs( parseInt(bc_check[i]) );
-						var bc_string	= bc_number.toString() + " B.C.";
-						_date			= _date.replace(bc_original, bc_string);
+						bc_original	= bc_check[i];
+						bc_number	= Math.abs( parseInt(bc_check[i], 10) );
+						bc_string	= bc_number.toString() + " B.C.";
+						_date		= _date.replace(bc_original, bc_string);
 					}
 				}
 					
@@ -1363,12 +1364,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					_date2 = dateFormat(d2, format);
 					bc_check = _date2.split(" ");
 					// BC TIME SUPPORT
-					for(var i = 0; i < bc_check.length; i++) {
-						if ( parseInt(bc_check[i]) < 0 ) {
+					for(var j = 0; j < bc_check.length; j++) {
+						if ( parseInt(bc_check[j], 10) < 0 ) {
 							trace("YEAR IS BC");
-							var bc_original	= bc_check[i];
-							var bc_number	= Math.abs( parseInt(bc_check[i]) );
-							var bc_string	= bc_number.toString() + " B.C.";
+							bc_original	= bc_check[j];
+							bc_number	= Math.abs( parseInt(bc_check[j], 10) );
+							bc_string	= bc_number.toString() + " B.C.";
 							_date2			= _date2.replace(bc_original, bc_string);
 						}
 					}
@@ -2354,8 +2355,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			errorTimeOut: function(tweet) {
 				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
-				VMM.attachElement("#tweet_" + tweet.id, "<span class='messege'><p>Still waiting on Twitter: " + tweet.mid + "</p></span>"  );
-				
+				VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage("Still waiting on Twitter: " + tweet.mid) );
 				// CHECK RATE STATUS
 				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
 					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
@@ -2365,10 +2365,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						mes		= 	"<p>You've reached the maximum number of tweets you can load in an hour.</p>";
 						mes 	+=	"<p>You can view tweets again starting at: <br/>" + d.reset_time + "</p>";
 					} else {
-						mes		=	"<p>Still waiting on Twitter. " + id + "</p>";
+						mes		=	"<p>Still waiting on Twitter. " + tweet.mid + "</p>";
 						//mes 	= 	"<p>Tweet " + id + " was not found.</p>";
 					}
-					VMM.attachElement("#twitter_" + id, VMM.MediaElement.loadingmessage(mes) );
+					VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage(mes) );
 				});
 				
 			},
@@ -4106,146 +4106,202 @@ if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
 if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 	// VMM.DragSlider.createSlidePanel(drag_object, move_object, w, padding, sticky);
 	// VMM.DragSlider.cancelSlide();
-	VMM.DragSlider = {
-		createPanel: function(drag_object, move_object, w, padding, sticky) {
-			
 
+	VMM.DragSlider = function() {
+		var drag = {
+			element:		"",
+			element_move:	"",
+			constraint:		"",
+			sliding:		false,
+			pagex: {
+				start:		0,
+				end:		0
+			},
+			left: {
+				start:		0,
+				end:		0
+			},
+			time: {
+				start:		0,
+				end:		0
+			},
+			touch:			false
+		},
+		dragevent = {
+			down:		"mousedown",
+			up:			"mouseup",
+			leave:		"mouseleave",
+			move:		"mousemove"
+		},
+		mousedrag = {
+			down:		"mousedown",
+			up:			"mouseup",
+			leave:		"mouseleave",
+			move:		"mousemove"
+		},
+		touchdrag = {
+			down:		"touchstart",
+			up:			"touchend",
+			leave:		"mouseleave",
+			move:		"touchmove"
+		};
+		
+		this.createPanel = function(drag_object, move_object, constraint, touch) {
+			drag.element		= drag_object;
+			drag.element_move	= move_object;
 			
-			var x = padding;
-			VMM.DragSlider.width = w;
-			VMM.DragSlider.makeDraggable(drag_object, move_object);
-			VMM.DragSlider.drag_elem = drag_object;
-			/*
-			if (sticky != null && sticky != "") {
-				VMM.TouchSlider.sticky = sticky;
+			if ( constraint != null && constraint != "") {
+				drag.constraint = constraint;
 			} else {
-				VMM.TouchSlider.sticky = false;
+				drag.constraint = false;
 			}
-			*/
-			VMM.DragSlider.sticky = sticky;
-		},
-		makeDraggable: function(drag_object, move_object) {
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragStart, "mousedown", {element: move_object, delement: drag_object});
-			//VMM.bindEvent(drag_object, VMM.DragSlider.onDragMove, "mousemove", {element: move_object});
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragEnd, "mouseup", {element: move_object, delement: drag_object});
-			VMM.bindEvent(drag_object, VMM.DragSlider.onDragLeave, "mouseleave", {element: move_object, delement: drag_object});
-	    },
-		cancelSlide: function(e) {
-			VMM.unbindEvent(VMM.DragSlider.drag_elem, VMM.DragSlider.onDragMove, "mousemove");
-			//VMM.DragSlider.drag_elem.preventDefault();
-			//VMM.DragSlider.drag_elem.stopPropagation();
-			return true;
-		},
-		onDragLeave: function(e) {
-
-			VMM.unbindEvent(e.data.delement, VMM.DragSlider.onDragMove, "mousemove");
-			e.preventDefault();
-			e.stopPropagation();
-			return true;
-		},
-		onDragStart: function(e) {
-			VMM.DragSlider.dragStart(e.data.element, e.data.delement, e);
+			if ( touch) {
+				drag.touch = touch;
+			} else {
+				drag.touch = false;
+			}
+			trace("TOUCH" + drag.touch);
+			if (drag.touch) {
+				dragevent = touchdrag;
+			} else {
+				dragevent = mousedrag;
+			}
 			
-			e.preventDefault();
-			e.stopPropagation();
-			return true;
-		},
-		onDragEnd: function(e) {
-			e.preventDefault();
-			e.stopPropagation();
+			makeDraggable(drag.element, drag.element_move);
+		}
+		
+		this.updateConstraint = function(constraint) {
+			trace("updateConstraint");
+			drag.constraint = constraint;
+		}
+		
+		var makeDraggable = function(drag_object, move_object) {
 			
-			if (VMM.DragSlider.sliding) {
-				VMM.DragSlider.sliding = false;
-				VMM.DragSlider.dragEnd(e.data.element, e.data.delement, e);
+			VMM.bindEvent(drag_object, onDragStart, dragevent.down, {element: move_object, delement: drag_object});
+			VMM.bindEvent(drag_object, onDragEnd, dragevent.up, {element: move_object, delement: drag_object});
+			VMM.bindEvent(drag_object, onDragLeave, dragevent.leave, {element: move_object, delement: drag_object});
+			
+	    }
+		this.cancelSlide = function(e) {
+			VMM.unbindEvent(drag.element, onDragMove, dragevent.move);
+			return true;
+		}
+		var onDragLeave = function(e) {
+			VMM.unbindEvent(e.data.delement, onDragMove, dragevent.move);
+			e.preventDefault();
+			e.stopPropagation();
+			if (drag.sliding) {
+				drag.sliding = false;
+				dragEnd(e.data.element, e.data.delement, e);
 				return false;
 			} else {
 				return true;
 			}
-			
-		},
-		onDragMove: function(e) {
-			VMM.DragSlider.dragMove(e.data.element, e);
+		}
+		
+		var onDragStart = function(e) {
+			dragStart(e.data.element, e.data.delement, e);
+			e.preventDefault();
+			e.stopPropagation();
+			return true;
+		}
+		
+		var onDragEnd = function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			if (drag.sliding) {
+				drag.sliding = false;
+				dragEnd(e.data.element, e.data.delement, e);
+				return false;
+			} else {
+				return true;
+			}
+		}
+		var onDragMove = function(e) {
+			dragMove(e.data.element, e);
 			e.preventDefault();
 			e.stopPropagation();
 			return false;
-		},
-		dragStart: function(elem, delem, e) {
-			
-			VMM.DragSlider.startX = e.pageX;
-			
-			VMM.DragSlider.startLeft = VMM.DragSlider.getLeft(elem);
-			VMM.DragSlider.dragStartTime = new Date().getTime();
-			VMM.DragSlider.dragWidth = VMM.Lib.width(delem);
-			
-			// CANCEL CURRENT ANIMATION IF ANIMATING
-			var _newx = Math.round(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft);
+		}
+		var dragStart = function(elem, delem, e) {
+			if (drag.touch) {
+				trace("IS TOUCH")
+				VMM.Lib.css(elem, '-webkit-transition-duration', '0');
+				drag.pagex.start = e.originalEvent.touches[0].screenX;
+			} else {
+				drag.pagex.start = e.pageX;
+			}
+			drag.left.start = getLeft(elem);
+			drag.time.start = new Date().getTime();
 			
 			VMM.Lib.stop(elem);
-			VMM.bindEvent(delem, VMM.DragSlider.onDragMove, "mousemove", {element: elem});
+			VMM.bindEvent(delem, onDragMove, dragevent.move, {element: elem});
 
-	    },
-		dragEnd: function(elem, delem, e) {
-			VMM.unbindEvent(delem, VMM.DragSlider.onDragMove, "mousemove");
-			//VMM.DragSlider.dragMomentum(elem, e);
-			if (VMM.DragSlider.getLeft(elem) > 0) {
-				//(VMM.DragSlider.dragWidth/2)
-				//This means they dragged to the right past the first item
-				//VMM.Lib.animate(elem, 1000, "linear", {"left": 0});
+	    }
+		var dragEnd = function(elem, delem, e) {
+			VMM.unbindEvent(delem, onDragMove, dragevent.move);
+			dragMomentum(elem, e);
+		}
+		var dragMove = function(elem, e) {
+			drag.sliding = true;
+			if (drag.touch) {
+				drag.pagex.end = e.originalEvent.touches[0].screenX;
+			} else {
+				drag.pagex.end = e.pageX;
+			}
+			drag.left.end = getLeft(elem);
+			VMM.Lib.css(elem, 'left', -(drag.pagex.start - drag.pagex.end - drag.left.start));
+		}
+		var dragMomentum = function(elem, e) {
+			var drag_info = {
+					left:			drag.left.end,
+					left_adjust:	0,
+					change: {
+						x:			0
+					},
+					time:			(new Date().getTime() - drag.time.start) * 10,
+					time_adjust:	(new Date().getTime() - drag.time.start) * 10
+				},
+				ease		= "easeOutExpo";
 				
-				//VMM.fireEvent(elem, "DRAGUPDATE", [0]);
-			} else {
-				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
-				VMM.DragSlider.dragMomentum(elem, e);
-	         }
-		},
-		dragMove: function(elem, e) {
-			if (!VMM.DragSlider.sliding) {
-				//elem.parent().addClass('sliding');
+			drag_info.change.x = 6000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
+			
+			
+			drag_info.left_adjust = Math.round(drag_info.change.x / drag_info.time);
+			
+			drag_info.left = Math.min(drag_info.left + drag_info.left_adjust);
+			
+			if (drag.constraint) {
+				if (drag_info.left > drag.constraint.left) {
+					drag_info.left = drag.constraint.left;
+					if (drag_info.time > 5000) {
+						drag_info.time = 5000;
+					}
+				} else if (drag_info.left < drag.constraint.right) {
+					drag_info.left = drag.constraint.right;
+					if (drag_info.time > 5000) {
+						drag_info.time = 5000;
+					}
+				}
 			}
 			
-			VMM.DragSlider.sliding = true;
-			if (VMM.DragSlider.startX > e.pageX) {
-				//Sliding to the left
-				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
-				VMM.DragSlider.slidingLeft = true;
-			} else {
-				//Sliding to the right
-				var left = (e.pageX - VMM.DragSlider.startX + VMM.DragSlider.startLeft);
-				VMM.Lib.css(elem, 'left', -(VMM.DragSlider.startX - e.pageX - VMM.DragSlider.startLeft));
-				VMM.DragSlider.slidingLeft = false;
-			}
-		},
-		dragMomentum: function(elem, e) {
-			var slideAdjust = (new Date().getTime() - VMM.DragSlider.dragStartTime) * 10;
-			var timeAdjust = slideAdjust;
-			var left = VMM.DragSlider.getLeft(elem);
-
-			var changeX = 6000 * (Math.abs(VMM.DragSlider.startLeft) - Math.abs(left));
-			//var changeX = 6000 * (VMM.DragSlider.startLeft - left);
-			slideAdjust = Math.round(changeX / slideAdjust);
+			VMM.fireEvent(elem, "DRAGUPDATE", [drag_info]);
 			
-			var newLeft = left + slideAdjust;
-			
-			var t = newLeft % VMM.DragSlider.width;
-			//left: Math.min(0, newLeft),
-			var _r_object = {
-				left: Math.min(newLeft),
-				time: timeAdjust
+			if (drag_info.time > 0) {
+				if (drag.touch) {
+					VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+					VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
+					VMM.Lib.css(elem, 'left', drag_info.left);
+					
+				} else {
+					VMM.Lib.animate(elem, drag_info.time, ease, {"left": drag_info.left});
+				}
 			}
 			
-			VMM.fireEvent(elem, "DRAGUPDATE", [_r_object]);
-			var _ease = "easeOutExpo";
-			if (_r_object.time > 0) {
-				VMM.Lib.animate(elem, _r_object.time, _ease, {"left": _r_object.left});
-			};
-			
-			
-			//VMM.DragSlider.startX = null;
-		},
-		getLeft: function(elem) {
+		}
+		var getLeft = function(elem) {
 			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		}
-	
 	}
 }
 
@@ -6364,6 +6420,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			current_slide:			0,
 			hash_bookmark:			false,
 			start_at_end: 			false,
+			start_at_slide:			0,
 			start_page: 			false,
 			api_keys: {
 				google:				"",
@@ -6386,10 +6443,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				density: 			4,
 				minor_width: 		0,
 				minor_left:			0,
-				contstraint: {
+				constraint: {
 					left:			0,
 					right:			0,
-					right_min:		0
+					right_min:		0,
+					right_max:		0
 				},
 				multiplier: {
 					current: 		6,
@@ -6439,18 +6497,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		if(window.location.hash) {
 			 var hash					=	window.location.hash.substring(1);
 			 if (!isNaN(hash)) {
-			 	 config.current_slide		=	parseInt(hash);
+			 	 config.current_slide	=	parseInt(hash);
 			 }
 		}
 		
 		window.onhashchange = function () {
+			var hash					=	window.location.hash.substring(1);
 			if (config.hash_bookmark) {
 				if (is_moving) {
-					var hash					=	window.location.hash.substring(1);
 					goToEvent(parseInt(hash));
 				} else {
 					is_moving = false;
 				}
+			} else {
+				goToEvent(parseInt(hash));
 			}
 		}
 		
@@ -6617,16 +6677,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			if (ie7) {
-				ie7 = true;
-				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
+			if (type.of(_data) == "string" || type.of(_data) == "object") {
+				VMM.Timeline.DataObj.getData(_data);
 			} else {
-				if (type.of(_data) == "string" || type.of(_data) == "object") {
-					VMM.Timeline.DataObj.getData(_data);
-				} else {
-					VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
-				}
+				VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
 			}
+			
 			
 		};
 		
@@ -6675,24 +6731,59 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
-			// CREATE DOM STRUCTURE
-			VMM.attachElement($timeline, "");
-			VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
+			// START AT END?
+			if (parseInt(config.start_at_slide) > 0) {
+				config.current_slide = parseInt(config.start_at_slide); 
+			}
 			
-			reSize();
+			// IE7
+			if (ie7) {
+				ie7 = true;
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
+			} else {
+				// CREATE DOM STRUCTURE
+				VMM.attachElement($timeline, "");
+				VMM.appendElement($timeline, "<div class='container main'><div class='feature'><div class='slider'></div></div><div class='navigation'></div></div>");
 			
-			VMM.bindEvent("div.slider", onSliderLoaded, "LOADED");
-			VMM.bindEvent("div.navigation", onTimeNavLoaded, "LOADED");
-			VMM.bindEvent("div.slider", onSlideUpdate, "UPDATE");
-			VMM.bindEvent("div.navigation", onMarkerUpdate, "UPDATE");
+				reSize();
 			
-			slider.init(_dates);
-			timenav.init(_dates, data.era);
+				VMM.bindEvent("div.slider", onSliderLoaded, "LOADED");
+				VMM.bindEvent("div.navigation", onTimeNavLoaded, "LOADED");
+				VMM.bindEvent("div.slider", onSlideUpdate, "UPDATE");
+				VMM.bindEvent("div.navigation", onMarkerUpdate, "UPDATE");
 			
-			// RESIZE EVENT LISTENERS
-			VMM.bindEvent(global, reSize, config.events.resize);
-			//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+				slider.init(_dates);
+				timenav.init(_dates, data.era);
 			
+				// RESIZE EVENT LISTENERS
+				VMM.bindEvent(global, reSize, config.events.resize);
+				//VMM.bindEvent(global, function(e) {e.preventDefault()}, "touchmove");
+				
+			}
+			
+			
+		};
+		
+		var ie7Build = function() {
+			trace("IE7 or lower");
+			for(var i = 0; i < _dates.length; i++) {
+				trace(_dates[i]);
+				/*
+				var st	= VMM.Date.prettyDate(data.startdate);
+				var en	= VMM.Date.prettyDate(data.enddate);
+				var tag	= "";
+				if (data.tag != null && data.tag != "") {
+					tag		= VMM.createElement("span", data.tag, "slide-tag");
+				}
+						
+				if (st != en) {
+					c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
+				} else {
+					c.text += VMM.createElement("h2", st + tag, "date");
+				}
+				*/
+				
+			}
 		};
 		
 		var updateSize = function() {
@@ -6880,7 +6971,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 			},
 			$timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
-			$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+			$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout, $dragslide;
 			
 		
 
@@ -6972,8 +7063,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function reSize(firstrun) {
-			config.nav.contstraint.left = (config.width/2);
-			config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
+			config.nav.constraint.left = (config.width/2);
+			config.nav.constraint.right = config.nav.constraint.right_min - (config.width/2);
+			$dragslide.updateConstraint(config.nav.constraint);
+			
 			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
 			VMM.Lib.css($timenavindicator, "left", Math.round(config.width/2)-8);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
@@ -6984,7 +7077,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onZoomIn() {
-			VMM.DragSlider.cancelSlide();
+			
+			$dragslide.cancelSlide();
 			if (config.nav.multiplier.current > config.nav.multiplier.min) {
 				if (config.nav.multiplier.current <= 1) {
 					config.nav.multiplier.current = config.nav.multiplier.current - .25;
@@ -7008,7 +7102,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onZoomOut() {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			if (config.nav.multiplier.current < config.nav.multiplier.max) {
 				if (config.nav.multiplier.current > 4) {
 					if (config.nav.multiplier.current > 16) {
@@ -7028,7 +7122,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onBackHome(e) {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			goToMarker(0);
 			upDate();
 		}
@@ -7060,10 +7154,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
-			if (scroll_to > config.nav.contstraint.left) {
+			if (scroll_to > config.nav.constraint.left) {
 				scroll_to = config.width/2;
-			} else if (scroll_to < config.nav.contstraint.right) {
-				scroll_to = config.nav.contstraint.right;
+			} else if (scroll_to < config.nav.constraint.right) {
+				scroll_to = config.nav.constraint.right;
 			}
 			
 			VMM.Lib.stop($timenav);
@@ -7077,12 +7171,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			positionEras(true);
 			positionInterval($timeinterval, interval_array, true, true);
 			positionInterval($timeintervalmajor, interval_major_array, true);
+			config.nav.constraint.left = (config.width/2);
+			config.nav.constraint.right = config.nav.constraint.right_min - (config.width/2);
+			$dragslide.updateConstraint(config.nav.constraint);
 		};
 		
 		/* MARKER EVENTS
 		================================================== */
 		function onMarkerClick(e) {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			goToMarker(e.data.number);
 			upDate();
 		};
@@ -7833,13 +7930,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 					if (pos > config.nav.minor_width) {
 						config.nav.minor_width = pos;
+						//config.nav.constraint.right_min = -pos;
+						//config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
+						
 						
 					}
 					
 					if (pos < config.nav.minor_left) {
 						config.nav.minor_left = pos;
-						config.nav.contstraint.right_min = pos;
-						config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
+						//config.nav.constraint.right_min = pos;
+						//config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
+						
+						
 					}
 					
 				}
@@ -7852,6 +7954,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 			}
 			
+
+			
+			config.nav.constraint.right_min = -(config.nav.minor_width)+(config.width);
+			config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
 			
 			VMM.Lib.css($timeintervalminor_minor, "left", config.nav.minor_left - (config.width)/2);
 			VMM.Lib.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) + Math.abs(config.nav.minor_left) );
@@ -8124,13 +8230,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
 			
-			// MAKE TIMELINE TOUCHABLE
+			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
+			$dragslide = new VMM.DragSlider;
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				VMM.TouchSlider.createPanel($timebackground, $timenav, config.width, config.spacing, false);
-				VMM.bindEvent($timenav, onTouchUpdate, "TOUCHUPDATE");
+				$dragslide.createPanel(layout, $timenav, config.nav.constraint, true);
 			} else {
-				VMM.DragSlider.createPanel(layout, $timenav, config.width, config.spacing, false);
+				$dragslide.createPanel(layout, $timenav, config.nav.constraint);
 			}
+			
+			
 			
 			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
@@ -8428,22 +8536,16 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
      Begin VMM.Timeline.DataObj.js 
 ***********************************************/ 
 
-/* 	TIMELINE SOURCE DATA PROCESSOR
+/*	TIMELINE SOURCE DATA PROCESSOR
 ================================================== */
 
-if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
-	
+if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
 	VMM.Timeline.DataObj = {
-		
 		data_obj: {},
-		
 		model_array: [],
-		
-		getData: function(raw_data) {
+		getData: function (raw_data) {
 			VMM.Timeline.DataObj.data_obj = {};
-			data = VMM.Timeline.DataObj.data_obj;
 			VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
-			
 			if (type.of(raw_data) == "object") {
 				trace("DATA SOURCE: JSON OBJECT");
 				VMM.Timeline.DataObj.parseJSON(raw_data);
@@ -8471,7 +8573,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.DataObj == 'undefin
 			
 		},
 		
-		parseHTML: function(d) {
+		parseHTML: function (d) {
 			trace("parseHTML");
 			trace("WARNING: THIS IS STILL ALPHA AND WILL NOT WORK WITH ID's other than #timeline");
 			var _data_obj = VMM.Timeline.DataObj.data_template_obj;
