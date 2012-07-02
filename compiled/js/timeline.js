@@ -6727,14 +6727,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		var build = function() {
 			
-			// START AT END?
+			// START AT SLIDE
+			if (parseInt(config.start_at_slide) > 0 && config.current_slide == 0) {
+				config.current_slide = parseInt(config.start_at_slide); 
+			}
+			// START AT END
 			if (config.start_at_end && config.current_slide == 0) {
 				config.current_slide = _dates.length - 1;
 			}
-			// START AT END?
-			if (parseInt(config.start_at_slide) > 0) {
-				config.current_slide = parseInt(config.start_at_slide); 
-			}
+			
 			
 			// IE7
 			if (ie7) {
