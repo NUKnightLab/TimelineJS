@@ -32,7 +32,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 			},
 			$timenav, $content, $time, $timeintervalminor, $timeinterval, $timeintervalmajor, $timebackground, 
-			$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout;
+			$timeintervalbackground, $timenavline, $timenavindicator, $timeintervalminor_minor, $toolbar, $zoomin, $zoomout, $dragslide;
 			
 		
 
@@ -124,8 +124,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		function reSize(firstrun) {
-			config.nav.contstraint.left = (config.width/2);
-			config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
+			config.nav.constraint.left = (config.width/2);
+			config.nav.constraint.right = config.nav.constraint.right_min - (config.width/2);
+			$dragslide.updateConstraint(config.nav.constraint);
+			
 			VMM.Lib.css($timenavline, "left", Math.round(config.width/2)+2);
 			VMM.Lib.css($timenavindicator, "left", Math.round(config.width/2)-8);
 			goToMarker(config.current_slide, config.ease, config.duration, true, firstrun);
@@ -136,7 +138,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onZoomIn() {
-			VMM.DragSlider.cancelSlide();
+			
+			$dragslide.cancelSlide();
 			if (config.nav.multiplier.current > config.nav.multiplier.min) {
 				if (config.nav.multiplier.current <= 1) {
 					config.nav.multiplier.current = config.nav.multiplier.current - .25;
@@ -160,7 +163,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onZoomOut() {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			if (config.nav.multiplier.current < config.nav.multiplier.max) {
 				if (config.nav.multiplier.current > 4) {
 					if (config.nav.multiplier.current > 16) {
@@ -180,7 +183,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function onBackHome(e) {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			goToMarker(0);
 			upDate();
 		}
@@ -212,10 +215,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
-			if (scroll_to > config.nav.contstraint.left) {
+			if (scroll_to > config.nav.constraint.left) {
 				scroll_to = config.width/2;
-			} else if (scroll_to < config.nav.contstraint.right) {
-				scroll_to = config.nav.contstraint.right;
+			} else if (scroll_to < config.nav.constraint.right) {
+				scroll_to = config.nav.constraint.right;
 			}
 			
 			VMM.Lib.stop($timenav);
@@ -229,12 +232,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			positionEras(true);
 			positionInterval($timeinterval, interval_array, true, true);
 			positionInterval($timeintervalmajor, interval_major_array, true);
+			config.nav.constraint.left = (config.width/2);
+			config.nav.constraint.right = config.nav.constraint.right_min - (config.width/2);
+			$dragslide.updateConstraint(config.nav.constraint);
 		};
 		
 		/* MARKER EVENTS
 		================================================== */
 		function onMarkerClick(e) {
-			VMM.DragSlider.cancelSlide();
+			$dragslide.cancelSlide();
 			goToMarker(e.data.number);
 			upDate();
 		};
@@ -985,13 +991,18 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 					if (pos > config.nav.minor_width) {
 						config.nav.minor_width = pos;
+						//config.nav.constraint.right_min = -pos;
+						//config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
+						
 						
 					}
 					
 					if (pos < config.nav.minor_left) {
 						config.nav.minor_left = pos;
-						config.nav.contstraint.right_min = pos;
-						config.nav.contstraint.right = config.nav.contstraint.right_min - (config.width/2);
+						//config.nav.constraint.right_min = pos;
+						//config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
+						
+						
 					}
 					
 				}
@@ -1004,6 +1015,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 			}
 			
+
+			
+			config.nav.constraint.right_min = -(config.nav.minor_width)+(config.width);
+			config.nav.constraint.right = config.nav.constraint.right_min + (config.width/2);
 			
 			VMM.Lib.css($timeintervalminor_minor, "left", config.nav.minor_left - (config.width)/2);
 			VMM.Lib.width($timeintervalminor_minor, (config.nav.minor_width)+(config.width) + Math.abs(config.nav.minor_left) );
@@ -1276,13 +1291,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 
 			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
 			
-			// MAKE TIMELINE TOUCHABLE
+			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
+			$dragslide = new VMM.DragSlider;
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				VMM.TouchSlider.createPanel($timebackground, $timenav, config.width, config.spacing, false);
-				VMM.bindEvent($timenav, onTouchUpdate, "TOUCHUPDATE");
+				$dragslide.createPanel(layout, $timenav, config.nav.constraint, true);
 			} else {
-				VMM.DragSlider.createPanel(layout, $timenav, config.width, config.spacing, false);
+				$dragslide.createPanel(layout, $timenav, config.nav.constraint);
 			}
+			
+			
 			
 			
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
