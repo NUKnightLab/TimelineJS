@@ -5,7 +5,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	VMM.Date = ({
 		
 		init: function() {
-			"use strict";
 			return this;
 		},
 		
@@ -24,8 +23,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
 		month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 		day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-		day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
-		hour: [1,2,3,4,5,6,7,8,9,10,11,12,1,2,3,4,5,6,7,8,9,10,11,12],
+		day_abbr: ["Sun.", "Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
+		hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 		hour_suffix: ["am"],
 			
 		//B.C.
@@ -42,7 +41,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		setLanguage: function(lang) {
-			"use strict";
 			trace("SET DATE LANGUAGE");
 			VMM.Date.dateformats		=	lang.dateformats;	
 			VMM.Date.month				=	lang.date.month;
@@ -68,7 +66,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
-						date_array[i] = parseInt(date_array[i]);
+						date_array[i] = parseInt(date_array[i], 10);
 					}
 					if (	date_array[0]			) {	date.setFullYear(		date_array[0]);			}
 					if (	date_array[1]	> 1		) {	date.setMonth(			date_array[1] - 1);		}
@@ -95,7 +93,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
 					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
 				} else if (d.length <= 5) {
-					date.setFullYear(parseInt(d));
+					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
 					date.setDate(1);
 					date.setHours(0);
@@ -123,11 +121,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					}
 				} else {
 					date = new Date(
-						parseInt(d.slice(0,4)), 
-						parseInt(d.slice(4,6)) - 1, 
-						parseInt(d.slice(6,8)), 
-						parseInt(d.slice(8,10)), 
-						parseInt(d.slice(10,12))
+						parseInt(d.slice(0,4), 10), 
+						parseInt(d.slice(4,6), 10) - 1, 
+						parseInt(d.slice(6,8), 10), 
+						parseInt(d.slice(8,10), 10), 
+						parseInt(d.slice(10,12), 10)
 					);
 				}
 				
@@ -140,7 +138,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				_date2,
 				format,
 				bc_check,
-				is_pair = false;
+				is_pair = false,
+				bc_original,
+				bc_number,
+				bc_string;
 				
 			if (d2 != null) {
 				is_pair = true;
@@ -186,12 +187,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					
 				// BC TIME SUPPORT
 				for(var i = 0; i < bc_check.length; i++) {
-					if ( parseInt(bc_check[i]) < 0 ) {
+					if ( parseInt(bc_check[i], 10) < 0 ) {
 						trace("YEAR IS BC");
-						var bc_original	= bc_check[i];
-						var bc_number	= Math.abs( parseInt(bc_check[i]) );
-						var bc_string	= bc_number.toString() + " B.C.";
-						_date			= _date.replace(bc_original, bc_string);
+						bc_original	= bc_check[i];
+						bc_number	= Math.abs( parseInt(bc_check[i], 10) );
+						bc_string	= bc_number.toString() + " B.C.";
+						_date		= _date.replace(bc_original, bc_string);
 					}
 				}
 					
@@ -200,12 +201,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					_date2 = dateFormat(d2, format);
 					bc_check = _date2.split(" ");
 					// BC TIME SUPPORT
-					for(var i = 0; i < bc_check.length; i++) {
-						if ( parseInt(bc_check[i]) < 0 ) {
+					for(var j = 0; j < bc_check.length; j++) {
+						if ( parseInt(bc_check[j], 10) < 0 ) {
 							trace("YEAR IS BC");
-							var bc_original	= bc_check[i];
-							var bc_number	= Math.abs( parseInt(bc_check[i]) );
-							var bc_string	= bc_number.toString() + " B.C.";
+							bc_original	= bc_check[j];
+							bc_number	= Math.abs( parseInt(bc_check[j], 10) );
+							bc_string	= bc_number.toString() + " B.C.";
 							_date2			= _date2.replace(bc_original, bc_string);
 						}
 					}
