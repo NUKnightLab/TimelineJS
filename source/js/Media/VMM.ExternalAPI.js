@@ -100,8 +100,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			errorTimeOut: function(tweet) {
 				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
-				VMM.attachElement("#tweet_" + tweet.id, "<span class='messege'><p>Still waiting on Twitter: " + tweet.mid + "</p></span>"  );
-				
+				VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage("Still waiting on Twitter: " + tweet.mid) );
 				// CHECK RATE STATUS
 				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
 					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
@@ -111,10 +110,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						mes		= 	"<p>You've reached the maximum number of tweets you can load in an hour.</p>";
 						mes 	+=	"<p>You can view tweets again starting at: <br/>" + d.reset_time + "</p>";
 					} else {
-						mes		=	"<p>Still waiting on Twitter. " + id + "</p>";
+						mes		=	"<p>Still waiting on Twitter. " + tweet.mid + "</p>";
 						//mes 	= 	"<p>Tweet " + id + " was not found.</p>";
 					}
-					VMM.attachElement("#twitter_" + id, VMM.MediaElement.loadingmessage(mes) );
+					VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage(mes) );
 				});
 				
 			},
