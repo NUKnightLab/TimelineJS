@@ -21,17 +21,18 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	<div id="timeline-embed"></div>
 	<script type="text/javascript">
 	    var timeline_config = {
-			width:			"100%",
-			height:			"100%",
-			source:			'path_to_json/or_link_to_googlespreadsheet',
-			start_at_end: 	false,							//OPTIONAL START AT LATEST DATE
-			start_at_slide:	'4',							//OPTIONAL START AT SPECIFIC SLIDE
-			hash_bookmark:	true,							//OPTIONAL LOCATION BAR HASHES
-			font:			'Bevan-PotanoSans',				//OPTIONAL FONT
-			lang:			'fr',							//OPTIONAL LANGUAGE
-			maptype:		'watercolor',					//OPTIONAL MAP STYLE
-			css:			'path_to_css/timeline.css',		//OPTIONAL PATH TO CSS
-			js:				'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
+			width:				"100%",
+			height:				"600",
+			source:				'path_to_json/or_link_to_googlespreadsheet',
+			start_at_end: 		false,							//OPTIONAL START AT LATEST DATE
+			start_at_slide:		'4',							//OPTIONAL START AT SPECIFIC SLIDE
+			start_zoom_adjust:	'3',							//OPTIONAL TWEAK THE DEFAULT ZOOM LEVEL
+			hash_bookmark:		true,							//OPTIONAL LOCATION BAR HASHES
+			font:				'Bevan-PotanoSans',				//OPTIONAL FONT
+			lang:				'fr',							//OPTIONAL LANGUAGE
+			maptype:			'watercolor',					//OPTIONAL MAP STYLE
+			css:				'path_to_css/timeline.css',		//OPTIONAL PATH TO CSS
+			js:					'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
 		}
 	</script>
 	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
@@ -48,20 +49,38 @@ Languages available:
 * `fr` *Français*
 * `es` *Español*
 * `de` *Deutsch*
-* `is` *Icelandic*
 * `it` *Italiano*
-* `nl` *Nederlands*
-* `kr` *월요일*
 * `pt-br` *Português Brazil *
+* `nl` *Dutch*
+* `cz` *Czech*
+* `dk` *Danish*
+* `id` *Indonesian*
+* `pl` *Polish*
+* `ru` *Russian*
+* `is` *Icelandic*
+* `fo` *Icelandic*
+* `kr` *월요일*
 * `ja` *日本語*
 * `zh-ch` *中文*
 * `zh-tw` *Taiwanese Mandarin*
+
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/Timeline/blob/master/source/js/locale/en.js) 
 
 ###Start at End 
 `start_at_end`
 set to true to start the timeline on the last date.
 *default is false*
+
+###Start at Slide 
+`start_at_slide`
+You can tell TimelineJS to start at a specific slide number
+*default is 0*
+
+###Start Zoom Adjust
+`start_zoom_adjust`
+This will tweak the default zoom level. Equivilent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.
+*default is 0*
+
 	
 ###Hash Bookmark 
 `hash_bookmark`
