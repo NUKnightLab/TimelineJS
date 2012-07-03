@@ -209,9 +209,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				e.returnValue = false;
 			}
 			// Webkit
-			if (typeof e.wheelDeltaY != 'undefined' ) { 
+			if (typeof e.wheelDeltaX != 'undefined' ) {
 				delta = e.wheelDeltaY/6;
+				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
+					delta = e.wheelDeltaX/6;
+				} else {
+					delta = e.wheelDeltaY/6;
+				}
 			}
+			
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
@@ -1268,10 +1274,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			positionMarkers();
 			positionEras();
 			
-			
 			positionInterval($timeinterval, interval_array, false, true);
 			positionInterval($timeintervalmajor, interval_major_array);
-			//reSize(true);
+			
 			
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
@@ -1282,31 +1287,30 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
-			
-			VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
-			VMM.Lib.attribute($zoomin, "rel", "tooltip");
-			VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
-			VMM.Lib.attribute($zoomout, "rel", "tooltip");
-
-			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
+			$zoomin		= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+			$zoomout	= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				$dragslide.createPanel(layout, $timenav, config.nav.constraint, true);
-			} else {
-				$dragslide.createPanel(layout, $timenav, config.nav.constraint);
-			}
+			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
-			
-			
-			
+			// ZOOM EVENTS
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
 			VMM.bindEvent(".zoom-out", onZoomOut, "click");
-			VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
-			VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
+			
+			if (!config.touch) {
+				
+				// TOOLTIP
+				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
+				VMM.Lib.attribute($zoomin, "rel", "tooltip");
+				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
+				VMM.Lib.attribute($zoomout, "rel", "tooltip");
+				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				
+				// MOUSE EVENTS
+				VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
+				VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
+			}
 			
 			VMM.fireEvent(layout, "LOADED");
 			_active = true;

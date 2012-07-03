@@ -22,7 +22,8 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				start:		0,
 				end:		0
 			},
-			touch:			false
+			touch:			false,
+			ease:			"easeOutExpo"
 		},
 		dragevent = {
 			down:		"mousedown",
@@ -85,7 +86,9 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		}
 		var onDragLeave = function(e) {
 			VMM.unbindEvent(e.data.delement, onDragMove, dragevent.move);
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			if (drag.sliding) {
 				drag.sliding = false;
@@ -98,13 +101,17 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		
 		var onDragStart = function(e) {
 			dragStart(e.data.element, e.data.delement, e);
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			return true;
 		}
 		
 		var onDragEnd = function(e) {
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			if (drag.sliding) {
 				drag.sliding = false;
@@ -148,6 +155,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 			drag.left.end = getLeft(elem);
 			VMM.Lib.css(elem, 'left', -(drag.pagex.start - drag.pagex.end - drag.left.start));
+			
 		}
 		var dragMomentum = function(elem, e) {
 			var drag_info = {
@@ -158,10 +166,9 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 					},
 					time:			(new Date().getTime() - drag.time.start) * 10,
 					time_adjust:	(new Date().getTime() - drag.time.start) * 10
-				},
-				ease		= "easeOutExpo";
+				};
 				
-			drag_info.change.x = 6000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
+			drag_info.change.x = 3000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
 			
 			
 			drag_info.left_adjust = Math.round(drag_info.change.x / drag_info.time);
@@ -183,15 +190,22 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 			
 			VMM.fireEvent(elem, "DRAGUPDATE", [drag_info]);
+
 			
 			if (drag_info.time > 0) {
 				if (drag.touch) {
-					VMM.Lib.css(elem, '-webkit-transition-property', 'left');
-					VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
-					VMM.Lib.css(elem, 'left', drag_info.left);
+					//VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+					//VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
+					//VMM.Lib.css(elem, 'left', drag_info.left);
 					
+					//VMM.Lib.animate(elem, drag_info.time, "easeOutQuad", {"left": drag_info.left});
+					VMM.Lib.animate(elem, drag_info.time, "easeOutCirc", {"left": drag_info.left});
+					//VMM.Lib.css(elem, 'webkitTransition', '');
+					//VMM.Lib.css(elem, 'webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
+					//VMM.Lib.css(elem, 'webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
+
 				} else {
-					VMM.Lib.animate(elem, drag_info.time, ease, {"left": drag_info.left});
+					VMM.Lib.animate(elem, drag_info.time, drag.ease, {"left": drag_info.left});
 				}
 			}
 			

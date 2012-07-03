@@ -851,23 +851,20 @@ if(typeof VMM != 'undefined') {
 				var _tdd		= Math.round((_duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
-				VMM.Lib.css(element, '-webkit-transition', 'all '+ __duration + ' ease');
-				VMM.Lib.css(element, '-moz-transition', 'all '+ __duration + ' ease');
-				VMM.Lib.css(element, '-o-transition', 'all '+ __duration + ' ease');
-				VMM.Lib.css(element, '-ms-transition', 'all '+ __duration + ' ease');
-				VMM.Lib.css(element, 'transition', 'all '+ __duration + ' ease');
-				VMM.Lib.cssmultiple(element, _att);
-				
-				//callback_function();
-				/*
-				if( typeof( jQuery ) != 'undefined' ){
-					if (callback_function != null && callback_function != "") {
-						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease, complete:callback_function} );
-					} else {
-						jQuery(element).animate(_att, {queue:false, duration:_duration, easing:_ease} );
+				_ease = " cubic-bezier(0.33, 0.66, 0.66, 1)";
+				//_ease = " ease-in-out";
+				for (x in _att) {
+					if (Object.prototype.hasOwnProperty.call(_att, x)) {
+						trace(x + " to " + _att[x]);
+						VMM.Lib.css(element, '-webkit-transition',  x + ' ' + __duration + _ease);
+						VMM.Lib.css(element, '-moz-transition', x + ' ' + __duration + _ease);
+						VMM.Lib.css(element, '-o-transition', x + ' ' + __duration + _ease);
+						VMM.Lib.css(element, '-ms-transition', x + ' ' + __duration + _ease);
+						VMM.Lib.css(element, 'transition', x + ' ' + __duration + _ease);
 					}
 				}
-				*/
+				
+				VMM.Lib.cssmultiple(element, _att);
 				
 			} else {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -4125,7 +4122,8 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				start:		0,
 				end:		0
 			},
-			touch:			false
+			touch:			false,
+			ease:			"easeOutExpo"
 		},
 		dragevent = {
 			down:		"mousedown",
@@ -4188,7 +4186,9 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		}
 		var onDragLeave = function(e) {
 			VMM.unbindEvent(e.data.delement, onDragMove, dragevent.move);
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			if (drag.sliding) {
 				drag.sliding = false;
@@ -4201,13 +4201,17 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		
 		var onDragStart = function(e) {
 			dragStart(e.data.element, e.data.delement, e);
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			return true;
 		}
 		
 		var onDragEnd = function(e) {
-			e.preventDefault();
+			if (!drag.touch) {
+				e.preventDefault();
+			}
 			e.stopPropagation();
 			if (drag.sliding) {
 				drag.sliding = false;
@@ -4251,6 +4255,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 			drag.left.end = getLeft(elem);
 			VMM.Lib.css(elem, 'left', -(drag.pagex.start - drag.pagex.end - drag.left.start));
+			
 		}
 		var dragMomentum = function(elem, e) {
 			var drag_info = {
@@ -4261,10 +4266,9 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 					},
 					time:			(new Date().getTime() - drag.time.start) * 10,
 					time_adjust:	(new Date().getTime() - drag.time.start) * 10
-				},
-				ease		= "easeOutExpo";
+				};
 				
-			drag_info.change.x = 6000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
+			drag_info.change.x = 3000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
 			
 			
 			drag_info.left_adjust = Math.round(drag_info.change.x / drag_info.time);
@@ -4286,15 +4290,22 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 			
 			VMM.fireEvent(elem, "DRAGUPDATE", [drag_info]);
+
 			
 			if (drag_info.time > 0) {
 				if (drag.touch) {
-					VMM.Lib.css(elem, '-webkit-transition-property', 'left');
-					VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
-					VMM.Lib.css(elem, 'left', drag_info.left);
+					//VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+					//VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
+					//VMM.Lib.css(elem, 'left', drag_info.left);
 					
+					//VMM.Lib.animate(elem, drag_info.time, "easeOutQuad", {"left": drag_info.left});
+					VMM.Lib.animate(elem, drag_info.time, "easeOutCirc", {"left": drag_info.left});
+					//VMM.Lib.css(elem, 'webkitTransition', '');
+					//VMM.Lib.css(elem, 'webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
+					//VMM.Lib.css(elem, 'webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
+
 				} else {
-					VMM.Lib.animate(elem, drag_info.time, ease, {"left": drag_info.left});
+					VMM.Lib.animate(elem, drag_info.time, drag.ease, {"left": drag_info.left});
 				}
 			}
 			
@@ -6427,6 +6438,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			},
 			id: 					timeline_id,
 			type: 					"timeline",
+			touch:					false,
 			maptype: 				"toner",
 			preload:				4,
 			current_slide:			0,
@@ -6550,6 +6562,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						config[x] = conf[x];
 					}
 				}
+			}
+			
+			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+				config.touch = true;
 			}
 			
 			config.nav.width			= config.width;
@@ -7166,9 +7182,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				e.returnValue = false;
 			}
 			// Webkit
-			if (typeof e.wheelDeltaY != 'undefined' ) { 
+			if (typeof e.wheelDeltaX != 'undefined' ) {
 				delta = e.wheelDeltaY/6;
+				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
+					delta = e.wheelDeltaX/6;
+				} else {
+					delta = e.wheelDeltaY/6;
+				}
 			}
+			
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
@@ -8225,10 +8247,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			positionMarkers();
 			positionEras();
 			
-			
 			positionInterval($timeinterval, interval_array, false, true);
 			positionInterval($timeintervalmajor, interval_major_array);
-			//reSize(true);
+			
 			
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
@@ -8239,31 +8260,30 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
-			$zoomin = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout = 					VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
-			
-			VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
-			VMM.Lib.attribute($zoomin, "rel", "tooltip");
-			VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
-			VMM.Lib.attribute($zoomout, "rel", "tooltip");
-
-			$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"})
+			$zoomin		= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+			$zoomout	= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				$dragslide.createPanel(layout, $timenav, config.nav.constraint, true);
-			} else {
-				$dragslide.createPanel(layout, $timenav, config.nav.constraint);
-			}
+			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
-			
-			
-			
+			// ZOOM EVENTS
 			VMM.bindEvent(".zoom-in", onZoomIn, "click");
 			VMM.bindEvent(".zoom-out", onZoomOut, "click");
-			VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
-			VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
+			
+			if (!config.touch) {
+				
+				// TOOLTIP
+				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
+				VMM.Lib.attribute($zoomin, "rel", "tooltip");
+				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
+				VMM.Lib.attribute($zoomout, "rel", "tooltip");
+				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				
+				// MOUSE EVENTS
+				VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
+				VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
+			}
 			
 			VMM.fireEvent(layout, "LOADED");
 			_active = true;

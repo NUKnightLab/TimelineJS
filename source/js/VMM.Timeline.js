@@ -98,6 +98,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			},
 			id: 					timeline_id,
 			type: 					"timeline",
+			touch:					false,
 			maptype: 				"toner",
 			preload:				4,
 			current_slide:			0,
@@ -221,6 +222,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						config[x] = conf[x];
 					}
 				}
+			}
+			
+			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+				config.touch = true;
 			}
 			
 			config.nav.width			= config.width;
