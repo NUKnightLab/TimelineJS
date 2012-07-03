@@ -166,9 +166,14 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 					},
 					time:			(new Date().getTime() - drag.time.start) * 10,
 					time_adjust:	(new Date().getTime() - drag.time.start) * 10
-				};
+				},
+				multiplier = 3000;
 				
-			drag_info.change.x = 3000 * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
+			if (drag.touch) {
+				multiplier = 6000;
+			}
+			
+			drag_info.change.x = multiplier * (Math.abs(drag.pagex.end) - Math.abs(drag.pagex.start));
 			
 			
 			drag_info.left_adjust = Math.round(drag_info.change.x / drag_info.time);

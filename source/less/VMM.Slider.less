@@ -33,6 +33,59 @@
 	}
 }
 
+/* HOVER ELEMENTS
+================================================== */
+.vmm-notouch {
+	.slider {
+		.nav-previous:hover, .nav-next:hover {
+			color: @color-dark-second;
+			cursor: pointer;
+		}
+		.nav-previous:hover {
+			.icon {
+				margin-left: @base-space - 5;
+			}
+		}
+		.nav-next:hover {
+			.icon {
+				margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh + 5;
+			}
+		}
+		.slider-item {
+			.content {
+				.content-container {
+					.media {
+						.media-container {
+							.wikipedia {
+								h4 a:hover {
+									color: @color-theme;
+									text-decoration: none;
+								}
+								
+							}
+						}
+					}
+					.created-at:hover {
+						.opacity(100);
+					}
+					.googleplus {
+						.googleplus-content {
+							.googleplus-attachments {
+								a:hover {
+									text-decoration: none;
+									h5 {
+										text-decoration: underline;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+	}
+}
 /* SLIDER ELEMENTS
 ================================================== */
 .slider {
@@ -87,10 +140,6 @@
 		}
 	}
 	
-	.nav-previous:hover, .nav-next:hover {
-		color: @color-dark-second;
-		cursor: pointer;
-	}
 	.nav-previous {
 		float: left;
 		text-align:left;
@@ -101,11 +150,6 @@
 		.date, .title {
 			text-align:left;
 			padding-left:@base-space;
-		}
-	}
-	.nav-previous:hover {
-		.icon {
-			margin-left: @base-space - 5;
 		}
 	}
 	
@@ -121,12 +165,6 @@
 			padding-right:@base-space;
 		}
 	}
-	.nav-next:hover {
-		.icon {
-			margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh + 5;
-		}
-	}
-	
 	
 }
 
@@ -327,10 +365,6 @@
 								h4 a {
 									color: @color-feature-title;
 								}
-								h4 a:hover {
-									color: @color-theme;
-									text-decoration: none;
-								}
 								
 								p {
 									font-size: 13px;
@@ -431,9 +465,6 @@
 					float:right;
 					.opacity(25);
 				}
-				.created-at:hover {
-					.opacity(100);
-				}
 				.storify {
 					.created-at {
 						.icon-storify();
@@ -483,12 +514,6 @@
 							.clearfix();
 							h5 {
 								margin-bottom:5px;
-							}
-							a:hover {
-								text-decoration: none;
-								h5 {
-									text-decoration: underline;
-								}
 							}
 							div {
 								width: 50%;

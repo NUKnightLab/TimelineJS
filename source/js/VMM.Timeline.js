@@ -244,6 +244,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$timeline = 			VMM.getElement(timeline_id);
 			
 			VMM.Lib.addClass(timeline_id, "vmm-timeline");
+			if (config.touch) {
+				VMM.Lib.addClass(timeline_id, "vmm-touch");
+			} else {
+				VMM.Lib.addClass(timeline_id, "vmm-notouch");
+			}
 			
 			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
