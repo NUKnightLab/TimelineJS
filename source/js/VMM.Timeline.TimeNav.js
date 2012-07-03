@@ -343,10 +343,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			for(var i = 0; i < temp_multiplier; i++) {
 				if (averageMarkerPositionDistance() < 75) {
 					if (config.nav.multiplier.current > 1) {
-						config.nav.multiplier.current = config.nav.multiplier.current - 1;
+						config.nav.multiplier.current = (config.nav.multiplier.current - 1);
 					}
 				}
 			}
+			
 		}
 		
 		var calculateInterval = function() {
@@ -1311,6 +1312,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			_active = true;
 			
 			reSize(true);
+			
+			// USER CONFIGURABLE ADJUSTMENT TO DEFAULT ZOOM
+			if (config.nav.zoom.adjust != 0) {
+				if (config.nav.zoom.adjust < 0) {
+					for(var i = 0; i < Math.abs(config.nav.zoom.adjust); i++) {
+						onZoomOut();
+					}
+				} else {
+					for(var j = 0; j < config.nav.zoom.adjust; j++) {
+						onZoomIn();
+					}
+				}
+			}
 			
 		};
 		

@@ -104,6 +104,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			hash_bookmark:			false,
 			start_at_end: 			false,
 			start_at_slide:			0,
+			start_zoom_adjust:		0,
 			start_page: 			false,
 			api_keys: {
 				google:				"",
@@ -131,6 +132,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					right:			0,
 					right_min:		0,
 					right_max:		0
+				},
+				zoom: {
+					adjust:			0
 				},
 				multiplier: {
 					current: 		6,
@@ -219,13 +223,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			config.nav.width			=	config.width;
-			config.nav.height			=	200;
-			config.feature.width		=	config.width;
-			config.feature.height		=	config.height - config.nav.height;
-			VMM.Timeline.Config			=	config;
-			VMM.master_config.Timeline	=	VMM.Timeline.Config;
-			this.events					=	config.events;
+			config.nav.width			= config.width;
+			config.nav.height			= 200;
+			config.feature.width		= config.width;
+			config.feature.height		= config.height - config.nav.height;
+			config.nav.zoom.adjust		= parseInt(config.start_zoom_adjust, 10);
+			VMM.Timeline.Config			= config;
+			VMM.master_config.Timeline	= VMM.Timeline.Config;
+			this.events					= config.events;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE

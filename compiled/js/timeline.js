@@ -4631,37 +4631,38 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* SIZE SLIDES
 		================================================== */
 		var sizeSlides = function() {
-			var layout_text_media = 		".slider-item .layout-text-media .media .media-container ";
-			var layout_media = 				".slider-item .layout-media .media .media-container ";
-			var layout_both	= 				".slider-item .media .media-container";
-			var mediasize = {
-				text_media: {
-					width: 		(config.slider.content.width/100) * 60,
-					height: 	config.slider.height - 60,
-					video: {
-						width: 	0,
-						height: 0
+			var layout_text_media		= ".slider-item .layout-text-media .media .media-container ",
+				layout_media			= ".slider-item .layout-media .media .media-container ",
+				layout_both				= ".slider-item .media .media-container",
+				layout_caption			= ".slider-item .media .media-container .media-shadow .caption",
+				mediasize = {
+					text_media: {
+						width: 			(config.slider.content.width/100) * 60,
+						height: 		config.slider.height - 60,
+						video: {
+							width:		0,
+							height:		0
+						},
+						text: {
+							width:		((config.slider.content.width/100) * 40) - 30,
+							height:		config.slider.height
+						}
 					},
-					text: {
-						width:	((config.slider.content.width/100) * 40) - 30,
-						height:	config.slider.height
+					media: {
+						width: 			config.slider.content.width,
+						height: 		config.slider.height - 110,
+						video: {
+							width: 		0,
+							height: 	0
+						}
 					}
-				},
-				media: {
-					width: 		config.slider.content.width,
-					height: 	config.slider.height - 110,
-					video: {
-						width: 	0,
-						height: 0
-					}
-				}
-			}
+				};
 			
-			VMM.master_config.sizes.api.width = mediasize.media.width;
-			VMM.master_config.sizes.api.height = mediasize.media.height;
+			VMM.master_config.sizes.api.width	= mediasize.media.width;
+			VMM.master_config.sizes.api.height	= mediasize.media.height;
 			
-			mediasize.text_media.video = 	VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
-			mediasize.media.video = 		VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
+			mediasize.text_media.video			= VMM.Util.ratio.fit(mediasize.text_media.width, mediasize.text_media.height, 16, 9);
+			mediasize.media.video				= VMM.Util.ratio.fit(mediasize.media.width, mediasize.media.height, 16, 9);
 			
 			VMM.Lib.css(".slider-item", "width", config.slider.content.width );
 			VMM.Lib.height(".slider-item", config.slider.height);
@@ -4774,6 +4775,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.width(	layout_media + 		".twitter", 							mediasize.media.width);
 			VMM.Lib.width(	layout_media + 		".plain-text-quote", 					mediasize.media.width);
 			VMM.Lib.width(	layout_media + 		".plain-text", 							mediasize.media.width);
+			
+			// CAPTION WIDTH
+			VMM.Lib.css( layout_text_media + 	".caption",	"max-width",	mediasize.text_media.video.width);
+			VMM.Lib.css( layout_media + 		".caption",	"max-width",	mediasize.media.video.width);
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
 			for(var i = 0; i < slides.length; i++) {
@@ -4896,7 +4901,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider", "overflow-y", "scroll" );
 			} else {
 				VMM.Lib.css(layout, "overflow-y", "hidden" );
-				VMM.Lib.animate(layout, _duration, _ease, {scrollTop: VMM.Lib.prop(layout, "scrollHeight") - VMM.Lib.height(layout) });
+				var scroll_height = 0;
+				try {
+					scroll_height = VMM.Lib.prop(layout, "scrollHeight");
+					VMM.Lib.animate(layout, _duration, _ease, {scrollTop: scroll_height - VMM.Lib.height(layout) });
+				}
+				catch(err) {
+					scroll_height = VMM.Lib.height(layout);
+				}
 			}
 			
 			preloadSlides();
@@ -6421,6 +6433,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			hash_bookmark:			false,
 			start_at_end: 			false,
 			start_at_slide:			0,
+			start_zoom_adjust:		0,
 			start_page: 			false,
 			api_keys: {
 				google:				"",
@@ -6448,6 +6461,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					right:			0,
 					right_min:		0,
 					right_max:		0
+				},
+				zoom: {
+					adjust:			0
 				},
 				multiplier: {
 					current: 		6,
@@ -6536,13 +6552,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			config.nav.width			=	config.width;
-			config.nav.height			=	200;
-			config.feature.width		=	config.width;
-			config.feature.height		=	config.height - config.nav.height;
-			VMM.Timeline.Config			=	config;
-			VMM.master_config.Timeline	=	VMM.Timeline.Config;
-			this.events					=	config.events;
+			config.nav.width			= config.width;
+			config.nav.height			= 200;
+			config.feature.width		= config.width;
+			config.feature.height		= config.height - config.nav.height;
+			config.nav.zoom.adjust		= parseInt(config.start_zoom_adjust, 10);
+			VMM.Timeline.Config			= config;
+			VMM.master_config.Timeline	= VMM.Timeline.Config;
+			this.events					= config.events;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -7283,10 +7300,11 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			for(var i = 0; i < temp_multiplier; i++) {
 				if (averageMarkerPositionDistance() < 75) {
 					if (config.nav.multiplier.current > 1) {
-						config.nav.multiplier.current = config.nav.multiplier.current - 1;
+						config.nav.multiplier.current = (config.nav.multiplier.current - 1);
 					}
 				}
 			}
+			
 		}
 		
 		var calculateInterval = function() {
@@ -8251,6 +8269,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			_active = true;
 			
 			reSize(true);
+			
+			// USER CONFIGURABLE ADJUSTMENT TO DEFAULT ZOOM
+			if (config.nav.zoom.adjust != 0) {
+				if (config.nav.zoom.adjust < 0) {
+					for(var i = 0; i < Math.abs(config.nav.zoom.adjust); i++) {
+						onZoomOut();
+					}
+				} else {
+					for(var j = 0; j < config.nav.zoom.adjust; j++) {
+						onZoomIn();
+					}
+				}
+			}
 			
 		};
 		
