@@ -154,6 +154,7 @@ Here is the full model:
 				"tag":"This is Optional",
 				"asset": {
 					"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+					"thumbnail":"optional-32x32px.jpg",
 					"credit":"Credit Name Goes Here",
 					"caption":"Caption text goes here"
 				}
