@@ -1,5 +1,6 @@
 /*!
-	TIMELINE 0.98
+	TIMELINE CSS
+	
 	Designed and built by Zach Wise at VeriteCo
 
     This program is free software: you can redistribute it and/or modify
@@ -25,6 +26,7 @@
 	.loading-sprite() {
 		background-image: url(themes/loading.gif?v3.4);
 	}
+	
 	// COLORS
 	@color-base:					#1A1A1A;
 	@color-line: 					#333; //#414141;
@@ -87,6 +89,12 @@
 						display:block;
 						.container {
 							display:block;
+							-webkit-hyphens:auto;
+							   -moz-hyphens:auto;
+							    -ms-hyphens:auto;
+							        hyphens:auto;
+							word-wrap:break-word;
+							
 						}
 					}
 					.media {
@@ -100,7 +108,7 @@
 							display:block;
 							.media-container {
 								img, iframe {
-									width:100%;
+									//width:100%;
 									//max-height:350px;
 								}
 							}
@@ -110,7 +118,6 @@
 						.media-wrapper {
 							.media-container {
 								border: none;
-								background-color: @white;
 							}
 						}
 					}
