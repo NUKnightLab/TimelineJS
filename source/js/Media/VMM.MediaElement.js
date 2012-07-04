@@ -127,7 +127,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
 					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='" + uid + "'>" + loading_messege + "</div></div>";
-					VMM.ExternalAPI.youtube.get(m.id, uid);
+					VMM.ExternalAPI.youtube.get(m.id, uid, m.start);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";

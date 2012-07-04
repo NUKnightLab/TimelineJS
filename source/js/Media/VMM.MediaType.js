@@ -11,6 +11,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media	= {
 				type:		"unknown",
 				id:			"",
+				start:		0,
 				link:		"",
 				lang:		"",
 				uniqueid:	VMM.Util.unique_ID(6)
@@ -23,10 +24,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
 				media.id = VMM.Util.getUrlVars(d)["v"];
+				media.start = VMM.Util.getUrlVars(d)["t"];
 			} else if (d.match('\/embed\/')) {
 				media.id = d.split("embed\/")[1].split(/[?&]/)[0];
+				media.start = d.split("embed\/")[1].split(/[?&]/)[1];
 			} else {
 				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+				media.start = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[1];
 			}
 		    media.type = "youtube";
 		    success = true;

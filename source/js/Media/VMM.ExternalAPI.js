@@ -967,9 +967,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		youtube: {
 			
-			get: function(mid, id) {
+			get: function(mid, id, start) {
 				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + mid + "?v=2&alt=jsonc&callback=?",
-					vid = {mid: mid, id: id};
+					vid = {mid: mid, id: id, start: start};
 					
 				VMM.master_config.youtube.que.push(vid);
 				
@@ -989,6 +989,23 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(vid) {
+				if (typeof(vid.start) != 'undefined') {
+					
+					var vidstart			= vid.start.toString(),
+						vid_start_minutes	= 0,
+						vid_start_seconds	= 0;
+						
+					if (vidstart.match('m')) {
+						vidstart = vidstart.split("=")[1];
+						vid_start_minutes = parseInt(vidstart.split("m")[0], 10);
+						vid_start_seconds = parseInt(vidstart.split("m")[1].split("s")[0], 10);
+						vid.start = (vid_start_minutes * 60) + vid_start_seconds;
+					} else {
+						vid.start = 0;
+					}
+				} else {
+					vid.start = 0;
+				}
 				
 				var p = {
 					active: 				false,
@@ -1005,6 +1022,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						color: 				'white',
 						showinfo:			0,
 						theme:				'light',
+						start:				vid.start,
 						rel:				0
 					},
 					videoId: vid.mid,

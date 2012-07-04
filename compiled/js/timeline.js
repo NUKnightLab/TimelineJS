@@ -3219,9 +3219,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		youtube: {
 			
-			get: function(mid, id) {
+			get: function(mid, id, start) {
 				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + mid + "?v=2&alt=jsonc&callback=?",
-					vid = {mid: mid, id: id};
+					vid = {mid: mid, id: id, start: start};
 					
 				VMM.master_config.youtube.que.push(vid);
 				
@@ -3241,6 +3241,23 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(vid) {
+				if (typeof(vid.start) != 'undefined') {
+					
+					var vidstart			= vid.start.toString(),
+						vid_start_minutes	= 0,
+						vid_start_seconds	= 0;
+						
+					if (vidstart.match('m')) {
+						vidstart = vidstart.split("=")[1];
+						vid_start_minutes = parseInt(vidstart.split("m")[0], 10);
+						vid_start_seconds = parseInt(vidstart.split("m")[1].split("s")[0], 10);
+						vid.start = (vid_start_minutes * 60) + vid_start_seconds;
+					} else {
+						vid.start = 0;
+					}
+				} else {
+					vid.start = 0;
+				}
 				
 				var p = {
 					active: 				false,
@@ -3257,6 +3274,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						color: 				'white',
 						showinfo:			0,
 						theme:				'light',
+						start:				vid.start,
 						rel:				0
 					},
 					videoId: vid.mid,
@@ -3505,7 +3523,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// YOUTUBE
 				} else if (m.type		==	"youtube") {
 					mediaElem			=	"<div class='media-shadow'><div class='media-frame video youtube' id='" + uid + "'>" + loading_messege + "</div></div>";
-					VMM.ExternalAPI.youtube.get(m.id, uid);
+					VMM.ExternalAPI.youtube.get(m.id, uid, m.start);
 			// VIMEO
 				} else if (m.type		==	"vimeo") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video vimeo' autostart='false' frameborder='0' width='100%' height='100%' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'></iframe></div>";
@@ -3600,6 +3618,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media	= {
 				type:		"unknown",
 				id:			"",
+				start:		0,
 				link:		"",
 				lang:		"",
 				uniqueid:	VMM.Util.unique_ID(6)
@@ -3612,10 +3631,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
 				media.id = VMM.Util.getUrlVars(d)["v"];
+				media.start = VMM.Util.getUrlVars(d)["t"];
 			} else if (d.match('\/embed\/')) {
 				media.id = d.split("embed\/")[1].split(/[?&]/)[0];
+				media.start = d.split("embed\/")[1].split(/[?&]/)[1];
 			} else {
 				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
+				media.start = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[1];
 			}
 		    media.type = "youtube";
 		    success = true;
@@ -3897,201 +3919,6 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 		}
 		
 	}).init();
-}
-
-/*********************************************** 
-     Begin VMM.TouchSlider.js 
-***********************************************/ 
-
-/* TOUCH SLIDER
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.TouchSlider == 'undefined') {
-	
-	// VMM.TouchSlider.createSlidePanel(touch_object, move_object, w, padding, vertical, h) ;
-	VMM.TouchSlider = {
-		createPanel: function(touch_object, move_object, w, padding, vertical, h) {
-			VMM.TouchSlider.vertical = false;
-			VMM.TouchSlider.vertical = vertical;
-			
-			var x = padding;
-			VMM.TouchSlider.width = w;
-			VMM.TouchSlider.height = h;
-			VMM.TouchSlider.makeTouchable(touch_object, move_object);
-			/*
-			if (sticky != null && sticky != "") {
-				VMM.TouchSlider.sticky = sticky;
-			} else {
-				VMM.TouchSlider.sticky = false;
-			}
-			*/
-			// VMM.TouchSlider.sticky = sticky;
-			
-		},
-		
-		removePanel: function(touch_object) {
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart");
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove");
-			VMM.unbindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend");
-		},
-		
-		makeTouchable: function(touch_object, move_object) {
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchStart, "touchstart", {element: move_object});
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchMove, "touchmove", {element: move_object});
-			VMM.bindEvent(touch_object, VMM.TouchSlider.onTouchEnd, "touchend", {element: move_object});
-	    },
-		onTouchStart: function(e) {
-			VMM.TouchSlider.touchStart(e.data.element, e);
-			e.stopPropagation();
-			return true;
-		},
-		onTouchEnd: function(e) {
-			e.stopPropagation();
-			
-			if (VMM.TouchSlider.sliding) {
-				VMM.TouchSlider.sliding = false;
-				VMM.TouchSlider.touchEnd(e.data.element, e);
-				return false;
-			} else {
-				return true;
-			}
-			
-		},
-		onTouchMove: function(e) {
-			VMM.TouchSlider.touchMove(e.data.element, e);
-			e.preventDefault();
-			e.stopPropagation();
-			return false;
-		},
-		getLeft: function(elem) {
-			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
-		},
-		getTop: function(elem) {
-			return parseInt(VMM.Lib.css(elem, 'top').substring(0, VMM.Lib.css(elem, 'top').length - 2), 10);
-		},
-	    touchStart: function(elem, e) {
-			
-			VMM.Lib.css(elem, '-webkit-transition-duration', '0');
-			
-			VMM.TouchSlider.startX = e.originalEvent.touches[0].screenX;
-			VMM.TouchSlider.startY = e.originalEvent.touches[0].screenY;
-			
-			VMM.TouchSlider.startLeft = VMM.TouchSlider.getLeft(elem);
-			VMM.TouchSlider.startTop = VMM.TouchSlider.getTop(elem);
-			
-			VMM.TouchSlider.touchStartTime = new Date().getTime();
-
-	    },
-		touchEnd: function(elem, e) {
-			if (VMM.TouchSlider.getLeft(elem) > 0) {
-				
-				//This means they dragged to the right past the first item
-				
-				if (VMM.TouchSlider.vertical) {
-					VMM.Lib.animate(elem, 1000, "", {"top": 0});
-				} else {
-					VMM.Lib.animate(elem, 1000, "", {"left": 0});
-				}
-				
-				VMM.TouchSlider.startX = null;
-				VMM.TouchSlider.startY = null;
-				
-				VMM.fireEvent(elem, "TOUCHUPDATE", [0]);
-				
-			} else {
-				//This means they were just dragging within the bounds of the grid and we just need to handle the momentum and snap to the grid.
-				VMM.TouchSlider.slideMomentum(elem, e);
-	         }
-	    },
-		slideMomentum: function(elem, e) {
-			var slideAdjust = (new Date().getTime() - VMM.TouchSlider.touchStartTime) * 10;
-			var timeAdjust = slideAdjust;
-			
-			var left = VMM.TouchSlider.getLeft(elem);
-			var top = VMM.TouchSlider.getTop(elem);
-			
-			var changeX = 6000 * (Math.abs(VMM.TouchSlider.startLeft) - Math.abs(left));
-			var changeY = 6000 * (Math.abs(VMM.TouchSlider.startTop) - Math.abs(top));
-			
-			slideAdjust = Math.round(changeX / slideAdjust);
-			slideAdjustY = Math.round(changeY / slideAdjust);
-
-			var newLeft = slideAdjust + left;
-			var newTop = slideAdjustY + top;
-			
-			var y = newTop % VMM.TouchSlider.height;
-			var t = newLeft % VMM.TouchSlider.width;
-			
-			
-			var _r_object = {
-				top: Math.min(0, newTop),
-				left: Math.min(0, newLeft),
-				time: timeAdjust
-			}
-			VMM.fireEvent(elem, "TOUCHUPDATE", [_r_object]);
-			/*
-			if (VMM.TouchSlider.sticky) {
-				trace("sticky");
-				if ((Math.abs(t)) > ((VMM.TouchSlider.width / 2))) {
-					//Show the next cell
-					newLeft -= (VMM.TouchSlider.width - Math.abs(t));
-				} else {
-		             //Stay on the current cell
-					newLeft -= t;
-				}
-				
-				VMM.fireEvent(elem, "TOUCHUPDATE", [Math.min(0, newLeft)]);
-				
-			} else {
-				trace("not sticky");
-				//VMM.TouchSlider.doSlide(elem, Math.min(0, newLeft), '0.5s');
-				VMM.Lib.animate(elem, 500, "", {"left": Math.min(0, newLeft)});
-			}
-			*/
-			
-			VMM.TouchSlider.startX = null;
-			VMM.TouchSlider.startY = null;
-			
-	    },
-		doSlide: function(elem, x, duration) {
-			VMM.Lib.css(elem, '-webkit-transition-property', 'left');
-			VMM.Lib.css(elem, '-webkit-transition-duration', duration);
-			VMM.Lib.css(elem, 'left', x);
-		},
-		touchMove: function(elem, e) {
-			
-			if (!VMM.TouchSlider.sliding) {
-				//elem.parent().addClass('sliding');
-			}
-
-			VMM.TouchSlider.sliding = true;
-			
-			if (VMM.TouchSlider.vertical) {
-				
-				if (VMM.TouchSlider.startY > e.originalEvent.touches[0].screenY) {
-					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
-					VMM.TouchSlider.slidingTop = true;
-				} else {
-					var top = (e.originalEvent.touches[0].screenY - VMM.TouchSlider.startY + VMM.TouchSlider.startTop);
-					VMM.Lib.css(elem, 'top', -(VMM.TouchSlider.startY - e.originalEvent.touches[0].screenY - VMM.TouchSlider.startTop));
-					VMM.TouchSlider.slidingTop = false;
-				}
-				
-			} else {
-				
-				if (VMM.TouchSlider.startX > e.originalEvent.touches[0].screenX) {
-					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
-					VMM.TouchSlider.slidingLeft = true;
-				} else {
-					var left = (e.originalEvent.touches[0].screenX - VMM.TouchSlider.startX + VMM.TouchSlider.startLeft);
-					VMM.Lib.css(elem, 'left', -(VMM.TouchSlider.startX - e.originalEvent.touches[0].screenX - VMM.TouchSlider.startLeft));
-					VMM.TouchSlider.slidingLeft = false;
-				}
-				
-			}
-			
-			
-		}
-	}
 }
 
 /*********************************************** 
@@ -6380,7 +6207,6 @@ Utf8.decode = function(strUtf) {
 // @codekit-prepend "Media/VMM.Media.js";
 // @codekit-prepend "Media/VMM.TextElement.js";
 
-// @codekit-prepend "Slider/VMM.TouchSlider.js";
 // @codekit-prepend "Slider/VMM.DragSlider.js";
 // @codekit-prepend "Slider/VMM.Slider.js";
 // @codekit-prepend "Slider/VMM.Slider.Slide.js";
@@ -6392,21 +6218,6 @@ Utf8.decode = function(strUtf) {
 
 // @codekit-prepend "lib/AES.js";
 // @codekit-prepend "lib/bootstrap-tooltip.js";
-
-
-/*	Timeline TO DO
-	6 row timeline
-	fix google plus on IE
-	Better Storify integration
-	More design tweaks
-	multiple media on each slide / slideshows
-	StoryJS
-	SliderJS
-	PhudioJS
-	MapsJS
-	ChartsJS
-	TimelineJS
-================================================== */
 
 
 /* Timeline
@@ -6426,7 +6237,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.62";
+		version = 					"1.65";
 		
 		trace("TIMELINE VERSION " + version);
 		
