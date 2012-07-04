@@ -35,7 +35,6 @@
 // @codekit-prepend "Media/VMM.Media.js";
 // @codekit-prepend "Media/VMM.TextElement.js";
 
-// @codekit-prepend "Slider/VMM.TouchSlider.js";
 // @codekit-prepend "Slider/VMM.DragSlider.js";
 // @codekit-prepend "Slider/VMM.Slider.js";
 // @codekit-prepend "Slider/VMM.Slider.Slide.js";
@@ -47,21 +46,6 @@
 
 // @codekit-prepend "lib/AES.js";
 // @codekit-prepend "lib/bootstrap-tooltip.js";
-
-
-/*	Timeline TO DO
-	6 row timeline
-	fix google plus on IE
-	Better Storify integration
-	More design tweaks
-	multiple media on each slide / slideshows
-	StoryJS
-	SliderJS
-	PhudioJS
-	MapsJS
-	ChartsJS
-	TimelineJS
-================================================== */
 
 
 /* Timeline
@@ -81,7 +65,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id = 			"#timeline";
 		}
 		
-		version = 					"1.62";
+		version = 					"1.65";
 		
 		trace("TIMELINE VERSION " + version);
 		
