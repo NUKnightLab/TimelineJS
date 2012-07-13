@@ -192,19 +192,37 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* NAVIGATION
 		================================================== */
 		function onNextClick(e) {
-			if (current_slide == slides.length - 1) {
+			var next;
+			var last;
+			if (config.reverse) {
+				next = -1;
+				last = 0;
+			} else {
+				next = 1;
+				last = slides.length - 1;
+			}
+			if (current_slide == last) {
 				VMM.Lib.animate($slider_container, config.duration, config.ease, {"left": -(slides[current_slide].leftpos()) } );
 			} else {
-				goToSlide(current_slide+1);
+				goToSlide(current_slide+next);
 				upDate();
 			}
 		}
 		
 		function onPrevClick(e) {
-			if (current_slide == 0) {
+			var prev;
+			var first;
+			if (config.reverse) {
+				prev = 1;
+				first = slides.length - 1;
+			} else {
+				prev = -1;
+				first = 0;
+			}
+			if (current_slide == first) {
 				goToSlide(current_slide);
 			} else {
-				goToSlide(current_slide-1);
+				goToSlide(current_slide+prev);
 				upDate();
 			}
 		}
@@ -488,7 +506,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		var positionSlides = function() {
 			var pos = 0;
 			for(var i = 0; i < slides.length; i++) {
-				pos = i * (config.slider.width+config.spacing);
+				if (config.reverse) {
+					pos = -i * (config.slider.width+config.spacing);
+				} else {
+					pos = i * (config.slider.width+config.spacing);
+				}
 				slides[i].leftpos(pos);
 			}
 		}
@@ -527,8 +549,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			var _pos = slides[current_slide].leftpos();
 			var _title = "";
 			
-			if (current_slide == 0) {is_first = true};
-			if (current_slide +1 >= slides.length) {is_last = true};
+			var next, prev;
+			
+			if (config.reverse) {
+				if (current_slide == 0) {is_last = true};
+				if (current_slide +1 >= slides.length) {is_first = true};
+				next = -1;
+				prev = 1;
+			} else {
+				if (current_slide == 0) {is_first = true};
+				if (current_slide +1 >= slides.length) {is_last = true};
+				next = 1;
+				prev = -1;
+			}			
 			if (ease != null && ease != "") {_ease = ease};
 			if (duration != null && duration != "") {_duration = duration};
 			
@@ -538,13 +571,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.visible(navigation.prevBtn, false);
 			} else {
 				VMM.Lib.visible(navigation.prevBtn, true);
-				_title = VMM.Util.unlinkify(data[current_slide - 1].title)
+				_title = VMM.Util.unlinkify(data[current_slide + prev].title)
 				if (config.type == "timeline") {
-					if(typeof data[current_slide - 1].date === "undefined") {
+					if(typeof data[current_slide + prev].date === "undefined") {
 						VMM.attachElement(navigation.prevDate, _title);
 						VMM.attachElement(navigation.prevTitle, "");
 					} else {
-						VMM.attachElement(navigation.prevDate, VMM.Date.prettyDate(data[current_slide - 1].startdate));
+						VMM.attachElement(navigation.prevDate, VMM.Date.prettyDate(data[current_slide + prev].startdate));
 						VMM.attachElement(navigation.prevTitle, _title);
 					}
 				} else {
@@ -556,13 +589,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.visible(navigation.nextBtn, false);
 			} else {
 				VMM.Lib.visible(navigation.nextBtn, true);
-				_title = VMM.Util.unlinkify(data[current_slide + 1].title);
+				_title = VMM.Util.unlinkify(data[current_slide + next].title);
 				if (config.type == "timeline") {
-					if(typeof data[current_slide + 1].date === "undefined") {
+					if(typeof data[current_slide + next].date === "undefined") {
 						VMM.attachElement(navigation.nextDate, _title);
 						VMM.attachElement(navigation.nextTitle, "");
 					} else {
-						VMM.attachElement(navigation.nextDate, VMM.Date.prettyDate(data[current_slide + 1].startdate) );
+						VMM.attachElement(navigation.nextDate, VMM.Date.prettyDate(data[current_slide + next].startdate) );
 						VMM.attachElement(navigation.nextTitle, _title);
 					}
 				} else {
