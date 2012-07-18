@@ -1,46 +1,95 @@
 /* Mixins.less
  * Snippets of reusable CSS to develop faster and keep code readable
  * ----------------------------------------------------------------- */
-
-
-// Clearfix for clearing floats like a boss h5bp.com/q
-.clearfix() {
-  zoom: 1;
-  &:before,
-  &:after {
-    display: table;
-    content: "";
-    zoom: 1;
-  }
-  &:after {
-    clear: both;
-  }
+ 
+// Text Font
+.text-font(@fontsize: 15px) {
+	font-size: @fontsize;
+ 	line-height: round((@fontsize/100) * 130);
 }
-
+// Border Radius
+.border-radius(@radius: 5px) {
+ 	-webkit-border-radius: @radius;
+ 	   -moz-border-radius: @radius;
+ 	        border-radius: @radius;
+}
+// User Select
+.user-select(@userselect) {
+ 	-webkit-user-select: @userselect;
+ 	   -moz-user-select: @userselect;
+ 	        user-select: @userselect;
+}
+// Box Shadow
+.box-shadow(@shadow: 1px 1px 7px rgba(0,0,0,.30)) {
+	-webkit-box-shadow: @shadow;
+	   -moz-box-shadow: @shadow;
+	        box-shadow: @shadow;
+}
+// Media Shadow
+.media-shadow(@shadow: 0 1px 3px 0px @color-dark-fourth) {
+	-webkit-box-shadow: @shadow;
+ 	   -moz-box-shadow: @shadow;
+ 	        box-shadow: @shadow;
+ 	border: 1px solid;
+ 	border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
+}
+// Transform
+.transform(@transform) {
+ 	-webkit-transform: @transform;
+ 	   -moz-transform: @transform;
+ 	    -ms-transform: @transform;
+ 	     -o-transform: @transform;
+ 	        transform: @transform;
+}
+// Transitions
+.transition(@transition) {
+ 	-webkit-transition: @transition;
+ 	   -moz-transition: @transition;
+ 	    -ms-transition: @transition;
+ 	     -o-transition: @transition;
+ 	        transition: @transition;
+}
+// Background clipping
+.background-clip(@clip) {
+ 	-webkit-background-clip: @clip;
+ 	   -moz-background-clip: @clip;
+ 	        background-clip: @clip;
+}
+// Opacity
+.opacity(@opacity: 100) {
+ 	filter: e(%("alpha(opacity=%d)", @opacity));
+ 	-khtml-opacity: @opacity / 100;
+ 	  -moz-opacity: @opacity / 100;
+ 	       opacity: @opacity / 100;
+}
+// Hyphens
+.hyphens(@hyphens: auto) {
+ 	-webkit-hyphens:@hyphens;
+ 	   -moz-hyphens:@hyphens;
+ 	    -ms-hyphens:@hyphens;
+ 	        hyphens:@hyphens;
+}
+// Clear Fix
+.clearfix() {
+	*zoom: 1;
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+} 
+// Reset filters for IE
+.reset-filter() {
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
+}
 // Center-align a block level element
 .center-block() {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-// Sizing shortcuts
-.size(@height: 5px, @width: 5px) {
-  height: @height;
-  width: @width;
-}
-.square(@size: 5px) {
-  .size(@size, @size);
-}
-
-// Input placeholder text
-.placeholder(@color: @grayLight) {
-  :-moz-placeholder {
-    color: @color;
-  }
-  ::-webkit-input-placeholder {
-    color: @color;
-  }
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 // Font Stacks
@@ -89,32 +138,6 @@
 	  }
 }
 
-// Border Radius
-.border-radius(@radius: 5px) {
-  -webkit-border-radius: @radius;
-     -moz-border-radius: @radius;
-          border-radius: @radius;
-}
-
-// Drop shadows
-
-
-// Transitions
-.transition(@transition) {
-     -webkit-transition: @transition;
-        -moz-transition: @transition;
-         -ms-transition: @transition;
-          -o-transition: @transition;
-             transition: @transition;
-}
-
-// Background clipping
-.background-clip(@clip) {
-  -webkit-background-clip: @clip;
-     -moz-background-clip: @clip;
-          background-clip: @clip;
-}
-
 // CSS3 Content Columns
 .content-columns(@columnCount, @columnGap: 20px) {
   -webkit-column-count: @columnCount;
@@ -123,12 +146,6 @@
   -webkit-column-gap: @columnGap;
      -moz-column-gap: @columnGap;
           column-gap: @columnGap;
-}
-
-// Make any element resizable for prototyping
-.resizable(@direction: both) {
-  resize: @direction; // Options are horizontal, vertical, both
-  overflow: auto; // Safari fix
 }
 
 // Add an alphatransparency value to any background or border color (via Elyse Holladay)
@@ -196,17 +213,4 @@
     background-image: linear-gradient(@startColor, @midColor @colorStop, @endColor);
     filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@startColor,@endColor)); // IE9 and down, gets no color-stop at all for proper fallback
   }
-}
-
-// Reset filters for IE
-.reset-filter() {
-  filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
-}
-
-// Opacity
-.opacity(@opacity: 100) {
-  filter: e(%("alpha(opacity=%d)", @opacity));
-  -khtml-opacity: @opacity / 100;
-    -moz-opacity: @opacity / 100;
-         opacity: @opacity / 100;
 }
