@@ -25,6 +25,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 		},
 		
+		/*	* MERGE CONFIG
+		================================================== */
+		mergeConfig: function(config_main, config_to_merge) {
+			var x;
+			for (x in config_to_merge) {
+				if (Object.prototype.hasOwnProperty.call(config_to_merge, x)) {
+					config_main[x] = config_to_merge[x];
+				}
+			}
+			return config_main;
+		},
+		
 		/*	* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
@@ -42,6 +54,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 			
 		},
+		
+		/*	* ORDINAL
+		================================================== */
+		ordinal: function(n) {
+		    return ["th","st","nd","rd"][(!( ((n%10) >3) || (Math.floor(n%100/10)==1)) ) * (n%10)]; 
+		},
+		
 		/*	* RANDOM BETWEEN
 		================================================== */
 		//VMM.Util.randomBetween(1, 3)
@@ -363,34 +382,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		properQuotes: function(str) {
 			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
 		},
-		/*	* Given an int or decimal, return a string with pretty commas in the correct spot.
+		/*	* Add Commas to numbers
 		================================================== */
-		niceNumber: function(n){
-		
-			var amount = String( Math.abs(Number(n) ) );
-		    
-			var leftOfDecimal = amount.split(/\./g)[0];
-			var rightOfDecimal = amount.split(/\./g)[1];
-		    
-			var formatted_text = '';
-		    
-			var num_a = leftOfDecimal.toArray();
-			num_a.reverse();
-		    
-			for (var i=1; i <= num_a.length; i++) {
-				if ( (i%3 == 0) && (i < num_a.length ) ) {
-					formatted_text = "," + num_a[i-1] + formatted_text;
-				} else {
-					formatted_text = num_a[i-1] + formatted_text;
-				}
-		    }
-			if (rightOfDecimal != null && rightOfDecimal != '' && rightOfDecimal != undefined) {
-				return formatted_text + "." + rightOfDecimal;
-			} else {
-				return formatted_text;
+		niceNumber: function(nStr){
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + ',' + '$2');
 			}
+			return x1 + x2;
 		},
-		
 		/*	* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){

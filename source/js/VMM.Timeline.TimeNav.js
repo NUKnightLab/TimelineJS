@@ -1295,8 +1295,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
 			// ZOOM EVENTS
-			VMM.bindEvent(".zoom-in", onZoomIn, "click");
-			VMM.bindEvent(".zoom-out", onZoomOut, "click");
+			VMM.bindEvent($zoomin, onZoomIn, "click");
+			VMM.bindEvent($zoomout, onZoomOut, "click");
 			
 			if (!config.touch) {
 				

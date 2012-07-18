@@ -2,6 +2,32 @@
 ================================================== */
 if(typeof VMM != 'undefined') {
 	
+	VMM.smoothScrollTo = function(elem, duration, ease) {
+		if( typeof( jQuery ) != 'undefined' ){
+			var _ease		= "easein",
+				_duration	= 1000;
+		
+			if (duration != null) {
+				if (duration < 1) {
+					_duration = 1;
+				} else {
+					_duration = Math.round(duration);
+				}
+				
+			}
+			
+			if (ease != null && ease != "") {
+				_ease = ease;
+			}
+			
+			if (jQuery(window).scrollTop() != VMM.Lib.offset(elem).top) {
+				VMM.Lib.animate('html,body', _duration, _ease, {scrollTop: VMM.Lib.offset(elem).top})
+			}
+			
+		}
+		
+	};
+	
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
 			jQuery(element).html(content);

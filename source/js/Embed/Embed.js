@@ -1,18 +1,7 @@
-/*	* VéritéCo Timeline Loader 0.8
-	* Designed and built by Zach Wise digitalartwork.net
-
-    * This program is free software: you can redistribute it and/or modify
-    * it under the terms of the GNU General Public License as published by
-    * the Free Software Foundation, either version 3 of the License, or
-    * (at your option) any later version.
-
-    * This program is distributed in the hope that it will be useful,
-    * but WITHOUT ANY WARRANTY; without even the implied warranty of
-    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    * GNU General Public License for more details.
-
-    * http://www.gnu.org/licenses/
-
+/*
+	VéritéCo Embed Loader 0.8
+	Designed and built by Zach Wise digitalartwork.net
+	Date: June 21, 2012
 */  
 
 /* 	CodeKit Import
@@ -22,9 +11,9 @@
 
 var WebFontConfig;
 
-if(typeof timeline_path == 'undefined' || typeof timeline_path == 'undefined') {
+if(typeof embed_path == 'undefined' || typeof embed_path == 'undefined') {
 	// REPLACE WITH YOUR BASEPATH IF YOU WANT OTHERWISE IT WILL TRY AND FIGURE IT OUT
-	var timeline_path = getScriptPath("timeline-embed.js").split("js/")[0];
+	var embed_path = getScriptPath("timeline-embed.js").split("js/")[0];
 }
 function getScriptPath(scriptname) {
 	var scriptTags = document.getElementsByTagName('script'),
@@ -48,8 +37,8 @@ function getScriptPath(scriptname) {
 	
 	/* VARS
 	================================================== */
-	var timelinejs, t, te, x, isCDN = false,
-		timeline_js_version = "1.62",
+	var embedjs, t, te, x, isCDN = false,
+		js_version = "1.68",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
@@ -67,19 +56,19 @@ function getScriptPath(scriptname) {
 			}
 		},
 		path = {
-			base:		timeline_path,
-			css:		timeline_path + "css/",
-			js:			timeline_path + "js/",
-			locale:		timeline_path + "js/locale/",
+			base:		embed_path,
+			css:		embed_path + "css/",
+			js:			embed_path + "js/",
+			locale:		embed_path + "js/locale/",
 			jquery:		"http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js",
 			font: {
 				google:	false,
-				css:	timeline_path + "css/themes/font/",
+				css:	embed_path + "css/themes/font/",
 				js:		"http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"
 			}
 		},
 		embed_config = {
-			version:	timeline_js_version,
+			version:	js_version,
 			debug:		false,
 			embed:		true,
 			width:		'100%',
@@ -87,8 +76,8 @@ function getScriptPath(scriptname) {
 			source:		'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadFYzRjJPUGktY0NkWXFUWkVIZDNGRHc&output=html',
 			lang:		'en',
 			font:		'default',
-			css:		path.css + 'timeline.css?'+timeline_js_version,
-			js:			path.js + 'timeline-min.js?'+timeline_js_version
+			css:		path.css + 'timeline.css?'+js_version,
+			js:			path.js + 'timeline-min.js?'+js_version
 		},
 		font_presets = [
 			{ name:	"Merriweather-NewsCycle",		google:	[ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] },
@@ -148,17 +137,16 @@ function getScriptPath(scriptname) {
 	if (embed_config.lang.match("/")) {
 		path.locale = embed_config.lang;
 	} else {
-		path.locale = path.locale + embed_config.lang + ".js?" + timeline_js_version;
+		path.locale = path.locale + embed_config.lang + ".js?" + js_version;
 	}
 	// Check for old installs still using the old method of language
 	if (embed_config.js.match("locale")) {
 		embed_config.lang = embed_config.js.split("locale/")[1].replace(".js", "");
-		embed_config.js = path.js + 'timeline-min.js?'+timeline_js_version;
+		embed_config.js = path.js + 'timeline-min.js?' + js_version;
 	}
 	/* PREPARE
 	================================================== */
-	timeline_config = embed_config;
-	createTimelineDiv();
+	createEmbedDiv();
 	
 	/* Load CSS
 	================================================== */
@@ -178,7 +166,7 @@ function getScriptPath(scriptname) {
 			path.font.css	= embed_config.font;
 		} else {
 			path.font.name	= embed_config.font;
-			path.font.css	= path.font.css + embed_config.font + ".css?" + timeline_js_version;
+			path.font.css	= path.font.css + embed_config.font + ".css?" + js_version;
 		}
 		LazyLoad.css(path.font.css, onloaded_font_css);
 		
@@ -262,7 +250,7 @@ function getScriptPath(scriptname) {
 			if (ready.js && ready.css && ready.font.css && ready.font.js && ready.language) {
 				if (!ready.finished) {
 					ready.finished = true;
-					buildTimeline();
+					buildEmbed();
 				}
 			} else {
 				ready.timeout = setTimeout('onloaded_check_again();', 250);
@@ -275,11 +263,11 @@ function getScriptPath(scriptname) {
 	
 	/* Build Timeline
 	================================================== */
-	function createTimelineDiv() {
+	function createEmbedDiv() {
 		t = document.createElement('div');
 		te = document.getElementById("timeline-embed");
 		te.appendChild(t);
-		t.setAttribute("id", 'timeline');
+		t.setAttribute("id", 'timelinejs');
 		
 		if (embed_config.width.toString().match("%") ) {
 			te.style.width = embed_config.width;
@@ -302,12 +290,12 @@ function getScriptPath(scriptname) {
 		t.style.position = 'relative';
 	}
 	
-	function buildTimeline() {
+	function buildEmbed() {
 		VMM.debug = embed_config.debug;
-		timelinejs = new VMM.Timeline();
-		timelinejs.init(embed_config.source);
+		embedjs = new VMM.Timeline();
+		embedjs.init(embed_config.source);
 		if (isCDN) {
-			VMM.bindEvent(global, onTimelineHeadline, "TIMELINE_HEADLINE");
+			VMM.bindEvent(global, onHeadline, "HEADLINE");
 		}
 	};
 	

@@ -62,10 +62,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		if (type.of(_timeline_id) == "string") {
 			timeline_id = 			_timeline_id;
 		} else {
-			timeline_id = 			"#timeline";
+			timeline_id = 			"#timelinejs";
 		}
 		
-		version = 					"1.65";
+		version = 					"1.68";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -76,7 +76,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			events: {
 				data_ready:		"DATAREADY",
 				messege:		"MESSEGE",
-				headline:		"TIMELINE_HEADLINE",
+				headline:		"HEADLINE",
 				slide_change:	"SLIDE_CHANGE",
 				resize:			"resize"
 			},
@@ -191,21 +191,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var createConfig = function(conf) {
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
+			if (typeof embed_config == 'object') {
+				timeline_config = embed_config;
+			}
 			if (typeof timeline_config == 'object') {
 				trace("HAS TIMELINE CONFIG");
-			    var x;
-				for (x in timeline_config) {
-					if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
-						config[x] = timeline_config[x];
-					}
-				}
+				config = VMM.Util.mergeConfig(config, timeline_config);
 			} else if (typeof conf == 'object') {
-				var x;
-				for (x in conf) {
-					if (Object.prototype.hasOwnProperty.call(conf, x)) {
-						config[x] = conf[x];
-					}
-				}
+				config = VMM.Util.mergeConfig(config, conf);
 			}
 			
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
@@ -347,10 +340,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			
+			// EVENTS
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
 			
 			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
+			
 			/* GET DATA
 			================================================== */
 			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
