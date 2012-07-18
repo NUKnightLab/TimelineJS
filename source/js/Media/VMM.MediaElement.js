@@ -25,9 +25,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				var _valid		= true,
 					mediaElem	= "",
 					m			= VMM.MediaType(data.media); //returns an object with .type and .id
-						
-				// CREATE MEDIA CODE 
-				if (m.type == "image") {
+					
+				// DETERMINE THUMBNAIL OR ICON
+				if (data.thumbnail != null && data.thumbnail != "") {
+					trace("CUSTOM THUMB");
+					mediaElem		=	"<div class='thumbnail thumb-custom' id='" + uid + "_custom_thumb'><img src='" + data.thumbnail + "'></div>";
+					return mediaElem;
+				} else if (m.type == "image") {
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {

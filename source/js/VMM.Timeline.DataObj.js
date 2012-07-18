@@ -206,15 +206,19 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					            "headline": 						dd.gsx$headline.$t,
 					            "text": 							dd.gsx$text.$t,
 					            "asset": {
-									"media": 						dd.gsx$media.$t, 
-									"credit": 						dd.gsx$mediacredit.$t, 
-									"caption": 						dd.gsx$mediacaption.$t 
+									"media": 						dd.gsx$media.$t,
+									"credit": 						dd.gsx$mediacredit.$t,
+									"caption": 						dd.gsx$mediacaption.$t
 								},
 					            "tag": 								""
 							};
 							if (typeof dd.gsx$tag != 'undefined') {
-								_date.tag = dd.gsx$tag.$t;
+								_date.tag				= dd.gsx$tag.$t;
 							}
+							if (typeof dd.gsx$tag != 'undefined') {
+								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
+							}
+							
 							_data_obj.timeline.date.push(_date);
 						}
 					};

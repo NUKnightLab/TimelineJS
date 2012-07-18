@@ -1,5 +1,6 @@
 /*!
 	TimelineJS
+	Version 1.65
 	Designed and built by Zach Wise at VéritéCo
 
 	This program is free software: you can redistribute it and/or modify
@@ -394,6 +395,32 @@ var type={
 /*	* LIBRARY ABSTRACTION
 ================================================== */
 if(typeof VMM != 'undefined') {
+	
+	VMM.smoothScrollTo = function(elem, duration, ease) {
+		if( typeof( jQuery ) != 'undefined' ){
+			var _ease		= "easein",
+				_duration	= 1000;
+		
+			if (duration != null) {
+				if (duration < 1) {
+					_duration = 1;
+				} else {
+					_duration = Math.round(duration);
+				}
+				
+			}
+			
+			if (ease != null && ease != "") {
+				_ease = ease;
+			}
+			
+			if (jQuery(window).scrollTop() != VMM.Lib.offset(elem).top) {
+				VMM.Lib.animate('html,body', _duration, _ease, {scrollTop: VMM.Lib.offset(elem).top})
+			}
+			
+		}
+		
+	};
 	
 	VMM.attachElement = function(element, content) {
 		if( typeof( jQuery ) != 'undefined' ){
@@ -1549,6 +1576,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			
 		},
 		
+		/*	* MERGE CONFIG
+		================================================== */
+		mergeConfig: function(config_main, config_to_merge) {
+			var x;
+			for (x in config_to_merge) {
+				if (Object.prototype.hasOwnProperty.call(config_to_merge, x)) {
+					config_main[x] = config_to_merge[x];
+				}
+			}
+			return config_main;
+		},
+		
 		/*	* GET OBJECT ATTRIBUTE BY INDEX
 		================================================== */
 		getObjectAttributeByIndex: function(obj, index) {
@@ -1566,6 +1605,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			}
 			
 		},
+		
+		/*	* ORDINAL
+		================================================== */
+		ordinal: function(n) {
+		    return ["th","st","nd","rd"][(!( ((n%10) >3) || (Math.floor(n%100/10)==1)) ) * (n%10)]; 
+		},
+		
 		/*	* RANDOM BETWEEN
 		================================================== */
 		//VMM.Util.randomBetween(1, 3)
@@ -1887,34 +1933,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		properQuotes: function(str) {
 			return str.replace(/\"([^\"]*)\"/gi,"&#8220;$1&#8221;");
 		},
-		/*	* Given an int or decimal, return a string with pretty commas in the correct spot.
+		/*	* Add Commas to numbers
 		================================================== */
-		niceNumber: function(n){
-		
-			var amount = String( Math.abs(Number(n) ) );
-		    
-			var leftOfDecimal = amount.split(/\./g)[0];
-			var rightOfDecimal = amount.split(/\./g)[1];
-		    
-			var formatted_text = '';
-		    
-			var num_a = leftOfDecimal.toArray();
-			num_a.reverse();
-		    
-			for (var i=1; i <= num_a.length; i++) {
-				if ( (i%3 == 0) && (i < num_a.length ) ) {
-					formatted_text = "," + num_a[i-1] + formatted_text;
-				} else {
-					formatted_text = num_a[i-1] + formatted_text;
-				}
-		    }
-			if (rightOfDecimal != null && rightOfDecimal != '' && rightOfDecimal != undefined) {
-				return formatted_text + "." + rightOfDecimal;
-			} else {
-				return formatted_text;
+		niceNumber: function(nStr){
+			nStr += '';
+			x = nStr.split('.');
+			x1 = x[0];
+			x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + ',' + '$2');
 			}
+			return x1 + x2;
 		},
-		
 		/*	* Transform text to Title Case
 		================================================== */
 		toTitleCase: function(t){
@@ -3421,9 +3452,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				var _valid		= true,
 					mediaElem	= "",
 					m			= VMM.MediaType(data.media); //returns an object with .type and .id
-						
-				// CREATE MEDIA CODE 
-				if (m.type == "image") {
+					
+				// DETERMINE THUMBNAIL OR ICON
+				if (data.thumbnail != null && data.thumbnail != "") {
+					trace("CUSTOM THUMB");
+					mediaElem		=	"<div class='thumbnail thumb-custom' id='" + uid + "_custom_thumb'><img src='" + data.thumbnail + "'></div>";
+					return mediaElem;
+				} else if (m.type == "image") {
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
@@ -5892,281 +5927,6 @@ Utf8.decode = function(strUtf) {
 }( window.jQuery );
 
 /*********************************************** 
-     Begin bootstrap-tooltip.js 
-***********************************************/ 
-
-/* ===========================================================
- * bootstrap-tooltip.js v2.0.1
- * http://twitter.github.com/bootstrap/javascript.html#tooltips
- * Inspired by the original jQuery.tipsy by Jason Frame
- * ===========================================================
- * Copyright 2012 Twitter, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ========================================================== */
-
-!function( $ ) {
-
-  "use strict"
-
- /* TOOLTIP PUBLIC CLASS DEFINITION
-  * =============================== */
-
-  var Tooltip = function ( element, options ) {
-    this.init('tooltip', element, options)
-  }
-
-  Tooltip.prototype = {
-
-    constructor: Tooltip
-
-  , init: function ( type, element, options ) {
-      var eventIn
-        , eventOut
-
-      this.type = type
-      this.$element = $(element)
-      this.options = this.getOptions(options)
-      this.enabled = true
-
-      if (this.options.trigger != 'manual') {
-        eventIn  = this.options.trigger == 'hover' ? 'mouseenter' : 'focus'
-        eventOut = this.options.trigger == 'hover' ? 'mouseleave' : 'blur'
-        this.$element.on(eventIn, this.options.selector, $.proxy(this.enter, this))
-        this.$element.on(eventOut, this.options.selector, $.proxy(this.leave, this))
-      }
-
-      this.options.selector ?
-        (this._options = $.extend({}, this.options, { trigger: 'manual', selector: '' })) :
-        this.fixTitle()
-    }
-
-  , getOptions: function ( options ) {
-      options = $.extend({}, $.fn[this.type].defaults, options, this.$element.data())
-
-      if (options.delay && typeof options.delay == 'number') {
-        options.delay = {
-          show: options.delay
-        , hide: options.delay
-        }
-      }
-
-      return options
-    }
-
-  , enter: function ( e ) {
-      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
-
-      if (!self.options.delay || !self.options.delay.show) {
-        self.show()
-      } else {
-        self.hoverState = 'in'
-        setTimeout(function() {
-          if (self.hoverState == 'in') {
-            self.show()
-          }
-        }, self.options.delay.show)
-      }
-    }
-
-  , leave: function ( e ) {
-      var self = $(e.currentTarget)[this.type](this._options).data(this.type)
-
-      if (!self.options.delay || !self.options.delay.hide) {
-        self.hide()
-      } else {
-        self.hoverState = 'out'
-        setTimeout(function() {
-          if (self.hoverState == 'out') {
-            self.hide()
-          }
-        }, self.options.delay.hide)
-      }
-    }
-
-  , show: function () {
-      var $tip
-        , inside
-        , pos
-        , actualWidth
-        , actualHeight
-        , placement
-        , tp
-
-      if (this.hasContent() && this.enabled) {
-        $tip = this.tip()
-        this.setContent()
-
-        if (this.options.animation) {
-          $tip.addClass('fade')
-        }
-
-        placement = typeof this.options.placement == 'function' ?
-          this.options.placement.call(this, $tip[0], this.$element[0]) :
-          this.options.placement
-
-        inside = /in/.test(placement)
-
-        $tip
-          .remove()
-          .css({ top: 0, left: 0, display: 'block' })
-          .appendTo(inside ? this.$element : document.body)
-
-        pos = this.getPosition(inside)
-
-        actualWidth = $tip[0].offsetWidth
-        actualHeight = $tip[0].offsetHeight
-
-        switch (inside ? placement.split(' ')[1] : placement) {
-          case 'bottom':
-            tp = {top: pos.top + pos.height, left: pos.left + pos.width / 2 - actualWidth / 2}
-            break
-          case 'top':
-            tp = {top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2}
-            break
-          case 'left':
-            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth}
-            break
-          case 'right':
-            tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width}
-            break
-        }
-
-        $tip
-          .css(tp)
-          .addClass(placement)
-          .addClass('in')
-      }
-    }
-
-  , setContent: function () {
-      var $tip = this.tip()
-      $tip.find('.tooltip-inner').html(this.getTitle())
-      $tip.removeClass('fade in top bottom left right')
-    }
-
-  , hide: function () {
-      var that = this
-        , $tip = this.tip()
-
-      $tip.removeClass('in')
-
-      function removeWithAnimation() {
-        var timeout = setTimeout(function () {
-          $tip.off($.support.transition.end).remove()
-        }, 500)
-
-        $tip.one($.support.transition.end, function () {
-          clearTimeout(timeout)
-          $tip.remove()
-        })
-      }
-
-      $.support.transition && this.$tip.hasClass('fade') ?
-        removeWithAnimation() :
-        $tip.remove()
-    }
-
-  , fixTitle: function () {
-      var $e = this.$element
-      if ($e.attr('title') || typeof($e.attr('data-original-title')) != 'string') {
-        $e.attr('data-original-title', $e.attr('title') || '').removeAttr('title')
-      }
-    }
-
-  , hasContent: function () {
-      return this.getTitle()
-    }
-
-  , getPosition: function (inside) {
-      return $.extend({}, (inside ? {top: 0, left: 0} : this.$element.offset()), {
-        width: this.$element[0].offsetWidth
-      , height: this.$element[0].offsetHeight
-      })
-    }
-
-  , getTitle: function () {
-      var title
-        , $e = this.$element
-        , o = this.options
-
-      title = $e.attr('data-original-title')
-        || (typeof o.title == 'function' ? o.title.call($e[0]) :  o.title)
-
-      title = title.toString().replace(/(^\s*|\s*$)/, "")
-
-      return title
-    }
-
-  , tip: function () {
-      return this.$tip = this.$tip || $(this.options.template)
-    }
-
-  , validate: function () {
-      if (!this.$element[0].parentNode) {
-        this.hide()
-        this.$element = null
-        this.options = null
-      }
-    }
-
-  , enable: function () {
-      this.enabled = true
-    }
-
-  , disable: function () {
-      this.enabled = false
-    }
-
-  , toggleEnabled: function () {
-      this.enabled = !this.enabled
-    }
-
-  , toggle: function () {
-      this[this.tip().hasClass('in') ? 'hide' : 'show']()
-    }
-
-  }
-
-
- /* TOOLTIP PLUGIN DEFINITION
-  * ========================= */
-
-  $.fn.tooltip = function ( option ) {
-    return this.each(function () {
-      var $this = $(this)
-        , data = $this.data('tooltip')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('tooltip', (data = new Tooltip(this, options)))
-      if (typeof option == 'string') data[option]()
-    })
-  }
-
-  $.fn.tooltip.Constructor = Tooltip
-
-  $.fn.tooltip.defaults = {
-    animation: true
-  , delay: 0
-  , selector: false
-  , placement: 'top'
-  , trigger: 'hover'
-  , title: ''
-  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
-  }
-
-}( window.jQuery );
-
-/*********************************************** 
      Begin VMM.Timeline.js 
 ***********************************************/ 
 
@@ -6234,10 +5994,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		if (type.of(_timeline_id) == "string") {
 			timeline_id = 			_timeline_id;
 		} else {
-			timeline_id = 			"#timeline";
+			timeline_id = 			"#timelinejs";
 		}
 		
-		version = 					"1.65";
+		version = 					"1.68";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -6248,7 +6008,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			events: {
 				data_ready:		"DATAREADY",
 				messege:		"MESSEGE",
-				headline:		"TIMELINE_HEADLINE",
+				headline:		"HEADLINE",
 				slide_change:	"SLIDE_CHANGE",
 				resize:			"resize"
 			},
@@ -6363,21 +6123,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		var createConfig = function(conf) {
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
+			if (typeof embed_config == 'object') {
+				timeline_config = embed_config;
+			}
 			if (typeof timeline_config == 'object') {
 				trace("HAS TIMELINE CONFIG");
-			    var x;
-				for (x in timeline_config) {
-					if (Object.prototype.hasOwnProperty.call(timeline_config, x)) {
-						config[x] = timeline_config[x];
-					}
-				}
+				config = VMM.Util.mergeConfig(config, timeline_config);
 			} else if (typeof conf == 'object') {
-				var x;
-				for (x in conf) {
-					if (Object.prototype.hasOwnProperty.call(conf, x)) {
-						config[x] = conf[x];
-					}
-				}
+				config = VMM.Util.mergeConfig(config, conf);
 			}
 			
 			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
@@ -6519,10 +6272,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			$feedback = VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
 			
+			// EVENTS
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
 			
 			VMM.fireEvent(global, config.events.messege, VMM.master_config.language.messages.loading_timeline);
+			
 			/* GET DATA
 			================================================== */
 			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
@@ -8089,8 +7844,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
 			// ZOOM EVENTS
-			VMM.bindEvent(".zoom-in", onZoomIn, "click");
-			VMM.bindEvent(".zoom-out", onZoomOut, "click");
+			VMM.bindEvent($zoomin, onZoomIn, "click");
+			VMM.bindEvent($zoomout, onZoomOut, "click");
 			
 			if (!config.touch) {
 				
@@ -8617,15 +8372,19 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					            "headline": 						dd.gsx$headline.$t,
 					            "text": 							dd.gsx$text.$t,
 					            "asset": {
-									"media": 						dd.gsx$media.$t, 
-									"credit": 						dd.gsx$mediacredit.$t, 
-									"caption": 						dd.gsx$mediacaption.$t 
+									"media": 						dd.gsx$media.$t,
+									"credit": 						dd.gsx$mediacredit.$t,
+									"caption": 						dd.gsx$mediacaption.$t
 								},
 					            "tag": 								""
 							};
 							if (typeof dd.gsx$tag != 'undefined') {
-								_date.tag = dd.gsx$tag.$t;
+								_date.tag				= dd.gsx$tag.$t;
 							}
+							if (typeof dd.gsx$tag != 'undefined') {
+								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
+							}
+							
 							_data_obj.timeline.date.push(_date);
 						}
 					};
