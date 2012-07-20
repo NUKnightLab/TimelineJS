@@ -12,6 +12,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 				type:		"unknown",
 				id:			"",
 				start:		0,
+				hd:			false,
 				link:		"",
 				lang:		"",
 				uniqueid:	VMM.Util.unique_ID(6)
@@ -23,15 +24,14 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		    success = true;
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
-				media.id = VMM.Util.getUrlVars(d)["v"];
-				media.start = VMM.Util.getUrlVars(d)["t"];
+				media.id	= VMM.Util.getUrlVars(d)["v"];
 			} else if (d.match('\/embed\/')) {
-				media.id = d.split("embed\/")[1].split(/[?&]/)[0];
-				media.start = d.split("embed\/")[1].split(/[?&]/)[1];
+				media.id	= d.split("embed\/")[1].split(/[?&]/)[0];
 			} else {
-				media.id = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
-				media.start = d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[1];
+				media.id	= d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
 			}
+			media.start	= VMM.Util.getUrlVars(d)["t"];
+			media.hd	= VMM.Util.getUrlVars(d)["hd"];
 		    media.type = "youtube";
 		    success = true;
 		} else if (d.match('(player.)?vimeo\.com')) {

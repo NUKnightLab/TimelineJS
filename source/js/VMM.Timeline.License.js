@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 1.65
+	Version 1.71
 	Designed and built by Zach Wise at VéritéCo
 
 	This program is free software: you can redistribute it and/or modify

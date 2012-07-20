@@ -31,6 +31,80 @@
 				"text":"Example of an era"
 	        }
 		],
+		"chart": [
+			{
+				"startDate":"1895,1,1",
+				"endDate":"1905,1,1",
+				"headline":"Something",
+				"value":"28"
+			},
+			{
+				"startDate":"1906,1,1",
+				"endDate":"1915,1,1",
+				"headline":"Something",
+				"value":"35"
+			},
+			{
+				"startDate":"1916,1,1",
+				"endDate":"1925,1,1",
+				"headline":"Something",
+				"value":"55"
+			},
+			{
+				"startDate":"1926,1,1",
+				"endDate":"1935,1,1",
+				"headline":"Something",
+				"value":"67"
+			},
+			{
+				"startDate":"1936,1,1",
+				"endDate":"1945,1,1",
+				"headline":"Something",
+				"value":"78"
+			},
+			{
+				"startDate":"1946,1,1",
+				"endDate":"1955,1,1",
+				"headline":"Something",
+				"value":"79"
+			},
+			{
+				"startDate":"1956,1,1",
+				"endDate":"1965,1,1",
+				"headline":"Something",
+				"value":"84"
+			},
+			{
+				"startDate":"1966,1,1",
+				"endDate":"1975,1,1",
+				"headline":"Something",
+				"value":"66"
+			},
+			{
+				"startDate":"1976,1,1",
+				"endDate":"1985,1,1",
+				"headline":"Something",
+				"value":"87"
+			},
+			{
+				"startDate":"1986,1,1",
+				"endDate":"1995,1,1",
+				"headline":"Something",
+				"value":"90"
+			},
+			{
+				"startDate":"1996,1,1",
+				"endDate":"2005,1,1",
+				"headline":"Something",
+				"value":"45"
+			},
+			{
+				"startDate":"2006,1,1",
+				"endDate":"2015,1,1",
+				"headline":"Something",
+				"value":"99"
+			}
+		],
         "date": [
             {
                 "startDate":"2012,1,18",
@@ -38,9 +112,9 @@
                 "text":"To add a YouTube video, just add a link to it.",
                 "asset":
                 {
-                    "media":"http://youtu.be/yRvJylbSg7o",
+                    "media":"http://youtu.be/5NlVttFRPpU?hd=1&t=3s",
                     "credit":"",
-                    "caption":"Directed and Edited by Matt Mayer, Produced by Seth Keim, Written by Eliot Glazer. Featuring Eliot and Ilana Glazer, who are siblings, not married."
+                    "caption":"From the creators of the game Flower comes Journey for the PlayStation 3."
                 }
             },
 			{

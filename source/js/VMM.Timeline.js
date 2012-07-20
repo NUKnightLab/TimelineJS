@@ -29,23 +29,23 @@
 // @codekit-prepend "Core/VMM.Util.js";
 // @codekit-prepend "Core/VMM.LoadLib.js";
 
-// @codekit-prepend "Media/VMM.ExternalAPI.js";
-// @codekit-prepend "Media/VMM.MediaElement.js";
-// @codekit-prepend "Media/VMM.MediaType.js";
-// @codekit-prepend "Media/VMM.Media.js";
-// @codekit-prepend "Media/VMM.TextElement.js";
+// @codekit-prepend "Core/Media/VMM.ExternalAPI.js";
+// @codekit-prepend "Core/Media/VMM.MediaElement.js";
+// @codekit-prepend "Core/Media/VMM.MediaType.js";
+// @codekit-prepend "Core/Media/VMM.Media.js";
+// @codekit-prepend "Core/Media/VMM.TextElement.js";
 
-// @codekit-prepend "Slider/VMM.DragSlider.js";
-// @codekit-prepend "Slider/VMM.Slider.js";
-// @codekit-prepend "Slider/VMM.Slider.Slide.js";
+// @codekit-prepend "Core/Slider/VMM.DragSlider.js";
+// @codekit-prepend "Core/Slider/VMM.Slider.js";
+// @codekit-prepend "Core/Slider/VMM.Slider.Slide.js";
 
 // @codekit-prepend "VMM.Language.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
 // @codekit-append "VMM.Timeline.DataObj.js";
 
-// @codekit-prepend "lib/AES.js";
-// @codekit-prepend "lib/bootstrap-tooltip.js";
+// @codekit-prepend "Core/Library/AES.js";
+// @codekit-prepend "Core/Library/bootstrap-tooltip.js";
 
 
 /* Timeline
@@ -53,19 +53,33 @@
 
 if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
-	VMM.Timeline = function(w, h, conf, _timeline_id) {
+	VMM.Timeline = function(_timeline_id, w, h) {
 		
-		var $timeline, $feedback, slider, timenav, version, timeline_id;
-		var events = {}, data = {}, _dates = [], config = {};
-		var has_width = false, has_height = false, ie7 = false, is_moving = false;
+		var $timeline,
+			$feedback,
+			slider,
+			timenav,
+			version		= "1.70",
+			timeline_id	= "#timelinejs",
+			events		= {},
+			data		= {},
+			_dates		= [],
+			config		= {},
+			has_width	= false,
+			has_height	= false,
+			ie7			= false,
+			is_moving	= false;
 		
+
 		if (type.of(_timeline_id) == "string") {
-			timeline_id = 			_timeline_id;
+			if (_timeline_id.match("#")) {
+				timeline_id	= _timeline_id;
+			} else {
+				timeline_id	= "#" + _timeline_id;
+			}
 		} else {
-			timeline_id = 			"#timelinejs";
+			timeline_id		= "#timelinejs";
 		}
-		
-		version = 					"1.68";
 		
 		trace("TIMELINE VERSION " + version);
 		
@@ -74,11 +88,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		config = {
 			embed:					false,
 			events: {
-				data_ready:		"DATAREADY",
-				messege:		"MESSEGE",
-				headline:		"HEADLINE",
-				slide_change:	"SLIDE_CHANGE",
-				resize:			"resize"
+				data_ready:			"DATAREADY",
+				messege:			"MESSEGE",
+				headline:			"HEADLINE",
+				slide_change:		"SLIDE_CHANGE",
+				resize:				"resize"
 			},
 			id: 					timeline_id,
 			type: 					"timeline",
@@ -188,7 +202,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* CREATE CONFIG
 		================================================== */
-		var createConfig = function(conf) {
+		function createConfig(conf) {
 			
 			// APPLY SUPPLIED CONFIG TO TIMELINE CONFIG
 			if (typeof embed_config == 'object') {
@@ -217,8 +231,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* CREATE TIMELINE STRUCTURE
 		================================================== */
-		var createStructure = function(w, h) {
-			$timeline = 			VMM.getElement(timeline_id);
+		function createStructure() {
+			$timeline	= VMM.getElement(timeline_id);
 			
 			VMM.Lib.addClass(timeline_id, "vmm-timeline");
 			if (config.touch) {
@@ -227,9 +241,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Lib.addClass(timeline_id, "vmm-notouch");
 			}
 			
-			$feedback = 			VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
-			slider = 				new VMM.Slider(timeline_id + " div.slider", config);
-			timenav = 				new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
+			$feedback	= VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+			slider		= new VMM.Slider(timeline_id + " div.slider", config);
+			timenav		= new VMM.Timeline.TimeNav(timeline_id + " div.navigation");
 			
 			if (!has_width) {
 				config.width = VMM.Lib.width($timeline);
@@ -305,7 +319,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			slider.setSlide(config.current_slide);
 		};
 		
-		var goToEvent = function(n) {
+		function goToEvent(n) {
 			if (n <= _dates.length - 1 && n >= 0) {
 				config.current_slide = n;
 				slider.setSlide(config.current_slide);
@@ -321,7 +335,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
-		this.init = function(_data, _timeline_id, conf) {
+		this.init = function(conf, _data, _timeline_id) {
+			trace('TIMELINE INIT');
 			
 			if (type.of(_timeline_id) == "string") {
 				if (_timeline_id.match("#")) {
@@ -332,9 +347,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 			
 			createConfig(conf);
-			createStructure(w,h);
+			createStructure();
 			
-			trace('TIMELINE INIT');
+			if (type.of(_data) == "string") {
+				config.source	= _data;
+			}
+			
 			VMM.Date.setLanguage(VMM.Timeline.Config.language);
 			VMM.master_config.language = VMM.Timeline.Config.language;
 			
@@ -354,8 +372,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 			}
 			
-			if (type.of(_data) == "string" || type.of(_data) == "object") {
-				VMM.Timeline.DataObj.getData(_data);
+			if (type.of(config.source) == "string" || type.of(config.source) == "object") {
+				VMM.Timeline.DataObj.getData(config.source);
 			} else {
 				VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
 			}
@@ -376,7 +394,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* DATA 
 		================================================== */
-		var getData = function(url) {
+		function getData(url) {
 			VMM.getJSON(url, function(d) {
 				data = VMM.Timeline.DataObj.getData(d);
 				VMM.fireEvent(global, config.events.data_ready);
@@ -385,24 +403,23 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* MESSEGES 
 		================================================== */
-		
-		var showMessege = function(e, msg) {
+		function showMessege(e, msg) {
 			trace("showMessege " + msg);
 			//VMM.attachElement($messege, msg);
 			VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg)); 
 		};
 		
-		var hideMessege = function() {
+		function hideMessege() {
 			VMM.Lib.animate($feedback, config.duration, config.ease*4, {"opacity": 0}, detachMessege);
 		};
 		
-		var detachMessege = function() {
+		function detachMessege() {
 			VMM.Lib.detach($feedback);
 		}
 		
 		/* BUILD DISPLAY
 		================================================== */
-		var build = function() {
+		function build() {
 			
 			// START AT SLIDE
 			if (parseInt(config.start_at_slide) > 0 && config.current_slide == 0) {
@@ -442,7 +459,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		var ie7Build = function() {
+		function ie7Build() {
 			trace("IE7 or lower");
 			for(var i = 0; i < _dates.length; i++) {
 				trace(_dates[i]);
@@ -464,7 +481,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 		};
 		
-		var updateSize = function() {
+		function updateSize() {
 			trace("UPDATE SIZE");
 			config.width = VMM.Lib.width($timeline);
 			config.height = VMM.Lib.height($timeline);
@@ -481,7 +498,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		// BUILD DATE OBJECTS
-		var buildDates = function() {
+		function buildDates() {
 			
 			_dates = [];
 			VMM.fireEvent(global, config.events.messege, "Building Dates");

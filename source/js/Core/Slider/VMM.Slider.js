@@ -4,46 +4,64 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
 	VMM.Slider = function(parent, parent_config) {
 		
-		var events = {}, config;
-		var $slider, $slider_mask, $slider_container, $slides_items;
-		var data = [], slides = [], slide_positions = [];
-		
-		var slides_content		=	"";
-		var current_slide		=	0;
-		var current_width		=	960;
-		var touch				=	{move: false, x: 10, y:0, off: 0, dampen: 48};
-		var content				=	"";
-		var _active				=	false;
-		var layout				=	parent;
-		var navigation			=	{nextBtn:"", prevBtn:"", nextDate:"", prevDate:"", nextTitle:"", prevTitle:""};
-		var timer;
+		var config,
+			timer,
+			$slider,
+			$slider_mask,
+			$slider_container,
+			$slides_items,
+			events				= {},
+			data				= [],
+			slides				= [],
+			slide_positions		= [],
+			slides_content		= "",
+			current_slide		= 0,
+			current_width		= 960,
+			touch = {
+				move:			false,
+				x:				10,
+				y:				0,
+				off:			0,
+				dampen:			48
+			},
+			content				= "",
+			_active				= false,
+			layout				= parent,
+			navigation = {
+				nextBtn:		"",
+				prevBtn:		"",
+				nextDate:		"",
+				prevDate:		"",
+				nextTitle:		"",
+				prevTitle:		""
+			};
 		
 		// CONFIG
-		if(typeof VMM.Timeline != 'undefined') {
-			config	= 	VMM.Timeline.Config;
+		if(typeof parent_config != 'undefined') {
+			config	= parent_config;
 		} else {
-			config = {
-				preload: 4,
-				current_slide: 0,
-				interval: 10, 
-				something: 0, 
-				width: 720, 
-				height: 400, 
-				ease: "easeInOutExpo", 
-				duration: 1000, 
-				timeline: false, 
-				spacing: 15,
+			config	= {
+				preload:			4,
+				current_slide:		0,
+				interval:			10, 
+				something:			0, 
+				width:				720, 
+				height:				400, 
+				ease:				"easeInOutExpo", 
+				duration:			1000, 
+				timeline:			false, 
+				spacing:			15,
 				slider: {
-					width: 720, 
-					height: 400, 
+					width:			720, 
+					height:			400, 
 					content: {
-						width: 720, 
-						height: 400, 
-						padding: 130
+						width:		720, 
+						height:		400, 
+						padding:	130
 					}, 
 					nav: {
-						width: 100, 
-						height: 200
+						width:		100, 
+						height:		200
 					} 
 				} 
 			};
@@ -53,14 +71,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		this.ver = "0.6";
 		
-		config.slider.width		=	config.width;
-		config.slider.height	=	config.height;
+		config.slider.width		= config.width;
+		config.slider.height	= config.height;
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
 		this.init = function(d) {
-			slides = [];
-			slide_positions = [];
+			slides			= [];
+			slide_positions	= [];
 			
 			if(typeof d != 'undefined') {
 				this.setData(d);
@@ -142,9 +160,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		};
 		
 		function reSize(go_to_slide, from_start) {
-			
-			var _go_to_slide = true;
-			var _from_start = false;
+			var _go_to_slide	= true,
+				_from_start		= false;
 			
 			if (go_to_slide != null) {_go_to_slide = go_to_slide};
 			if (from_start != null) {_from_start = from_start};
@@ -158,8 +175,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.width($slides_items, (slides.length * config.slider.content.width));
 			
 			if (_from_start) {
-				var _pos = slides[current_slide].leftpos();
-				VMM.Lib.css($slider_container, "left", _pos);
+				VMM.Lib.css($slider_container, "left", slides[current_slide].leftpos());
 			}
 			
 			// RESIZE SLIDES
@@ -265,10 +281,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* BUILD SLIDES
 		================================================== */
 		var buildSlides = function(d) {
+			var i	= 0;
+			
 			VMM.attachElement($slides_items, "");
 			slides = [];
 			
-			for(var i = 0; i < d.length; i++) {
+			for(i = 0; i < d.length; i++) {
 				var _slide = new VMM.Slider.Slide(d[i], $slides_items);
 				//_slide.show();
 				slides.push(_slide);
@@ -276,11 +294,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		var preloadSlides = function(skip) {
+			var i	= 0;
+			
 			if (skip) {
 				preloadTimeOutSlides();
 			} else {
-				for(var k = 0; k < slides.length; k++) {
-					slides[k].clearTimers();
+				for(i = 0; i < slides.length; i++) {
+					slides[i].clearTimers();
 				}
 				timer = setTimeout(preloadTimeOutSlides, config.duration);
 				
@@ -288,23 +308,25 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		var preloadTimeOutSlides = function() {
-			for(var k = 0; k < slides.length; k++) {
-				slides[k].enqueue = true;
+			var i = 0;
+			
+			for(i = 0; i < slides.length; i++) {
+				slides[i].enqueue = true;
 			}
 			
-			for(var j = 0; j < config.preload; j++) {
-				if ( !((current_slide + j) > slides.length - 1)) {
-					slides[current_slide + j].show();
-					slides[current_slide + j].enqueue = false;
+			for(i = 0; i < config.preload; i++) {
+				if ( !((current_slide + i) > slides.length - 1)) {
+					slides[current_slide + i].show();
+					slides[current_slide + i].enqueue = false;
 				}
-				if ( !( (current_slide - j) < 0 ) ) {
-					slides[current_slide - j].show();
-					slides[current_slide - j].enqueue = false;
+				if ( !( (current_slide - i) < 0 ) ) {
+					slides[current_slide - i].show();
+					slides[current_slide - i].enqueue = false;
 				}
 			}
 			
 			if (slides.length > 50) {
-				for(var i = 0; i < slides.length; i++) {
+				for(i = 0; i < slides.length; i++) {
 					if (slides[i].enqueue) {
 						slides[i].hide();
 					}
@@ -320,7 +342,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* SIZE SLIDES
 		================================================== */
 		var sizeSlides = function() {
-			var layout_text_media		= ".slider-item .layout-text-media .media .media-container ",
+			var i						= 0,
+				layout_text_media		= ".slider-item .layout-text-media .media .media-container ",
 				layout_media			= ".slider-item .layout-media .media .media-container ",
 				layout_both				= ".slider-item .media .media-container",
 				layout_caption			= ".slider-item .media .media-container .media-shadow .caption",
@@ -470,7 +493,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.css( layout_media + 		".caption",	"max-width",	mediasize.media.video.width);
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
-			for(var i = 0; i < slides.length; i++) {
+			for(i = 0; i < slides.length; i++) {
 				
 				slides[i].layout(is_skinny);
 				
@@ -486,8 +509,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* POSITION SLIDES
 		================================================== */
 		var positionSlides = function() {
-			var pos = 0;
-			for(var i = 0; i < slides.length; i++) {
+			var pos = 0,
+				i	= 0;
+				
+			for(i = 0; i < slides.length; i++) {
 				pos = i * (config.slider.width+config.spacing);
 				slides[i].leftpos(pos);
 			}
@@ -496,8 +521,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* OPACITY SLIDES
 		================================================== */
 		var opacitySlides = function(n) {
-			var _ease = "linear";
-			for(var i = 0; i < slides.length; i++) {
+			var _ease	= "linear",
+				i		= 0;
+				
+			for(i = 0; i < slides.length; i++) {
 				if (i == current_slide) {
 					slides[i].animate(config.duration, _ease, {"opacity": 1});
 				} else if (i == current_slide - 1 || i == current_slide + 1) {
@@ -512,20 +539,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			goToSlide(n, ease, duration);
 		================================================== */
 		var goToSlide = function(n, ease, duration, fast, firstrun) {
+			var _ease		= config.ease,
+				_duration	= config.duration,
+				is_last		= false,
+				is_first	= false,
+				_title		= "",
+				_pos;
 			
 			/* STOP ANY VIDEO PLAYERS ACTIVE
 			================================================== */
 			VMM.ExternalAPI.youtube.stopPlayers();
 			
 			// Set current slide
-			current_slide = n;
+			current_slide	= n;
+			_pos			= slides[current_slide].leftpos();
 			
-			var _ease = config.ease;
-			var _duration = config.duration;
-			var is_last = false;
-			var is_first = false;
-			var _pos = slides[current_slide].leftpos();
-			var _title = "";
 			
 			if (current_slide == 0) {is_first = true};
 			if (current_slide +1 >= slides.length) {is_last = true};
@@ -629,7 +657,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* BUILD
 		================================================== */
 		var build = function() {
-			
+			var __duration = 3000;
 			// Clear out existing content
 			VMM.attachElement(layout, "");
 			
@@ -647,9 +675,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			/* MAKE SLIDER TOUCHABLE
 			================================================== */
-			
-			var __duration = 3000;
-			
 			if (VMM.Browser.device == "tablet" || VMM.Browser.device == "mobile") {
 				config.duration = 500;
 				__duration = 1000;

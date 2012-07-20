@@ -38,8 +38,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		twitter: {
 			tweetArray: [],
 			
-			get: function(mid, id) {
-				var tweet = {mid: mid, id: id};
+			get: function(m) {
+				var tweet = {mid: m.id, id: m.uid};
 				VMM.master_config.twitter.que.push(tweet);
 				VMM.master_config.twitter.active = true;
 				//VMM.master_config.api.pushques.push(VMM.ExternalAPI.twitter.pushQue);
@@ -299,10 +299,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		googlemaps: {
 			
-			get: function(url, id) {
-				var timer, api_key, map_vars;
+			get: function(m) {
+				var timer, 
+					api_key,
+					map_vars,
+					map_url,
+					map;
 				
-				map_vars = VMM.Util.getUrlVars(url);
+				map_vars = VMM.Util.getUrlVars(m.id);
 				
 				if (VMM.master_config.Timeline.api_keys.google != "") {
 					api_key = VMM.master_config.Timeline.api_keys.google;
@@ -310,8 +314,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.google, VMM.master_config.vp, 256);
 				}
 				
-				var map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
-				var map = { url: url, vars: map_vars, id: id };
+				map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				map = { url: m.id, vars: map_vars, id: m.uid };
 				
 				if (VMM.master_config.googlemaps.active) {
 					VMM.master_config.googlemaps.que.push(map);
@@ -561,9 +565,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		googleplus: {
 			
-			get: function(user, activity) {
+			get: function(m) {
 				var api_key;
-				var gplus = {user: user, activity: activity};
+				var gplus = {user: m.user, activity: m.id, id: m.uid};
 				
 				VMM.master_config.googleplus.que.push(gplus);
 				VMM.master_config.googleplus.active = true;
@@ -707,8 +711,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		googledocs: {
 			
-			get: function(url, id) {
-				var doc = {url: url, id: id};
+			get: function(m) {
+				var doc = {url: m.id, id: m.uid};
 				VMM.master_config.googledocs.que.push(doc);
 				VMM.master_config.googledocs.active = true;
 			},
@@ -735,8 +739,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		flickr: {
 			
-			get: function(mid, id, link) {
-				var flick = {mid: mid, id: id, link:link};
+			get: function(m) {
+				var flick = {mid: m.id, id: m.uid, link: m.link};
 				VMM.master_config.flickr.que.push(flick);
 				VMM.master_config.flickr.active = true;
 			},
@@ -848,8 +852,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		soundcloud: {
 			
-			get: function(mid, id) {
-				var sound = {mid: mid, id: id};
+			get: function(m) {
+				var sound = {mid: m.id, id: m.uid};
 				VMM.master_config.soundcloud.que.push(sound);
 				VMM.master_config.soundcloud.active = true;
 			},
@@ -873,8 +877,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		wikipedia: {
 			
-			get: function(url, id, lang) {
-				var api_obj = {url: url, id: id, lang: lang};
+			get: function(m) {
+				var api_obj = {url: m.id, id: m.uid, lang: m.lang};
 				VMM.master_config.wikipedia.que.push(api_obj);
 				VMM.master_config.wikipedia.active = true;
 			},
@@ -967,9 +971,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		youtube: {
 			
-			get: function(mid, id, start) {
-				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + mid + "?v=2&alt=jsonc&callback=?",
-					vid = {mid: mid, id: id, start: start};
+			get: function(m) {
+				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + m.id + "?v=2&alt=jsonc&callback=?",
+					vid = {mid: m.id, id: m.uid, start: m.start, hd: m.hd};
 					
 				VMM.master_config.youtube.que.push(vid);
 				
@@ -996,7 +1000,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						vid_start_seconds	= 0;
 						
 					if (vidstart.match('m')) {
-						vidstart = vidstart.split("=")[1];
 						vid_start_minutes = parseInt(vidstart.split("m")[0], 10);
 						vid_start_seconds = parseInt(vidstart.split("m")[1].split("s")[0], 10);
 						vid.start = (vid_start_minutes * 60) + vid_start_seconds;
@@ -1011,8 +1014,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					active: 				false,
 					player: 				{},
 					name:					vid.id,
-					playing:				false
+					playing:				false,
+					hd:						false
 				};
+				
+				if (typeof(vid.hd) != 'undefined') {
+					p.hd = true;
+				}
 				
 				p.player[vid.id] = new YT.Player(vid.id, {
 					height: 				'390',
@@ -1073,6 +1081,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					if (VMM.master_config.youtube.array[i].player[the_name] == e.target) {
 						if (e.data == YT.PlayerState.PLAYING) {
 							VMM.master_config.youtube.array[i].playing = true;
+							trace(VMM.master_config.youtube.array[i].hd)
+							if (VMM.master_config.youtube.array[i].hd) {
+								// SET TO HD
+								// DOESN'T WORK AS OF NOW
+								//VMM.master_config.youtube.array[i].player.setPlaybackQuality("hd720");
+							}
 						}
 					}
 				}
@@ -1087,8 +1101,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		vimeo: {
 			
-			get: function(mid, id) {
-				var vid = {mid: mid, id: id};
+			get: function(m) {
+				var vid = {mid: m.id, id: m.uid};
 				VMM.master_config.vimeo.que.push(vid);
 				VMM.master_config.vimeo.active = true;
 			},

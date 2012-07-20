@@ -215,7 +215,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							if (typeof dd.gsx$tag != 'undefined') {
 								_date.tag				= dd.gsx$tag.$t;
 							}
-							if (typeof dd.gsx$tag != 'undefined') {
+							if (typeof dd.gsx$mediathumbnail != 'undefined') {
 								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
 							}
 							

@@ -7,7 +7,7 @@
 /* 	CodeKit Import
 	http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "../lib/Embed.LoadLib.js";
+// @codekit-prepend "../Core/Library/Embed.LoadLib.js";
 
 var WebFontConfig;
 
@@ -38,7 +38,7 @@ function getScriptPath(scriptname) {
 	/* VARS
 	================================================== */
 	var embedjs, t, te, x, isCDN = false,
-		js_version = "1.68",
+		js_version = "1.69",
 		jquery_version_required = "1.7.1",
 		jquery_version = "",
 		ready = {
@@ -292,8 +292,8 @@ function getScriptPath(scriptname) {
 	
 	function buildEmbed() {
 		VMM.debug = embed_config.debug;
-		embedjs = new VMM.Timeline();
-		embedjs.init(embed_config.source);
+		embedjs = new VMM.Timeline('timelinejs');
+		embedjs.init(embed_config);
 		if (isCDN) {
 			VMM.bindEvent(global, onHeadline, "HEADLINE");
 		}
