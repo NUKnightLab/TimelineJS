@@ -1,0 +1,3 @@
+[submodule "source/js/Core"]
+	path = source/js/Core
+	url = https://zachwise@github.com/VeriteCo/StoryJS-Core.git
