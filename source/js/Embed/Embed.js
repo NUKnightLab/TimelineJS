@@ -70,6 +70,7 @@ function getScriptPath(scriptname) {
 		embed_config = {
 			version:	js_version,
 			debug:		false,
+			id:			'#timelinejs',
 			embed:		true,
 			width:		'100%',
 			height:		'650',
@@ -292,7 +293,7 @@ function getScriptPath(scriptname) {
 	
 	function buildEmbed() {
 		VMM.debug = embed_config.debug;
-		embedjs = new VMM.Timeline('timelinejs');
+		embedjs = new VMM.Timeline(embed_config.id);
 		embedjs.init(embed_config);
 		if (isCDN) {
 			VMM.bindEvent(global, onHeadline, "HEADLINE");
