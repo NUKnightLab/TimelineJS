@@ -1250,8 +1250,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timenavindicator			= VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground		= VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
 			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "toolbar");
-			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
+			
 			
 			buildInterval();
 			buildMarkers();
@@ -1273,6 +1272,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
+			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;

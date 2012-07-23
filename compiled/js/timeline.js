@@ -18,6 +18,19 @@
 */
 
 /*********************************************** 
+     Begin VMM.StoryJS.License.js 
+***********************************************/ 
+
+/*!
+	StoryJS
+	Designed and built by Zach Wise at VéritéCo
+
+	This Source Code Form is subject to the terms of the Mozilla Public
+	License, v. 2.0. If a copy of the MPL was not distributed with this
+	file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+/*********************************************** 
      Begin VMM.js 
 ***********************************************/ 
 
@@ -2280,6 +2293,68 @@ if(typeof VMM != 'undefined' && typeof VMM.LoadLib == 'undefined') {
 
 
 /*********************************************** 
+     Begin VMM.Core.js 
+***********************************************/ 
+
+/* VeriteCo Core
+================================================== */
+
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
+================================================== */
+// @codekit-prepend "VMM.js";
+// @codekit-prepend "VMM.Library.js";
+// @codekit-prepend "VMM.Browser.js";
+// @codekit-prepend "VMM.FileExtention.js";
+// @codekit-prepend "VMM.Date.js";
+// @codekit-prepend "VMM.Util.js";
+// @codekit-prepend "VMM.LoadLib.js";
+// @codekit-prepend "VMM.Language.js";
+
+
+
+/*********************************************** 
+     Begin VMM.Language.js 
+***********************************************/ 
+
+/* DEFAULT LANGUAGE 
+================================================== */
+if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
+	VMM.Language = {
+		lang: "en",
+		api: {
+			wikipedia: "en"
+		},
+		date: {
+			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
+			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
+		}, 
+		dateformats: {
+			year: "yyyy",
+			month_short: "mmm",
+			month: "mmmm yyyy",
+			full_short: "mmm d",
+			full: "mmmm d',' yyyy",
+			time_no_seconds_short: "h:MM TT",
+			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
+			full_long: "mmm d',' yyyy 'at' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
+		},
+		messages: {
+			loading_timeline: "Loading Timeline... ",
+			return_to_title: "Return to Title",
+			expand_timeline: "Expand Timeline",
+			contract_timeline: "Contract Timeline",
+			wikipedia: "From Wikipedia, the free encyclopedia",
+			loading_content: "Loading Content",
+			loading: "Loading"
+		}
+	}
+};
+
+/*********************************************** 
      Begin VMM.ExternalAPI.js 
 ***********************************************/ 
 
@@ -3786,174 +3861,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 }
 
 /*********************************************** 
-     Begin VMM.Media.js 
-***********************************************/ 
-
-/* Media
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Media == 'undefined') {
-	
-	// something = new VMM.Media(parent, w, h, {thedata});
-	VMM.Media = function(parent, w, h, thedata) {  
-		
-		/* PRIVATE VARS
-		================================================== */
-		var data = {}; // HOLDS DATA
-		
-		var _valid = false;
-		
-		var config = {
-			width: 720,
-			height: 400,
-			content_width: 720,
-			content_height: 400,
-			ease: "easeInOutExpo",
-			duration: 1000,
-			spacing: 15
-		};
-		/* ELEMENTS
-		================================================== */
-		var $media = "";
-		var $container = "";
-		var $mediacontainer  = "";
-		var $mediaelement = "";
-		var layout = parent; // expecting media div
-		
-		if (w != null && w != "") {config.width = w};
-		if (h != null && h != "") {config.height = h};
-		/*
-		if (typeof thedata != "undefined") {
-			data = thedata;
-			this.init(data);
-		}
-		*/
-		/* PUBLIC FUNCTIONS
-		================================================== */
-		this.init = function(d) {
-			if(typeof d != 'undefined') {
-				this.setData(d);
-			} else {
-				trace("WAITING ON DATA");
-			}
-		};
-		
-		var build = function(media, caption, credit) {
-			
-			$media = VMM.appendAndGetElement(layout, "<div>", "media");
-			$container = VMM.appendAndGetElement($media, "<div>", "container");
-			$mediacontainer = VMM.appendAndGetElement($container, "<div>", "media-container");
-			
-
-			if (data.media != null && data.media != "") {
-
-				_valid = true;
-				var m = {};
-				
-				m = VMM.MediaType(data.media); //returns an object with .type and .id
-				
-				if (m.type == "image") {
-					VMM.appendElement($mediacontainer, "<img src='" + m.id + "'>");  
-				} else if (m.type == "youtube") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://www.youtube.com/embed/" + m.id + "?&rel=0&theme=light&showinfo=0&hd=1&autohide=0&color=white' allowfullscreen>");
-				} else if (m.type == "vimeo") {
-					VMM.appendElement($mediacontainer, "<iframe frameborder='0' src='http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff'>");
-				} else {
-					
-				}
-				
-				// CREDIT
-				if (data.credit != null && data.credit != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.credit, "credit"));
-				}
-
-				// CAPTION
-				if (data.caption != null && data.caption != "") {
-					VMM.appendElement($container, VMM.createElement("div", data.caption, "caption"));
-				}
-
-			}
-	    };
-	
-		
-	
-		/* GETTERS AND SETTERS
-		================================================== */
-		
-		this.setData = function(d) {
-			if(typeof d != 'undefined') {
-				data = d;
-				build();
-			} else{
-				trace("NO DATA");
-			}
-		};
-		
-		/* RESIZE
-		================================================== */
-		
-		function reSize() {
-
-		}
-		
-
-
-	}
-	
-	// Less expensive to use prototype
-	
-	VMM.Media.prototype.height = function(h) {
-		if (h != null && h != "") {
-			config.height = h;
-			reSize();
-		} else {
-			return config.height;
-		}
-	};
-	
-	VMM.Media.prototype.width = function(w) {
-		if (w != null && w != "") {
-			config.width = w;
-			reSize();
-		} else {
-			return config.width;
-		}
-	};
-	
-	/* GETTERS AND SETTERS
-	================================================== */
-	
-	VMM.Media.prototype.getData = function() {
-		return data;
-	};
-	
-	VMM.Media.prototype.setConfig = function(d) {
-		if(typeof d != 'undefined') {
-			config = d;
-		} else{
-			trace("NO CONFIG DATA");
-		}
-	};
-	
-	VMM.Media.prototype.getConfig = function() {
-		return config;
-	};
-	
-	VMM.Media.prototype.setSize = function(w, h) {
-		if (w != null) {config.width = w};
-		if (h != null) {config.height = h};
-		if (_active) {
-			reSize();
-		}
-		
-	}
-	
-	VMM.Media.prototype.active = function() {
-		return _active;
-	};
-	
-}
-
-/*********************************************** 
      Begin VMM.TextElement.js 
 ***********************************************/ 
 
@@ -3973,6 +3880,22 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 		
 	}).init();
 }
+
+/*********************************************** 
+     Begin VMM.Media.js 
+***********************************************/ 
+
+/* Media
+================================================== */
+
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
+================================================== */
+// @codekit-prepend "VMM.ExternalAPI.js";
+// @codekit-prepend "VMM.MediaElement.js";
+// @codekit-prepend "VMM.MediaType.js";
+// @codekit-prepend "VMM.TextElement.js";
+
 
 /*********************************************** 
      Begin VMM.DragSlider.js 
@@ -4207,6 +4130,11 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 
 /* Slider
 ================================================== */
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
+================================================== */
+// @codekit-append "VMM.Slider.Slide.js";
+
 if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	
 	VMM.Slider = function(parent, parent_config) {
@@ -4916,6 +4844,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 
 /* Slider Slide 
 ================================================== */
+
 if (typeof VMM.Slider != 'undefined') {
 	VMM.Slider.Slide = function(d, _parent) {
 		
@@ -5090,8 +5019,8 @@ if (typeof VMM.Slider != 'undefined') {
 		
 		var buildSlide = function() {
 			trace("BUILDSLIDE");
-			$wrap	=	VMM.appendAndGetElement(element, "<div>", "content");
-			$slide	=	VMM.appendAndGetElement($wrap, "<div>");
+			$wrap	= VMM.appendAndGetElement(element, "<div>", "content");
+			$slide	= VMM.appendAndGetElement($wrap, "<div>");
 			
 			/* DATE
 			================================================== */
@@ -5130,15 +5059,15 @@ if (typeof VMM.Slider != 'undefined') {
 			/* TEXT
 			================================================== */
 			if (data.text != null && data.text != "") {
-				c.has.text		=	true;
-				c.text			+=	VMM.createElement("p", VMM.Util.linkify_with_twitter(data.text, "_blank"));
+				c.has.text		=  true;
+				c.text			+= VMM.createElement("p", VMM.Util.linkify_with_twitter(data.text, "_blank"));
 			}
 			
 			if (c.has.text || c.has.headline) {
-				c.text			=	VMM.createElement("div", c.text, "container");
+				c.text		= VMM.createElement("div", c.text, "container");
 				//$text		=	VMM.appendAndGetElement($slide, "<div>", "text", c.text);
 				
-				$text		=	VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
+				$text		= VMM.appendAndGetElement($slide, "<div>", "text", VMM.TextElement.create(c.text));
 				
 			}
 			
@@ -5152,8 +5081,8 @@ if (typeof VMM.Slider != 'undefined') {
 			================================================== */
 			if (data.asset != null && data.asset != "") {
 				if (data.asset.media != null && data.asset.media != "") {
-					c.has.media	=	true;
-					$media		=	VMM.appendAndGetElement($slide, "<div>", "media", VMM.MediaElement.create(data.asset, data.uniqueid));
+					c.has.media	= true;
+					$media		= VMM.appendAndGetElement($slide, "<div>", "media", VMM.MediaElement.create(data.asset, data.uniqueid));
 				}
 			}
 			
@@ -5184,47 +5113,6 @@ if (typeof VMM.Slider != 'undefined') {
 	
 };
 
-
-/*********************************************** 
-     Begin VMM.Language.js 
-***********************************************/ 
-
-/* DEFAULT LANGUAGE 
-================================================== */
-if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
-	VMM.Language = {
-		lang: "en",
-		api: {
-			wikipedia: "en"
-		},
-		date: {
-			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
-			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
-		}, 
-		dateformats: {
-			year: "yyyy",
-			month_short: "mmm",
-			month: "mmmm yyyy",
-			full_short: "mmm d",
-			full: "mmmm d',' yyyy",
-			time_no_seconds_short: "h:MM TT",
-			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-			full_long: "mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
-		},
-		messages: {
-			loading_timeline: "Loading Timeline... ",
-			return_to_title: "Return to Title",
-			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline",
-			wikipedia: "From Wikipedia, the free encyclopedia",
-			loading_content: "Loading Content",
-			loading: "Loading"
-		}
-	}
-};
 
 /*********************************************** 
      Begin AES.js 
@@ -5970,11 +5858,48 @@ Utf8.decode = function(strUtf) {
 }( window.jQuery );
 
 /*********************************************** 
+     Begin VMM.StoryJS.js 
+***********************************************/ 
+
+/* VeriteCo StoryJS
+================================================== */
+
+/*	* CodeKit Import
+	* http://incident57.com/codekit/
+================================================== */
+// @codekit-prepend "VMM.StoryJS.License.js";
+// @codekit-prepend "Core/VMM.Core.js";
+// @codekit-prepend "Language/VMM.Language.js";
+// @codekit-prepend "Media/VMM.Media.js";
+// @codekit-prepend "Slider/VMM.DragSlider.js";
+// @codekit-prepend "Slider/VMM.Slider.js";
+// @codekit-prepend "Library/AES.js";
+// @codekit-prepend "Library/bootstrap-tooltip.js";
+
+
+if(typeof VMM != 'undefined' && typeof VMM.StoryJS == 'undefined') {
+	
+	VMM.StoryJS = function() {  
+		
+		/* PRIVATE VARS
+		================================================== */
+		
+		/* PUBLIC FUNCTIONS
+		================================================== */
+		this.init = function(d) {
+			
+		};
+		
+	}
+}
+
+
+/*********************************************** 
      Begin VMM.Timeline.js 
 ***********************************************/ 
 
 /**
-	* Timeline
+	* TimelineJS
 	* Designed and built by Zach Wise at VéritéCo
 
 	* This program is free software: you can redistribute it and/or modify
@@ -5996,31 +5921,10 @@ Utf8.decode = function(strUtf) {
 ================================================== */
 // @codekit-prepend "VMM.Timeline.License.js";
 
-// @codekit-prepend "Core/VMM.js";
-// @codekit-prepend "Core/VMM.Library.js";
-// @codekit-prepend "Core/VMM.Browser.js";
-// @codekit-prepend "Core/VMM.FileExtention.js";
-// @codekit-prepend "Core/VMM.Date.js";
-// @codekit-prepend "Core/VMM.Util.js";
-// @codekit-prepend "Core/VMM.LoadLib.js";
-
-// @codekit-prepend "Core/Media/VMM.ExternalAPI.js";
-// @codekit-prepend "Core/Media/VMM.MediaElement.js";
-// @codekit-prepend "Core/Media/VMM.MediaType.js";
-// @codekit-prepend "Core/Media/VMM.Media.js";
-// @codekit-prepend "Core/Media/VMM.TextElement.js";
-
-// @codekit-prepend "Core/Slider/VMM.DragSlider.js";
-// @codekit-prepend "Core/Slider/VMM.Slider.js";
-// @codekit-prepend "Core/Slider/VMM.Slider.Slide.js";
-
-// @codekit-prepend "VMM.Language.js";
+// @codekit-prepend "Core/VMM.StoryJS.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
 // @codekit-append "VMM.Timeline.DataObj.js";
-
-// @codekit-prepend "Core/Library/AES.js";
-// @codekit-prepend "Core/Library/bootstrap-tooltip.js";
 
 
 /* Timeline
@@ -7858,8 +7762,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timenavindicator			= VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground		= VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
 			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "toolbar");
-			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
+			
 			
 			buildInterval();
 			buildMarkers();
@@ -7881,6 +7784,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 			}
 			
+			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;
