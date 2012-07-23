@@ -6215,6 +6215,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			// CREATE DOM STRUCTURE
 			$timeline	= VMM.getElement(timeline_id);
 			VMM.Lib.addClass($timeline, "vmm-timeline");
+			VMM.Lib.addClass($timeline, "vmm-storyjs");
 			
 			$container	= VMM.appendAndGetElement($timeline, "<div>", "container main");
 			$feature	= VMM.appendAndGetElement($container, "<div>", "feature");
