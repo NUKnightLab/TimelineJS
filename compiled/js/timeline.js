@@ -21,13 +21,15 @@
      Begin VMM.js 
 ***********************************************/ 
 
-/*	VéritéCo JS Master
-	Version: 0.6
-	Date: June 19, 2012
-	Copyright 2012 VéritéCo unless part of TimelineJS, 
-	if part of TimelineJS then it inherits TimelineJS's license.
-	Designed and built by Zach Wise digitalartwork.net
-================================================== */
+/**
+	* VéritéCo JS Core
+	* Designed and built by Zach Wise at VéritéCo zach@verite.co
+
+	* This Source Code Form is subject to the terms of the Mozilla Public
+	* License, v. 2.0. If a copy of the MPL was not distributed with this
+	* file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+*/  
 
 
 /*	Simple JavaScript Inheritance
@@ -1164,7 +1166,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
 	VMM.FileExtention = {
 		googleDocType: function(url) {
-			var fileName			= url,
+			var fileName			= url.replace(/\s\s*$/, ''),
 				fileExtension		= "",
 				validFileExtensions = ["DOC","DOCX","XLS","XLSX","PPT","PPTX","PDF","PAGES","AI","PSD","TIFF","DXF","SVG","EPS","PS","TTF","XPS","ZIP","RAR"],
 				flag				= false;
@@ -3663,8 +3665,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	
-	VMM.MediaType = function(d) {
-		var success	= false,
+	VMM.MediaType = function(_d) {
+		var d		= _d.replace(/^\s\s*/, '').replace(/\s\s*$/, ''),
+			success	= false,
 			media	= {
 				type:		"unknown",
 				id:			"",
