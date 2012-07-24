@@ -6166,6 +6166,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Lib.addClass($timeline, "vco-notouch");
 			}
 			
+			if (typeof config.language.right_to_left != 'undefined') {
+				VMM.Lib.addClass($main, "vco-right-to-left");
+			}
+			
 			slider		= new VMM.Slider($slider, config);
 			timenav		= new VMM.Timeline.TimeNav($navigation);
 			
