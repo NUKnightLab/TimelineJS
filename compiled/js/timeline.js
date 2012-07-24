@@ -2339,8 +2339,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			full: "mmmm d',' yyyy",
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-			full_long: "mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>mmm d',' yyyy'</small>'"
+			full_long: "mmm d',' yyyy 'at' h:MM TT",
+			full_long_small_date: "h:MM TT'<br/><small>mmm d',' yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Loading Timeline... ",
@@ -6151,19 +6151,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		function createStructure() {
 			// CREATE DOM STRUCTURE
 			$timeline	= VMM.getElement(timeline_id);
-			VMM.Lib.addClass($timeline, "vmm-timeline");
-			VMM.Lib.addClass($timeline, "vmm-storyjs");
+			VMM.Lib.addClass($timeline, "vco-timeline");
+			VMM.Lib.addClass($timeline, "vco-storyjs");
 			
-			$container	= VMM.appendAndGetElement($timeline, "<div>", "container main");
-			$feature	= VMM.appendAndGetElement($container, "<div>", "feature");
-			$slider		= VMM.appendAndGetElement($feature, "<div>", "vmm-slider");
-			$navigation	= VMM.appendAndGetElement($container, "<div>", "navigation");
-			$feedback	= VMM.appendAndGetElement($timeline, "<div>", "feedback", "");
+			$container	= VMM.appendAndGetElement($timeline, "<div>", "vco-container vco-main");
+			$feature	= VMM.appendAndGetElement($container, "<div>", "vco-feature");
+			$slider		= VMM.appendAndGetElement($feature, "<div>", "vco-slider");
+			$navigation	= VMM.appendAndGetElement($container, "<div>", "vco-navigation");
+			$feedback	= VMM.appendAndGetElement($timeline, "<div>", "vco-feedback", "");
 			
 			if (config.touch) {
-				VMM.Lib.addClass($timeline, "vmm-touch");
+				VMM.Lib.addClass($timeline, "vco-touch");
 			} else {
-				VMM.Lib.addClass($timeline, "vmm-notouch");
+				VMM.Lib.addClass($timeline, "vco-notouch");
 			}
 			
 			slider		= new VMM.Slider($slider, config);
