@@ -1422,14 +1422,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			for(i = 0; i < data.length; i++) {
 				
 				var _marker,
-				_marker_flag,
-				_marker_content,
-				_marker_dot,
-				_marker_line,
-				_marker_line_event,
-				_marker_obj,
-				_marker_title		= "",
-				has_title			= false;
+					_marker_flag,
+					_marker_content,
+					_marker_dot,
+					_marker_line,
+					_marker_line_event,
+					_marker_obj,
+					_marker_title		= "",
+					has_title			= false;
 				
 				
 				_marker					= VMM.appendAndGetElement($content, "<div>", "marker");
@@ -1474,7 +1474,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				} else {
 					trace("TITLE SLUG NOT FOUND " + data[i].slug)
 				}
-
 				
 				if (has_title) {
 					VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3>");
@@ -1521,7 +1520,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// CREATE TAGS
 			tags = VMM.Util.deDupeArray(tags);
-			if (tags.length > 2) {
+			if (tags.length > 3) {
 				config.nav.rows.current = config.nav.rows.half;
 			} else {
 				config.nav.rows.current = config.nav.rows.full;
@@ -1530,7 +1529,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (k < config.nav.rows.current.length) {
 					var tag_element = VMM.appendAndGetElement($timebackground, "<div>", "timenav-tag");
 					VMM.Lib.addClass(tag_element, "timenav-tag-row-" + (k+1));
-					if (tags.length > 2) {
+					if (tags.length > 3) {
 						VMM.Lib.addClass(tag_element, "timenav-tag-size-half");
 					} else {
 						VMM.Lib.addClass(tag_element, "timenav-tag-size-full");
@@ -1541,7 +1540,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 			
 			// RESIZE FLAGS IF NEEDED
-			if (tags.length > 2) {
+			if (tags.length > 3) {
 				for(l = 0; l < markers.length; l++) {
 					VMM.Lib.addClass(markers[l].flag, "flag-small");
 					markers[l].full = false;
