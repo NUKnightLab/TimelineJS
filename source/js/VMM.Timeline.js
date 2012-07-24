@@ -234,7 +234,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 			
 			if (typeof config.language.right_to_left != 'undefined') {
-				VMM.Lib.addClass($main, "vco-right-to-left");
+				VMM.Lib.addClass($timeline, "vco-right-to-left");
 			}
 			
 			slider		= new VMM.Slider($slider, config);
