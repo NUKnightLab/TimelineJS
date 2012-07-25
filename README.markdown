@@ -63,8 +63,9 @@ Languages available:
 * `ja` *日本語*
 * `zh-ch` *中文*
 * `zh-tw` *Taiwanese Mandarin*
+* `ta` *தமிழ் - Tamil*
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/Timeline/blob/master/source/js/locale/en.js) 
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/TimelineJS/blob/master/source/js/locale/en.js) 
 
 ###Start at End 
 `start_at_end`
