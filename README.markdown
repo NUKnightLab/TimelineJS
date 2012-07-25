@@ -14,7 +14,7 @@ Creating one is as easy as filling in a Google spreadsheet or as detailed as
 JSON.
 
 ## Add it to your site
-
+### Using Inline *easiest*
 Place the embed code where you want the timeline to show in the `<body>` of your site.
 
 ```html
@@ -38,8 +38,8 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	</script>
 	<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
 ```
+### Using a method *advanced*
 You could also initialize a new timeline using the `createStoryJS` method after `storyjs-embed.js` has been loaded
-
 ```javascript
 	createStoryJS({
 		type:		'timeline',
@@ -50,10 +50,35 @@ You could also initialize a new timeline using the `createStoryJS` method after 
 	});
 ```
 
+#### Example
+```html
+	<head>
+		<!-- jQuery -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<!-- BEGIN TimelineJS -->
+		<script type="text/javascript" src="../compiled/js/storyjs-embed.js"></script>
+		<script>
+			$(document).ready(function() {
+				createStoryJS({
+					type:		'timeline',
+					width:		'800',
+					height:		'600',
+					source:		'example_json.json',
+					embed_id:	'my-timeline'
+				});
+			});
+		</script>
+		<!-- END TimelineJS -->
+	</head>
+	<body>	
+		<div id="my-timeline"></div>
+	</body>
+```
+
 	
 ## Options
 
-###Language
+### Language
 `lang`
 Localization
 *default is en*
