@@ -57,14 +57,14 @@ Here's a simple example:
 		<!-- jQuery -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<!-- BEGIN TimelineJS -->
-		<script type="text/javascript" src="../compiled/js/storyjs-embed.js"></script>
+		<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
 		<script>
 			$(document).ready(function() {
 				createStoryJS({
 					type:		'timeline',
 					width:		'800',
 					height:		'600',
-					source:		'example_json.json',
+					source:		'path_to_json/or_link_to_googlespreadsheet',
 					embed_id:	'my-timeline'
 				});
 			});
