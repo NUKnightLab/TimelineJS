@@ -21,9 +21,10 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	<div id="timeline-embed"></div>
 	<script type="text/javascript">
 	    var timeline_config = {
-			width:				"100%",
-			height:				"600",
+			width:				'100%',
+			height:				'600',
 			source:				'path_to_json/or_link_to_googlespreadsheet',
+			embed_id:			'timeline-embed',				//OPTIONAL USE A DIFFERENT DIV ID FOR EMBED
 			start_at_end: 		false,							//OPTIONAL START AT LATEST DATE
 			start_at_slide:		'4',							//OPTIONAL START AT SPECIFIC SLIDE
 			start_zoom_adjust:	'3',							//OPTIONAL TWEAK THE DEFAULT ZOOM LEVEL
@@ -35,8 +36,20 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			js:					'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
 		}
 	</script>
-	<script type="text/javascript" src="path_to_js/timeline-embed.js"></script>
+	<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
 ```
+You could also initialize a new timeline using the `createStoryJS` method after `storyjs-embed.js` has been loaded
+
+```javascript
+	createStoryJS({
+		type:		'timeline',
+		width:		'800',
+		height:		'600',
+		source:		'path_to_json/or_link_to_googlespreadsheet',
+		embed_id:	'my-timeline'			// ID of the DIV you want to load the timeline into
+	});
+```
+
 	
 ## Options
 
@@ -57,14 +70,17 @@ Languages available:
 * `id` *Indonesian*
 * `pl` *Polish*
 * `ru` *Russian*
+* `sk` *Slovak*
 * `is` *Icelandic*
-* `fo` *Icelandic*
+* `fo` *Faroese*
 * `kr` *월요일*
 * `ja` *日本語*
 * `zh-ch` *中文*
 * `zh-tw` *Taiwanese Mandarin*
+* `ta` *தமிழ் - Tamil*
+* `ar` *Arabic* *May be issues with right to left (need some help here)* 
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/Timeline/blob/master/source/js/locale/en.js) 
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/TimelineJS/blob/master/source/js/locale/en.js) 
 
 ###Start at End 
 `start_at_end`
@@ -81,11 +97,16 @@ You can tell TimelineJS to start at a specific slide number
 This will tweak the default zoom level. Equivilent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.
 *default is 0*
 
-	
 ###Hash Bookmark 
 `hash_bookmark`
 set to true to allow bookmarking slides using the hash tag
 *default is false*
+
+###Debug 
+`debug`
+Will log events etc to the console.
+*default is false*
+
 
 ###Map Style Types 
 `maptype:`
