@@ -30,6 +30,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			start_zoom_adjust:	'3',							//OPTIONAL TWEAK THE DEFAULT ZOOM LEVEL
 			hash_bookmark:		true,							//OPTIONAL LOCATION BAR HASHES
 			font:				'Bevan-PotanoSans',				//OPTIONAL FONT
+			debug:				true,							//OPTIONAL DEBUG TO CONSOLE
 			lang:				'fr',							//OPTIONAL LANGUAGE
 			maptype:			'watercolor',					//OPTIONAL MAP STYLE
 			css:				'path_to_css/timeline.css',		//OPTIONAL PATH TO CSS
