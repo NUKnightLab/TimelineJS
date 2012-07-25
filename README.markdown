@@ -50,7 +50,8 @@ You could also initialize a new timeline using the `createStoryJS` method after 
 	});
 ```
 
-#### Example
+Here's a simple example:
+
 ```html
 	<head>
 		<!-- jQuery -->
