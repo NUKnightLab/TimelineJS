@@ -289,7 +289,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				scroll_to = config.nav.constraint.right;
 			}
 			
-			VMM.Lib.stop($timenav);
+			//VMM.Lib.stop($timenav);
 			//VMM.Lib.animate($timenav, config.duration/2, "linear", {"left": scroll_to});
 			VMM.Lib.css($timenav, "left", scroll_to);	
 		}
@@ -318,6 +318,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		var goToMarker = function(n, ease, duration, fast, firstrun) {
+			trace("GO TO MARKER");
 			var _ease		= config.ease,
 				_duration	= config.duration,
 				is_last		= false,
@@ -325,7 +326,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			current_marker = 	n;
 			
-			timenav_pos.left			= (config.width/2) - VMM.Lib.position(markers[current_marker].marker).left;
+			timenav_pos.left			= (config.width/2) - markers[current_marker].pos_left
 			timenav_pos.visible.left	= Math.abs(timenav_pos.left) - 100;
 			timenav_pos.visible.right	= Math.abs(timenav_pos.left) + config.width + 100;
 			
@@ -730,6 +731,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				pos.begin				= Math.round(pos.begin +  pos_offset);
 				pos.end					= Math.round(pos.end + pos_offset);
 				line					= Math.round(pos.end - pos.begin);
+				marker.pos_left			= pos.begin;
 				
 				if (current_marker == i) {
 					timenav_pos.left			= (config.width/2) - pos;
@@ -837,8 +839,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 			
 			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
-			VMM.Lib.stop($timenav);
-			VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			if (is_animated) {
+				VMM.Lib.stop($timenav);
+				VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			} else {
+				
+			}
+			
 			//VMM.Lib.delay_animate(config.duration, $timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
 			
 		
@@ -1256,7 +1263,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			buildMarkers();
 			buildEras();
 			calculateMultiplier();
-			positionMarkers();
+			positionMarkers(false);
 			positionEras();
 			
 			positionInterval($timeinterval, interval_array, false, true);
@@ -1297,10 +1304,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
 			}
 			
-			VMM.fireEvent(layout, "LOADED");
-			_active = true;
 			
-			reSize(true);
 			
 			// USER CONFIGURABLE ADJUSTMENT TO DEFAULT ZOOM
 			if (config.nav.zoom.adjust != 0) {
@@ -1314,6 +1318,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					}
 				}
 			}
+			
+			//VMM.fireEvent(layout, "LOADED");
+			_active = true;
+			
+			reSize(true);
+			VMM.fireEvent(layout, "LOADED");
 			
 		};
 		
@@ -1493,7 +1503,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					type: 				"marker",
 					full:				true,
 					relative_pos:		_marker_relative_pos,
-					tag:				data[i].tag
+					tag:				data[i].tag,
+					pos_left:			0
 				};
 				
 				
