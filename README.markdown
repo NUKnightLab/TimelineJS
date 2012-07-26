@@ -168,7 +168,7 @@ Will log events etc to the console.
 * `Pacifico-Arimo`
 * Or make your own
 
-Font Combination Preview:
+####Font Combination Preview:
 ![Font Combination Preview](http://timeline.verite.co/gfx/font-options.png)
 
 ## File Formats
