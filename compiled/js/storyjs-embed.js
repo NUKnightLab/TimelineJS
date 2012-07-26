@@ -505,7 +505,7 @@ function createStoryJS(c, src) {
 	================================================== */
 	var storyjs_embedjs, t, te, x,
 		isCDN					= false,
-		js_version				= "1.71",
+		js_version				= "2.01",
 		jquery_version_required	= "1.7.1",
 		jquery_version			= "",
 		ready = {
@@ -542,7 +542,7 @@ function createStoryJS(c, src) {
 			embed_id:	'timeline-embed',
 			embed:		true,
 			width:		'100%',
-			height:		'650',
+			height:		'100%',
 			source:		'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadFYzRjJPUGktY0NkWXFUWkVIZDNGRHc&output=html',
 			lang:		'en',
 			font:		'default',
@@ -599,18 +599,18 @@ function createStoryJS(c, src) {
 		
 	/* DETERMINE TYPE
 	================================================== */
+	// Check for old installs still using the old method of language
+	if (storyjs_e_config.js.match("locale")) {
+		storyjs_e_config.lang = storyjs_e_config.js.split("locale/")[1].replace(".js", "");
+		storyjs_e_config.js		= path.js + 'timeline-min.js?' + js_version;
+	}
+	
 	if (storyjs_e_config.js.match("/")) {
 		
 	} else {
 		storyjs_e_config.css	= path.css + storyjs_e_config.type + ".css?" + js_version;
 		storyjs_e_config.js		= path.js  + storyjs_e_config.type + "-min.js?"  + js_version;
 		storyjs_e_config.id		= "storyjs-" + storyjs_e_config.type;
-	}
-	
-	// Check for old installs still using the old method of language
-	if (storyjs_e_config.js.match("locale")) {
-		storyjs_e_config.lang = storyjs_e_config.js.split("locale/")[1].replace(".js", "");
-		storyjs_e_config.js = path.js + 'timeline-min.js?' + js_version;
 	}
 	
 	/* PREPARE LANGUAGE
@@ -620,28 +620,15 @@ function createStoryJS(c, src) {
 	} else {
 		path.locale = path.locale + storyjs_e_config.lang + ".js?" + js_version;
 	}
-		
-	// Check for old installs still using the old method of language
-	if (storyjs_e_config.js.match("locale")) {
-		storyjs_e_config.lang = storyjs_e_config.js.split("locale/")[1].replace(".js", "");
-	}
+	
 		
 	/* PREPARE
 	================================================== */
 	createEmbedDiv();
-	load_css();
 	
 	/* Load CSS
 	================================================== */
-	function load_css() {
-		LoadLib.css(storyjs_e_config.css, onloaded_css);
-	}
-	
-	/* Load CSS
-	================================================== */
-	function load_js() {
-		LoadLib.js(storyjs_e_config.js, onloaded_js);
-	}
+	LoadLib.css(storyjs_e_config.css, onloaded_css);
 	
 	/* Load FONT
 	================================================== */
@@ -710,7 +697,7 @@ function createStoryJS(c, src) {
 	function onloaded_js() {
 		ready.js = true;
 		if (storyjs_e_config.lang != "en") {
-			load_js();
+			LazyLoad.js(path.locale, onloaded_language);
 		} else {
 			ready.language = true;
 		}

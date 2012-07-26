@@ -2915,7 +2915,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					if (VMM.master_config.googlemaps.api_loaded) {
 						
 					} else {
-						VMM.LoadLib.js(map_url, function() {
+						LoadLib.js(map_url, function() {
 							trace("Google Maps API Library Loaded");
 						});
 					}
@@ -3573,7 +3573,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
-						VMM.LoadLib.js('http://www.youtube.com/player_api', function() {
+						LoadLib.js('http://www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
 						});
 					}
@@ -3867,6 +3867,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				}
 			// IMAGE
 				if (m.type				==	"image") {
+					if (m.id.match("https://")) {
+						m.id = m.id.replace("https://","http://");
+					}
 					mediaElem			=	"<div class='media-image media-shadow'><img src='" + m.id + "' class='media-image'></div>";
 			// FLICKR
 				} else if (m.type		==	"flickr") {
@@ -6176,7 +6179,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation,
 			slider,
 			timenav,
-			version		= "1.70",
+			version		= "2.01",
 			timeline_id	= "#timelinejs",
 			events		= {},
 			data		= {},
@@ -7044,7 +7047,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				scroll_to = config.nav.constraint.right;
 			}
 			
-			VMM.Lib.stop($timenav);
+			//VMM.Lib.stop($timenav);
 			//VMM.Lib.animate($timenav, config.duration/2, "linear", {"left": scroll_to});
 			VMM.Lib.css($timenav, "left", scroll_to);	
 		}
@@ -7073,6 +7076,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		};
 		
 		var goToMarker = function(n, ease, duration, fast, firstrun) {
+			trace("GO TO MARKER");
 			var _ease		= config.ease,
 				_duration	= config.duration,
 				is_last		= false,
@@ -7080,7 +7084,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			current_marker = 	n;
 			
-			timenav_pos.left			= (config.width/2) - VMM.Lib.position(markers[current_marker].marker).left;
+			timenav_pos.left			= (config.width/2) - markers[current_marker].pos_left
 			timenav_pos.visible.left	= Math.abs(timenav_pos.left) - 100;
 			timenav_pos.visible.right	= Math.abs(timenav_pos.left) + config.width + 100;
 			
@@ -7485,6 +7489,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				pos.begin				= Math.round(pos.begin +  pos_offset);
 				pos.end					= Math.round(pos.end + pos_offset);
 				line					= Math.round(pos.end - pos.begin);
+				marker.pos_left			= pos.begin;
 				
 				if (current_marker == i) {
 					timenav_pos.left			= (config.width/2) - pos;
@@ -7592,8 +7597,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 			
 			// ANIMATE THE TIMELINE TO ADJUST TO CHANGES
-			VMM.Lib.stop($timenav);
-			VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			if (is_animated) {
+				VMM.Lib.stop($timenav);
+				VMM.Lib.animate($timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
+			} else {
+				
+			}
+			
 			//VMM.Lib.delay_animate(config.duration, $timenav, config.duration/2, config.ease, {"left": (config.width/2) - (cur_mark)});
 			
 		
@@ -8011,7 +8021,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			buildMarkers();
 			buildEras();
 			calculateMultiplier();
-			positionMarkers();
+			positionMarkers(false);
 			positionEras();
 			
 			positionInterval($timeinterval, interval_array, false, true);
@@ -8052,10 +8062,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.bindEvent(layout, onMouseScroll, 'mousewheel');
 			}
 			
-			VMM.fireEvent(layout, "LOADED");
-			_active = true;
 			
-			reSize(true);
 			
 			// USER CONFIGURABLE ADJUSTMENT TO DEFAULT ZOOM
 			if (config.nav.zoom.adjust != 0) {
@@ -8069,6 +8076,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					}
 				}
 			}
+			
+			//VMM.fireEvent(layout, "LOADED");
+			_active = true;
+			
+			reSize(true);
+			VMM.fireEvent(layout, "LOADED");
 			
 		};
 		
@@ -8248,7 +8261,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					type: 				"marker",
 					full:				true,
 					relative_pos:		_marker_relative_pos,
-					tag:				data[i].tag
+					tag:				data[i].tag,
+					pos_left:			0
 				};
 				
 				
@@ -8535,8 +8549,17 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 				},
 				
 				buildData: function(d) {
+					var data_obj	= VMM.Timeline.DataObj.data_template_obj;
+					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
-					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
+					
+					function getGVar(v) {
+						if (typeof v != 'undefined') {
+							return v.$t;
+						} else {
+							return "";
+						}
+					}
 
 					for(var i = 0; i < d.feed.entry.length; i++) {
 						var dd		= d.feed.entry[i],
@@ -8549,52 +8572,44 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						}
 						
 						if (dd_type.match("start") || dd_type.match("title") ) {
-							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
-							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
-							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
-							_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
-							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
-							_data_obj.timeline.text = 				dd.gsx$text.$t;
-							_data_obj.timeline.type = 				"google spreadsheet";
+							data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
+							data_obj.timeline.headline			= getGVar(dd.gsx$headline);
+							data_obj.timeline.asset.media		= getGVar(dd.gsx$media);
+							data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
+							data_obj.timeline.asset.credit		= getGVar(dd.gsx$mediacredit);
+							data_obj.timeline.text				= getGVar(dd.gsx$text);
+							data_obj.timeline.type				= "google spreadsheet";
 						} else if (dd_type.match("era")) {
-							var _era = {
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-								"headline": 						dd.gsx$headline.$t,
-								"text": 							dd.gsx$text.$t,
-								"tag": 								""
-								
-							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_era.tag = dd.gsx$tag.$t;
+							var era = {
+								startDate:		getGVar(dd.gsx$startdate),
+								endDate:		getGVar(dd.gsx$enddate),
+								headline:		getGVar(dd.gsx$headline),
+								text:			getGVar(dd.gsx$text),
+								tag:			getGVar(dd.gsx$tag)
 							}
-							_data_obj.timeline.era.push(_era);
+							data_obj.timeline.era.push(era);
 						} else {
-							var _date = {
-								"type": 							"google spreadsheet",
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-					            "headline": 						dd.gsx$headline.$t,
-					            "text": 							dd.gsx$text.$t,
-					            "asset": {
-									"media": 						dd.gsx$media.$t,
-									"credit": 						dd.gsx$mediacredit.$t,
-									"caption": 						dd.gsx$mediacaption.$t
-								},
-					            "tag": 								""
+							var date = {
+									type:			"google spreadsheet",
+									startDate:		getGVar(dd.gsx$startdate),
+									endDate:		getGVar(dd.gsx$enddate),
+									headline:		getGVar(dd.gsx$headline),
+									tag:			getGVar(dd.gsx$tag),
+									asset: {
+										media:		getGVar(dd.gsx$media),
+										credit:		getGVar(dd.gsx$mediacredit),
+										caption:	getGVar(dd.gsx$mediacaption),
+										thumbnail:	getGVar(dd.gsx$mediathumbnail)
+									}
 							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_date.tag				= dd.gsx$tag.$t;
-							}
-							if (typeof dd.gsx$mediathumbnail != 'undefined') {
-								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
-							}
 							
-							_data_obj.timeline.date.push(_date);
+							data_obj.timeline.date.push(date);
 						}
 					};
 				
-					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Finished Parsing Data");
+					
+					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, data_obj);
 				}
 				
 			},
