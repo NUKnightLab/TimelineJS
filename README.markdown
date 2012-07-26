@@ -12,10 +12,10 @@ in the future.
 
 Creating one is as easy as filling in a Google spreadsheet or as detailed as
 JSON.
-
+ 
 ## Add it to your site
-### Using Inline *easiest*
-Place the embed code where you want the timeline to show in the `<body>` of your site.
+### Using Inline (*easiest*)
+Place the embed code where you want the timeline to show in the `<body>` of your site. See [Options](#options) for a full list of what you can set in the config.
 
 ```html
 	<div id="timeline-embed"></div>
@@ -39,7 +39,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 	</script>
 	<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
 ```
-### Using a method *advanced*
+### Using a method (*advanced*)
 You could also initialize a new timeline using the `createStoryJS` method after `storyjs-embed.js` has been loaded
 ```javascript
 	createStoryJS({
@@ -78,7 +78,8 @@ Here's a simple example:
 ```
 
 	
-## Options
+## Config Options
+Here are some of the options you can set in the config.
 
 ### Language
 `lang`
@@ -175,12 +176,10 @@ Will log events etc to the console.
 
 ### JSON:
 
-JSON is the native data format for TimelineJS. It is easy enough for “normals”
-to use but powerful enough for real nerds to get excited about.
+JSON is the native data format for TimelineJS.
 
-The thing about JSON is it is picky. A misplaced comma or quotation mark can
-prevent the timeline from loading properly. Instructions on actually using the
-JSON file are included in the example data.JSON file.
+Remember, JSON is it is picky. A misplaced comma or quotation mark can
+prevent the timeline from loading properly. 
 
 Here is the full model:
 ```javascript
@@ -232,14 +231,13 @@ into the appropriate columns in TimelineJS’s template.
 
 You can find the template here: [TimelineJS Google Spreadsheet Template](https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
 
-There are only four things you need to know in order to create a timeline
+There are only a couple things you need to know in order to create a timeline
 using Google Docs:
 
   1. Make the spreadsheet public:   
 	Google Docs are automatically set to private but the spreadsheet must be
 	public.
-
-  
+	
 	Click the blue “Share” button on the top right-hand corner. In the “Share
 	settings” window, you’ll see the private setting of the spreadsheet: click
 	“Change...”. In the Visibility options window, choose “Public on the Web” and
@@ -247,8 +245,7 @@ using Google Docs:
 
   2. Publish to the Web  
 	Under the File menu, select “Publish to the Web.”
-
-  
+	
 	In the next window, check the box next to “Automatically republish when
 	changes are made.” Uncheck all other boxes. Click “start publishing.” This
 	will give you the URL to embed in your HTML file.
@@ -256,18 +253,9 @@ using Google Docs:
   3. Copy/paste the Web URL into your TimelineJS HTML file  
 	After you publish the spreadsheet, Google Docs will generate a link to the
 	file. Copy the link for the Web Page option (as opposed to PDF, HTML, XLS,
-	etc.), then paste it into the timeline’s HTML file:
+	etc.), then paste it into the timeline’s HTML file (see [Add it to your site](#add-it-to-your-site) )
 
-  
-	`timeline.init(“URL goes here”)`
 
-  4. Designate the “start” slide  
-	This indicates which event is the title slide, the one that begins the
-	timeline.
-
-  
-	Only one should be labeled "start" (generally, the first one). The title slide
-	must have a start date, headline and text to appear properly.
 	
 ### Storify:
 
@@ -290,3 +278,11 @@ Tips and tricks to best utilize TimelineJS
   1. Keep it light - don’t get bogged down by text or other elements
   2. Pick stories that have a strong chronological narrative. It does not work well for stories that need to jump around in the timeline.
   3. Include events that build up to major occurrences, not just the major events.
+  4. Don't overwhelm the user. A timeline with hundreds of events is probably not the best use of the format.
+  
+## License
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+
