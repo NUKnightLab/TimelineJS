@@ -172,8 +172,17 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 				},
 				
 				buildData: function(d) {
+					var data_obj	= VMM.Timeline.DataObj.data_template_obj;
+					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
-					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
+					
+					function getGVar(v) {
+						if (typeof v != 'undefined') {
+							return v.$t;
+						} else {
+							return "";
+						}
+					}
 
 					for(var i = 0; i < d.feed.entry.length; i++) {
 						var dd		= d.feed.entry[i],
@@ -186,52 +195,44 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						}
 						
 						if (dd_type.match("start") || dd_type.match("title") ) {
-							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
-							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
-							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
-							_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
-							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
-							_data_obj.timeline.text = 				dd.gsx$text.$t;
-							_data_obj.timeline.type = 				"google spreadsheet";
+							data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
+							data_obj.timeline.headline			= getGVar(dd.gsx$headline);
+							data_obj.timeline.asset.media		= getGVar(dd.gsx$media);
+							data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
+							data_obj.timeline.asset.credit		= getGVar(dd.gsx$mediacredit);
+							data_obj.timeline.text				= getGVar(dd.gsx$text);
+							data_obj.timeline.type				= "google spreadsheet";
 						} else if (dd_type.match("era")) {
-							var _era = {
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-								"headline": 						dd.gsx$headline.$t,
-								"text": 							dd.gsx$text.$t,
-								"tag": 								""
-								
-							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_era.tag = dd.gsx$tag.$t;
+							var era = {
+								startDate:		getGVar(dd.gsx$startdate),
+								endDate:		getGVar(dd.gsx$enddate),
+								headline:		getGVar(dd.gsx$headline),
+								text:			getGVar(dd.gsx$text),
+								tag:			getGVar(dd.gsx$tag)
 							}
-							_data_obj.timeline.era.push(_era);
+							data_obj.timeline.era.push(era);
 						} else {
-							var _date = {
-								"type": 							"google spreadsheet",
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-					            "headline": 						dd.gsx$headline.$t,
-					            "text": 							dd.gsx$text.$t,
-					            "asset": {
-									"media": 						dd.gsx$media.$t,
-									"credit": 						dd.gsx$mediacredit.$t,
-									"caption": 						dd.gsx$mediacaption.$t
-								},
-					            "tag": 								""
+							var date = {
+									type:			"google spreadsheet",
+									startDate:		getGVar(dd.gsx$startdate),
+									endDate:		getGVar(dd.gsx$enddate),
+									headline:		getGVar(dd.gsx$headline),
+									tag:			getGVar(dd.gsx$tag),
+									asset: {
+										media:		getGVar(dd.gsx$media),
+										credit:		getGVar(dd.gsx$mediacredit),
+										caption:	getGVar(dd.gsx$mediacaption),
+										thumbnail:	getGVar(dd.gsx$mediathumbnail)
+									}
 							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_date.tag				= dd.gsx$tag.$t;
-							}
-							if (typeof dd.gsx$mediathumbnail != 'undefined') {
-								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
-							}
 							
-							_data_obj.timeline.date.push(_date);
+							data_obj.timeline.date.push(date);
 						}
 					};
 				
-					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Finished Parsing Data");
+					
+					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, data_obj);
 				}
 				
 			},
