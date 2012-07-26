@@ -15,7 +15,7 @@ JSON.
  
 ## Add it to your site
 ### Using Inline (*easiest*)
-Place the embed code where you want the timeline to show in the `<body>` of your site. See [Options](#options) for a full list of what you can set in the config.
+Place the embed code where you want the timeline to show in the `<body>` of your site. See [Config Options](#config-options) for a full list of what you can set in the config.
 
 ```html
 	<div id="timeline-embed"></div>
