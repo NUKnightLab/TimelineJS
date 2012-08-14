@@ -306,9 +306,9 @@ if(typeof VMM != 'undefined') {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
 					if (show) {
-						jQuery(element).show(0);
+						jQuery(element).show();
 					} else {
-						jQuery(element).hide(0);
+						jQuery(element).hide();
 					}
 				}
 			} else {
