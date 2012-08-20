@@ -1470,9 +1470,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 						if (m.type == "quote" || m.type == "unknown") {
 							_marker_title = VMM.Util.untagify(m.id);
 							has_title = true;
-						} else if (m.type == "twitter") {
-							has_title = false;
-							VMM.appendElement(_marker_content, "<h3 id='text_thumb_" + m.id + "'>" + _marker_title + "</h3>");
 						} else {
 							has_title = false;
 						}
@@ -1487,6 +1484,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				if (has_title) {
 					VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3>");
+				} else {
+					VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3>");
+					VMM.appendElement(_marker_content, "<h3 id='marker_content_" + data[i].uniqueid + "'>" + _marker_title + "</h3>");
 				}
 				
 				// ADD ID
