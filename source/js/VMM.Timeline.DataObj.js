@@ -166,9 +166,24 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var _key = VMM.Util.getUrlVars(raw)["key"];
-					var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData);
+					var key, url, timeout;
+					
+					key	= VMM.Util.getUrlVars(raw)["key"];
+					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json";
+					
+					timeout = setTimeout(function() {
+						trace("Google Docs timeout");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+					}, 6000);
+					
+					VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
+						.error(function(jqXHR, textStatus, errorThrown) {
+							trace("Google Docs ERROR");
+							trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+						})
+						.success(function(d) {
+							clearTimeout(timeout);
+						});
 				},
 				
 				buildData: function(d) {
@@ -196,12 +211,12 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						
 						if (dd_type.match("start") || dd_type.match("title") ) {
 							data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
-							data_obj.timeline.headline			= getGVar(dd.gsx$headline);
-							data_obj.timeline.asset.media		= getGVar(dd.gsx$media);
+							data_obj.timeline.headline		= getGVar(dd.gsx$headline);
+							data_obj.timeline.asset.media	= getGVar(dd.gsx$media);
 							data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
-							data_obj.timeline.asset.credit		= getGVar(dd.gsx$mediacredit);
-							data_obj.timeline.text				= getGVar(dd.gsx$text);
-							data_obj.timeline.type				= "google spreadsheet";
+							data_obj.timeline.asset.credit	= getGVar(dd.gsx$mediacredit);
+							data_obj.timeline.text			= getGVar(dd.gsx$text);
+							data_obj.timeline.type			= "google spreadsheet";
 						} else if (dd_type.match("era")) {
 							var era = {
 								startDate:		getGVar(dd.gsx$startdate),
@@ -240,19 +255,21 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			storify: {
 				
 				getData: function(raw) {
+					var key, url, storify_timeout;
 					//http://storify.com/number10gov/g8-and-nato-chicago-summit
 					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
 					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
-					var _key = raw.split("storify.com\/")[1];
-					var _url = "http://api.storify.com/v1/stories/" + _key + "?per_page=300&callback=?";
 					
-					var storify_timeout = setTimeout(function() {
+					key	= raw.split("storify.com\/")[1];
+					url	= "http://api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
+					
+					storify_timeout = setTimeout(function() {
 						trace("STORIFY timeout");
 						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Storify is not responding");
 					}, 6000);
 					
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.storify.buildData)
+					VMM.getJSON(url, VMM.Timeline.DataObj.model.storify.buildData)
 						.error(function(jqXHR, textStatus, errorThrown) {
 							trace("STORIFY error");
 							trace("STORIFY ERROR: " + textStatus + " " + jqXHR.responseText);
