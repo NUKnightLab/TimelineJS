@@ -91,12 +91,14 @@ Languages available:
 * `es` *Español*
 * `de` *Deutsch*
 * `it` *Italiano*
-* `pt-br` *Português Brazil *
+* `pt-br` *Português Brazil*
+* `pt` *Português*
 * `nl` *Dutch*
 * `cz` *Czech*
 * `dk` *Danish*
 * `id` *Indonesian*
 * `pl` *Polish*
+* `sl` *Slovenian*
 * `ru` *Russian*
 * `sk` *Slovak*
 * `is` *Icelandic*
@@ -108,7 +110,7 @@ Languages available:
 * `ta` *தமிழ் - Tamil*
 * `ar` *Arabic* *May be issues with right to left (need some help here)* 
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/TimelineJS/blob/master/source/js/locale/en.js) 
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/TimelineJS/blob/master/source/js/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
 
 ###Start at End 
 `start_at_end`
@@ -137,6 +139,10 @@ Will log events etc to the console.
 
 
 ###Map Style Types 
+Due to recent changes to the Google Maps API, you need a [API Key](https://developers.google.com/places/documentation/#Authentication) in order to use custom map types.
+`gmap_key:`
+*required in order to use maptype*
+
 `maptype:`
 * [Stamen Maps ](maps.stamen.com)
 	* `toner`
