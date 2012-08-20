@@ -492,7 +492,7 @@ LoadLib = (function (doc) {
 		var i			= 0,
 			has_loaded	= false;
 			
-		for (i = 0; i < loaded; i++) {
+		for (i = 0; i < loaded.length; i++) {
 			if (loaded[i] == url) {
 				has_loaded = true;
 			}
@@ -584,7 +584,7 @@ function createStoryJS(c, src) {
 	================================================== */
 	var storyjs_embedjs, t, te, x,
 		isCDN					= false,
-		js_version				= "2.01",
+		js_version				= "2.05",
 		jquery_version_required	= "1.7.1",
 		jquery_version			= "",
 		ready = {
@@ -626,7 +626,13 @@ function createStoryJS(c, src) {
 			lang:		'en',
 			font:		'default',
 			css:		path.css + 'timeline.css?'+js_version,
-			js:			path.js + 'timeline-min.js?'+js_version
+			js:			path.js + 'timeline-min.js?'+js_version,
+			api_keys: {
+				google:				"",
+				flickr:				"",
+				twitter:			""
+			},
+			gmap_key: 	""
 		},
 		font_presets = [
 			{ name:	"Merriweather-NewsCycle",		google:	[ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] },

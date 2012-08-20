@@ -151,7 +151,8 @@ if (typeof VMM == 'undefined') {
 		
 		api_keys_master: {
 			flickr:		"RAIvxHY4hE/Elm5cieh4X5ptMyDpj7MYIxziGxi0WGCcy1s+yr7rKQ==",
-			google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo=",
+			//google:		"jwNGnYw4hE9lmAez4ll0QD+jo6SKBJFknkopLS4FrSAuGfIwyj57AusuR0s8dAo=",
+			google:		"uQKadH1VMlCsp560gN2aOiMz4evWkl1s34yryl3F/9FJOsn+/948CbBUvKLN46U=",
 			twitter:	""
 		},
 		
@@ -2459,8 +2460,8 @@ LoadLib = (function (doc) {
 		
 		var i			= 0,
 			has_loaded	= false;
-			
-		for (i = 0; i < loaded; i++) {
+		
+		for (i = 0; i < loaded.length; i++) {
 			if (loaded[i] == url) {
 				has_loaded = true;
 			}
@@ -2665,6 +2666,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 					VMM.attachElement("#"+tweet.id.toString(), twit );
 					VMM.attachElement("#text_thumb_"+tweet.id.toString(), d.text );
+					VMM.attachElement("#marker_content_" + tweet.id.toString(), d.text );
 					
 				})
 				.error(function(jqXHR, textStatus, errorThrown) {
@@ -2923,17 +2925,42 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(m) {
+				trace(m.url);
+				VMM.ExternalAPI.googlemaps.createAPIMap(m);
+				if (m.url[0].match("msid")) {
+					//VMM.ExternalAPI.googlemaps.createAPIMap(m);
+				} else {
+					//VMM.ExternalAPI.googlemaps.createiFrameMap(m);
+				} 
+				
+			},
+			
+			createiFrameMap: function(m) {
+				var embed_url		= m.url + "&output=embed",
+					mc				= "",
+					unique_map_id	= m.id.toString() + "_gmap";
+					
+				mc				+= "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'>";
+				mc				+= "<iframe width='100%' height='100%' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' src='" + embed_url + "'></iframe>";
+				mc				+= "</div>";
+				
+				VMM.attachElement("#" + m.id, mc);
+				
+			},
+			
+			createAPIMap: function(m) {
 				var map_attribution	= "",
 					layer,
 					map,
 					map_options,
-					unique_map_id	= m.id.toString() + "_gmap",
+					unique_map_id			= m.id.toString() + "_gmap",
 					map_attribution_html	= "",
-					location		= new google.maps.LatLng(41.875696,-87.624207),
+					location				= new google.maps.LatLng(41.875696,-87.624207),
 					latlong,
-					zoom			= 11,
-					has_location	= false,
-					has_zoom		= false,
+					zoom					= 11,
+					has_location			= false,
+					has_zoom				= false,
+					api_limit				= false,
 					map_bounds;
 					
 				
@@ -3025,7 +3052,6 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				    }
 				}
 				
-				
 				VMM.attachElement("#" + m.id, "<div class='google-map' id='" + unique_map_id + "' style='width=100%;height=100%;'></div>");
 				
 				map		= new google.maps.Map(document.getElementById(unique_map_id), map_options);
@@ -3039,7 +3065,108 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					VMM.appendElement("#"+unique_map_id, map_attribution_html);
 				}
 				
-				loadKML();
+				// DETERMINE IF KML IS POSSIBLE
+				if (m.url[0].match("msid")) {
+					loadKML();
+				} else {
+					loadPlaces();
+				} 
+				
+				// PLACES
+				function loadPlaces() {
+					var api_key,
+						places_url,
+						has_key		= false;
+						
+					trace("LOADING PLACES API FOR GOOGLE MAPS");
+						
+					if (VMM.ExternalAPI.keys.google != "") {
+						api_key	= VMM.ExternalAPI.keys.google;
+						has_key	= true;
+					} else {
+						trace("YOU NEED A GOOGLE MAPS API KEY IN ORDER TO USE THIS FEATURE OF TIMELINEJS");
+						trace("FIND OUT HOW TO GET YOUR KEY HERE: https://developers.google.com/places/documentation/#Authentication");
+					}
+					
+					places_url		= "https://maps.googleapis.com/maps/api/place/textsearch/json?key=" + api_key + "&sensor=false&language=" + m.lang + "&";
+					
+					if (type.of(VMM.Util.getUrlVars(m.url)["q"]) == "string") {
+						places_url	+= "query=" + VMM.Util.getUrlVars(m.url)["q"];
+					}
+					
+					if (has_location) {
+						places_url	+= "&location=" + location;
+					} 
+					
+					if (has_key) {
+						VMM.getJSON(places_url, function(d) {
+							trace("PLACES JSON");
+						
+							var places_location 	= "",
+								places_bounds		= "",
+								places_bounds_ne	= "",
+								places_bounds_sw	= "";
+						
+							trace(d);
+						
+							if (d.status == "OVER_QUERY_LIMIT") {
+								trace("OVER_QUERY_LIMIT");
+								if (has_location) {
+									map.panTo(location);
+									if (has_zoom) {
+										map.setZoom(zoom);
+									}
+								} else {
+									trace("DOING TRADITIONAL MAP IFRAME EMBED UNTIL QUERY LIMIT RESTORED");
+									api_limit = true;
+									VMM.ExternalAPI.googlemaps.createiFrameMap(m);
+								}
+							
+							} else {
+								if (d.results.length >= 1) {
+									//location = new google.maps.LatLng(parseFloat(d.results[0].geometry.location.lat),parseFloat(d.results[0].geometry.location.lng));
+									//map.panTo(location);
+							
+									places_bounds_ne	= new google.maps.LatLng(parseFloat(d.results[0].geometry.viewport.northeast.lat),parseFloat(d.results[0].geometry.viewport.northeast.lng));
+									places_bounds_sw	= new google.maps.LatLng(parseFloat(d.results[0].geometry.viewport.southwest.lat),parseFloat(d.results[0].geometry.viewport.southwest.lng));
+							
+									places_bounds = new google.maps.LatLngBounds(places_bounds_sw, places_bounds_ne)
+									map.fitBounds(places_bounds);
+							
+								} else {
+									trace("NO RESULTS");
+								}
+						
+								if (has_location) {
+									map.panTo(location);
+								} 
+								if (has_zoom) {
+									map.setZoom(zoom);
+								}
+							}
+						
+						})
+						.error(function(jqXHR, textStatus, errorThrown) {
+							trace("PLACES JSON ERROR");
+							trace("PLACES JSON ERROR: " + textStatus + " " + jqXHR.responseText);
+						})
+						.success(function(d) {
+							trace("PLACES JSON SUCCESS");
+						});
+					} else {
+						if (has_location) {
+							map.panTo(location);
+							if (has_zoom) {
+								map.setZoom(zoom);
+							}
+						} else {
+							trace("DOING TRADITIONAL MAP IFRAME EMBED BECAUSE NO GOOGLE MAP API KEY WAS PROVIDED");
+							VMM.ExternalAPI.googlemaps.createiFrameMap(m);
+						}
+					}
+					
+					
+				}
 				
 				// KML
 				function loadKML() {
@@ -3050,9 +3177,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					kml_layer			= new google.maps.KmlLayer(kml_url, {preserveViewport:true});
 					infowindow			= new google.maps.InfoWindow();
 					kml_layer.setMap(map);
-
+					
 					google.maps.event.addListenerOnce(kml_layer, "defaultviewport_changed", function() {
-						map.fitBounds(kml_layer.getDefaultViewport() );
+						//map.fitBounds(kml_layer.getDefaultViewport() );
+					   
 						if (has_location) {
 							map.panTo(location);
 						} 
@@ -3071,6 +3199,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						}
 					});
 				}
+				
 				
 			},
 			
@@ -3986,7 +4115,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 				start:		0,
 				hd:			false,
 				link:		"",
-				lang:		"",
+				lang:		VMM.Language.lang,
 				uniqueid:	VMM.Util.unique_ID(6)
 			};
 		
@@ -6179,7 +6308,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation,
 			slider,
 			timenav,
-			version		= "2.01",
+			version		= "2.05",
 			timeline_id	= "#timelinejs",
 			events		= {},
 			data		= {},
@@ -6218,6 +6347,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			source:					"nothing",
 			type: 					"timeline",
 			touch:					false,
+			orientation: 			"normal", 
 			maptype: 				"toner",
 			preload:				4,
 			current_slide:			0,
@@ -6288,6 +6418,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			},
 			ease: 					"easeInOutExpo",
 			duration: 				1000,
+			gmap_key: 				"",
 			language: 				VMM.Language
 		};
 		
@@ -6348,6 +6479,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.Timeline.Config			= config;
 			VMM.master_config.Timeline	= VMM.Timeline.Config;
 			this.events					= config.events;
+			
+			if (config.gmap_key != "") {
+				config.api_keys.google = config.gmap_key;
+			}
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -6412,9 +6547,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function reSize() {
+			if (orientationChange()) {
+				setViewport();
+			}
 			updateSize();
 			slider.setSize(config.feature.width, config.feature.height);
 			timenav.setSize(config.width, config.height);
+			
 		};
 		
 		function onSliderLoaded(e) {
@@ -6462,6 +6601,63 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				window.location.hash = "#" + n.toString();
 			}
 		}
+		
+		function getViewport() {
+			
+		}
+		
+		function setViewport() {
+			var viewport_content		= "",
+				viewport_orientation	= searchOrientation(window.orientation);
+			
+			if (VMM.Browser.device == "mobile") {
+				if (viewport_orientation == "portrait") {
+					viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+				} else if (viewport_orientation == "landscape") {
+					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
+				} else {
+					viewport_content	= "width=device-width, initial-scale=1, maximum-scale=1.0";
+				}
+			} else if (VMM.Browser.device == "tablet") {
+				viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
+			}
+			
+			if (document.getElementById("viewport")) {
+				VMM.Lib.attr("#viewport", "content", viewport_content);
+			} else {
+				VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
+			}
+
+		}
+		
+		/* ORIENTATION
+		================================================== */
+		function searchOrientation(orientation) {
+			var orient = "";
+			
+			if ( orientation == 0  || orientation == 180) {  
+				orient = "portrait";
+			} else if ( orientation == 90 || orientation == -90) {  
+				orient = "landscape";
+			} else {
+				orient = "normal";
+			}
+			
+			return orient;
+		}
+		
+		function orientationChange() {
+			var orientation	= searchOrientation(window.orientation);
+			
+			if (orientation == config.orientation) {
+				return false;
+			} else {
+				config.orientation = orientation;
+				return true;
+			}
+			
+		}
+		
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -6578,6 +6774,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);
 				
+				// VIEWPORT
+				setViewport();
+				
 			}
 			
 			
@@ -6693,27 +6892,36 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
+				var startpage_date	= VMM.Date.parse(data.startDate),
+					_date			= {},
+					td_num			= 0,
+					td;
+				
 				trace("HAS STARTPAGE");
-				var _date = {}, td_num = 0, td;
+				trace(startpage_date);
 				
-				td = _dates[0].startdate;
-				_date.startdate = new Date(_dates[0].startdate);
-				
-				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
-					// trace("YEAR ONLY");
-					_date.startdate.setFullYear(td.getFullYear() - 1);
-				} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
-					// trace("YEAR MONTH");
-					_date.startdate.setMonth(td.getMonth() - 1);
-				} else if (td.getHours() === 0 && td.getMinutes() === 0) {
-					// trace("YEAR MONTH DAY");
-					_date.startdate.setDate(td.getDate() - 1);
-				} else  if (td.getMinutes() === 0) {
-					// trace("YEAR MONTH DAY HOUR");
-					_date.startdate.setHours(td.getHours() - 1);
+				if (startpage_date < _dates[0].startdate) {
+					_date.startdate = new Date(startpage_date);
 				} else {
-					// trace("YEAR MONTH DAY HOUR MINUTE");
-					_date.startdate.setMinutes(td.getMinutes() - 1);
+					td = _dates[0].startdate;
+					_date.startdate = new Date(_dates[0].startdate);
+				
+					if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
+						// trace("YEAR ONLY");
+						_date.startdate.setFullYear(td.getFullYear() - 1);
+					} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
+						// trace("YEAR MONTH");
+						_date.startdate.setMonth(td.getMonth() - 1);
+					} else if (td.getHours() === 0 && td.getMinutes() === 0) {
+						// trace("YEAR MONTH DAY");
+						_date.startdate.setDate(td.getDate() - 1);
+					} else  if (td.getMinutes() === 0) {
+						// trace("YEAR MONTH DAY HOUR");
+						_date.startdate.setHours(td.getHours() - 1);
+					} else {
+						// trace("YEAR MONTH DAY HOUR MINUTE");
+						_date.startdate.setMinutes(td.getMinutes() - 1);
+					}
 				}
 				
 				_date.uniqueid		= VMM.Util.unique_ID(7);
@@ -8228,9 +8436,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 						if (m.type == "quote" || m.type == "unknown") {
 							_marker_title = VMM.Util.untagify(m.id);
 							has_title = true;
-						} else if (m.type == "twitter") {
-							has_title = false;
-							VMM.appendElement(_marker_content, "<h3 id='text_thumb_" + m.id + "'>" + _marker_title + "</h3>");
 						} else {
 							has_title = false;
 						}
@@ -8245,6 +8450,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				if (has_title) {
 					VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3>");
+				} else {
+					VMM.appendElement(_marker_content, "<h3>" + _marker_title + "</h3>");
+					VMM.appendElement(_marker_content, "<h3 id='marker_content_" + data[i].uniqueid + "'>" + _marker_title + "</h3>");
 				}
 				
 				// ADD ID
@@ -8543,9 +8751,24 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var _key = VMM.Util.getUrlVars(raw)["key"];
-					var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData);
+					var key, url, timeout;
+					
+					key	= VMM.Util.getUrlVars(raw)["key"];
+					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json";
+					
+					timeout = setTimeout(function() {
+						trace("Google Docs timeout");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+					}, 6000);
+					
+					VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
+						.error(function(jqXHR, textStatus, errorThrown) {
+							trace("Google Docs ERROR");
+							trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+						})
+						.success(function(d) {
+							clearTimeout(timeout);
+						});
 				},
 				
 				buildData: function(d) {
@@ -8573,12 +8796,12 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						
 						if (dd_type.match("start") || dd_type.match("title") ) {
 							data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
-							data_obj.timeline.headline			= getGVar(dd.gsx$headline);
-							data_obj.timeline.asset.media		= getGVar(dd.gsx$media);
+							data_obj.timeline.headline		= getGVar(dd.gsx$headline);
+							data_obj.timeline.asset.media	= getGVar(dd.gsx$media);
 							data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
-							data_obj.timeline.asset.credit		= getGVar(dd.gsx$mediacredit);
-							data_obj.timeline.text				= getGVar(dd.gsx$text);
-							data_obj.timeline.type				= "google spreadsheet";
+							data_obj.timeline.asset.credit	= getGVar(dd.gsx$mediacredit);
+							data_obj.timeline.text			= getGVar(dd.gsx$text);
+							data_obj.timeline.type			= "google spreadsheet";
 						} else if (dd_type.match("era")) {
 							var era = {
 								startDate:		getGVar(dd.gsx$startdate),
@@ -8617,19 +8840,21 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			storify: {
 				
 				getData: function(raw) {
+					var key, url, storify_timeout;
 					//http://storify.com/number10gov/g8-and-nato-chicago-summit
 					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
 					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
-					var _key = raw.split("storify.com\/")[1];
-					var _url = "http://api.storify.com/v1/stories/" + _key + "?per_page=300&callback=?";
 					
-					var storify_timeout = setTimeout(function() {
+					key	= raw.split("storify.com\/")[1];
+					url	= "http://api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
+					
+					storify_timeout = setTimeout(function() {
 						trace("STORIFY timeout");
 						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Storify is not responding");
 					}, 6000);
 					
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.storify.buildData)
+					VMM.getJSON(url, VMM.Timeline.DataObj.model.storify.buildData)
 						.error(function(jqXHR, textStatus, errorThrown) {
 							trace("STORIFY error");
 							trace("STORIFY ERROR: " + textStatus + " " + jqXHR.responseText);
