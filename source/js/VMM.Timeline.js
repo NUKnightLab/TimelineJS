@@ -42,7 +42,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation,
 			slider,
 			timenav,
-			version		= "2.01",
+			version		= "2.05",
 			timeline_id	= "#timelinejs",
 			events		= {},
 			data		= {},
@@ -81,6 +81,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			source:					"nothing",
 			type: 					"timeline",
 			touch:					false,
+			orientation: 			"normal", 
 			maptype: 				"toner",
 			preload:				4,
 			current_slide:			0,
@@ -151,6 +152,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			},
 			ease: 					"easeInOutExpo",
 			duration: 				1000,
+			gmap_key: 				"",
 			language: 				VMM.Language
 		};
 		
@@ -211,6 +213,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			VMM.Timeline.Config			= config;
 			VMM.master_config.Timeline	= VMM.Timeline.Config;
 			this.events					= config.events;
+			
+			if (config.gmap_key != "") {
+				config.api_keys.google = config.gmap_key;
+			}
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -275,9 +281,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function reSize() {
+			if (orientationChange()) {
+				setViewport();
+			}
 			updateSize();
 			slider.setSize(config.feature.width, config.feature.height);
 			timenav.setSize(config.width, config.height);
+			
 		};
 		
 		function onSliderLoaded(e) {
@@ -325,6 +335,63 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				window.location.hash = "#" + n.toString();
 			}
 		}
+		
+		function getViewport() {
+			
+		}
+		
+		function setViewport() {
+			var viewport_content		= "",
+				viewport_orientation	= searchOrientation(window.orientation);
+			
+			if (VMM.Browser.device == "mobile") {
+				if (viewport_orientation == "portrait") {
+					viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+				} else if (viewport_orientation == "landscape") {
+					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
+				} else {
+					viewport_content	= "width=device-width, initial-scale=1, maximum-scale=1.0";
+				}
+			} else if (VMM.Browser.device == "tablet") {
+				viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
+			}
+			
+			if (document.getElementById("viewport")) {
+				VMM.Lib.attr("#viewport", "content", viewport_content);
+			} else {
+				VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
+			}
+
+		}
+		
+		/* ORIENTATION
+		================================================== */
+		function searchOrientation(orientation) {
+			var orient = "";
+			
+			if ( orientation == 0  || orientation == 180) {  
+				orient = "portrait";
+			} else if ( orientation == 90 || orientation == -90) {  
+				orient = "landscape";
+			} else {
+				orient = "normal";
+			}
+			
+			return orient;
+		}
+		
+		function orientationChange() {
+			var orientation	= searchOrientation(window.orientation);
+			
+			if (orientation == config.orientation) {
+				return false;
+			} else {
+				config.orientation = orientation;
+				return true;
+			}
+			
+		}
+		
 		
 		/* PUBLIC FUNCTIONS
 		================================================== */
@@ -441,6 +508,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);
 				
+				// VIEWPORT
+				setViewport();
+				
 			}
 			
 			
@@ -556,27 +626,36 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
+				var startpage_date	= VMM.Date.parse(data.startDate),
+					_date			= {},
+					td_num			= 0,
+					td;
+				
 				trace("HAS STARTPAGE");
-				var _date = {}, td_num = 0, td;
+				trace(startpage_date);
 				
-				td = _dates[0].startdate;
-				_date.startdate = new Date(_dates[0].startdate);
-				
-				if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
-					// trace("YEAR ONLY");
-					_date.startdate.setFullYear(td.getFullYear() - 1);
-				} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
-					// trace("YEAR MONTH");
-					_date.startdate.setMonth(td.getMonth() - 1);
-				} else if (td.getHours() === 0 && td.getMinutes() === 0) {
-					// trace("YEAR MONTH DAY");
-					_date.startdate.setDate(td.getDate() - 1);
-				} else  if (td.getMinutes() === 0) {
-					// trace("YEAR MONTH DAY HOUR");
-					_date.startdate.setHours(td.getHours() - 1);
+				if (startpage_date < _dates[0].startdate) {
+					_date.startdate = new Date(startpage_date);
 				} else {
-					// trace("YEAR MONTH DAY HOUR MINUTE");
-					_date.startdate.setMinutes(td.getMinutes() - 1);
+					td = _dates[0].startdate;
+					_date.startdate = new Date(_dates[0].startdate);
+				
+					if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
+						// trace("YEAR ONLY");
+						_date.startdate.setFullYear(td.getFullYear() - 1);
+					} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
+						// trace("YEAR MONTH");
+						_date.startdate.setMonth(td.getMonth() - 1);
+					} else if (td.getHours() === 0 && td.getMinutes() === 0) {
+						// trace("YEAR MONTH DAY");
+						_date.startdate.setDate(td.getDate() - 1);
+					} else  if (td.getMinutes() === 0) {
+						// trace("YEAR MONTH DAY HOUR");
+						_date.startdate.setHours(td.getHours() - 1);
+					} else {
+						// trace("YEAR MONTH DAY HOUR MINUTE");
+						_date.startdate.setMinutes(td.getMinutes() - 1);
+					}
 				}
 				
 				_date.uniqueid		= VMM.Util.unique_ID(7);
