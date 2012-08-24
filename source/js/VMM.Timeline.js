@@ -42,7 +42,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation,
 			slider,
 			timenav,
-			version		= "2.05",
+			version		= "2.10",
 			timeline_id	= "#timelinejs",
 			events		= {},
 			data		= {},
