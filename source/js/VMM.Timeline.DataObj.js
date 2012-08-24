@@ -232,6 +232,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									startDate:		getGVar(dd.gsx$startdate),
 									endDate:		getGVar(dd.gsx$enddate),
 									headline:		getGVar(dd.gsx$headline),
+									text:			getGVar(dd.gsx$text),
 									tag:			getGVar(dd.gsx$tag),
 									asset: {
 										media:		getGVar(dd.gsx$media),
