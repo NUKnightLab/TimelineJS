@@ -1,19 +1,11 @@
 /*!
 	TimelineJS
-	Version 1.71
+	Version 2.10
 	Designed and built by Zach Wise at VéritéCo
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	http://www.gnu.org/licenses/
+	This Source Code Form is subject to the terms of the Mozilla Public
+	License, v. 2.0. If a copy of the MPL was not distributed with this
+	file, You can obtain one at http://mozilla.org/MPL/2.0/.
 	
 */
 
@@ -3069,11 +3061,142 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (m.url[0].match("msid")) {
 					loadKML();
 				} else {
-					loadPlaces();
-				} 
+					//loadPlaces();
+					if (type.of(VMM.Util.getUrlVars(m.url)["q"]) == "string") {
+						geocodePlace();
+					} 
+				}
+				
+				// GEOCODE
+				function geocodePlace() {
+
+
+					
+					var geocoder	= new google.maps.Geocoder(),
+						address		= VMM.Util.getUrlVars(m.url)["q"],
+						marker;
+						
+					geocoder.geocode( { 'address': address}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+							
+							marker = new google.maps.Marker({
+								map: map,
+								position: results[0].geometry.location
+							});
+							
+							// POSITION MAP
+							//map.setCenter(results[0].geometry.location);
+							//map.panTo(location);
+							if (typeof results[0].geometry.viewport != 'undefined') {
+								map.fitBounds(results[0].geometry.viewport);
+							} else if (typeof results[0].geometry.bounds != 'undefined') {
+								map.fitBounds(results[0].geometry.bounds);
+							} else {
+								map.setCenter(results[0].geometry.location);
+							}
+							
+							if (has_location) {
+								map.panTo(location);
+							}
+							if (has_zoom) {
+								map.setZoom(zoom);
+							}
+							
+						} else {
+							trace("Geocode for " + address + " was not successful for the following reason: " + status);
+							trace("TRYING PLACES SEARCH");
+							loadPlaces();
+						}
+					});
+				}
 				
 				// PLACES
 				function loadPlaces() {
+					var place,
+						search_request,
+						infowindow,
+						search_bounds,
+						bounds_sw,
+						bounds_ne;
+					
+					place_search	= new google.maps.places.PlacesService(map);
+					infowindow		= new google.maps.InfoWindow();
+					
+					search_request = {
+						query:		"",
+						types:		['country', 'neighborhood', 'political', 'locality', 'geocode']
+					};
+					
+					if (type.of(VMM.Util.getUrlVars(m.url)["q"]) == "string") {
+						search_request.query	= VMM.Util.getUrlVars(m.url)["q"];
+					}
+					
+					if (has_location) {
+						search_request.location	= location;
+						search_request.radius	= "15000";
+					} else {
+						bounds_sw = new google.maps.LatLng(-89.999999,-179.999999);
+						bounds_ne = new google.maps.LatLng(89.999999,179.999999);
+						search_bounds = new google.maps.LatLngBounds(bounds_sw,bounds_ne);
+						
+						//search_request.location	= search_bounds;
+					}
+					
+					place_search.textSearch(search_request, placeResults);
+					
+					function placeResults(results, status) {
+						
+						if (status == google.maps.places.PlacesServiceStatus.OK) {
+							
+							for (var i = 0; i < results.length; i++) {
+								//createMarker(results[i]);
+							}
+							
+							if (has_location) {
+								map.panTo(location);
+							} else {
+								if (results.length >= 1) {
+									map.panTo(results[0].geometry.location);
+									if (has_zoom) {
+										map.setZoom(zoom);
+									}
+								} 
+							}
+							
+							
+						} else {
+							trace("Place search for " + address + " was not successful for the following reason: " + status);
+							// IF There's a problem loading the map, load a simple iFrame version instead
+							trace("YOU MAY NEED A GOOGLE MAPS API KEY IN ORDER TO USE THIS FEATURE OF TIMELINEJS");
+							trace("FIND OUT HOW TO GET YOUR KEY HERE: https://developers.google.com/places/documentation/#Authentication");
+							trace("USING SIMPLE IFRAME MAP EMBED");
+							
+							if (m.url.match("https")) {
+								m.url = m.url.replace("https", "http");
+							}
+							VMM.ExternalAPI.googlemaps.createiFrameMap(m);
+						}
+						
+					}
+					
+					function createMarker(place) {
+						var marker, placeLoc;
+						
+						placeLoc = place.geometry.location;
+						marker = new google.maps.Marker({
+							map: map,
+							position: place.geometry.location
+						});
+
+						google.maps.event.addListener(marker, 'click', function() {
+							infowindow.setContent(place.name);
+							infowindow.open(map, this);
+						});
+					}
+					
+				}
+				
+				function loadPlacesAlt() {
 					var api_key,
 						places_url,
 						has_key		= false;
@@ -3179,11 +3302,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					kml_layer.setMap(map);
 					
 					google.maps.event.addListenerOnce(kml_layer, "defaultviewport_changed", function() {
-						//map.fitBounds(kml_layer.getDefaultViewport() );
 					   
 						if (has_location) {
 							map.panTo(location);
-						} 
+						} else {
+							map.fitBounds(kml_layer.getDefaultViewport() );
+						}
 						if (has_zoom) {
 							map.setZoom(zoom);
 						}
@@ -6308,7 +6432,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation,
 			slider,
 			timenav,
-			version		= "2.05",
+			version		= "2.10",
 			timeline_id	= "#timelinejs",
 			events		= {},
 			data		= {},
@@ -8817,6 +8941,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									startDate:		getGVar(dd.gsx$startdate),
 									endDate:		getGVar(dd.gsx$enddate),
 									headline:		getGVar(dd.gsx$headline),
+									text:			getGVar(dd.gsx$text),
 									tag:			getGVar(dd.gsx$tag),
 									asset: {
 										media:		getGVar(dd.gsx$media),

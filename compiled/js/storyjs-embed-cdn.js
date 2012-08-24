@@ -584,7 +584,7 @@ function createStoryJS(c, src) {
 	================================================== */
 	var storyjs_embedjs, t, te, x,
 		isCDN					= false,
-		js_version				= "2.05",
+		js_version				= "2.10",
 		jquery_version_required	= "1.7.1",
 		jquery_version			= "",
 		ready = {
@@ -636,6 +636,7 @@ function createStoryJS(c, src) {
 		},
 		font_presets = [
 			{ name:	"Merriweather-NewsCycle",		google:	[ 'News+Cycle:400,700:latin', 'Merriweather:400,700,900:latin' ] },
+			{ name:	"NewsCycle-Merriweather",		google:	[ 'News+Cycle:400,700:latin', 'Merriweather:300,400,700:latin' ] },
 			{ name:	"PoiretOne-Molengo",			google:	[ 'Poiret+One::latin', 'Molengo::latin' ] },
 			{ name:	"Arvo-PTSans",					google:	[ 'Arvo:400,700,400italic:latin', 'PT+Sans:400,700,400italic:latin' ] },
 			{ name:	"PTSerif-PTSans",				google:	[ 'PT+Sans:400,700,400italic:latin', 'PT+Serif:400,700,400italic:latin' ] },
