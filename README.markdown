@@ -110,7 +110,7 @@ Languages available:
 * `ta` *தமிழ் - Tamil*
 * `ar` *Arabic* *May be issues with right to left (need some help here)* 
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/TimelineJS/blob/master/source/js/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
 
 ###Start at End 
 `start_at_end`
