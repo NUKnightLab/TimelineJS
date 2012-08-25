@@ -281,12 +281,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function reSize() {
+			
+			updateSize();
+			
+			slider.setSize(config.feature.width, config.feature.height);
+			timenav.setSize(config.width, config.height);
 			if (orientationChange()) {
 				setViewport();
 			}
-			updateSize();
-			slider.setSize(config.feature.width, config.feature.height);
-			timenav.setSize(config.width, config.height);
 			
 		};
 		
@@ -346,20 +348,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			if (VMM.Browser.device == "mobile") {
 				if (viewport_orientation == "portrait") {
-					viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+					//viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
 				} else if (viewport_orientation == "landscape") {
 					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
 				} else {
 					viewport_content	= "width=device-width, initial-scale=1, maximum-scale=1.0";
 				}
 			} else if (VMM.Browser.device == "tablet") {
-				viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
+				//viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
 			}
 			
 			if (document.getElementById("viewport")) {
-				VMM.Lib.attr("#viewport", "content", viewport_content);
+				//VMM.Lib.attr("#viewport", "content", viewport_content);
 			} else {
-				VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
+				//VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
 			}
 
 		}
@@ -397,7 +400,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		this.init = function(c, _data) {
 			trace('INIT');
-			
+			setViewport();
 			createConfig(c);
 			createStructure();
 			
@@ -508,8 +511,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);
 				
-				// VIEWPORT
-				setViewport();
+				
 				
 			}
 			
@@ -626,15 +628,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
-				var startpage_date	= VMM.Date.parse(data.startDate),
+
+				var startpage_date,
 					_date			= {},
 					td_num			= 0,
 					td;
-				
+					
+				if (typeof data.startDate != 'undefined') {
+					startpage_date	= VMM.Date.parse(data.startDate);
+				} else {
+					startpage_date = false;
+				}
 				trace("HAS STARTPAGE");
 				trace(startpage_date);
 				
-				if (startpage_date < _dates[0].startdate) {
+				if (startpage_date && startpage_date < _dates[0].startdate) {
 					_date.startdate = new Date(startpage_date);
 				} else {
 					td = _dates[0].startdate;

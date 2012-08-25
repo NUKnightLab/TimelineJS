@@ -9,9 +9,9 @@
 	
 */
 
-/*********************************************** 
-     Begin VMM.StoryJS.License.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.StoryJS.License.js
+********************************************** */
 
 /*!
 	StoryJS
@@ -22,9 +22,9 @@
 	file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-/*********************************************** 
-     Begin VMM.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.js
+********************************************** */
 
 /**
 	* VéritéCo JS Core
@@ -396,9 +396,9 @@ var type={
 
 
 
-/*********************************************** 
-     Begin VMM.Library.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Library.js
+********************************************** */
 
 /*	* LIBRARY ABSTRACTION
 ================================================== */
@@ -1002,9 +1002,9 @@ if( typeof( jQuery ) != 'undefined' ){
 }
 
 
-/*********************************************** 
-     Begin VMM.Browser.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Browser.js
+********************************************** */
 
 /*	* DEVICE AND BROWSER DETECTION
 ================================================== */
@@ -1163,9 +1163,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 	VMM.Browser.init();
 }
 
-/*********************************************** 
-     Begin VMM.FileExtention.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.FileExtention.js
+********************************************** */
 
 /*	* File Extention
 ================================================== */
@@ -1189,9 +1189,9 @@ if(typeof VMM != 'undefined' && typeof VMM.FileExtention == 'undefined') {
 	}
 }
 
-/*********************************************** 
-     Begin VMM.Date.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Date.js
+********************************************** */
 
 /*	* Utilities and Useful Functions
 ================================================== */
@@ -1553,9 +1553,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	
 }
 
-/*********************************************** 
-     Begin VMM.Util.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Util.js
+********************************************** */
 
 /*	* Utilities and Useful Functions
 ================================================== */
@@ -2034,9 +2034,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 	}).init();
 }
 
-/*********************************************** 
-     Begin LazyLoad.js 
-***********************************************/ 
+/* **********************************************
+     Begin LazyLoad.js
+********************************************** */
 
 /*jslint browser: true, eqeqeq: true, bitwise: true, newcap: true, immed: true, regexp: false */
 
@@ -2431,9 +2431,9 @@ LazyLoad = (function (doc) {
 })(this.document);
 
 
-/*********************************************** 
-     Begin VMM.LoadLib.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.LoadLib.js
+********************************************** */
 
 /*
 	LoadLib
@@ -2486,9 +2486,9 @@ LoadLib = (function (doc) {
 })(this.document);
 
 
-/*********************************************** 
-     Begin VMM.Core.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Core.js
+********************************************** */
 
 /* VeriteCo Core
 ================================================== */
@@ -2507,9 +2507,9 @@ LoadLib = (function (doc) {
 
 
 
-/*********************************************** 
-     Begin VMM.Language.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Language.js
+********************************************** */
 
 /* DEFAULT LANGUAGE 
 ================================================== */
@@ -2548,9 +2548,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 	}
 };
 
-/*********************************************** 
-     Begin VMM.ExternalAPI.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.ExternalAPI.js
+********************************************** */
 
 /* External API
 ================================================== */
@@ -3999,9 +3999,9 @@ function onYouTubePlayerAPIReady() {
 	VMM.ExternalAPI.youtube.onAPIReady();
 }
 
-/*********************************************** 
-     Begin VMM.MediaElement.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.MediaElement.js
+********************************************** */
 
 /* MediaElement
 ================================================== */
@@ -4218,9 +4218,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 	}).init();
 }
 
-/*********************************************** 
-     Begin VMM.MediaType.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.MediaType.js
+********************************************** */
 
 /*	MediaType
 	Determines the type of media the url string is.
@@ -4350,9 +4350,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	}
 }
 
-/*********************************************** 
-     Begin VMM.TextElement.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.TextElement.js
+********************************************** */
 
 /* TextElement
 ================================================== */
@@ -4371,9 +4371,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 	}).init();
 }
 
-/*********************************************** 
-     Begin VMM.Media.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Media.js
+********************************************** */
 
 /* Media
 ================================================== */
@@ -4387,9 +4387,9 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 // @codekit-prepend "VMM.TextElement.js";
 
 
-/*********************************************** 
-     Begin VMM.DragSlider.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.DragSlider.js
+********************************************** */
 
 /* DRAG SLIDER
 ================================================== */
@@ -4614,9 +4614,9 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 	}
 }
 
-/*********************************************** 
-     Begin VMM.Slider.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Slider.js
+********************************************** */
 
 /* Slider
 ================================================== */
@@ -5328,9 +5328,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 
 
 
-/*********************************************** 
-     Begin VMM.Slider.Slide.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Slider.Slide.js
+********************************************** */
 
 /* Slider Slide 
 ================================================== */
@@ -5604,9 +5604,9 @@ if (typeof VMM.Slider != 'undefined') {
 };
 
 
-/*********************************************** 
-     Begin AES.js 
-***********************************************/ 
+/* **********************************************
+     Begin AES.js
+********************************************** */
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 /*  AES implementation in JavaScript (c) Chris Veness 2005-2011                                   */
@@ -6072,9 +6072,9 @@ Utf8.decode = function(strUtf) {
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
 
-/*********************************************** 
-     Begin bootstrap-tooltip.js 
-***********************************************/ 
+/* **********************************************
+     Begin bootstrap-tooltip.js
+********************************************** */
 
 /* ===========================================================
  * bootstrap-tooltip.js v2.0.1
@@ -6347,9 +6347,9 @@ Utf8.decode = function(strUtf) {
 
 }( window.jQuery );
 
-/*********************************************** 
-     Begin VMM.StoryJS.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.StoryJS.js
+********************************************** */
 
 /* VeriteCo StoryJS
 ================================================== */
@@ -6384,9 +6384,9 @@ if(typeof VMM != 'undefined' && typeof VMM.StoryJS == 'undefined') {
 }
 
 
-/*********************************************** 
-     Begin VMM.Timeline.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Timeline.js
+********************************************** */
 
 /**
 	* TimelineJS
@@ -6671,12 +6671,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		function reSize() {
+			
+			updateSize();
+			
+			slider.setSize(config.feature.width, config.feature.height);
+			timenav.setSize(config.width, config.height);
 			if (orientationChange()) {
 				setViewport();
 			}
-			updateSize();
-			slider.setSize(config.feature.width, config.feature.height);
-			timenav.setSize(config.width, config.height);
 			
 		};
 		
@@ -6736,20 +6738,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 			if (VMM.Browser.device == "mobile") {
 				if (viewport_orientation == "portrait") {
-					viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+					//viewport_content	= "width=device-width; initial-scale=0.75, maximum-scale=0.75";
+					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
 				} else if (viewport_orientation == "landscape") {
 					viewport_content	= "width=device-width; initial-scale=0.5, maximum-scale=0.5";
 				} else {
 					viewport_content	= "width=device-width, initial-scale=1, maximum-scale=1.0";
 				}
 			} else if (VMM.Browser.device == "tablet") {
-				viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
+				//viewport_content		= "width=device-width, initial-scale=1, maximum-scale=1.0";
 			}
 			
 			if (document.getElementById("viewport")) {
-				VMM.Lib.attr("#viewport", "content", viewport_content);
+				//VMM.Lib.attr("#viewport", "content", viewport_content);
 			} else {
-				VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
+				//VMM.appendElement("head", "<meta id='viewport' name='viewport' content=" + viewport_content + "/>");
 			}
 
 		}
@@ -6787,7 +6790,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		this.init = function(c, _data) {
 			trace('INIT');
-			
+			setViewport();
 			createConfig(c);
 			createStructure();
 			
@@ -6898,8 +6901,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);
 				
-				// VIEWPORT
-				setViewport();
+				
 				
 			}
 			
@@ -7016,15 +7018,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* CREATE START PAGE IF AVAILABLE
 			================================================== */
 			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
-				var startpage_date	= VMM.Date.parse(data.startDate),
+
+				var startpage_date,
 					_date			= {},
 					td_num			= 0,
 					td;
-				
+					
+				if (typeof data.startDate != 'undefined') {
+					startpage_date	= VMM.Date.parse(data.startDate);
+				} else {
+					startpage_date = false;
+				}
 				trace("HAS STARTPAGE");
 				trace(startpage_date);
 				
-				if (startpage_date < _dates[0].startdate) {
+				if (startpage_date && startpage_date < _dates[0].startdate) {
 					_date.startdate = new Date(startpage_date);
 				} else {
 					td = _dates[0].startdate;
@@ -7084,9 +7092,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	
 };
 
-/*********************************************** 
-     Begin VMM.Timeline.TimeNav.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Timeline.TimeNav.js
+********************************************** */
 
 /* 	TimeNav
 	This class handles the bottom timeline navigation.
@@ -8703,9 +8711,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 	
 }
 
-/*********************************************** 
-     Begin VMM.Timeline.DataObj.js 
-***********************************************/ 
+/* **********************************************
+     Begin VMM.Timeline.DataObj.js
+********************************************** */
 
 /*	TIMELINE SOURCE DATA PROCESSOR
 ================================================== */
