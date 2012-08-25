@@ -4,6 +4,7 @@ storyjs_jsonp_data = {
         "headline":"Sh*t People Say",
         "type":"default",
 		"text":"People say stuff",
+		"startDate":"2012,1,26",
         "date": [
             {
                 "startDate":"2012,1,26",
