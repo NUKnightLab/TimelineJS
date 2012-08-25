@@ -6,8 +6,8 @@ Embed.CDN.js
 Embed.CDN.Generator.js
 compiled/generator.html
 compiled/index.html
-compiled/js/timeline-embed-cdn.js
-compiled/js/timeline-embed-generator.js
+compiled/js/storyjs-embed-cdn.js
+compiled/js/storyjs-embed-generator.js
 compiled/css/timeline-generator.css
 *.tmproj
 *.tmproject
