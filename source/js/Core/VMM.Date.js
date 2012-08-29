@@ -92,6 +92,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					if (	date_array[2]			) {	date.setFullYear(		date_array[2]);			}
 					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
 					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
+				} else if (d == "present" || d == "-") {
+					var now = new Date();
+					date.setFullYear(now.getFullYear());
+					date.setMonth(now.getMonth());
+					date.setDate(now.getDate());
 				} else if (d.length <= 5) {
 					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
