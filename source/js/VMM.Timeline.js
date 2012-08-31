@@ -143,7 +143,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		130
+					padding: 		130,
+					padding_default:130
 				},
 				nav: {
 					width: 			100,
@@ -548,12 +549,22 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.nav.width = config.width;
 			config.feature.width = config.width;
 			
-			if (VMM.Browser.device == "mobile") {
-				//config.feature.height = config.height;
-			} else {
-				//config.feature.height = config.height - config.nav.height - 3;
-			}
 			config.feature.height = config.height - config.nav.height - 3;
+			
+			if (VMM.Browser.device == "mobile") {
+				/*
+				if (VMM.Browser.orientation == "portrait") {
+					config.feature.height	= 480;
+					config.height			= 480 + config.nav.height;
+				} else if(VMM.Browser.orientation == "landscape") {
+					config.feature.height	= 320;
+					config.height			= 320 + config.nav.height;
+				} else {
+					config.feature.height = config.height - config.nav.height - 3;
+				}
+				*/
+			}
+			
 		};
 		
 		// BUILD DATE OBJECTS
