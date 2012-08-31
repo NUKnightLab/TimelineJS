@@ -166,24 +166,34 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var key, url, timeout;
+					var getjsondata, key, url, timeout, tries = 0;
 					
 					key	= VMM.Util.getUrlVars(raw)["key"];
 					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json";
 					
 					timeout = setTimeout(function() {
 						trace("Google Docs timeout");
-						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						if (tries < 3) {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Still waiting on Google Docs, trying again " + tries);
+							tries ++;
+							requestJsonData();
+						} else {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						}
 					}, 6000);
 					
-					VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
-						.error(function(jqXHR, textStatus, errorThrown) {
-							trace("Google Docs ERROR");
-							trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
-						})
-						.success(function(d) {
-							clearTimeout(timeout);
-						});
+					function requestJsonData() {
+						getjsondata = VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
+							.error(function(jqXHR, textStatus, errorThrown) {
+								trace("Google Docs ERROR");
+								trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+							})
+							.success(function(d) {
+								clearTimeout(timeout);
+							});
+					}
+					
+					requestJsonData();
 				},
 				
 				buildData: function(d) {
