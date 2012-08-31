@@ -1256,7 +1256,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timenavline				= VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
 			$timenavindicator			= VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground		= VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
-			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "toolbar");
+			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "vco-toolbar");
 			
 			
 			buildInterval();
@@ -1273,31 +1273,38 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
-				VMM.Lib.css($toolbar, "top", 27);
 				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
 				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
 			
-			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;
 			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
-			// ZOOM EVENTS
-			VMM.bindEvent($zoomin, onZoomIn, "click");
-			VMM.bindEvent($zoomout, onZoomOut, "click");
 			
-			if (!config.touch) {
-				
+			
+			if (config.touch && config.start_page) {
+				VMM.Lib.addClass($toolbar, "touch");
+				VMM.Lib.css($toolbar, "top", 55);
+				VMM.Lib.css($toolbar, "left", 10);
+			} else {
+				if (config.start_page) {
+					VMM.Lib.css($toolbar, "top", 27);
+				}
+				$zoomin		= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+				$zoomout	= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
+				// ZOOM EVENTS
+				VMM.bindEvent($zoomin, onZoomIn, "click");
+				VMM.bindEvent($zoomout, onZoomOut, "click");
 				// TOOLTIP
 				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
 				VMM.Lib.attribute($zoomin, "rel", "tooltip");
 				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
 				VMM.Lib.attribute($zoomout, "rel", "tooltip");
 				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				
 				
 				// MOUSE EVENTS
 				VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
