@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 2.11
+	Version 2.12
 	Designed and built by Zach Wise at VéritéCo
 
 	This Source Code Form is subject to the terms of the Mozilla Public
@@ -1287,6 +1287,29 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					if (	date_array[2]			) {	date.setFullYear(		date_array[2]);			}
 					if (	date_array[0]	> 1		) {	date.setMonth(			date_array[0] - 1);		}
 					if (	date_array[1]	> 1		) {	date.setDate(			date_array[1]);			}
+				} else if (d.match("now")) {
+					var now = new Date();					
+					date.setFullYear(now.getFullYear());
+					date.setMonth(now.getMonth());
+					date.setDate(now.getDate());
+					if (d.match("hours")) {
+						date.setHours(now.getHours());
+					}
+					if (d.match("minutes")) {
+						date.setHours(now.getHours());
+						date.setMinutes(now.getMinutes());
+					}
+					if (d.match("seconds")) {
+						date.setHours(now.getHours());
+						date.setMinutes(now.getMinutes());
+						date.setSeconds(now.getSeconds());
+					}
+					if (d.match("milliseconds")) {
+						date.setHours(now.getHours());
+						date.setMinutes(now.getMinutes());
+						date.setSeconds(now.getSeconds());
+						date.setMilliseconds(now.getMilliseconds());
+					}
 				} else if (d.length <= 5) {
 					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
@@ -4705,7 +4728,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 					content: {
 						width:		720, 
 						height:		400, 
-						padding:	130
+						padding:	120,
+						padding_default: 120
 					}, 
 					nav: {
 						width:		100, 
@@ -4817,6 +4841,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			current_width = config.slider.width;
 			
 			config.slider.nav.height = VMM.Lib.height(navigation.prevBtnContainer);
+			
+			// Handle smaller sizes
+			if (VMM.Browser.device == "mobile" || current_width <= 640) {
+				config.slider.content.padding	= 10;
+			} else {
+				config.slider.content.padding	= config.slider.content.padding_default;
+			}
 			
 			config.slider.content.width = current_width - (config.slider.content.padding *2);
 			
@@ -4995,6 +5026,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				layout_media			= ".slider-item .layout-media .media .media-container ",
 				layout_both				= ".slider-item .media .media-container",
 				layout_caption			= ".slider-item .media .media-container .media-shadow .caption",
+				is_skinny				= false,
 				mediasize = {
 					text_media: {
 						width: 			(config.slider.content.width/100) * 60,
@@ -5017,6 +5049,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 						}
 					}
 				};
+				
+			// Handle smaller sizes
+			if (VMM.Browser.device == "mobile" || current_width <= 640) {
+				is_skinny = true;
+
+			} 
 			
 			VMM.master_config.sizes.api.width	= mediasize.media.width;
 			VMM.master_config.sizes.api.height	= mediasize.media.height;
@@ -5027,20 +5065,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.css(".slider-item", "width", config.slider.content.width );
 			VMM.Lib.height(".slider-item", config.slider.height);
 			
-			// HANDLE SMALLER SIZES
-			var is_skinny = false;
 			
-			if (current_width <= 640) {
-				is_skinny = true;
-			} else if (VMM.Browser.device == "mobile" && VMM.Browser.orientation == "portrait") {
-				is_skinny = true;
-			} else if (VMM.Browser.device == "tablet" && VMM.Browser.orientation == "portrait") {
-				//is_skinny = true;
-			}
 			
 			if (is_skinny) {
 				
-				mediasize.text_media.width = 	config.slider.content.width;
+				mediasize.text_media.width = 	config.slider.content.width - (config.slider.content.padding*2);
+				mediasize.media.width = 		config.slider.content.width - (config.slider.content.padding*2);
 				mediasize.text_media.height = 	((config.slider.height/100) * 50 ) - 50;
 				mediasize.media.height = 		((config.slider.height/100) * 70 ) - 40;
 				
@@ -5050,7 +5080,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				VMM.Lib.css(".slider-item .layout-text-media .text", "width", "100%" );
 				VMM.Lib.css(".slider-item .layout-text-media .text", "display", "block" );
 				VMM.Lib.css(".slider-item .layout-text-media .text .container", "display", "block" );
-				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", config.slider.content.width );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container", "width", mediasize.media.width );
+				VMM.Lib.css(".slider-item .layout-text-media .text .container .start", "width", "auto" );
 				
 				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "none" );
 				VMM.Lib.addClass(".slider-item .content-container", "pad-top");
@@ -5122,13 +5153,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.css(	layout_both + 		".soundcloud", 			"max-height", 	168 );
 			
 			// MAPS
-			VMM.Lib.height(	layout_text_media + ".map", 								mediasize.text_media.height);
-			VMM.Lib.css(	layout_media + 		".map", 				"max-height", 	mediasize.media.height);
-			VMM.Lib.width(	layout_media + 		".map", 								mediasize.media.width);
-
+			VMM.Lib.height(	layout_text_media	+ ".map", 								mediasize.text_media.height);
+			VMM.Lib.width(	layout_text_media	+ ".map", 								mediasize.text_media.width);
+			VMM.Lib.css(	layout_media		+ ".map", 				"max-height", 	mediasize.media.height);
+			VMM.Lib.width(	layout_media		+ ".map", 								mediasize.media.width);
+			
+			
 			// DOCS
 			VMM.Lib.height(	layout_text_media + ".doc", 								mediasize.text_media.height);
+			VMM.Lib.width(	layout_text_media	+ ".doc", 								mediasize.text_media.width);
 			VMM.Lib.height(	layout_media + 		".doc", 								mediasize.media.height);
+			VMM.Lib.width(	layout_media		+ ".doc", 								mediasize.media.width);
 			
 			// IE8 NEEDS THIS
 			VMM.Lib.width(	layout_media + 		".wikipedia", 							mediasize.media.width);
@@ -5139,6 +5174,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// CAPTION WIDTH
 			VMM.Lib.css( layout_text_media + 	".caption",	"max-width",	mediasize.text_media.video.width);
 			VMM.Lib.css( layout_media + 		".caption",	"max-width",	mediasize.media.video.width);
+			//VMM.Lib.css( layout_text_media + 	".caption",	"max-width",	mediasize.text_media.width);
+			//VMM.Lib.css( layout_media + 		".caption",	"max-width",	mediasize.media.width);
 			
 			// MAINTAINS VERTICAL CENTER IF IT CAN
 			for(i = 0; i < slides.length; i++) {
@@ -5208,44 +5245,53 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (ease != null && ease != "") {_ease = ease};
 			if (duration != null && duration != "") {_duration = duration};
 			
-			/* set proper nav titles and dates etc.
+			/*	NAVIGATION
+				set proper nav titles and dates etc.
 			================================================== */
-			if (is_first) {
+			// Handle smaller sizes
+			if (VMM.Browser.device == "mobile") {
+			//if (VMM.Browser.device == "mobile" || current_width <= 640) {
 				VMM.Lib.visible(navigation.prevBtn, false);
-			} else {
-				VMM.Lib.visible(navigation.prevBtn, true);
-				_title = VMM.Util.unlinkify(data[current_slide - 1].title)
-				if (config.type == "timeline") {
-					if(typeof data[current_slide - 1].date === "undefined") {
-						VMM.attachElement(navigation.prevDate, _title);
-						VMM.attachElement(navigation.prevTitle, "");
-					} else {
-						VMM.attachElement(navigation.prevDate, VMM.Date.prettyDate(data[current_slide - 1].startdate));
-						VMM.attachElement(navigation.prevTitle, _title);
-					}
-				} else {
-					VMM.attachElement(navigation.prevTitle, _title);
-				}
-				
-			}
-			if (is_last) {
 				VMM.Lib.visible(navigation.nextBtn, false);
 			} else {
-				VMM.Lib.visible(navigation.nextBtn, true);
-				_title = VMM.Util.unlinkify(data[current_slide + 1].title);
-				if (config.type == "timeline") {
-					if(typeof data[current_slide + 1].date === "undefined") {
-						VMM.attachElement(navigation.nextDate, _title);
-						VMM.attachElement(navigation.nextTitle, "");
-					} else {
-						VMM.attachElement(navigation.nextDate, VMM.Date.prettyDate(data[current_slide + 1].startdate) );
-						VMM.attachElement(navigation.nextTitle, _title);
-					}
+				if (is_first) {
+					VMM.Lib.visible(navigation.prevBtn, false);
 				} else {
-					VMM.attachElement(navigation.nextTitle,  _title);
-				}
+					VMM.Lib.visible(navigation.prevBtn, true);
+					_title = VMM.Util.unlinkify(data[current_slide - 1].title)
+					if (config.type == "timeline") {
+						if(typeof data[current_slide - 1].date === "undefined") {
+							VMM.attachElement(navigation.prevDate, _title);
+							VMM.attachElement(navigation.prevTitle, "");
+						} else {
+							VMM.attachElement(navigation.prevDate, VMM.Date.prettyDate(data[current_slide - 1].startdate));
+							VMM.attachElement(navigation.prevTitle, _title);
+						}
+					} else {
+						VMM.attachElement(navigation.prevTitle, _title);
+					}
 				
+				}
+				if (is_last) {
+					VMM.Lib.visible(navigation.nextBtn, false);
+				} else {
+					VMM.Lib.visible(navigation.nextBtn, true);
+					_title = VMM.Util.unlinkify(data[current_slide + 1].title);
+					if (config.type == "timeline") {
+						if(typeof data[current_slide + 1].date === "undefined") {
+							VMM.attachElement(navigation.nextDate, _title);
+							VMM.attachElement(navigation.nextTitle, "");
+						} else {
+							VMM.attachElement(navigation.nextDate, VMM.Date.prettyDate(data[current_slide + 1].startdate) );
+							VMM.attachElement(navigation.nextTitle, _title);
+						}
+					} else {
+						VMM.attachElement(navigation.nextTitle,  _title);
+					}
+				
+				}
 			}
+			
 			
 			/* ANIMATE SLIDE
 			================================================== */
@@ -6556,7 +6602,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		130
+					padding: 		130,
+					padding_default:130
 				},
 				nav: {
 					width: 			100,
@@ -6961,12 +7008,22 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			config.nav.width = config.width;
 			config.feature.width = config.width;
 			
-			if (VMM.Browser.device == "mobile") {
-				//config.feature.height = config.height;
-			} else {
-				//config.feature.height = config.height - config.nav.height - 3;
-			}
 			config.feature.height = config.height - config.nav.height - 3;
+			
+			if (VMM.Browser.device == "mobile") {
+				/*
+				if (VMM.Browser.orientation == "portrait") {
+					config.feature.height	= 480;
+					config.height			= 480 + config.nav.height;
+				} else if(VMM.Browser.orientation == "landscape") {
+					config.feature.height	= 320;
+					config.height			= 320 + config.nav.height;
+				} else {
+					config.feature.height = config.height - config.nav.height - 3;
+				}
+				*/
+			}
+			
 		};
 		
 		// BUILD DATE OBJECTS
@@ -8377,7 +8434,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			$timenavline				= VMM.appendAndGetElement($timebackground, "<div>", "timenav-line");
 			$timenavindicator			= VMM.appendAndGetElement($timebackground, "<div>", "timenav-indicator");
 			$timeintervalbackground		= VMM.appendAndGetElement($timebackground, "<div>", "timenav-interval-background", "<div class='top-highlight'></div>");
-			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "toolbar");
+			$toolbar					= VMM.appendAndGetElement(layout, "<div>", "vco-toolbar");
 			
 			
 			buildInterval();
@@ -8394,31 +8451,38 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (config.start_page) {
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
-				VMM.Lib.css($toolbar, "top", 27);
 				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
 				VMM.Lib.attribute($backhome, "rel", "tooltip");
 				
 			}
 			
-			$zoomin						= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
-			$zoomout					= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
 			
 			// MAKE TIMELINE DRAGGABLE/TOUCHABLE
 			$dragslide = new VMM.DragSlider;
 			$dragslide.createPanel(layout, $timenav, config.nav.constraint, config.touch);
 			
-			// ZOOM EVENTS
-			VMM.bindEvent($zoomin, onZoomIn, "click");
-			VMM.bindEvent($zoomout, onZoomOut, "click");
 			
-			if (!config.touch) {
-				
+			
+			if (config.touch && config.start_page) {
+				VMM.Lib.addClass($toolbar, "touch");
+				VMM.Lib.css($toolbar, "top", 55);
+				VMM.Lib.css($toolbar, "left", 10);
+			} else {
+				if (config.start_page) {
+					VMM.Lib.css($toolbar, "top", 27);
+				}
+				$zoomin		= VMM.appendAndGetElement($toolbar, "<div>", "zoom-in", "<div class='icon'></div>");
+				$zoomout	= VMM.appendAndGetElement($toolbar, "<div>", "zoom-out", "<div class='icon'></div>");
+				// ZOOM EVENTS
+				VMM.bindEvent($zoomin, onZoomIn, "click");
+				VMM.bindEvent($zoomout, onZoomOut, "click");
 				// TOOLTIP
 				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
 				VMM.Lib.attribute($zoomin, "rel", "tooltip");
 				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
 				VMM.Lib.attribute($zoomout, "rel", "tooltip");
 				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				
 				
 				// MOUSE EVENTS
 				VMM.bindEvent(layout, onMouseScroll, 'DOMMouseScroll');
@@ -8906,24 +8970,34 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var key, url, timeout;
+					var getjsondata, key, url, timeout, tries = 0;
 					
 					key	= VMM.Util.getUrlVars(raw)["key"];
 					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json";
 					
 					timeout = setTimeout(function() {
 						trace("Google Docs timeout");
-						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						if (tries < 3) {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Still waiting on Google Docs, trying again " + tries);
+							tries ++;
+							requestJsonData();
+						} else {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						}
 					}, 6000);
 					
-					VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
-						.error(function(jqXHR, textStatus, errorThrown) {
-							trace("Google Docs ERROR");
-							trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
-						})
-						.success(function(d) {
-							clearTimeout(timeout);
-						});
+					function requestJsonData() {
+						getjsondata = VMM.getJSON(url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData)
+							.error(function(jqXHR, textStatus, errorThrown) {
+								trace("Google Docs ERROR");
+								trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+							})
+							.success(function(d) {
+								clearTimeout(timeout);
+							});
+					}
+					
+					requestJsonData();
 				},
 				
 				buildData: function(d) {
