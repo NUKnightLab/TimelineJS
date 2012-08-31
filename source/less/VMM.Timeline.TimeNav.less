@@ -7,7 +7,7 @@
 ================================================== */
 .vco-notouch {
 	.vco-navigation {
-		.toolbar {
+		.vco-toolbar {
 			.zoom-in:hover, .zoom-out:hover, .back-home:hover {
 				color: @color-theme;
 				cursor: pointer;
@@ -90,7 +90,7 @@
 		height:@navigation-height;
 		border-top: 1px solid @color-dark-fifth;
 		position: relative;
-		.toolbar {
+		.vco-toolbar {
 			position:absolute;
 			top:45px;
 			left:0px;
@@ -126,6 +126,40 @@
 			.back-home {
 				.icon {
 					.icon-back-home();
+				}
+			}
+		}
+		.vco-toolbar.touch {
+			.border-radius(10px);
+			background-color: transparent;
+			.box-shadow(none);
+			.zoom-in, .zoom-out, .back-home {
+				//line-height: 48px;
+				width: 40px;
+				height: 40px;
+				padding:5px;
+				background-color: @color-base; 
+				border: 1px solid @color-line;
+				.box-shadow(1px 1px 0px rgba(0,0,0,.20));
+				.border-radius(10px);
+				.opacity(100);
+				//.buttonBackground(darken(@color-base, 5%), darken(@color-navigation-major-time, 5%));
+				//.box-shadow(~"inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075)");
+			}
+
+			.zoom-in {
+				.icon {
+					.icon-touch-zoom-in();
+				}
+			}
+			.zoom-out {
+				.icon {
+					.icon-touch-zoom-out();
+				}
+			}
+			.back-home {
+				.icon {
+					.icon-touch-back-home();
 				}
 			}
 		}
