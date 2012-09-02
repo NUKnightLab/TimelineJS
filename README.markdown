@@ -84,31 +84,37 @@ Here are some of the options you can set in the config.
 ### Language
 `lang`
 Localization
-*default is en*
+*default is `en` English*
 Languages available:
 * `en` *English*
-* `fr` *Français*
-* `es` *Español*
-* `de` *Deutsch*
-* `it` *Italiano*
-* `pt-br` *Português Brazil*
-* `pt` *Português*
+* `fr` *French*
+* `es` *Spanish*
+* `it` *Italian*
+* `de` *German / Deutsch*
+* `pt` *Portuguese*
+* `pt-br` *Brazilian Portuguese*
 * `nl` *Dutch*
+* `is` *Icelandic*
+* `no` *Norwegian*
+* `bg` *Bulgarian*
+* `sl` *Slovenian*
+* `hu` *Hungarian*
+* `hy` *Armenian*
+* `fo` *Faroese*
 * `cz` *Czech*
 * `dk` *Danish*
 * `id` *Indonesian*
 * `pl` *Polish*
-* `sl` *Slovenian*
 * `ru` *Russian*
 * `sk` *Slovak*
-* `is` *Icelandic*
-* `fo` *Faroese*
-* `kr` *월요일*
-* `ja` *日本語*
-* `zh-ch` *中文*
-* `zh-tw` *Taiwanese Mandarin*
-* `ta` *தமிழ் - Tamil*
-* `ar` *Arabic* *May be issues with right to left (need some help here)* 
+* `ca` *Catalan*
+* `el` *Greek*
+* `ta` *Tamil*
+* `ja` *Japanese*
+* `kr` *Korean*
+* `zh-ch` *Chinese*
+* `zh-tw` *Taiwanese*
+* `ar` *Arabic (beta)*
 
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
 
