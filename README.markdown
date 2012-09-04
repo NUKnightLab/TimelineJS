@@ -19,7 +19,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 
 ```html
 	<div id="timeline-embed"></div>
-	<script type="text/javascript">
+	<script>
 	    var timeline_config = {
 			width:				'100%',
 			height:				'600',
@@ -37,7 +37,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			js:					'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
 		}
 	</script>
-	<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
+	<script src="path_to_js/storyjs-embed.js"></script>
 ```
 ### Using a method (*advanced*)
 You could also initialize a new timeline using the `createStoryJS` method after `storyjs-embed.js` has been loaded
@@ -56,9 +56,9 @@ Here's a simple example:
 ```html
 	<head>
 		<!-- jQuery -->
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 		<!-- BEGIN TimelineJS -->
-		<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
+		<script src="path_to_js/storyjs-embed.js"></script>
 		<script>
 			$(document).ready(function() {
 				createStoryJS({
@@ -348,5 +348,3 @@ Tips and tricks to best utilize TimelineJS
 This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-
