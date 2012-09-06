@@ -5171,6 +5171,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.Lib.width(	layout_media + 		".plain-text-quote", 					mediasize.media.width);
 			VMM.Lib.width(	layout_media + 		".plain-text", 							mediasize.media.width);
 			
+			VMM.Lib.css(	layout_both, 		"max-width", 							mediasize.media.width);
+			
+			
 			// CAPTION WIDTH
 			VMM.Lib.css( layout_text_media + 	".caption",	"max-width",	mediasize.text_media.video.width);
 			VMM.Lib.css( layout_media + 		".caption",	"max-width",	mediasize.media.video.width);
@@ -6696,11 +6699,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			$navigation	= VMM.appendAndGetElement($container, "<div>", "vco-navigation");
 			$feedback	= VMM.appendAndGetElement($timeline, "<div>", "vco-feedback", "");
 			
-			if (config.touch) {
-				VMM.Lib.addClass($timeline, "vco-touch");
-			} else {
-				VMM.Lib.addClass($timeline, "vco-notouch");
-			}
 			
 			if (typeof config.language.right_to_left != 'undefined') {
 				VMM.Lib.addClass($timeline, "vco-right-to-left");
@@ -6721,6 +6719,15 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Lib.height($timeline, config.height);
 			}
 			
+			if (config.touch) {
+				VMM.Lib.addClass($timeline, "vco-touch");
+			} else {
+				VMM.Lib.addClass($timeline, "vco-notouch");
+			}
+			
+			if (config.width < 640) {
+				VMM.Lib.addClass($timeline, "vco-skinny");
+			}
 		}
 		
 		/* ON EVENT
