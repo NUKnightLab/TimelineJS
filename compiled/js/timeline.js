@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 2.14
+	Version 2.15
 	Designed and built by Zach Wise at VéritéCo
 
 	This Source Code Form is subject to the terms of the Mozilla Public
@@ -6949,10 +6949,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		this.reload = function(_d) {
-			trace("loadNewDates" + _d);
+			trace("Load new timeline data" + _d);
 			VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
 			data = {};
 			VMM.Timeline.DataObj.getData(_d);
+			config.current_slide = 0;
+			slider.setSlide(0);
+			timenav.setMarker(0, config.ease,config.duration);
 		};
 		
 		/* DATA 
