@@ -64,7 +64,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timeline_id		= "#timelinejs";
 		}
 		
-		trace("VERSION " + version);
 		
 		/* CONFIG
 		================================================== */
@@ -83,6 +82,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			touch:					false,
 			orientation: 			"normal", 
 			maptype: 				"toner",
+			version: 				"2.x", 
 			preload:				4,
 			current_slide:			0,
 			hash_bookmark:			false,
@@ -218,6 +218,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			if (config.gmap_key != "") {
 				config.api_keys.google = config.gmap_key;
 			}
+			
+			trace("VERSION " + config.version);
+			version = config.version;
 		}
 		
 		/* CREATE TIMELINE STRUCTURE
@@ -266,7 +269,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 
 		function onDataReady(e, d) {
 			trace("onDataReady");
-			trace(d);
 			data = d.timeline;
 			
 			if (type.of(data.era) != "array") {
