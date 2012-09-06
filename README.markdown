@@ -110,6 +110,7 @@ Languages available:
 * `ca` *Catalan*
 * `el` *Greek*
 * `ta` *Tamil*
+* `tl` *Tagalog*
 * `tr` *Turkish*
 * `ja` *Japanese*
 * `kr` *Korean*
