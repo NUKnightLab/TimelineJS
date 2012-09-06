@@ -6725,9 +6725,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.Lib.addClass($timeline, "vco-notouch");
 			}
 			
-			if (config.width < 640) {
-				VMM.Lib.addClass($timeline, "vco-skinny");
-			}
+			
 		}
 		
 		/* ON EVENT
@@ -7031,6 +7029,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					config.feature.height = config.height - config.nav.height - 3;
 				}
 				*/
+			}
+			
+			if (config.width < 640) {
+				VMM.Lib.addClass($timeline, "vco-skinny");
+			} else {
+				VMM.Lib.removeClass($timeline, "vco-skinny");
 			}
 			
 		};
