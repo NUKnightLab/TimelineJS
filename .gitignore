@@ -9,8 +9,6 @@ compiled/index.html
 compiled/generator-backup.html
 compiled/js/storyjs-embed-cdn.js
 compiled/js/storyjs-embed-generator.js
-storyjs-embed-cdn.js
-storyjs-embed-generator.js
 compiled/css/timeline-generator.css
 *.tmproj
 *.tmproject
