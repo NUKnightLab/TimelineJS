@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 2.15
+	Version 2.16 
 	Designed and built by Zach Wise at VéritéCo
 
 	This Source Code Form is subject to the terms of the Mozilla Public
@@ -2070,7 +2070,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 
 /*jslint browser: true, eqeqeq: true, bitwise: true, newcap: true, immed: true, regexp: false */
 
-/**
+/*
 LazyLoad makes it easy and painless to lazily load one or more external
 JavaScript or CSS files on demand either during or after the rendering of a web
 page.
@@ -4519,12 +4519,19 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			up:			"touchend",
 			leave:		"mouseleave",
 			move:		"touchmove"
-		};
+		},
+		dragslider		= this,
+		is_sticky		= false;
 		
-		this.createPanel = function(drag_object, move_object, constraint, touch) {
+		/* PUBLIC FUNCTIONS
+		================================================== */
+		this.createPanel = function(drag_object, move_object, constraint, touch, sticky) {
 			drag.element		= drag_object;
 			drag.element_move	= move_object;
-			
+			//dragslider			= drag_object;
+			if ( sticky != null && sticky != "") {
+				is_sticky = sticky;
+			}
 			if ( constraint != null && constraint != "") {
 				drag.constraint = constraint;
 			} else {
@@ -4550,18 +4557,22 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			drag.constraint = constraint;
 		}
 		
-		var makeDraggable = function(drag_object, move_object) {
+		this.cancelSlide = function(e) {
+			VMM.unbindEvent(drag.element, onDragMove, dragevent.move);
+			return true;
+		}
+		
+		/* PRIVATE FUNCTIONS
+		================================================== */
+		function makeDraggable(drag_object, move_object) {
 			
 			VMM.bindEvent(drag_object, onDragStart, dragevent.down, {element: move_object, delement: drag_object});
 			VMM.bindEvent(drag_object, onDragEnd, dragevent.up, {element: move_object, delement: drag_object});
 			VMM.bindEvent(drag_object, onDragLeave, dragevent.leave, {element: move_object, delement: drag_object});
 			
 	    }
-		this.cancelSlide = function(e) {
-			VMM.unbindEvent(drag.element, onDragMove, dragevent.move);
-			return true;
-		}
-		var onDragLeave = function(e) {
+		
+		function onDragLeave(e) {
 			VMM.unbindEvent(e.data.delement, onDragMove, dragevent.move);
 			if (!drag.touch) {
 				e.preventDefault();
@@ -4576,7 +4587,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 		}
 		
-		var onDragStart = function(e) {
+		function onDragStart(e) {
 			dragStart(e.data.element, e.data.delement, e);
 			if (!drag.touch) {
 				e.preventDefault();
@@ -4585,7 +4596,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			return true;
 		}
 		
-		var onDragEnd = function(e) {
+		function onDragEnd(e) {
 			if (!drag.touch) {
 				e.preventDefault();
 			}
@@ -4598,13 +4609,19 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				return true;
 			}
 		}
-		var onDragMove = function(e) {
+		
+		function onDragMove(e) {
 			dragMove(e.data.element, e);
-			e.preventDefault();
-			e.stopPropagation();
+			
+			if (Math.abs(drag.left.start) > getLeft(elem)) {
+				
+
+			}
+			
 			return false;
 		}
-		var dragStart = function(elem, delem, e) {
+		
+		function dragStart(elem, delem, e) {
 			if (drag.touch) {
 				trace("IS TOUCH")
 				VMM.Lib.css(elem, '-webkit-transition-duration', '0');
@@ -4619,22 +4636,33 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			VMM.bindEvent(delem, onDragMove, dragevent.move, {element: elem});
 
 	    }
-		var dragEnd = function(elem, delem, e) {
+		
+		function dragEnd(elem, delem, e) {
 			VMM.unbindEvent(delem, onDragMove, dragevent.move);
 			dragMomentum(elem, e);
 		}
-		var dragMove = function(elem, e) {
+		
+		function dragMove(elem, e) {
+			var drag_to;
 			drag.sliding = true;
 			if (drag.touch) {
 				drag.pagex.end = e.originalEvent.touches[0].screenX;
 			} else {
 				drag.pagex.end = e.pageX;
 			}
-			drag.left.end = getLeft(elem);
-			VMM.Lib.css(elem, 'left', -(drag.pagex.start - drag.pagex.end - drag.left.start));
+			drag.left.end	= getLeft(elem);
+			drag_to			= -(drag.pagex.start - drag.pagex.end - drag.left.start);
 			
+			if (Math.abs(drag_to - drag.left.start) > 10) {
+				VMM.Lib.css(elem, 'left', drag_to);
+				e.preventDefault();
+				e.stopPropagation();
+			}
+			//VMM.Lib.css(elem, 'left', drag_to);
+
 		}
-		var dragMomentum = function(elem, e) {
+		
+		function dragMomentum(elem, e) {
 			var drag_info = {
 					left:			drag.left.end,
 					left_adjust:	0,
@@ -4671,30 +4699,34 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				}
 			}
 			
-			VMM.fireEvent(elem, "DRAGUPDATE", [drag_info]);
+			VMM.fireEvent(dragslider, "DRAGUPDATE", [drag_info]);
 
-			
-			if (drag_info.time > 0) {
-				if (drag.touch) {
-					//VMM.Lib.css(elem, '-webkit-transition-property', 'left');
-					//VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
-					//VMM.Lib.css(elem, 'left', drag_info.left);
+			if (!is_sticky) {
+				if (drag_info.time > 0) {
+					if (drag.touch) {
+						//VMM.Lib.css(elem, '-webkit-transition-property', 'left');
+						//VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
+						//VMM.Lib.css(elem, 'left', drag_info.left);
 					
-					//VMM.Lib.animate(elem, drag_info.time, "easeOutQuad", {"left": drag_info.left});
-					VMM.Lib.animate(elem, drag_info.time, "easeOutCirc", {"left": drag_info.left});
-					//VMM.Lib.css(elem, 'webkitTransition', '');
-					//VMM.Lib.css(elem, 'webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
-					//VMM.Lib.css(elem, 'webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
+						//VMM.Lib.animate(elem, drag_info.time, "easeOutQuad", {"left": drag_info.left});
+						VMM.Lib.animate(elem, drag_info.time, "easeOutCirc", {"left": drag_info.left});
+						//VMM.Lib.css(elem, 'webkitTransition', '');
+						//VMM.Lib.css(elem, 'webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
+						//VMM.Lib.css(elem, 'webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
 
-				} else {
-					VMM.Lib.animate(elem, drag_info.time, drag.ease, {"left": drag_info.left});
+					} else {
+						VMM.Lib.animate(elem, drag_info.time, drag.ease, {"left": drag_info.left});
+					}
 				}
 			}
 			
+			
 		}
-		var getLeft = function(elem) {
+		
+		function getLeft(elem) {
 			return parseInt(VMM.Lib.css(elem, 'left').substring(0, VMM.Lib.css(elem, 'left').length - 2), 10);
 		}
+		
 	}
 }
 
@@ -4719,6 +4751,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			$slider_mask,
 			$slider_container,
 			$slides_items,
+			$dragslide,
 			events				= {},
 			data				= [],
 			slides				= [],
@@ -4922,11 +4955,43 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 		}
 		
+		function onDragFinish(e, d) {
+			trace("DRAG FINISH");
+			trace(d.left_adjust);
+			trace((config.slider.width / 2));
+			
+			if (d.left_adjust < 0 ) {
+				if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
+					//onNextClick(e);
+					if (current_slide == slides.length - 1) {
+						backToCurrentSlide();
+					} else {
+						goToSlide(current_slide+1, "easeOutExpo");
+						upDate();
+					}
+				} else {
+					backToCurrentSlide();
+					
+				}
+			} else if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
+				if (current_slide == 0) {
+					backToCurrentSlide();
+				} else {
+					goToSlide(current_slide-1, "easeOutExpo");
+					upDate();
+				}
+			} else {
+				backToCurrentSlide();
+			}
+				
+			
+			
+		}
 		/* NAVIGATION
 		================================================== */
 		function onNextClick(e) {
 			if (current_slide == slides.length - 1) {
-				VMM.Lib.animate($slider_container, config.duration, config.ease, {"left": -(slides[current_slide].leftpos()) } );
+				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide+1);
 				upDate();
@@ -4935,7 +5000,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		function onPrevClick(e) {
 			if (current_slide == 0) {
-				goToSlide(current_slide);
+				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide-1);
 				upDate();
@@ -5264,7 +5329,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* GO TO SLIDE
 			goToSlide(n, ease, duration);
 		================================================== */
-		var goToSlide = function(n, ease, duration, fast, firstrun) {
+		function goToSlide(n, ease, duration, fast, firstrun) {
 			var _ease		= config.ease,
 				_duration	= config.duration,
 				is_last		= false,
@@ -5366,6 +5431,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			preloadSlides();
 		}
 
+		function backToCurrentSlide() {
+			VMM.Lib.stop($slider_container);
+			VMM.Lib.animate($slider_container, config.duration, "easeOutExpo", {"left": -(slides[current_slide].leftpos()) +  config.slider.content.padding} );
+		}
 		/* BUILD NAVIGATION
 		================================================== */
 		var buildNavigation = function() {
@@ -5408,19 +5477,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			// ATTACH SLIDES
 			buildSlides(data);
 			
-			/* MAKE SLIDER TOUCHABLE
+			/* MAKE SLIDER DRAGGABLE/TOUCHABLE
 			================================================== */
+			
 			if (VMM.Browser.device == "tablet" || VMM.Browser.device == "mobile") {
 				config.duration = 500;
 				__duration = 1000;
-				//VMM.TouchSlider.createPanel($slider_container, $slider_container, VMM.Lib.width(slides[0]), config.spacing, true);
-				//VMM.TouchSlider.createPanel($slider_container, $slider_container, slides[0].width(), config.spacing, true);
-				//VMM.bindEvent($slider_container, onTouchUpdate, "TOUCHUPDATE");
-			} else if (VMM.Browser.device == "mobile") {
-				
-			} else {
-				//VMM.DragSlider.createPanel($slider_container, $slider_container, VMM.Lib.width(slides[0]), config.spacing, true);
-			}
+				$dragslide = new VMM.DragSlider();
+				$dragslide.createPanel($slider_mask, $slider_container, "", config.touch, true);
+				VMM.bindEvent($dragslide, onDragFinish, 'DRAGUPDATE');
+				//"<div class='vco-loading'><div class='vco-loading-container'><div class='vco-loading-icon'></div>" + "<div class='vco-message'><p>" + "Slide" + "</p></div></div></div>"
+			} 
 			
 			reSize(false, true);
 			VMM.Lib.visible(navigation.prevBtn, false);
@@ -6822,6 +6889,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.setMarker(config.current_slide, config.ease,config.duration);
 		};
 		
+		function onSliderMessage(e, d) {
+			
+		};
+		
 		function onMarkerUpdate(e) {
 			is_moving = true;
 			config.current_slide = timenav.getCurrentNumber();
@@ -6938,7 +7009,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			if (type.of(config.source) == "string" || type.of(config.source) == "object") {
 				VMM.Timeline.DataObj.getData(config.source);
 			} else {
-				VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
+				VMM.fireEvent(global, config.events.messege, "No data source provided");
+				//VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
 			}
 			
 			
@@ -6969,10 +7041,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* MESSEGES 
 		================================================== */
-		function showMessege(e, msg) {
+		function showMessege(e, msg, other) {
 			trace("showMessege " + msg);
 			//VMM.attachElement($messege, msg);
-			VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg)); 
+			if (other) {
+				VMM.attachElement($feedback, msg);
+			} else{
+				VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg));
+			}
 		};
 		
 		function hideMessege() {
@@ -7010,6 +7086,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.bindEvent($slider, onSliderLoaded, "LOADED");
 				VMM.bindEvent($navigation, onTimeNavLoaded, "LOADED");
 				VMM.bindEvent($slider, onSlideUpdate, "UPDATE");
+				VMM.bindEvent($slider, onSliderMessage, "MESSAGE");
 				VMM.bindEvent($navigation, onMarkerUpdate, "UPDATE");
 				
 				// INITIALIZE COMPONENTS

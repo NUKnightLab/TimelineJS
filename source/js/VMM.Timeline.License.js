@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 2.15
+	Version 2.16 
 	Designed and built by Zach Wise at VéritéCo
 
 	This Source Code Form is subject to the terms of the Mozilla Public

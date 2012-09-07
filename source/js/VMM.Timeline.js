@@ -322,6 +322,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.setMarker(config.current_slide, config.ease,config.duration);
 		};
 		
+		function onSliderMessage(e, d) {
+			
+		};
+		
 		function onMarkerUpdate(e) {
 			is_moving = true;
 			config.current_slide = timenav.getCurrentNumber();
@@ -438,7 +442,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			if (type.of(config.source) == "string" || type.of(config.source) == "object") {
 				VMM.Timeline.DataObj.getData(config.source);
 			} else {
-				VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
+				VMM.fireEvent(global, config.events.messege, "No data source provided");
+				//VMM.Timeline.DataObj.getData(VMM.getElement(timeline_id));
 			}
 			
 			
@@ -469,10 +474,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		/* MESSEGES 
 		================================================== */
-		function showMessege(e, msg) {
+		function showMessege(e, msg, other) {
 			trace("showMessege " + msg);
 			//VMM.attachElement($messege, msg);
-			VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg)); 
+			if (other) {
+				VMM.attachElement($feedback, msg);
+			} else{
+				VMM.attachElement($feedback, VMM.MediaElement.loadingmessage(msg));
+			}
 		};
 		
 		function hideMessege() {
@@ -510,6 +519,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.bindEvent($slider, onSliderLoaded, "LOADED");
 				VMM.bindEvent($navigation, onTimeNavLoaded, "LOADED");
 				VMM.bindEvent($slider, onSlideUpdate, "UPDATE");
+				VMM.bindEvent($slider, onSliderMessage, "MESSAGE");
 				VMM.bindEvent($navigation, onMarkerUpdate, "UPDATE");
 				
 				// INITIALIZE COMPONENTS
