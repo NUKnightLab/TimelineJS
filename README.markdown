@@ -107,6 +107,8 @@ Languages available:
 * `pl` *Polish*
 * `ru` *Russian*
 * `sk` *Slovak*
+* `sr-la` *Serbian (Latin)*
+* `sr-ly` *Serbian (Cyrillic)*
 * `ca` *Catalan*
 * `el` *Greek*
 * `ta` *Tamil*
