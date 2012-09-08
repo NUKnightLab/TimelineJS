@@ -1,6 +1,6 @@
 /*!
 	TimelineJS
-	Version 2.16 
+	Version 2.17
 	Designed and built by Zach Wise at VéritéCo
 
 	This Source Code Form is subject to the terms of the Mozilla Public
@@ -3053,6 +3053,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				map_options = {
 					zoom:						zoom,
+					draggable: 					false, 
 					disableDefaultUI:			true,
 					mapTypeControl:				false,
 					zoomControl:				true,
@@ -4752,6 +4753,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			$slider_container,
 			$slides_items,
 			$dragslide,
+			$explainer,
 			events				= {},
 			data				= [],
 			slides				= [],
@@ -5047,6 +5049,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		};
 		
+		function onExplainerClick(e) {
+			detachMessege();
+		}
+		
 		/* UPDATE
 		================================================== */
 		function upDate() {
@@ -5056,13 +5062,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		/* GET DATA
 		================================================== */
-		var getData = function(d) {
+		function getData(d) {
 			data = d;
 		};
 		
 		/* BUILD SLIDES
 		================================================== */
-		var buildSlides = function(d) {
+		function buildSlides(d) {
 			var i	= 0;
 			
 			VMM.attachElement($slides_items, "");
@@ -5075,7 +5081,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		}
 		
-		var preloadSlides = function(skip) {
+		function preloadSlides(skip) {
 			var i	= 0;
 			
 			if (skip) {
@@ -5089,7 +5095,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		}
 		
-		var preloadTimeOutSlides = function() {
+		function preloadTimeOutSlides() {
 			var i = 0;
 			
 			for(i = 0; i < slides.length; i++) {
@@ -5118,12 +5124,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			sizeSlides();
 		}
 		
-		var sizeSlide = function(slide_id) {
+		function sizeSlide(slide_id) {
 			
 		}
+		
 		/* SIZE SLIDES
 		================================================== */
-		var sizeSlides = function() {
+		function sizeSlides() {
 			var i						= 0,
 				layout_text_media		= ".slider-item .layout-text-media .media .media-container ",
 				layout_media			= ".slider-item .layout-media .media .media-container ",
@@ -5429,15 +5436,33 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			preloadSlides();
+			VMM.fireEvent($slider, "MESSAGE", "TEST");
 		}
 
 		function backToCurrentSlide() {
 			VMM.Lib.stop($slider_container);
 			VMM.Lib.animate($slider_container, config.duration, "easeOutExpo", {"left": -(slides[current_slide].leftpos()) +  config.slider.content.padding} );
 		}
+		
+		/* MESSEGES 
+		================================================== */
+		function showMessege(e, msg, other) {
+			trace("showMessege " + msg);
+			//VMM.attachElement($timeline, $feedback);
+			VMM.attachElement($explainer, "<div class='vco-explainer'><div class='vco-explainer-container'><div class='vco-bezel'><div class='vco-gesture-icon'></div>" + "<div class='vco-message'><p>" + msg + "</p></div></div></div></div>");
+		};
+		
+		function hideMessege() {
+			VMM.Lib.animate($explainer, config.duration, config.ease, {"opacity": 0}, detachMessege);
+		};
+		
+		function detachMessege() {
+			VMM.Lib.detach($explainer);
+		}
+		
 		/* BUILD NAVIGATION
 		================================================== */
-		var buildNavigation = function() {
+		function buildNavigation() {
 			
 			var temp_icon = "<div class='icon'>&nbsp;</div>";
 			
@@ -5460,7 +5485,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		/* BUILD
 		================================================== */
-		var build = function() {
+		function build() {
 			var __duration = 3000;
 			// Clear out existing content
 			VMM.attachElement(layout, "");
@@ -5470,6 +5495,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			$slider_mask		= VMM.appendAndGetElement($slider, "<div>", "slider-container-mask");
 			$slider_container	= VMM.appendAndGetElement($slider_mask, "<div>", "slider-container");
 			$slides_items		= VMM.appendAndGetElement($slider_container, "<div>", "slider-item-container");
+			
 			
 			// BUILD NAVIGATION
 			buildNavigation();
@@ -5481,15 +5507,25 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			================================================== */
 			
 			if (VMM.Browser.device == "tablet" || VMM.Browser.device == "mobile") {
+				// Different Animation duration for touch
 				config.duration = 500;
 				__duration = 1000;
+				
+				// Make touchable
 				$dragslide = new VMM.DragSlider();
-				$dragslide.createPanel($slider_mask, $slider_container, "", config.touch, true);
+				$dragslide.createPanel($slider, $slider_container, "", config.touch, true);
 				VMM.bindEvent($dragslide, onDragFinish, 'DRAGUPDATE');
-				//"<div class='vco-loading'><div class='vco-loading-container'><div class='vco-loading-icon'></div>" + "<div class='vco-message'><p>" + "Slide" + "</p></div></div></div>"
-			} 
+				
+				// EXPLAINER
+				$explainer = VMM.appendAndGetElement($slider_mask, "<div>", "vco-feedback", "");
+				showMessege(null, "Swipe to Navigate");
+				VMM.Lib.height($explainer, config.slider.height);
+				VMM.bindEvent($explainer, onExplainerClick);
+			}
 			
 			reSize(false, true);
+			
+			
 			VMM.Lib.visible(navigation.prevBtn, false);
 			goToSlide(config.current_slide, "easeOutExpo", __duration, true, true);
 			
@@ -6889,10 +6925,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			timenav.setMarker(config.current_slide, config.ease,config.duration);
 		};
 		
-		function onSliderMessage(e, d) {
-			
-		};
-		
 		function onMarkerUpdate(e) {
 			is_moving = true;
 			config.current_slide = timenav.getCurrentNumber();
@@ -7043,7 +7075,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		================================================== */
 		function showMessege(e, msg, other) {
 			trace("showMessege " + msg);
-			//VMM.attachElement($messege, msg);
+			//VMM.attachElement($timeline, $feedback);
 			if (other) {
 				VMM.attachElement($feedback, msg);
 			} else{
@@ -7086,7 +7118,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				VMM.bindEvent($slider, onSliderLoaded, "LOADED");
 				VMM.bindEvent($navigation, onTimeNavLoaded, "LOADED");
 				VMM.bindEvent($slider, onSlideUpdate, "UPDATE");
-				VMM.bindEvent($slider, onSliderMessage, "MESSAGE");
 				VMM.bindEvent($navigation, onMarkerUpdate, "UPDATE");
 				
 				// INITIALIZE COMPONENTS
