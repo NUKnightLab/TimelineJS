@@ -1,3 +1,29 @@
+**Table of Contents**
+
+- [TimelineJS](#timelinejs)
+	- [Document history with TimelineJS](#document-history-with-timelinejs)
+	- [Add it to your site](#add-it-to-your-site)
+		- [Using Inline (easiest)](#using-inline-easiest)
+		- [Using a method (advanced)](#using-a-method-advanced)
+	- [Config Options](#config-options)
+		- [Language](#language)
+		- [Start at End](#start-at-end)
+		- [Start at Slide](#start-at-slide)
+		- [Start Zoom Adjust](#start-zoom-adjust)
+		- [Hash Bookmark](#hash-bookmark)
+		- [Debug](#debug)
+		- [Map Style Types](#map-style-types)
+		- [Font Options](#font-options)
+			- [Font Combination Preview:](#font-combination-preview)
+	- [File Formats](#file-formats)
+		- [JSON:](#json)
+		- [JSONP :](#jsonp-)
+		- [Google Docs:](#google-docs)
+		- [Storify:](#storify)
+	- [Media](#media)
+	- [Best practices](#best-practices)
+	- [License](#license)
+	
 # TimelineJS 
 ## Document history with TimelineJS
 

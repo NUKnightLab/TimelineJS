@@ -294,7 +294,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			VMM.Lib.css($timenav, "left", scroll_to);	
 		}
 		
-		var refreshTimeline = function() {
+		function refreshTimeline() {
 			trace("config.nav.multiplier " + config.nav.multiplier.current);
 			positionMarkers(true);
 			positionEras(true);
@@ -317,7 +317,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			VMM.Lib.toggleClass(e.data.elem, "zFront");
 		};
 		
-		var goToMarker = function(n, ease, duration, fast, firstrun) {
+		function goToMarker(n, ease, duration, fast, firstrun) {
 			trace("GO TO MARKER");
 			var _ease		= config.ease,
 				_duration	= config.duration,
@@ -365,7 +365,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* CALCULATIONS
 		================================================== */
-		var averageMarkerPositionDistance = function() {
+		function averageMarkerPositionDistance() {
 			var last_pos	= 0,
 				pos			= 0,
 				pos_dif		= 0,
@@ -386,7 +386,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			return VMM.Util.average(mp_diff).mean;
 		}
 		
-		var averageDateDistance = function() {
+		function averageDateDistance() {
 			var last_dd			= 0,
 				dd				= 0,
 				_dd				= "",
@@ -410,7 +410,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			return VMM.Util.average(date_diffs);
 		}
 		
-		var calculateMultiplier = function() {
+		function calculateMultiplier() {
 			var temp_multiplier	= config.nav.multiplier.current,
 				i				= 0;
 				
@@ -424,7 +424,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 		}
 		
-		var calculateInterval = function() {
+		function calculateInterval() {
 			// NEED TO REWRITE ALL OF THIS
 			var _first								= getDateFractions(data[0].startdate),
 				_last								= getDateFractions(data[data.length - 1].enddate);
@@ -557,7 +557,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.second.minor 				= 10;
 		}
 		
-		var getDateFractions = function(the_date, is_utc) {
+		function getDateFractions(the_date, is_utc) {
 			
 			var _time = {};
 			_time.days			=		the_date		/	dateFractionBrowser.day;
@@ -596,7 +596,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			Positions elements on the timeline based on date
 			relative to the calculated interval
 		================================================== */
-		var positionRelative = function(_interval, first, last) {
+		function positionRelative(_interval, first, last) {
 			var _first,
 				_last,
 				_type			= _interval.type,
@@ -683,14 +683,14 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			return timerelative
 		}
 		
-		var positionOnTimeline = function(the_interval, timerelative) {
+		function positionOnTimeline(the_interval, timerelative) {
 			return {
 				begin:	(timerelative.start	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current), 
 				end:	(timerelative.end	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current)
 			};
 		}
 		
-		var positionMarkers = function(is_animated) {
+		function positionMarkers(is_animated) {
 			
 			var row						= 2,
 				previous_pos			= 0,
@@ -851,7 +851,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		}
 		
-		var positionEras = function(is_animated) {
+		function positionEras(is_animated) {
 			var i	= 0,
 				p	= 0;
 				
@@ -898,7 +898,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 		}
 		
-		var positionInterval = function(the_main_element, the_intervals, is_animated, is_minor) {
+		function positionInterval(the_main_element, the_intervals, is_animated, is_minor) {
 			
 			var last_position		= 0,
 				last_position_major	= 0,
@@ -1033,7 +1033,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* Interval Elements
 		================================================== */
-		var createIntervalElements = function(_interval, _array, _element_parent) {
+		function createIntervalElements(_interval, _array, _element_parent) {
 			
 			var inc_time			= 0,
 				_first_run			= true,
@@ -1239,7 +1239,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* BUILD
 		================================================== */
-		var build = function() {
+		function build() {
 			var i	= 0,
 				j	= 0;
 				
@@ -1334,7 +1334,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 		};
 		
-		var buildInterval = function() {
+		function buildInterval() {
 			var i	= 0,
 				j	= 0;
 			// CALCULATE INTERVAL
@@ -1423,7 +1423,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 		}
 		
-		var buildMarkers = function() {
+		function buildMarkers() {
 			
 			var row			= 2,
 				lpos		= 0,
@@ -1568,7 +1568,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 		}
 		
-		var buildEras = function() {
+		function buildEras() {
 			var number_of_colors	= 6,
 				current_color		= 0,
 				j					= 0;
