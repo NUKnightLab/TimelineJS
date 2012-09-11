@@ -144,6 +144,7 @@ Languages available:
 * `kr` *Korean*
 * `zh-ch` *Chinese*
 * `zh-tw` *Taiwanese*
+* `iw` *Hebrew (beta)*
 * `ar` *Arabic (beta)*
 
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
