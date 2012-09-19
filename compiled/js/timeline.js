@@ -4633,8 +4633,6 @@ if(typeof VMM != 'undefined' && typeof VMM.TextElement == 'undefined') {
 /* DRAG SLIDER
 ================================================== */
 if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
-	// VMM.DragSlider.createSlidePanel(drag_object, move_object, w, padding, sticky);
-	// VMM.DragSlider.cancelSlide();
 
 	VMM.DragSlider = function() {
 		var drag = {
@@ -4768,11 +4766,6 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		function onDragMove(e) {
 			dragMove(e.data.element, e);
 			
-			if (Math.abs(drag.left.start) > getLeft(elem)) {
-				
-
-			}
-			
 			return false;
 		}
 		
@@ -4813,8 +4806,6 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				e.preventDefault();
 				e.stopPropagation();
 			}
-			//VMM.Lib.css(elem, 'left', drag_to);
-
 		}
 		
 		function dragMomentum(elem, e) {
@@ -4859,23 +4850,12 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			if (!is_sticky) {
 				if (drag_info.time > 0) {
 					if (drag.touch) {
-						//VMM.Lib.css(elem, '-webkit-transition-property', 'left');
-						//VMM.Lib.css(elem, '-webkit-transition-duration', drag_info.time);
-						//VMM.Lib.css(elem, 'left', drag_info.left);
-					
-						//VMM.Lib.animate(elem, drag_info.time, "easeOutQuad", {"left": drag_info.left});
 						VMM.Lib.animate(elem, drag_info.time, "easeOutCirc", {"left": drag_info.left});
-						//VMM.Lib.css(elem, 'webkitTransition', '');
-						//VMM.Lib.css(elem, 'webkitTransition', '-webkit-transform ' + drag_info.time + 'ms cubic-bezier(0.33, 0.66, 0.66, 1)');
-						//VMM.Lib.css(elem, 'webkitTransform', 'translate3d(' + drag_info.left + 'px, 0, 0)');
-
 					} else {
 						VMM.Lib.animate(elem, drag_info.time, drag.ease, {"left": drag_info.left});
 					}
 				}
 			}
-			
-			
 		}
 		
 		function getLeft(elem) {
