@@ -671,29 +671,33 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				trace("HAS STARTPAGE");
 				trace(startpage_date);
 				
-				if (startpage_date && startpage_date < _dates[0].startdate) {
-					_date.startdate = new Date(startpage_date);
-				} else {
-					td = _dates[0].startdate;
-					_date.startdate = new Date(_dates[0].startdate);
-				
-					if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
-						// trace("YEAR ONLY");
-						_date.startdate.setFullYear(td.getFullYear() - 1);
-					} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
-						// trace("YEAR MONTH");
-						_date.startdate.setMonth(td.getMonth() - 1);
-					} else if (td.getHours() === 0 && td.getMinutes() === 0) {
-						// trace("YEAR MONTH DAY");
-						_date.startdate.setDate(td.getDate() - 1);
-					} else  if (td.getMinutes() === 0) {
-						// trace("YEAR MONTH DAY HOUR");
-						_date.startdate.setHours(td.getHours() - 1);
+				if (_dates.length > 0) {
+					if (startpage_date && startpage_date < _dates[0].startdate) {
+						_date.startdate = new Date(startpage_date);
 					} else {
-						// trace("YEAR MONTH DAY HOUR MINUTE");
-						_date.startdate.setMinutes(td.getMinutes() - 1);
+						td = _dates[0].startdate;
+						_date.startdate = new Date(_dates[0].startdate);
+					
+						if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
+							// trace("YEAR ONLY");
+							_date.startdate.setFullYear(td.getFullYear() - 1);
+						} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
+							// trace("YEAR MONTH");
+							_date.startdate.setMonth(td.getMonth() - 1);
+						} else if (td.getHours() === 0 && td.getMinutes() === 0) {
+							// trace("YEAR MONTH DAY");
+							_date.startdate.setDate(td.getDate() - 1);
+						} else  if (td.getMinutes() === 0) {
+							// trace("YEAR MONTH DAY HOUR");
+							_date.startdate.setHours(td.getHours() - 1);
+						} else {
+							// trace("YEAR MONTH DAY HOUR MINUTE");
+							_date.startdate.setMinutes(td.getMinutes() - 1);
+						}
 					}
-				}
+				} else {
+                    _date.startdate = new Date(startpage_date != null ? startpage_date : new Date());
+                }
 				
 				_date.uniqueid		= VMM.Util.unique_ID(7);
 				_date.enddate		= _date.startdate;
