@@ -81,6 +81,29 @@ Here's a simple example:
 ## Config Options
 Here are some of the options you can set in the config.
 
+### Source
+`source` Should be either the path to the JSON resource to load, or a JavaScript
+object corresponding to the Timeline model.
+
+Here is an example using a data object:
+
+```javascript
+
+	var dataObject = {timeline: {headline: "Headline", type: ... }}
+	createStoryJS({
+		type:		'timeline',
+		width:		'800',
+		height:		'600',
+		source:		dataObject,
+		embed_id:	'my-timeline'
+	});
+```
+
+If source is a string, we will try to automatically recognize resources that are
+Twitter searches, Google Spreadsheets or Storify stories. Failing that, we assume
+the source is either JSON or JSONP. If string matches on `.jsonp`, we will treat it
+as JSONP, otherwise, we will append `?callback=onJSONP_Data`. See more details below.
+
 ### Language
 `lang`
 Localization
