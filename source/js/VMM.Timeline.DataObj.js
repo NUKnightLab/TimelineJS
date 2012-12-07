@@ -170,7 +170,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					
 					key	= VMM.Util.getUrlVars(raw)["key"];
 					worksheet = VMM.Util.getUrlVars(raw)["worksheet"];
-					if (worksheet == "") worksheet = "od6";
+					if (typeof worksheet == "undefined") worksheet = "od6";
 
 					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/" + worksheet + "/public/values?alt=json";
 					
