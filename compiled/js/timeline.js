@@ -9263,10 +9263,13 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var getjsondata, key, url, timeout, tries = 0;
+					var getjsondata, key, worksheet, url, timeout, tries = 0;
 					
 					key	= VMM.Util.getUrlVars(raw)["key"];
-					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/od6/public/values?alt=json";
+					worksheet = VMM.Util.getUrlVars(raw)["worksheet"];
+					if (typeof worksheet == "undefined") worksheet = "od6";
+
+					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/" + worksheet + "/public/values?alt=json";
 					
 					timeout = setTimeout(function() {
 						trace("Google Docs timeout " + url);
