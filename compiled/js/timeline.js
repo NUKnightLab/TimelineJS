@@ -5521,6 +5521,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				showMessege(null, "Swipe to Navigate");
 				VMM.Lib.height($explainer, config.slider.height);
 				VMM.bindEvent($explainer, onExplainerClick);
+				VMM.bindEvent($explainer, onExplainerClick, 'touchend');
 			}
 			
 			reSize(false, true);
