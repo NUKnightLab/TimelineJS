@@ -152,7 +152,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 *required in order to use maptype*
 
 `maptype:`
-* [Stamen Maps ](maps.stamen.com)
+* [Stamen Maps ](http://maps.stamen.com)
 	* `toner`
 	* `toner-lines`
 	* `toner-labels`
