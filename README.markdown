@@ -192,7 +192,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 
 JSON is the native data format for TimelineJS.
 
-Remember, JSON is it is picky. A misplaced comma or quotation mark can
+Remember, JSON is picky. A misplaced comma or quotation mark can
 prevent the timeline from loading properly. 
 
 Here is the full model:
@@ -242,7 +242,7 @@ Here is the full model:
 
 Timeline can use a variation of JSONP to allow you to easily load data across different domains.
 
-To allow this to happen, the file must end with the extention `.jsonp`
+To allow this to happen, the file must end with the extension `.jsonp`
 
 Here is the full model:
 ```javascript
