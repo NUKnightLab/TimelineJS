@@ -1,4 +1,3 @@
-
 {
     "timeline":
     {
@@ -7,6 +6,17 @@
 		"text":"People say stuff",
 		"startDate":"2012,1,26",
         "date": [
+            {
+                "startDate":"2012,1,26, 12:00",
+                "headline":"Sh*t People say at noon",
+                "text":"<p>Look at the startDate - I am using a time as well as a date</p>",
+                "asset":
+                {
+                    "media":"",
+                    "credit":"",
+                    "caption":""
+                }
+            },
             {
                 "startDate":"2012,1,26",
 				"endDate":"2012,1,27",
