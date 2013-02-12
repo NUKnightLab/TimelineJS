@@ -802,17 +802,6 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.LoadLib-min.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Language\/locale\/zh-ch.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/zh-ch.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-ch.js",
-      "fileType" : 64
-    },
     "\/source\/js\/Core\/Core\/VMM.Util.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -2082,6 +2071,17 @@
       "outputAbbreviatedPath" : "\/dev_examples\/power-plants\/fisk_swanksalot.jpg",
       "initialSize" : 119914,
       "fileType" : 4096
+    },
+    "\/source\/js\/Core\/Language\/locale\/zh-cn.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/zh-cn.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-ch.js",
+      "fileType" : 64
     },
     "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg" : {
       "ignoreWasSetByUser" : 0,
