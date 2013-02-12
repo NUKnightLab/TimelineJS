@@ -224,6 +224,17 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Media\/VMM.Media-min.js",
       "fileType" : 64
     },
+    "\/compiled\/js\/locale\/zh-cn.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn-min.js",
+      "fileType" : 64
+    },
     "\/dev_examples\/kitchen-sink\/index.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -2080,7 +2091,7 @@
       "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/zh-cn.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-ch.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn.js",
       "fileType" : 64
     },
     "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg" : {
@@ -2245,6 +2256,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/nl.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Language\/locale\/sv.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/sv.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sv.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Language\/locale\/bg.js" : {
@@ -2491,17 +2513,6 @@
       "outputAbbreviatedPath" : "\/examples\/example_jsonp.html",
       "fileType" : 512
     },
-    "\/compiled\/js\/locale\/es.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/es.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/es-min.js",
-      "fileType" : 64
-    },
     "\/dev_examples\/houston\/whChild.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -2512,6 +2523,17 @@
       "outputAbbreviatedPath" : "\/dev_examples\/houston\/whChild.jpg",
       "initialSize" : 87009,
       "fileType" : 4096
+    },
+    "\/compiled\/js\/locale\/es.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/es.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/es-min.js",
+      "fileType" : 64
     },
     "\/source\/less\/VMM.Timeline.less" : {
       "ignoreWasSetByUser" : 0,
