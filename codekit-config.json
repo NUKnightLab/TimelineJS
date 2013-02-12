@@ -143,6 +143,17 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
+    "\/compiled\/js\/locale\/eu.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/eu.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/eu-min.js",
+      "fileType" : 64
+    },
     "\/source\/less\/Core\/Font\/Pacifico-Arimo.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -645,11 +656,11 @@
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
+      "outputPathIsSetByUser" : 1,
       "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/eu.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/eu-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/eu.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Language\/locale\/tr.js" : {
