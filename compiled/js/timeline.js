@@ -9119,7 +9119,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					trace("DATA SOURCE: STORIFY");
 					VMM.Timeline.DataObj.model.storify.getData(raw_data);
 					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
-				} else if (raw_data.match(".jsonp")) {
+				} else if (raw_data.match("\.jsonp")) {
 					trace("DATA SOURCE: JSONP");
 					LoadLib.js(raw_data, VMM.Timeline.DataObj.onJSONPLoaded);
 				} else {
