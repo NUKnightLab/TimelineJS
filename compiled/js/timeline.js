@@ -3235,8 +3235,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					VMM.appendElement("#"+unique_map_id, map_attribution_html);
 				}
 				
-				// DETERMINE IF KML IS POSSIBLE
-				if (m.id[0].match("msid")) {
+				// DETERMINE IF KML IS POSSIBLE 
+				if (type.of(VMM.Util.getUrlVars(m.id)["msid"]) == "string") {
 					loadKML();
 				} else {
 					//loadPlaces();
