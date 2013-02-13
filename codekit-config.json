@@ -200,18 +200,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/source\/less\/Core\/Font\/AbrilFatface-Average.less" : {
+    "\/source\/js\/Core\/Language\/locale\/fo.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/AbrilFatface-Average.less",
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fo.js",
       "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/AbrilFatface-Average.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fo.js",
+      "fileType" : 64
     },
     "\/source\/jade\/sections\/example-head.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -255,16 +253,18 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/source\/js\/Core\/Language\/locale\/fo.js" : {
+    "\/source\/less\/Core\/Font\/AbrilFatface-Average.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fo.js",
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/AbrilFatface-Average.less",
       "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fo.js",
-      "fileType" : 64
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/AbrilFatface-Average.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
     },
     "\/dev_examples\/taylor\/fisher.jpg" : {
       "ignoreWasSetByUser" : 0,
@@ -612,17 +612,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/dev_examples\/taylor\/broadway.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
-      "initialSize" : 111700,
-      "fileType" : 4096
-    },
     "\/source\/js\/Core\/Media\/VMM.MediaType.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -633,6 +622,17 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Media\/VMM.MediaType-min.js",
       "fileType" : 64
+    },
+    "\/dev_examples\/taylor\/broadway.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/broadway.jpg",
+      "initialSize" : 111700,
+      "fileType" : 4096
     },
     "\/compiled\/css\/themes\/font\/Georgia-Helvetica.css" : {
       "ignoreWasSetByUser" : 0,
@@ -1596,17 +1596,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/dev_examples\/houston\/whlead.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
-      "initialSize" : 97988,
-      "fileType" : 4096
-    },
     "\/dev_examples\/taylor\/velvet.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1616,6 +1605,17 @@
       "processed" : 0,
       "outputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
       "initialSize" : 77001,
+      "fileType" : 4096
+    },
+    "\/dev_examples\/houston\/whlead.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
+      "initialSize" : 97988,
       "fileType" : 4096
     },
     "\/source\/js\/Core\/Library\/bootstrap-tooltip.js" : {
@@ -1836,11 +1836,11 @@
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
+      "outputPathIsSetByUser" : 1,
       "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/ko.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/ko-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ko.js",
       "fileType" : 64
     },
     "\/source\/less\/Core\/Font\/Rancho-Gudea.less" : {
@@ -2125,6 +2125,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn.js",
+      "fileType" : 64
+    },
+    "\/compiled\/js\/locale\/ko.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ko.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ko-min.js",
       "fileType" : 64
     },
     "\/dev_examples\/power-plants\/fisk_pauldailingmedill.jpg" : {

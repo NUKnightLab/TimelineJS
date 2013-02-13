@@ -9125,7 +9125,13 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					LoadLib.js(raw_data, VMM.Timeline.DataObj.onJSONPLoaded);
 				} else {
 					trace("DATA SOURCE: JSON");
-					VMM.getJSON(raw_data + "?callback=onJSONP_Data", VMM.Timeline.DataObj.parseJSON);
+					var req = "";
+					if (raw_data.indexOf("?") > -1) {
+						req = raw_data + "&callback=onJSONP_Data";
+					} else {
+						req = raw_data + "?callback=onJSONP_Data";
+					}
+					VMM.getJSON(req, VMM.Timeline.DataObj.parseJSON);
 				}
 			} else if (type.of(raw_data) == "html") {
 				trace("DATA SOURCE: HTML");
