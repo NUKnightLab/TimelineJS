@@ -5697,6 +5697,7 @@ if (typeof VMM.Slider != 'undefined') {
 			_enqueue	= true,
 			_removeque	= false,
 			_id			= "slide_",
+			_class		= 0,
 			timer		= {pushque:"", render:"", relayout:"", remove:"", skinny:false},
 			times		= {pushque:500, render:100, relayout:100, remove:30000};
 		
@@ -5704,7 +5705,17 @@ if (typeof VMM.Slider != 'undefined') {
 		this.enqueue	= _enqueue;
 		this.id			= _id;
 		
+		
 		element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
+		
+		if (typeof data.classname != 'undefined') {
+			trace("HAS CLASSNAME");
+			VMM.Lib.addClass(element, data.classname);
+		} else {
+			trace("NO CLASSNAME");
+			trace(data);
+		}
+		
 		c = {slide:"", text: "", media: "", media_element: "", layout: "content-container layout", has: { headline: false, text: false, media: false }};
 		
 		/* PUBLIC
@@ -7370,6 +7381,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 						_date.tag				= data.date[i].tag;
 						_date.slug				= data.date[i].slug;
 						_date.uniqueid			= VMM.Util.unique_ID(7);
+						_date.classname			= data.date[i].classname;
+						
 						
 						_dates.push(_date);
 					} 

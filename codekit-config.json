@@ -200,16 +200,18 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/source\/js\/Core\/Language\/locale\/fo.js" : {
+    "\/source\/less\/Core\/Font\/AbrilFatface-Average.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fo.js",
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/AbrilFatface-Average.less",
       "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fo.js",
-      "fileType" : 64
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/AbrilFatface-Average.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
     },
     "\/source\/jade\/sections\/example-head.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -253,18 +255,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/source\/less\/Core\/Font\/AbrilFatface-Average.less" : {
+    "\/source\/js\/Core\/Language\/locale\/fo.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/AbrilFatface-Average.less",
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fo.js",
       "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/AbrilFatface-Average.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fo.js",
+      "fileType" : 64
     },
     "\/dev_examples\/taylor\/fisher.jpg" : {
       "ignoreWasSetByUser" : 0,
@@ -727,16 +727,14 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/dev_examples\/taylor\/sun.jpg" : {
+    "\/dev_examples\/embed_wide.html" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
+      "ignore" : 1,
+      "hidden" : 1,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "initialSize" : 47058,
-      "fileType" : 4096
+      "inputAbbreviatedPath" : "\/dev_examples\/embed_wide.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/compiled\/js\/storyjs-embed.js" : {
       "ignoreWasSetByUser" : 0,
@@ -749,14 +747,16 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/storyjs-embed-min.js",
       "fileType" : 64
     },
-    "\/dev_examples\/embed_wide.html" : {
+    "\/dev_examples\/taylor\/sun.jpg" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 1,
+      "ignore" : 0,
+      "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/embed_wide.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "initialSize" : 47058,
+      "fileType" : 4096
     },
     "\/source\/js\/Core\/Language\/locale\/it.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1596,17 +1596,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/dev_examples\/taylor\/velvet.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
-      "initialSize" : 77001,
-      "fileType" : 4096
-    },
     "\/dev_examples\/houston\/whlead.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1616,6 +1605,17 @@
       "processed" : 0,
       "outputAbbreviatedPath" : "\/dev_examples\/houston\/whlead.jpg",
       "initialSize" : 97988,
+      "fileType" : 4096
+    },
+    "\/dev_examples\/taylor\/velvet.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/velvet.jpg",
+      "initialSize" : 77001,
       "fileType" : 4096
     },
     "\/source\/js\/Core\/Library\/bootstrap-tooltip.js" : {
@@ -1812,15 +1812,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
     "\/compiled\/js\/locale\/nl.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1831,6 +1822,15 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/nl-min.js",
       "fileType" : 64
+    },
+    "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
     },
     "\/source\/js\/Core\/Language\/locale\/ko.js" : {
       "ignoreWasSetByUser" : 0,
