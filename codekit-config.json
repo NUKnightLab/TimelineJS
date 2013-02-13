@@ -727,14 +727,16 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/dev_examples\/embed_wide.html" : {
+    "\/dev_examples\/taylor\/sun.jpg" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 1,
+      "ignore" : 0,
+      "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/embed_wide.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
+      "initialSize" : 47058,
+      "fileType" : 4096
     },
     "\/compiled\/js\/storyjs-embed.js" : {
       "ignoreWasSetByUser" : 0,
@@ -747,16 +749,14 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/storyjs-embed-min.js",
       "fileType" : 64
     },
-    "\/dev_examples\/taylor\/sun.jpg" : {
+    "\/dev_examples\/embed_wide.html" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
+      "ignore" : 1,
+      "hidden" : 1,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/taylor\/sun.jpg",
-      "initialSize" : 47058,
-      "fileType" : 4096
+      "inputAbbreviatedPath" : "\/dev_examples\/embed_wide.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/source\/js\/Core\/Language\/locale\/it.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1812,6 +1812,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
+    "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
     "\/compiled\/js\/locale\/nl.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1822,15 +1831,6 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/nl-min.js",
       "fileType" : 64
-    },
-    "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
     },
     "\/source\/js\/Core\/Language\/locale\/ko.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1966,17 +1966,6 @@
       "outputAbbreviatedPath" : "\/compiled\/lib\/jquery-min-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/timeline.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/timeline.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/timeline-min.js",
-      "fileType" : 64
-    },
     "\/source\/js\/Core\/Slider\/VMM.DragSlider.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1986,6 +1975,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Slider\/VMM.DragSlider-min.js",
+      "fileType" : 64
+    },
+    "\/compiled\/js\/timeline.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/timeline.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/timeline-min.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Embed\/Embed.LoadLib.js" : {

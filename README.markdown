@@ -268,6 +268,7 @@ Here is the full model:
 				"headline":"Headline Goes Here",
 				"text":"<p>Body text goes here, some HTML is OK</p>",
 				"tag":"This is Optional",
+				"classname":"optionaluniqueclassnamecanbeaddedhere",
 				"asset": {
 					"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
 					"thumbnail":"optional-32x32px.jpg",
@@ -316,6 +317,7 @@ storyjs_jsonp_data = {
 				"headline":"Headline Goes Here",
 				"text":"<p>Body text goes here, some HTML is OK</p>",
 				"tag":"This is Optional",
+				"classname":"optionaluniqueclassnamecanbeaddedhere",
 				"asset": {
 					"media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
 					"thumbnail":"optional-32x32px.jpg",
