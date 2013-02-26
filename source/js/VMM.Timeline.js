@@ -2,18 +2,9 @@
 	* TimelineJS
 	* Designed and built by Zach Wise at VéritéCo
 
-	* This program is free software: you can redistribute it and/or modify
-	* it under the terms of the GNU General Public License as published by
-	* the Free Software Foundation, either version 3 of the License, or
-	* (at your option) any later version.
-
-	* This program is distributed in the hope that it will be useful,
-	* but WITHOUT ANY WARRANTY; without even the implied warranty of
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	* GNU General Public License for more details.
-
-	* http://www.gnu.org/licenses/
-
+	* This Source Code Form is subject to the terms of the Mozilla Public
+	* License, v. 2.0. If a copy of the MPL was not distributed with this
+	* file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */  
 
 /*	* CodeKit Import
@@ -577,7 +568,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				*/
 			}
 			
-			if (config.width < 640) {
+			if (config.width < 641) {
 				VMM.Lib.addClass($timeline, "vco-skinny");
 			} else {
 				VMM.Lib.removeClass($timeline, "vco-skinny");
