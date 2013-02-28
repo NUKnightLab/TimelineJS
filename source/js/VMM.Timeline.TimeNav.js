@@ -859,6 +859,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				var era			= era_markers[i],
 					pos			= positionOnTimeline(interval, era.relative_pos),
 					row_pos		= 0,
+					row			= 0,
 					era_height	= config.nav.marker.height * config.nav.rows.full.length,
 					era_length	= pos.end - pos.begin;
 					
