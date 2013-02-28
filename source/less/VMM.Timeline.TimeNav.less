@@ -806,3 +806,76 @@
 	}
 	
 }
+
+/* RETINA
+================================================== */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), 
+only screen and (min-device-pixel-ratio: 2) {
+	.vco-notouch {
+		.vco-navigation {
+			.vco-toolbar {
+				.zoom-in {
+					.icon {
+						.icon-zoom-in2x();
+					}
+				}
+				.zoom-out {
+					.icon {
+						.icon-zoom-out2x();
+					}
+				}
+				.back-home {
+					.icon {
+						.icon-back-home2x();
+					}
+				}
+			}
+			.vco-toolbar.touch {
+				.zoom-in {
+					.icon {
+						.icon-touch-zoom-in2x();
+					}
+				}
+				.zoom-out {
+					.icon {
+						.icon-touch-zoom-out2x();
+					}
+				}
+				.back-home {
+					.icon {
+						.icon-touch-back-home2x();
+					}
+				}
+			}
+			.timenav {
+				.content {
+					.marker {
+						.flag:hover {
+							.time-flag-active2x();
+						}
+						.flag-small:hover {
+							.time-flag-active2x();
+						}
+						.flag-small.flag-small-last:hover {
+							.time-flag-small-active2x();
+						}
+					}
+				}
+			}
+			.timenav-background {
+				.timenav-indicator {
+					.icon-currenttime2x();
+				}
+			}
+		}
+	}
+	.vco-timeline {
+		.vco-navigation {
+			.timenav {
+				.content {
+					
+				}
+			}
+		}
+	}
+}
