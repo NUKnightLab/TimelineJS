@@ -1405,7 +1405,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					    // IE 8 < Won't accept dates with a "-" in them.
 						time_parse = d.split("T");
 						if (d.match(":")) {
-							time_array = _time_parse[1].split(":");
+							time_array = time_parse[1].split(":");
 							if (time_array[0] >= 1) {
 								date.setHours(time_array[0]);
 								p.hour = true;
@@ -1423,7 +1423,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 								p.millisecond = true;
 							}
 						}
-						_d_array = time_parse[0].split("-");
+						date_array = time_parse[0].split("-");
 						if (date_array[0]) {
 							date.setFullYear(date_array[0]);
 							p.year = true;

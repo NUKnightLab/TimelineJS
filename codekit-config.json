@@ -44,6 +44,15 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
+    "\/compiled\/css\/timeline.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/timeline.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
     "\/compiled\/css\/themes\/font\/SansitaOne-Kameron.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -63,15 +72,6 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sk.js",
       "fileType" : 64
-    },
-    "\/compiled\/css\/timeline.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/timeline.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
     },
     "\/examples\/example_googlespreadsheet.html" : {
       "ignoreWasSetByUser" : 0,
@@ -148,6 +148,17 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Embed\/Embed.LoadLib-min.js",
       "fileType" : 64
     },
+    "\/dev_examples\/archive\/taylor\/hilton.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/hilton.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/hilton.jpg",
+      "initialSize" : 72463,
+      "fileType" : 4096
+    },
     "\/source\/js\/Core\/Language\/locale\/pt-br.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -167,15 +178,6 @@
       "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/Rancho-Gudea.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
-    },
-    "\/dev_examples\/archive\/middle-east\/index.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/middle-east\/index.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
     },
     "\/source\/jade\/sections\/example-head.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -249,15 +251,15 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
-    "\/compiled\/js\/locale\/it.js" : {
+    "\/compiled\/js\/locale\/en.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/it.js",
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/en.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/it-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en-min.js",
       "fileType" : 64
     },
     "\/compiled\/generator.html" : {
@@ -269,26 +271,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/dev_examples\/archive\/taylor\/hilton.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/hilton.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/hilton.jpg",
-      "initialSize" : 72463,
-      "fileType" : 4096
-    },
-    "\/compiled\/js\/locale\/en.js" : {
+    "\/compiled\/js\/locale\/it.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/en.js",
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/it.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/it-min.js",
       "fileType" : 64
     },
     "\/dev_examples\/archive\/taylor\/velvet.jpg" : {
@@ -301,6 +292,15 @@
       "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/velvet.jpg",
       "initialSize" : 77001,
       "fileType" : 4096
+    },
+    "\/dev_examples\/archive\/middle-east\/index.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/middle-east\/index.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
     },
     "\/source\/less\/Core\/Mixins.less" : {
       "ignoreWasSetByUser" : 0,
@@ -337,17 +337,6 @@
       "outputAbbreviatedPath" : "\/tests\/test_googlespreadsheet_bc_era_ages_epoch.html",
       "fileType" : 512
     },
-    "\/compiled\/js\/locale\/zh-tw.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-tw.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-tw-min.js",
-      "fileType" : 64
-    },
     "\/examples\/example_jquery_load.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -356,6 +345,17 @@
       "inputAbbreviatedPath" : "\/examples\/example_jquery_load.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/source\/jade\/example_storify.jade" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/jade\/example_storify.jade",
+      "outputStyle" : 0,
+      "compileDebug" : 1,
+      "outputAbbreviatedPath" : "\/examples\/example_storify.html",
+      "fileType" : 512
     },
     "\/compiled\/css\/themes\/font\/PT.css" : {
       "ignoreWasSetByUser" : 0,
@@ -377,27 +377,25 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Library-min.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Core\/VMM.Date.js" : {
+    "\/tests\/test_googlespreadsheet.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Date.js",
+      "inputAbbreviatedPath" : "\/tests\/test_googlespreadsheet.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/compiled\/js\/locale\/zh-tw.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-tw.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Date-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-tw-min.js",
       "fileType" : 64
-    },
-    "\/source\/jade\/example_storify.jade" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/jade\/example_storify.jade",
-      "outputStyle" : 0,
-      "compileDebug" : 1,
-      "outputAbbreviatedPath" : "\/examples\/example_storify.html",
-      "fileType" : 512
     },
     "\/source\/jade\/example_json.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -432,14 +430,16 @@
       "initialSize" : 15505,
       "fileType" : 8192
     },
-    "\/tests\/test_googlespreadsheet.html" : {
+    "\/source\/js\/Core\/Core\/VMM.Date.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/tests\/test_googlespreadsheet.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Date.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Date-min.js",
+      "fileType" : 64
     },
     "\/compiled\/js\/storyjs-embed-generator.js" : {
       "ignoreWasSetByUser" : 0,
@@ -573,6 +573,17 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
+    "\/source\/js\/Core\/Language\/locale\/en.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/en.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en.js",
+      "fileType" : 64
+    },
     "\/compiled\/index.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -581,6 +592,17 @@
       "inputAbbreviatedPath" : "\/compiled\/index.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/dev_examples\/archive\/taylor\/burton-2.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton-2.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton-2.jpg",
+      "initialSize" : 74788,
+      "fileType" : 4096
     },
     "\/source\/less\/Core\/Font\/NixieOne-Ledger.less" : {
       "ignoreWasSetByUser" : 0,
@@ -594,28 +616,6 @@
       "strictImports" : 0,
       "fileType" : 1,
       "debugStyle" : 0
-    },
-    "\/dev_examples\/archive\/taylor\/burton-2.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton-2.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton-2.jpg",
-      "initialSize" : 74788,
-      "fileType" : 4096
-    },
-    "\/source\/js\/Core\/Language\/locale\/en.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/en.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en.js",
-      "fileType" : 64
     },
     "\/compiled\/js\/locale\/es.js" : {
       "ignoreWasSetByUser" : 0,
@@ -650,19 +650,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sr-la-min.js",
       "fileType" : 64
     },
-    "\/source\/less\/Core\/Font\/PTSerif-PTSans.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/PTSerif-PTSans.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/PTSerif-PTSans.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
-    },
     "\/source\/jade\/example_jsonp.jade" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -685,6 +672,17 @@
       "outputAbbreviatedPath" : "\/tests\/test_jsonp.html",
       "fileType" : 512
     },
+    "\/compiled\/js\/locale\/sv.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sv.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sv-min.js",
+      "fileType" : 64
+    },
     "\/source\/less\/Core\/Font\/Merriweather-NewsCycle.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -698,27 +696,18 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
-    "\/source\/js\/Core\/Core\/VMM.js" : {
+    "\/source\/less\/Core\/Font\/PTSerif-PTSans.less" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.js",
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/PTSerif-PTSans.less",
       "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM-min.js",
-      "fileType" : 64
-    },
-    "\/compiled\/js\/locale\/sv.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sv.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sv-min.js",
-      "fileType" : 64
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/PTSerif-PTSans.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
     },
     "\/source\/jade\/index.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -730,6 +719,17 @@
       "compileDebug" : 1,
       "outputAbbreviatedPath" : "\/compiled\/index.html",
       "fileType" : 512
+    },
+    "\/source\/js\/Core\/Core\/VMM.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM-min.js",
+      "fileType" : 64
     },
     "\/source\/js\/Core\/Core\/VMM.LoadLib.js" : {
       "ignoreWasSetByUser" : 0,
@@ -755,17 +755,6 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
-    "\/dev_examples\/archive\/taylor\/aids.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/aids.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/aids.jpg",
-      "initialSize" : 75647,
-      "fileType" : 4096
-    },
     "\/compiled\/js\/locale\/eu.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -776,6 +765,17 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/eu-min.js",
       "fileType" : 64
+    },
+    "\/dev_examples\/archive\/taylor\/aids.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/aids.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/aids.jpg",
+      "initialSize" : 75647,
+      "fileType" : 4096
     },
     "\/dev_examples\/archive\/taylor\/broadway.jpg" : {
       "ignoreWasSetByUser" : 0,
@@ -823,16 +823,29 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/timeline-min-min.js",
       "fileType" : 64
     },
-    "\/source\/js\/VMM.TImeline.Min.js" : {
+    "\/compiled\/js\/locale\/dk.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/VMM.TImeline.Min.js",
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/dk.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/timeline-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/dk-min.js",
       "fileType" : 64
+    },
+    "\/source\/less\/Core\/GFX.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/GFX.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/css\/GFX.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
     },
     "\/source\/js\/VMM.Timeline.License.js" : {
       "ignoreWasSetByUser" : 0,
@@ -845,26 +858,15 @@
       "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.License-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/dk.js" : {
+    "\/source\/js\/VMM.TImeline.Min.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/dk.js",
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/VMM.TImeline.Min.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/dk-min.js",
-      "fileType" : 64
-    },
-    "\/compiled\/js\/locale\/ja.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ja.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ja-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/timeline-min.js",
       "fileType" : 64
     },
     "\/tests\/test_utc_firefox.html" : {
@@ -900,6 +902,19 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
+    "\/source\/less\/Core\/Font\/BreeSerif-OpenSans.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/BreeSerif-OpenSans.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/BreeSerif-OpenSans.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
+    },
     "\/source\/js\/Core\/Media\/VMM.TextElement.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -909,17 +924,6 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Media\/VMM.TextElement-min.js",
-      "fileType" : 64
-    },
-    "\/source\/js\/Core\/Language\/locale\/hu.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/hu.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hu.js",
       "fileType" : 64
     },
     "\/source\/less\/Core\/VMM.Core.less" : {
@@ -935,6 +939,59 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
+    "\/source\/js\/Core\/Language\/locale\/hu.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/hu.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hu.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Language\/locale\/ta.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/ta.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ta.js",
+      "fileType" : 64
+    },
+    "\/examples\/example_storify.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 1,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/examples\/example_storify.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
+    "\/compiled\/js\/locale\/ca.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ca.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ca-min.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Language\/locale\/zh-cn.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/zh-cn.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn.js",
+      "fileType" : 64
+    },
     "\/source\/less\/Theme\/Dark.less" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 0,
@@ -948,50 +1005,6 @@
       "fileType" : 1,
       "debugStyle" : 0
     },
-    "\/compiled\/js\/locale\/ca.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ca.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ca-min.js",
-      "fileType" : 64
-    },
-    "\/examples\/example_storify.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 1,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/examples\/example_storify.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
-    "\/source\/less\/Core\/Font\/BreeSerif-OpenSans.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/BreeSerif-OpenSans.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/BreeSerif-OpenSans.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
-    },
-    "\/source\/js\/Core\/Language\/locale\/zh-cn.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/zh-cn.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn.js",
-      "fileType" : 64
-    },
     "\/compiled\/lib\/jquery-min.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 1,
@@ -1003,28 +1016,15 @@
       "outputAbbreviatedPath" : "\/compiled\/lib\/jquery-min-min.js",
       "fileType" : 64
     },
-    "\/source\/less\/Core\/GFX.less" : {
+    "\/compiled\/js\/locale\/ja.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/GFX.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/css\/GFX.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
-    },
-    "\/source\/js\/Core\/Language\/locale\/ta.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/ta.js",
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ja.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ta.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ja-min.js",
       "fileType" : 64
     },
     "\/compiled\/js\/locale\/ar.js" : {
@@ -1082,6 +1082,17 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ko-min.js",
       "fileType" : 64
     },
+    "\/compiled\/js\/locale\/pt-br.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/pt-br.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/pt-br-min.js",
+      "fileType" : 64
+    },
     "\/source\/js\/Core\/Language\/locale\/is.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1093,17 +1104,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/is.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Library\/bootstrap-tooltip.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Library\/bootstrap-tooltip.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Library\/bootstrap-tooltip-min.js",
-      "fileType" : 64
-    },
     "\/compiled\/css\/themes\/font\/Bevan-PotanoSans.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1113,15 +1113,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/compiled\/js\/locale\/pt-br.js" : {
+    "\/source\/js\/Core\/Library\/bootstrap-tooltip.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/pt-br.js",
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Library\/bootstrap-tooltip.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/pt-br-min.js",
+      "outputAbbreviatedPath" : "\/source\/js\/Core\/Library\/bootstrap-tooltip-min.js",
       "fileType" : 64
     },
     "\/compiled\/js\/timeline.js" : {
@@ -1340,26 +1340,15 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.FileExtention-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/ru.js" : {
+    "\/source\/js\/Core\/Language\/locale\/da.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ru.js",
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/da.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ru-min.js",
-      "fileType" : 64
-    },
-    "\/compiled\/js\/locale\/hy.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/hy.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hy-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/da.js",
       "fileType" : 64
     },
     "\/compiled\/js\/locale\/no.js" : {
@@ -1371,6 +1360,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/no-min.js",
+      "fileType" : 64
+    },
+    "\/compiled\/js\/locale\/ru.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ru.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ru-min.js",
       "fileType" : 64
     },
     "\/tests\/test_googlespreadsheet_bc_era_ages_epoch.html" : {
@@ -1435,15 +1435,15 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/storyjs-embed-cdn.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Language\/locale\/da.js" : {
+    "\/compiled\/js\/locale\/hy.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/da.js",
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/hy.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/da.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hy-min.js",
       "fileType" : 64
     },
     "\/compiled\/css\/themes\/font\/PTSerif-PTSans.css" : {
@@ -1477,15 +1477,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sr-cy.js",
       "fileType" : 64
     },
-    "\/tests\/test_jsonp.html" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/tests\/test_jsonp.html",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 2048
-    },
     "\/source\/js\/Core\/VMM.StoryJS.License.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1497,6 +1488,15 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/VMM.StoryJS.License-min.js",
       "fileType" : 64
     },
+    "\/tests\/test_jsonp.html" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/tests\/test_jsonp.html",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 2048
+    },
     "\/source\/less\/Core\/Font.Default.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1506,6 +1506,19 @@
       "outputStyle" : 1,
       "shouldRunBless" : 0,
       "outputAbbreviatedPath" : "\/source\/less\/css\/Font.Default.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
+    },
+    "\/source\/less\/Core\/Variables.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Variables.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/css\/Variables.css",
       "strictImports" : 0,
       "fileType" : 1,
       "debugStyle" : 0
@@ -1532,19 +1545,6 @@
       "initialSize" : 88811,
       "fileType" : 4096
     },
-    "\/source\/less\/Core\/Variables.less" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Variables.less",
-      "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/css\/Variables.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
-    },
     "\/source\/jade\/tests\/test_extra_html.jade" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1567,17 +1567,6 @@
       "outputAbbreviatedPath" : "\/examples\/example_googlespreadsheet.html",
       "fileType" : 512
     },
-    "\/dev_examples\/archive\/taylor\/burton.jpg" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton.jpg",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton.jpg",
-      "initialSize" : 85307,
-      "fileType" : 4096
-    },
     "\/dev_examples\/archive\/taylor\/fisher.jpg" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1587,6 +1576,17 @@
       "processed" : 0,
       "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/fisher.jpg",
       "initialSize" : 93019,
+      "fileType" : 4096
+    },
+    "\/dev_examples\/archive\/taylor\/burton.jpg" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton.jpg",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/burton.jpg",
+      "initialSize" : 85307,
       "fileType" : 4096
     },
     "\/source\/js\/Core\/Language\/locale\/tl.js" : {
@@ -1703,17 +1703,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/tr.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/id.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/id.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/id-min.js",
-      "fileType" : 64
-    },
     "\/compiled\/js\/locale\/fi.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1723,6 +1712,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fi-min.js",
+      "fileType" : 64
+    },
+    "\/compiled\/js\/locale\/id.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/id.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/id-min.js",
       "fileType" : 64
     },
     "\/dev_examples\/archive\/taylor\/fortensky.jpg" : {
@@ -1767,17 +1767,6 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Library\/Leaflet-min.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Language\/locale\/no.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/no.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/no.js",
-      "fileType" : 64
-    },
     "\/source\/js\/Core\/Language\/locale\/hy.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1787,6 +1776,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hy.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Language\/locale\/no.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/no.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/no.js",
       "fileType" : 64
     },
     "\/tests\/test_googlespreadsheet_minutes.html" : {
@@ -1809,17 +1809,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ru.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Language\/locale\/fi.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fi.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fi.js",
-      "fileType" : 64
-    },
     "\/source\/js\/Core\/Language\/locale\/id.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -1829,6 +1818,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/id.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Language\/locale\/fi.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/fi.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/fi.js",
       "fileType" : 64
     },
     "\/dev_examples\/archive\/taylor\/woolfe.jpg" : {
@@ -1935,6 +1935,17 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
+    "\/compiled\/js\/locale\/bg.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/bg.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/bg-min.js",
+      "fileType" : 64
+    },
     "\/source\/less\/Core\/Reset.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1947,17 +1958,6 @@
       "strictImports" : 0,
       "fileType" : 1,
       "debugStyle" : 0
-    },
-    "\/compiled\/js\/locale\/bg.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/bg.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/bg-min.js",
-      "fileType" : 64
     },
     "\/compiled\/js\/locale\/sr-cy.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2116,17 +2116,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/tr-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/pl.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/pl.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/pl-min.js",
-      "fileType" : 64
-    },
     "\/source\/js\/Core\/Language\/locale\/cz.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -2138,6 +2127,17 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/cz.js",
       "fileType" : 64
     },
+    "\/compiled\/js\/locale\/pl.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/pl.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/pl-min.js",
+      "fileType" : 64
+    },
     "\/compiled\/css\/themes\/font\/NewsCycle-Merriweather.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -2146,6 +2146,19 @@
       "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/NewsCycle-Merriweather.css",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
+    },
+    "\/source\/less\/Core\/Font\/Lora-Istok.less" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/Lora-Istok.less",
+      "outputStyle" : 1,
+      "shouldRunBless" : 0,
+      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/Lora-Istok.css",
+      "strictImports" : 0,
+      "fileType" : 1,
+      "debugStyle" : 0
     },
     "\/source\/js\/Core\/Media\/VMM.MediaElement.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2167,17 +2180,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
-    "\/source\/js\/Core\/Language\/locale\/sl.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/sl.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sl.js",
-      "fileType" : 64
-    },
     "\/source\/jade\/tests\/test_utc_firefox.jade" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -2189,18 +2191,16 @@
       "outputAbbreviatedPath" : "\/tests\/test_utc_firefox.html",
       "fileType" : 512
     },
-    "\/source\/less\/Core\/Font\/Lora-Istok.less" : {
+    "\/source\/js\/Core\/Core\/VMM.Browser.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/less\/Core\/Font\/Lora-Istok.less",
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Browser.js",
       "outputStyle" : 1,
-      "shouldRunBless" : 0,
-      "outputAbbreviatedPath" : "\/source\/less\/Core\/css\/Lora-Istok.css",
-      "strictImports" : 0,
-      "fileType" : 1,
-      "debugStyle" : 0
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Browser-min.js",
+      "fileType" : 64
     },
     "\/source\/js\/VMM.Timeline.TimeNav.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2213,15 +2213,15 @@
       "outputAbbreviatedPath" : "\/source\/js\/VMM.Timeline.TimeNav-min.js",
       "fileType" : 64
     },
-    "\/source\/js\/Core\/Core\/VMM.Browser.js" : {
+    "\/source\/js\/Core\/Language\/locale\/sl.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Browser.js",
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/sl.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Core\/VMM.Browser-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sl.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Language\/locale\/de.js" : {
@@ -2318,6 +2318,15 @@
       "initialSize" : 56926,
       "fileType" : 4096
     },
+    "\/compiled\/css\/themes\/font\/PlayfairDisplay-Muli.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/PlayfairDisplay-Muli.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
+    },
     "\/source\/js\/Core\/Language\/locale\/zh-tw.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -2329,15 +2338,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-tw.js",
       "fileType" : 64
     },
-    "\/compiled\/css\/themes\/font\/PlayfairDisplay-Muli.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/PlayfairDisplay-Muli.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
     "\/examples\/example_jsonp.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -2346,17 +2346,6 @@
       "inputAbbreviatedPath" : "\/examples\/example_jsonp.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
-    },
-    "\/source\/js\/Core\/Slider\/VMM.DragSlider.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Slider\/VMM.DragSlider.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Slider\/VMM.DragSlider-min.js",
-      "fileType" : 64
     },
     "\/compiled\/js\/locale\/zh-ch.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2367,6 +2356,17 @@
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-ch-min.js",
+      "fileType" : 64
+    },
+    "\/source\/js\/Core\/Slider\/VMM.DragSlider.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Slider\/VMM.DragSlider.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/source\/js\/Core\/Slider\/VMM.DragSlider-min.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Language\/locale\/ja.js" : {
@@ -2389,6 +2389,17 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 16
     },
+    "\/compiled\/js\/locale\/sk.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sk.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sk-min.js",
+      "fileType" : 64
+    },
     "\/source\/less\/Core\/Font\/Rancho-Gudea.less" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -2401,17 +2412,6 @@
       "strictImports" : 0,
       "fileType" : 1,
       "debugStyle" : 0
-    },
-    "\/compiled\/js\/locale\/sk.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sk.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sk-min.js",
-      "fileType" : 64
     },
     "\/source\/js\/Core\/Core\/VMM.Core.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2455,15 +2455,15 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/compiled\/js\/locale\/sl.js" : {
+    "\/compiled\/js\/locale\/cz.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sl.js",
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/cz.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sl-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/cz-min.js",
       "fileType" : 64
     },
     "\/source\/js\/Core\/Library\/jQuery\/easing.js" : {
@@ -2477,15 +2477,15 @@
       "outputAbbreviatedPath" : "\/source\/js\/Core\/Library\/jQuery\/easing-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/cz.js" : {
+    "\/compiled\/js\/locale\/sl.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/cz.js",
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/sl.js",
       "outputStyle" : 1,
       "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/cz-min.js",
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/sl-min.js",
       "fileType" : 64
     }
   },
