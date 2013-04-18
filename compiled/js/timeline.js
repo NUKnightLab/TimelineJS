@@ -4210,7 +4210,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				// VIDEO
 				// TODO: NEED TO ADD ASYNC SCRIPT TO TIMELINE FLOW
-				VMM.attachElement("#" + m.uid, "<iframe autostart='false' frameborder='0' width='100%' height='100%' src='" + video_url + "'></iframe><script async src='http://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>");
+				VMM.attachElement("#" + m.uid, "<iframe frameborder='0' width='100%' height='100%' src='" + video_url + "'></iframe><script async src='http://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>");
 				
 			},
 			
@@ -4331,6 +4331,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					return mediaElem;
 				} else if (m.type	==	"vimeo") {
 					mediaElem		=	"<div class='thumbnail thumb-vimeo' id='" + uid + "_thumb'></div>";
+					return mediaElem;
+				} else if (m.type  ==  "vine") {
+					mediaElem		=  "<div class='thumbnail thumb-vine'></div>";
 					return mediaElem;
 				} else if (m.type  ==  "dailymotion") {
 					mediaElem		=  "<div class='thumbnail thumb-video'></div>";

@@ -176,6 +176,7 @@
 .vco-storyjs .thumbnail.thumb-photo{background-repeat:no-repeat;background-position:-280px -24px;border:0;}.vco-storyjs .thumbnail.thumb-photo img{border:0px none #333333 !important;}
 .vco-storyjs .thumbnail.thumb-twitter{background-repeat:no-repeat;background-position:-256px -24px;}
 .vco-storyjs .thumbnail.thumb-vimeo{background-repeat:no-repeat;background-position:-328px -48px;}
+.vco-storyjs .thumbnail.thumb-vine{background-repeat:no-repeat;background-position:-232px -72px;}
 .vco-storyjs .thumbnail.thumb-youtube{background-repeat:no-repeat;background-position:-328px -72px;}
 .vco-storyjs .thumbnail.thumb-video{background-repeat:no-repeat;background-position:-328px -24px;}
 .vco-storyjs .thumbnail.thumb-audio{background-repeat:no-repeat;background-position:-304px -24px;}
@@ -241,6 +242,7 @@
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-photo{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-280px -120px;}
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-twitter{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-256px -120px;}
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-vimeo{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-328px -130px;}
+.vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-vine{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-160px -120px;}
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-youtube{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-304px -130px;}
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-video{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-328px -120px;}
 .vco-timeline .vco-navigation .timenav .content .marker .flag-small .flag-content .thumbnail.thumb-audio{background-image:url(themes/timeline-dark.png?v3.4);background-repeat:no-repeat;background-position:-304px -120px;}
