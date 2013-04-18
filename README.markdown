@@ -355,7 +355,7 @@ If you don’t want to mess with JSON, fire up Google Docs and build your
 timeline in a spreadsheet. It’s as simple as dropping a date, text, and links
 into the appropriate columns in TimelineJS’s template.
 
-You can find the template here: [TimelineJS Google Spreadsheet Template](https://docs.google.com/a/digitalartwork.net/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public)
+You can find the template here: [TimelineJS Google Spreadsheet Template](https://drive.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public&pli=1#)
 
 There are only a couple things you need to know in order to create a timeline
 using Google Docs:
