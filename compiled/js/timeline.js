@@ -185,6 +185,13 @@ if (typeof VMM == 'undefined') {
 			que:			[]
 		},
 		
+		vine: {
+			active:			false,
+			array:			[],
+			api_loaded:		false,
+			que:			[]
+		},
+		
 		webthumb: {
 			active:			false,
 			array:			[],
@@ -2786,6 +2793,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			if (VMM.master_config.vimeo.active) {
 				VMM.ExternalAPI.vimeo.pushQue();
 			}
+			if (VMM.master_config.vine.active) {
+				VMM.ExternalAPI.vine.pushQue();
+			}
 			if (VMM.master_config.twitter.active) {
 				VMM.ExternalAPI.twitter.pushQue();
 			}
@@ -4182,6 +4192,35 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 		},
 		
+		vine: {
+			
+			get: function(m) {
+				VMM.master_config.vine.que.push(m);
+				VMM.master_config.vine.active = true;
+			},
+			
+			create: function(m, callback) {
+				trace("VINE CREATE");				
+				
+				var video_url	= "https://vine.co/v/" + m.id + "/embed/simple";
+					
+				
+				
+				// VIDEO
+				// TODO: NEED TO ADD ASYNC SCRIPT TO TIMELINE FLOW
+				VMM.attachElement("#" + m.uid, "<iframe autostart='false' frameborder='0' width='100%' height='100%' src='" + video_url + "'></iframe><script async src='http://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>");
+				
+			},
+			
+			pushQue: function() {
+				if (VMM.master_config.vine.que.length > 0) {
+					VMM.ExternalAPI.vine.create(VMM.master_config.vine.que[0], VMM.ExternalAPI.vine.pushQue);
+					VMM.master_config.vine.que.remove(0);
+				}
+			}
+			
+		},
+		
 		webthumb: {
 			
 			get: function(m, thumb) {
@@ -4385,6 +4424,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// DAILYMOTION
 				} else if (m.type		==	"dailymotion") {
 					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video dailymotion' autostart='false' frameborder='0' width='100%' height='100%' src='http://www.dailymotion.com/embed/video/" + m.id + "'></iframe></div>";
+			// VINE
+				} else if (m.type		==	"vine") {
+					mediaElem			=	"<div class='media-shadow media-frame video vine' id='" + m.uid + "'>" + loading_messege + "</div>";
+					VMM.ExternalAPI.vine.get(m);
 			// TWITTER
 				} else if (m.type		==	"twitter"){
 					mediaElem			=	"<div class='twitter' id='" + m.uid + "'>" + loading_messege + "</div>";
@@ -4505,6 +4548,16 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 	    } else if (d.match('(www.)?dailymotion\.com')) {
 			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
 			media.type = "dailymotion";
+			success = true;
+	    } else if (d.match('(www.)?vine\.co')) {
+			trace("VINE");
+			//https://vine.co/v/b55LOA1dgJU
+			if (d.match("vine.co/v/")) {
+				media.id = d.split("vine.co/v/")[1];
+				trace(media.id);
+			}
+			trace(d);
+			media.type = "vine";
 			success = true;
 		} else if (d.match('(player.)?soundcloud\.com')) {
 			media.type = "soundcloud";
@@ -7735,10 +7788,25 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (e.originalEvent) {
 				e = e.originalEvent;
 			}
+			
+			// Browsers unable to differntiate between up/down and left/right scrolling
+			/*
 			if (e.wheelDelta) {
 				delta = e.wheelDelta/6;
 			} else if (e.detail) {
 				delta = -e.detail*12;
+			}
+			*/
+			
+			// Webkit and browsers able to differntiate between up/down and left/right scrolling
+			if (typeof e.wheelDeltaX != 'undefined' ) {
+				delta = e.wheelDeltaY/6;
+				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
+					delta = e.wheelDeltaX/6;
+				} else {
+					//delta = e.wheelDeltaY/6;
+					delta = 0;
+				}
 			}
 			if (delta) {
 				if (e.preventDefault) {
@@ -7746,16 +7814,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				e.returnValue = false;
 			}
-			// Webkit
-			if (typeof e.wheelDeltaX != 'undefined' ) {
-				delta = e.wheelDeltaY/6;
-				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
-					delta = e.wheelDeltaX/6;
-				} else {
-					delta = e.wheelDeltaY/6;
-				}
-			}
-			
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			

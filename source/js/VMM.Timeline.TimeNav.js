@@ -259,10 +259,25 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			if (e.originalEvent) {
 				e = e.originalEvent;
 			}
+			
+			// Browsers unable to differntiate between up/down and left/right scrolling
+			/*
 			if (e.wheelDelta) {
 				delta = e.wheelDelta/6;
 			} else if (e.detail) {
 				delta = -e.detail*12;
+			}
+			*/
+			
+			// Webkit and browsers able to differntiate between up/down and left/right scrolling
+			if (typeof e.wheelDeltaX != 'undefined' ) {
+				delta = e.wheelDeltaY/6;
+				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
+					delta = e.wheelDeltaX/6;
+				} else {
+					//delta = e.wheelDeltaY/6;
+					delta = 0;
+				}
 			}
 			if (delta) {
 				if (e.preventDefault) {
@@ -270,16 +285,6 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				e.returnValue = false;
 			}
-			// Webkit
-			if (typeof e.wheelDeltaX != 'undefined' ) {
-				delta = e.wheelDeltaY/6;
-				if (Math.abs(e.wheelDeltaX) > Math.abs(e.wheelDeltaY)) {
-					delta = e.wheelDeltaX/6;
-				} else {
-					delta = e.wheelDeltaY/6;
-				}
-			}
-			
 			// Stop from scrolling too far
 			scroll_to = VMM.Lib.position($timenav).left + delta;
 			
