@@ -1349,9 +1349,31 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			calculateInterval();
 
 			/* DETERMINE DEFAULT INTERVAL TYPE
-				millenium, ages, epoch, era and eon are not working yet
+				millenium, ages, epoch, era and eon are not optimized yet. They may never be.
 			================================================== */
-
+			/*
+			if (timespan.eons				>		data.length / config.nav.density) {
+				interval					=		interval_calc.eon;
+				interval_major				=		interval_calc.eon;
+				interval_macro				=		interval_calc.era;
+			} else if (timespan.eras		>		data.length / config.nav.density) {
+				interval					=		interval_calc.era;
+				interval_major				=		interval_calc.eon;
+				interval_macro				=		interval_calc.epoch;
+			} else if (timespan.epochs		>		data.length / config.nav.density) {
+				interval					=		interval_calc.epoch;
+				interval_major				=		interval_calc.era;
+				interval_macro				=		interval_calc.age;
+			} else if (timespan.ages		>		data.length / config.nav.density) {
+				interval					=		interval_calc.ages;
+				interval_major				=		interval_calc.epoch;
+				interval_macro				=		interval_calc.millenium;
+			} else if (timespan.milleniums			>		data.length / config.nav.density) {
+				interval					=		interval_calc.millenium;
+				interval_major				=		interval_calc.age;
+				interval_macro				=		interval_calc.century;
+			} else 
+			*/
 			if (timespan.centuries			>		data.length / config.nav.density) {
 				interval					=		interval_calc.century;
 				interval_major				=		interval_calc.millenium;
