@@ -1280,7 +1280,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
 				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
-				VMM.Lib.attribute($backhome, "rel", "tooltip");
+				VMM.Lib.attribute($backhome, "rel", "timeline-tooltip");
 				
 			}
 			
@@ -1306,10 +1306,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.bindEvent($zoomout, onZoomOut, "click");
 				// TOOLTIP
 				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
-				VMM.Lib.attribute($zoomin, "rel", "tooltip");
+				VMM.Lib.attribute($zoomin, "rel", "timeline-tooltip");
 				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
-				VMM.Lib.attribute($zoomout, "rel", "tooltip");
-				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				VMM.Lib.attribute($zoomout, "rel", "timeline-tooltip");
+				$toolbar.tooltip({selector: "div[rel=timeline-tooltip]", placement: "right"});
 				
 				
 				// MOUSE EVENTS

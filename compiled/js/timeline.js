@@ -6646,7 +6646,7 @@ Utf8.decode = function(strUtf) {
 
   , setContent: function () {
       var $tip = this.tip()
-      $tip.find('.tooltip-inner').html(this.getTitle())
+      $tip.find('.timeline-tooltip-inner').html(this.getTitle())
       $tip.removeClass('fade in top bottom left right')
     }
 
@@ -6756,7 +6756,7 @@ Utf8.decode = function(strUtf) {
   , placement: 'top'
   , trigger: 'hover'
   , title: ''
-  , template: '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+  , template: '<div class="timeline-tooltip"><div class="timeline-tooltip-arrow"></div><div class="timeline-tooltip-inner"></div></div>'
   }
 
 }( window.jQuery );
@@ -8811,7 +8811,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				$backhome = VMM.appendAndGetElement($toolbar, "<div>", "back-home", "<div class='icon'></div>");
 				VMM.bindEvent(".back-home", onBackHome, "click");
 				VMM.Lib.attribute($backhome, "title", VMM.master_config.language.messages.return_to_title);
-				VMM.Lib.attribute($backhome, "rel", "tooltip");
+				VMM.Lib.attribute($backhome, "rel", "timeline-tooltip");
 				
 			}
 			
@@ -8837,10 +8837,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.bindEvent($zoomout, onZoomOut, "click");
 				// TOOLTIP
 				VMM.Lib.attribute($zoomin, "title", VMM.master_config.language.messages.expand_timeline);
-				VMM.Lib.attribute($zoomin, "rel", "tooltip");
+				VMM.Lib.attribute($zoomin, "rel", "timeline-tooltip");
 				VMM.Lib.attribute($zoomout, "title", VMM.master_config.language.messages.contract_timeline);
-				VMM.Lib.attribute($zoomout, "rel", "tooltip");
-				$toolbar.tooltip({selector: "div[rel=tooltip]", placement: "right"});
+				VMM.Lib.attribute($zoomout, "rel", "timeline-tooltip");
+				$toolbar.tooltip({selector: "div[rel=timeline-tooltip]", placement: "right"});
 				
 				
 				// MOUSE EVENTS
