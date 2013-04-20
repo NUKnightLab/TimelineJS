@@ -71,6 +71,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			source:					"nothing",
 			type: 					"timeline",
 			touch:					false,
+			reverse: 				true, 
 			orientation: 			"normal", 
 			maptype: 				"toner",
 			version: 				"2.x", 
@@ -710,6 +711,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				_dates.sort(function(a, b){
 					return a.fulldate - b.fulldate
 				});
+			}
+			
+			/* REVERSE ORDER TIMELINE
+			================================================== */
+			if (config.reverse) {
+				//_dates.reverse()
 			}
 			
 			onDatesProcessed();

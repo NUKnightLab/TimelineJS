@@ -4979,6 +4979,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			config	= {
 				preload:			4,
 				current_slide:		0,
+				reverse: 			false,
 				interval:			10, 
 				something:			0, 
 				width:				720, 
@@ -5046,7 +5047,19 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		================================================== */
 		this.setData = function(d) {
 			if(typeof d != 'undefined') {
-				data = d;
+				var i	= 0;
+				
+				data = d.slice(0);
+				
+				// REVERSE MODE
+				if (config.reverse) {
+					// SET PROPER ARRAY NUMBER
+					for(i = 0; i < data.length; i++) {
+						data[i].slide_number = i;
+					}
+					data.reverse();
+				}
+				
 				build();
 			} else{
 				trace("NO DATA");
@@ -5087,7 +5100,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		};
 		
 		this.setSlide = function(n) {
-			goToSlide(n);
+			goToSlide(n, config.ease, config.duration, false, false, true);
+			//goToSlide(n);
 		};
 		
 		/* ON EVENT
@@ -5181,24 +5195,48 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			
 		}
+		
 		/* NAVIGATION
 		================================================== */
-		function onNextClick(e) {
-			if (current_slide == slides.length - 1) {
+		function onNextClick(e, r) {
+			var cs = 0;
+			
+			if (config.reverse) {
+				cs = slides[current_slide].slide_number();
+			} else {
+				cs = current_slide;
+			}
+			trace(current_slide);
+			trace(cs);
+			if (cs == slides.length - 1) {
 				backToCurrentSlide();
 			} else {
-				goToSlide(current_slide+1);
+				//goToSlide(cs+1);
+				
+				if (config.reverse) {
+					goToSlide(cs-1, config.ease, config.duration, false, false, true);
+				} else {
+					goToSlide(cs+1);
+				}
+				
 				upDate();
 			}
+			
 		}
 		
-		function onPrevClick(e) {
-			if (current_slide == 0) {
-				backToCurrentSlide();
+		function onPrevClick(e, r) {
+			if (config.reverse) {
+				
 			} else {
-				goToSlide(current_slide-1);
-				upDate();
+				if (current_slide == 0) {
+					backToCurrentSlide();
+				} else {
+					//goToSlide(current_slide-1, config.ease, config.duration, false, false, true);
+					goToSlide(current_slide-1);
+					upDate();
+				}
 			}
+			
 		}
 
 		function onKeypressNav(e) {
@@ -5527,8 +5565,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		
 		/* GO TO SLIDE
 			goToSlide(n, ease, duration);
+		
 		================================================== */
-		function goToSlide(n, ease, duration, fast, firstrun) {
+		function goToSlide(n, ease, duration, fast, firstrun, bypass_reverse) {
 			var _ease		= config.ease,
 				_duration	= config.duration,
 				is_last		= false,
@@ -5541,7 +5580,21 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			VMM.ExternalAPI.youtube.stopPlayers();
 			
 			// Set current slide
-			current_slide	= n;
+			if (config.reverse && bypass_reverse) {
+				// GET PROPER ARRAY NUMBER
+				for(i = 0; i < slides.length; i++) {
+					if (slides[i].slide_number() == n) {
+						trace("FOUND SLIDE FOR REVERSE MODE");
+						trace(n);
+						trace(i);
+						current_slide = i;
+					}
+				}
+			} else {
+				current_slide = n;
+			}
+			trace("CURRENT SLIDE " + current_slide);
+			// Set current slide
 			_pos			= slides[current_slide].leftpos();
 			
 			
@@ -5628,7 +5681,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 			
 			preloadSlides();
-			VMM.fireEvent($slider, "MESSAGE", "TEST");
+			//VMM.fireEvent($slider, "MESSAGE", "TEST");
 		}
 
 		function backToCurrentSlide() {
@@ -5762,6 +5815,8 @@ if (typeof VMM.Slider != 'undefined') {
 		_id				= _id + data.uniqueid;
 		this.enqueue	= _enqueue;
 		this.id			= _id;
+		trace("SLIDE");
+		trace(d);
 		
 		
 		element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
@@ -5778,6 +5833,14 @@ if (typeof VMM.Slider != 'undefined') {
 		
 		/* PUBLIC
 		================================================== */
+		this.slide_number = function() {
+			if (data.slide_number != null && data.slide_number != "") {
+				return data.slide_number;
+			} else {
+				return false;
+			}
+		}
+		
 		this.show = function(skinny) {
 			_enqueue = false;
 			timer.skinny = skinny;
@@ -6878,6 +6941,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			source:					"nothing",
 			type: 					"timeline",
 			touch:					false,
+			reverse: 				true, 
 			orientation: 			"normal", 
 			maptype: 				"toner",
 			version: 				"2.x", 
@@ -7519,6 +7583,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				});
 			}
 			
+			/* REVERSE ORDER TIMELINE
+			================================================== */
+			if (config.reverse) {
+				//_dates.reverse()
+			}
+			
 			onDatesProcessed();
 		}
 		
@@ -7918,7 +7988,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					var _pos = positionOnTimeline(interval, markers[i].relative_pos),
 					last_pos = pos;
 					pos = _pos.begin;
-					pos_dif = pos - last_pos;
+					pos_dif = Math.abs(pos - last_pos);
 					mp_diff.push(pos_dif);
 				}
 			}
@@ -7966,12 +8036,19 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		function calculateInterval() {
 			// NEED TO REWRITE ALL OF THIS
 			var _first								= getDateFractions(data[0].startdate),
-				_last								= getDateFractions(data[data.length - 1].enddate);
+				_last								= getDateFractions(data[data.length - 1].enddate)
+				_base								= 0;
+			
+			if (config.reverse) {
+				_base = _last;
+			} else {
+				_base = _first;      
+			}
 			
 			// EON
 			interval_calc.eon.type					=	"eon";
 			interval_calc.eon.first					=	_first.eons;
-			interval_calc.eon.base					=	Math.floor(_first.eons);
+			interval_calc.eon.base					=	Math.floor(_base.eons);
 			interval_calc.eon.last					=	_last.eons;
 			interval_calc.eon.number				=	timespan.eons;
 			interval_calc.eon.multiplier		 	=	timelookup.eons;
@@ -7980,7 +8057,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// ERA
 			interval_calc.era.type					=	"era";
 			interval_calc.era.first					=	_first.eras;
-			interval_calc.era.base					=	Math.floor(_first.eras);
+			interval_calc.era.base					=	Math.floor(_base.eras);
 			interval_calc.era.last					=	_last.eras;
 			interval_calc.era.number				=	timespan.eras;
 			interval_calc.era.multiplier		 	=	timelookup.eras;
@@ -7989,7 +8066,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// EPOCH
 			interval_calc.epoch.type				=	"epoch";
 			interval_calc.epoch.first				=	_first.epochs;
-			interval_calc.epoch.base				=	Math.floor(_first.epochs);
+			interval_calc.epoch.base				=	Math.floor(_base.epochs);
 			interval_calc.epoch.last				=	_last.epochs;
 			interval_calc.epoch.number				=	timespan.epochs;
 			interval_calc.epoch.multiplier		 	=	timelookup.epochs;
@@ -7998,7 +8075,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// AGE
 			interval_calc.age.type					=	"age";
 			interval_calc.age.first					=	_first.ages;
-			interval_calc.age.base					=	Math.floor(_first.ages);
+			interval_calc.age.base					=	Math.floor(_base.ages);
 			interval_calc.age.last					=	_last.ages;
 			interval_calc.age.number				=	timespan.ages;
 			interval_calc.age.multiplier		 	=	timelookup.ages;
@@ -8007,7 +8084,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// MILLENIUM
 			interval_calc.millenium.type 			=	"millenium";
 			interval_calc.millenium.first			=	_first.milleniums;
-			interval_calc.millenium.base			=	Math.floor(_first.milleniums);
+			interval_calc.millenium.base			=	Math.floor(_base.milleniums);
 			interval_calc.millenium.last			=	_last.milleniums;
 			interval_calc.millenium.number			=	timespan.milleniums;
 			interval_calc.millenium.multiplier	 	=	timelookup.millenium;
@@ -8016,7 +8093,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// CENTURY
 			interval_calc.century.type 				= "century";
 			interval_calc.century.first 			= _first.centuries;
-			interval_calc.century.base 				= Math.floor(_first.centuries);
+			interval_calc.century.base 				= Math.floor(_base.centuries);
 			interval_calc.century.last 				= _last.centuries;
 			interval_calc.century.number 			= timespan.centuries;
 			interval_calc.century.multiplier	 	= timelookup.century;
@@ -8025,7 +8102,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// DECADE
 			interval_calc.decade.type 				= "decade";
 			interval_calc.decade.first 				= _first.decades;
-			interval_calc.decade.base 				= Math.floor(_first.decades);
+			interval_calc.decade.base 				= Math.floor(_base.decades);
 			interval_calc.decade.last 				= _last.decades;
 			interval_calc.decade.number 			= timespan.decades;
 			interval_calc.decade.multiplier 		= timelookup.decade;
@@ -8034,7 +8111,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// YEAR
 			interval_calc.year.type					= "year";
 			interval_calc.year.first 				= _first.years;
-			interval_calc.year.base 				= Math.floor(_first.years);
+			interval_calc.year.base 				= Math.floor(_base.years);
 			interval_calc.year.last					= _last.years;
 			interval_calc.year.number 				= timespan.years;
 			interval_calc.year.multiplier 			= 1;
@@ -8043,7 +8120,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// MONTH
 			interval_calc.month.type 				= "month";
 			interval_calc.month.first 				= _first.months;
-			interval_calc.month.base 				= Math.floor(_first.months);
+			interval_calc.month.base 				= Math.floor(_base.months);
 			interval_calc.month.last 				= _last.months;
 			interval_calc.month.number 				= timespan.months;
 			interval_calc.month.multiplier 			= 1;
@@ -8053,7 +8130,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// NOT DONE
 			interval_calc.week.type 				= "week";
 			interval_calc.week.first 				= _first.weeks;
-			interval_calc.week.base 				= Math.floor(_first.weeks);
+			interval_calc.week.base 				= Math.floor(_base.weeks);
 			interval_calc.week.last 				= _last.weeks;
 			interval_calc.week.number 				= timespan.weeks;
 			interval_calc.week.multiplier 			= 1;
@@ -8062,7 +8139,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// DAY
 			interval_calc.day.type 					= "day";
 			interval_calc.day.first 				= _first.days;
-			interval_calc.day.base	 				= Math.floor(_first.days);
+			interval_calc.day.base	 				= Math.floor(_base.days);
 			interval_calc.day.last 					= _last.days;
 			interval_calc.day.number 				= timespan.days;
 			interval_calc.day.multiplier 			= 1;
@@ -8071,7 +8148,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// HOUR
 			interval_calc.hour.type 				= "hour";
 			interval_calc.hour.first 				= _first.hours;
-			interval_calc.hour.base 				= Math.floor(_first.hours);
+			interval_calc.hour.base 				= Math.floor(_base.hours);
 			interval_calc.hour.last 				= _last.hours;
 			interval_calc.hour.number 				= timespan.hours;
 			interval_calc.hour.multiplier 			= 1;
@@ -8080,7 +8157,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// MINUTE
 			interval_calc.minute.type 				= "minute";
 			interval_calc.minute.first 				= _first.minutes;
-			interval_calc.minute.base 				= Math.floor(_first.minutes);
+			interval_calc.minute.base 				= Math.floor(_base.minutes);
 			interval_calc.minute.last 				= _last.minutes;
 			interval_calc.minute.number 			= timespan.minutes;
 			interval_calc.minute.multiplier 		= 1;
@@ -8089,7 +8166,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			// SECOND
 			interval_calc.second.type 				= "decade";
 			interval_calc.second.first 				= _first.seconds;
-			interval_calc.second.base 				= Math.floor(_first.seconds);
+			interval_calc.second.base 				= Math.floor(_base.seconds);
 			interval_calc.second.last 				= _last.seconds;
 			interval_calc.second.number 			= timespan.seconds;
 			interval_calc.second.multiplier 		= 1;
@@ -8223,10 +8300,17 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		}
 		
 		function positionOnTimeline(the_interval, timerelative) {
-			return {
-				begin:	(timerelative.start	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current), 
-				end:	(timerelative.end	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current)
-			};
+			if (config.reverse) {
+				return {
+					begin:  (interval.base - timerelative.end) * (config.nav.interval_width / config.nav.multiplier.current), 
+					end:  (interval.base - timerelative.start) * (config.nav.interval_width / config.nav.multiplier.current)
+				}
+			} else {
+				return {
+					begin:	(timerelative.start	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current), 
+					end:	(timerelative.end	-	interval.base) * (config.nav.interval_width / config.nav.multiplier.current)
+				}
+			}
 		}
 		
 		function positionMarkers(is_animated) {
@@ -8594,6 +8678,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			_interval.date = new Date(data[0].startdate.getFullYear(), 0, 1, 0,0,0);
 			_timezone_offset = _interval.date.getTimezoneOffset();
 			
+			
 			for(i = 0; i < int_number; i++) {
 				trace(_interval.type);
 				var _is_year			= false,
@@ -8768,6 +8853,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_array.push(int_obj);
 				
 			}
+			
 			
 			VMM.Lib.width($timeintervalminor_minor, _largest_pos);
 			
