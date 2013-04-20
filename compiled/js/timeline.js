@@ -4702,6 +4702,10 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				start:		0,
 				end:		0
 			},
+			pagey: {
+				start:		0,
+				end:		0
+			},
 			left: {
 				start:		0,
 				end:		0
@@ -4803,7 +4807,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			if (!drag.touch) {
 				e.preventDefault();
 			}
-			e.stopPropagation();
+			//e.stopPropagation();
 			return true;
 		}
 		
@@ -4811,7 +4815,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			if (!drag.touch) {
 				e.preventDefault();
 			}
-			e.stopPropagation();
+			//e.stopPropagation();
 			if (drag.sliding) {
 				drag.sliding = false;
 				dragEnd(e.data.element, e.data.delement, e);
@@ -4823,8 +4827,6 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		
 		function onDragMove(e) {
 			dragMove(e.data.element, e);
-			
-			return false;
 		}
 		
 		function dragStart(elem, delem, e) {
@@ -4832,8 +4834,10 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 				trace("IS TOUCH")
 				VMM.Lib.css(elem, '-webkit-transition-duration', '0');
 				drag.pagex.start = e.originalEvent.touches[0].screenX;
+				drag.pagey.start = e.originalEvent.touches[0].screenY;
 			} else {
 				drag.pagex.start = e.pageX;
+				drag.pagey.start = e.pageY;
 			}
 			drag.left.start = getLeft(elem);
 			drag.time.start = new Date().getTime();
@@ -4849,16 +4853,24 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		}
 		
 		function dragMove(elem, e) {
-			var drag_to;
+			var drag_to, drag_to_y;
 			drag.sliding = true;
 			if (drag.touch) {
 				drag.pagex.end = e.originalEvent.touches[0].screenX;
+				drag.pagey.end = e.originalEvent.touches[0].screenY;
 			} else {
 				drag.pagex.end = e.pageX;
+				drag.pagey.end = e.pageY;
 			}
+			
 			drag.left.end	= getLeft(elem);
 			drag_to			= -(drag.pagex.start - drag.pagex.end - drag.left.start);
 			
+			
+			if (Math.abs(drag.pagey.start) - Math.abs(drag.pagey.end) > 10) {
+				trace("SCROLLING Y")
+				trace(Math.abs(drag.pagey.start) - Math.abs(drag.pagey.end));
+			}
 			if (Math.abs(drag_to - drag.left.start) > 10) {
 				VMM.Lib.css(elem, 'left', drag_to);
 				e.preventDefault();
@@ -4904,7 +4916,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 			}
 			
 			VMM.fireEvent(dragslider, "DRAGUPDATE", [drag_info]);
-
+			
 			if (!is_sticky) {
 				if (drag_info.time > 0) {
 					if (drag.touch) {
