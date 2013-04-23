@@ -4362,6 +4362,9 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type	==	"quote") {
 					mediaElem		=	"<div class='thumbnail thumb-quote'></div>";
 					return mediaElem;
+				} else if (m.type	==	"iframe") {
+					mediaElem		=	"<div class='thumbnail thumb-video'></div>";
+					return mediaElem;
 				} else if (m.type	==	"unknown") {
 					if (m.id.match("blockquote")) {
 						mediaElem	=	"<div class='thumbnail thumb-quote'></div>";
@@ -4465,6 +4468,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type		==	"storify") { 
 					isTextMedia			=	true;
 					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
+			// IFRAME
+				} else if (m.type		==	"iframe") { 
+					isTextMedia			=	true;
+					mediaElem			=	"<div class='media-shadow'><iframe class='media-frame video' autostart='false' frameborder='0' width='100%' height='100%' src='" + m.id + "'></iframe></div>";
 			// QUOTE
 				} else if (m.type		==	"quote") { 
 					isTextMedia			=	true;
@@ -4629,6 +4636,12 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('blockquote')) {
 			media.type = "quote";
 			media.id = d;
+			success = true;
+		} else if (d.match('iframe')) {
+			media.type = "iframe";
+			trace("IFRAME")
+			trace( d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1]);
+			media.id = d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1];
 			success = true;
 		} else {
 			trace("unknown media");  
