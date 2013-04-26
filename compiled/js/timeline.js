@@ -4253,7 +4253,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				VMM.attachElement("#" + m.uid, "<a href='" + m.id + "' target='_blank'><img src='" + thumb_url + "size=x&url=" + url + "'></a>");
 				
 				// Thumb
-				VMM.attachElement("#" + m.uid + "_thumb", "<a href='" + m.id + "' target='_blank'><img src='" + thumb_url + "size=t&url=" + url + "'></a>");
+				VMM.attachElement("#" + m.uid + "_thumb", "<img src='" + thumb_url + "size=t&url=" + url + "'>");
 			},
 			
 			pushQue: function() {
