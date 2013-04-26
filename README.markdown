@@ -135,40 +135,47 @@ as JSONP, otherwise, we will append `?callback=onJSONP_Data`. See more details b
 Localization
 *default is `en` English*
 Languages available:
-* `en` *English*
-* `fr` *French*
-* `es` *Spanish*
-* `it` *Italian*
-* `de` *German / Deutsch*
-* `pt` *Portuguese*
-* `pt-br` *Brazilian Portuguese*
-* `nl` *Dutch*
-* `is` *Icelandic*
-* `no` *Norwegian*
+* `ar` *Arabic (beta)*
 * `bg` *Bulgarian*
-* `sl` *Slovenian*
+* `ca` *Catalan*
+* `cz` *Czech*
+* `da` *Danish*
+* `de` *German / Deutsch*
+* `el` *Greek*
+* `en` *English*
+* `es` *Spanish*
+* `eu` *Basque/ Euskara*
+* `fi` *Finnish*
+* `fo` *Faroese*
+* `fr` *French*
+* `gl` *Galician*
 * `hu` *Hungarian*
 * `hy` *Armenian*
-* `fo` *Faroese*
-* `cz` *Czech*
-* `dk` *Danish*
 * `id` *Indonesian*
+* `is` *Icelandic*
+* `it` *Italian*
+* `iw` *Hebrew (beta)*
+* `ja` *Japanese*
+* `ka` *Georgian*
+* `ko` *Korean*
+* `lv` *Latvian*
+* `nl` *Dutch*
+* `no` *Norwegian*
 * `pl` *Polish*
+* `pt-br` *Brazilian Portuguese*
+* `pt` *Portuguese*
 * `ru` *Russian*
 * `sk` *Slovak*
-* `sr-la` *Serbian (Latin)*
-* `sr-ly` *Serbian (Cyrillic)*
-* `ca` *Catalan*
-* `el` *Greek*
+* `sl` *Slovenian*
+* `sr-cy` *Serbian (Cyrillic)*
+* `sr` *Serbian (Latin)*
+* `sv` *Swedish*
 * `ta` *Tamil*
 * `tl` *Tagalog*
 * `tr` *Turkish*
-* `ja` *Japanese*
-* `kr` *Korean*
-* `zh-ch` *Chinese*
+* `zh-cn` *Chinese*
 * `zh-tw` *Taiwanese*
-* `iw` *Hebrew (beta)*
-* `ar` *Arabic (beta)*
+
 
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
 
