@@ -5,11 +5,25 @@
         "headline":"Sh*t People Say",
         "type":"default",
 		"text":"People say stuff",
+		"startDate":"2012,1,26",
         "date": [
             {
+                "startDate":"2011,12,12",
+				"endDate":"2012,1,27",
+                "headline":"Vine",
+                "text":"<p>Vine Test</p>",
+                "asset":
+                {
+                    "media":"https://vine.co/v/b55LOA1dgJU",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+            {
                 "startDate":"2012,1,26",
+				"endDate":"2012,1,27",
                 "headline":"Sh*t Politicians Say",
-                "text":"<p>Sh*t Politicians Say landed just hours before Thursday night’s Republican presidential debate and stars actor Joe Leon. In true political fashion, his character rattles off common jargon heard from people running for office.</p><p>Do these ring a bell? Moral fiber, family values, trust me, three-point plan, earmarks, tough question, children are our future, Washington outsider, jobs, my opponent — all sound familiar.</p>",
+                "text":"<p>In true political fashion, his character rattles off common jargon heard from people running for office.</p>",
                 "asset":
                 {
                     "media":"http://youtu.be/u4XpeU9erbg",

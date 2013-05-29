@@ -22,9 +22,18 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					trace("DATA SOURCE: STORIFY");
 					VMM.Timeline.DataObj.model.storify.getData(raw_data);
 					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
+				} else if (raw_data.match("\.jsonp")) {
+					trace("DATA SOURCE: JSONP");
+					LoadLib.js(raw_data, VMM.Timeline.DataObj.onJSONPLoaded);
 				} else {
 					trace("DATA SOURCE: JSON");
-					VMM.getJSON(raw_data, VMM.Timeline.DataObj.parseJSON);
+					var req = "";
+					if (raw_data.indexOf("?") > -1) {
+						req = raw_data + "&callback=onJSONP_Data";
+					} else {
+						req = raw_data + "?callback=onJSONP_Data";
+					}
+					VMM.getJSON(req, VMM.Timeline.DataObj.parseJSON);
 				}
 			} else if (type.of(raw_data) == "html") {
 				trace("DATA SOURCE: HTML");
@@ -33,6 +42,11 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 				trace("DATA SOURCE: UNKNOWN");
 			}
 			
+		},
+		
+		onJSONPLoaded: function() {
+			trace("JSONP IS LOADED");
+			VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, storyjs_jsonp_data);
 		},
 		
 		parseHTML: function (d) {
@@ -158,72 +172,308 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			googlespreadsheet: {
 				
 				getData: function(raw) {
-					var _key = VMM.Util.getUrlVars(raw)["key"];
-					var _url = "https://spreadsheets.google.com/feeds/list/" + _key + "/od6/public/values?alt=json";
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.googlespreadsheet.buildData);
+					var getjsondata, key, worksheet, url, timeout, tries = 0;
+					
+					key	= VMM.Util.getUrlVars(raw)["key"];
+					worksheet = VMM.Util.getUrlVars(raw)["worksheet"];
+					if (typeof worksheet == "undefined") worksheet = "od6";
+					
+					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/" + worksheet + "/public/values?alt=json";
+					
+					timeout = setTimeout(function() {
+						trace("Google Docs timeout " + url);
+						trace(url);
+						if (tries < 3) {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Still waiting on Google Docs, trying again " + tries);
+							tries ++;
+							getjsondata.abort()
+							requestJsonData();
+						} else {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						}
+					}, 16000);
+					
+					function requestJsonData() {
+						getjsondata = VMM.getJSON(url, function(d) {
+							clearTimeout(timeout);
+							VMM.Timeline.DataObj.model.googlespreadsheet.buildData(d);
+						})
+							.error(function(jqXHR, textStatus, errorThrown) {
+								trace("Google Docs ERROR");
+								trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+							})
+							.success(function(d) {
+								clearTimeout(timeout);
+							});
+					}
+					
+					requestJsonData();
 				},
 				
 				buildData: function(d) {
-					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Data");
-					var _data_obj = VMM.Timeline.DataObj.data_template_obj;
-
-					for(var i = 0; i < d.feed.entry.length; i++) {
-						var dd		= d.feed.entry[i],
-							dd_type	= "";
+					var data_obj	= VMM.Timeline.DataObj.data_template_obj,
+						is_valid	= false;
+					
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Google Doc Data");
+					
+					function getGVar(v) {
+						if (typeof v != 'undefined') {
+							return v.$t;
+						} else {
+							return "";
+						}
+					}
+					if (typeof d.feed.entry != 'undefined') {
+						is_valid = true;
 						
-						if (typeof dd.gsx$type != 'undefined') {
-							dd_type = dd.gsx$type.$t;
-						} else if (typeof dd.gsx$titleslide != 'undefined') {
-							dd_type = dd.gsx$titleslide.$t;
+						for(var i = 0; i < d.feed.entry.length; i++) {
+							var dd		= d.feed.entry[i],
+								dd_type	= "";
+						
+							if (typeof dd.gsx$type != 'undefined') {
+								dd_type = dd.gsx$type.$t;
+							} else if (typeof dd.gsx$titleslide != 'undefined') {
+								dd_type = dd.gsx$titleslide.$t;
+							}
+						
+							if (dd_type.match("start") || dd_type.match("title") ) {
+								data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
+								data_obj.timeline.headline		= getGVar(dd.gsx$headline);
+								data_obj.timeline.asset.media	= getGVar(dd.gsx$media);
+								data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
+								data_obj.timeline.asset.credit	= getGVar(dd.gsx$mediacredit);
+								data_obj.timeline.text			= getGVar(dd.gsx$text);
+								data_obj.timeline.type			= "google spreadsheet";
+							} else if (dd_type.match("era")) {
+								var era = {
+									startDate:		getGVar(dd.gsx$startdate),
+									endDate:		getGVar(dd.gsx$enddate),
+									headline:		getGVar(dd.gsx$headline),
+									text:			getGVar(dd.gsx$text),
+									tag:			getGVar(dd.gsx$tag)
+								}
+								data_obj.timeline.era.push(era);
+							} else {
+								var date = {
+										type:			"google spreadsheet",
+										startDate:		getGVar(dd.gsx$startdate),
+										endDate:		getGVar(dd.gsx$enddate),
+										headline:		getGVar(dd.gsx$headline),
+										text:			getGVar(dd.gsx$text),
+										tag:			getGVar(dd.gsx$tag),
+										asset: {
+											media:		getGVar(dd.gsx$media),
+											credit:		getGVar(dd.gsx$mediacredit),
+											caption:	getGVar(dd.gsx$mediacaption),
+											thumbnail:	getGVar(dd.gsx$mediathumbnail)
+										}
+								};
+							
+								data_obj.timeline.date.push(date);
+							}
+						};
+						
+					} else {
+						
+					}
+					
+					
+					if (is_valid) {
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Finished Parsing Data");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, data_obj);
+					} else {
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Language.messages.loading + " Google Doc Data (cells)");
+						trace("There may be too many entries. Still trying to load data. Now trying to load cells to avoid Googles limitation on cells");
+						VMM.Timeline.DataObj.model.googlespreadsheet.getDataCells(d.feed.link[0].href);
+					}
+				},
+				
+				getDataCells: function(raw) {
+					var getjsondata, key, url, timeout, tries = 0;
+					
+					key	= VMM.Util.getUrlVars(raw)["key"];
+					url	= "https://spreadsheets.google.com/feeds/cells/" + key + "/od6/public/values?alt=json";
+					
+					timeout = setTimeout(function() {
+						trace("Google Docs timeout " + url);
+						trace(url);
+						if (tries < 3) {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Still waiting on Google Docs, trying again " + tries);
+							tries ++;
+							getjsondata.abort()
+							requestJsonData();
+						} else {
+							VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Google Docs is not responding");
+						}
+					}, 16000);
+					
+					function requestJsonData() {
+						getjsondata = VMM.getJSON(url, function(d) {
+							clearTimeout(timeout);
+							VMM.Timeline.DataObj.model.googlespreadsheet.buildDataCells(d);
+						})
+							.error(function(jqXHR, textStatus, errorThrown) {
+								trace("Google Docs ERROR");
+								trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
+							})
+							.success(function(d) {
+								clearTimeout(timeout);
+							});
+					}
+					
+					requestJsonData();
+				},
+				
+				buildDataCells: function(d) {
+					var data_obj	= VMM.Timeline.DataObj.data_template_obj,
+						is_valid	= false,
+						cellnames	= ["timeline"],
+						list 		= [],
+						max_row		= 0,
+						i			= 0,
+						k			= 0;
+					
+					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Language.messages.loading_timeline + " Parsing Google Doc Data (cells)");
+					
+					function getGVar(v) {
+						if (typeof v != 'undefined') {
+							return v.$t;
+						} else {
+							return "";
+						}
+					}
+					
+					if (typeof d.feed.entry != 'undefined') {
+						is_valid = true;
+						
+						// DETERMINE NUMBER OF ROWS
+						for(i = 0; i < d.feed.entry.length; i++) {
+							var dd				= d.feed.entry[i];
+							
+							if (parseInt(dd.gs$cell.row) > max_row) {
+								max_row = parseInt(dd.gs$cell.row);
+							}
 						}
 						
-						if (dd_type.match("start") || dd_type.match("title") ) {
-							_data_obj.timeline.startDate = 			dd.gsx$startdate.$t;
-							_data_obj.timeline.headline = 			dd.gsx$headline.$t;
-							_data_obj.timeline.asset.media = 		dd.gsx$media.$t;
-							_data_obj.timeline.asset.caption = 		dd.gsx$mediacaption.$t;
-							_data_obj.timeline.asset.credit = 		dd.gsx$mediacredit.$t;
-							_data_obj.timeline.text = 				dd.gsx$text.$t;
-							_data_obj.timeline.type = 				"google spreadsheet";
-						} else if (dd_type.match("era")) {
-							var _era = {
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-								"headline": 						dd.gsx$headline.$t,
-								"text": 							dd.gsx$text.$t,
-								"tag": 								""
+						// CREATE OBJECT FOR EACH ROW
+						for(var i = 0; i < max_row + 1; i++) {
+							var date = {
+								type:			"",
+								startDate:		"",
+								endDate:		"",
+								headline:		"",
+								text:			"",
+								tag:			"",
+								asset: {
+									media:		"",
+									credit:		"",
+									caption:	"",
+									thumbnail:	""
+								}
+							};
+							list.push(date);
+						}
+						
+						// PREP GOOGLE DOC CELL DATA TO EVALUATE
+						for(i = 0; i < d.feed.entry.length; i++) {
+							var dd				= d.feed.entry[i],
+								dd_type			= "",
+								column_name		= "",
+								cell = {
+									content: 	getGVar(dd.gs$cell),
+									col: 		dd.gs$cell.col,
+									row: 		dd.gs$cell.row,
+									name: 		""
+								};
 								
-							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_era.tag = dd.gsx$tag.$t;
-							}
-							_data_obj.timeline.era.push(_era);
-						} else {
-							var _date = {
-								"type": 							"google spreadsheet",
-								"startDate": 						dd.gsx$startdate.$t,
-								"endDate": 							dd.gsx$enddate.$t,
-					            "headline": 						dd.gsx$headline.$t,
-					            "text": 							dd.gsx$text.$t,
-					            "asset": {
-									"media": 						dd.gsx$media.$t,
-									"credit": 						dd.gsx$mediacredit.$t,
-									"caption": 						dd.gsx$mediacaption.$t
-								},
-					            "tag": 								""
-							};
-							if (typeof dd.gsx$tag != 'undefined') {
-								_date.tag				= dd.gsx$tag.$t;
-							}
-							if (typeof dd.gsx$tag != 'undefined') {
-								_date.asset.thumbnail	= dd.gsx$mediathumbnail.$t;
+							//trace(cell);
+							
+							if (cell.row == 1) {
+								if (cell.content == "Start Date") {
+									column_name = "startDate";
+								} else if (cell.content == "End Date") {
+									column_name = "endDate";
+								} else if (cell.content == "Headline") {
+									column_name = "headline";
+								} else if (cell.content == "Text") {
+									column_name = "text";
+								} else if (cell.content == "Media") {
+									column_name = "media";
+								} else if (cell.content == "Media Credit") {
+									column_name = "credit";
+								} else if (cell.content == "Media Caption") {
+									column_name = "caption";
+								} else if (cell.content == "Media Thumbnail") {
+									column_name = "thumbnail";
+								} else if (cell.content == "Type") {
+									column_name = "type";
+								} else if (cell.content == "Tag") {
+									column_name = "tag";
+								}
+								
+								cellnames.push(column_name);
+								
+							} else {
+								cell.name = cellnames[cell.col];
+								list[cell.row][cell.name] = cell.content;
 							}
 							
-							_data_obj.timeline.date.push(_date);
+						};
+						
+
+						for(i = 0; i < list.length; i++) {
+							var date	= list[i];
+							
+							if (date.type.match("start") || date.type.match("title") ) {
+								data_obj.timeline.startDate		= date.startDate;
+								data_obj.timeline.headline		= date.headline;
+								data_obj.timeline.asset.media	= date.media;
+								data_obj.timeline.asset.caption	= date.caption;
+								data_obj.timeline.asset.credit	= date.credit;
+								data_obj.timeline.text			= date.text;
+								data_obj.timeline.type			= "google spreadsheet";
+							} else if (date.type.match("era")) {
+								var era = {
+									startDate:		date.startDate,
+									endDate:		date.endDate,
+									headline:		date.headline,
+									text:			date.text,
+									tag:			date.tag
+								}
+								data_obj.timeline.era.push(era);
+							} else {
+								var date = {
+										type:			"google spreadsheet",
+										startDate:		date.startDate,
+										endDate:		date.endDate,
+										headline:		date.headline,
+										text:			date.text,
+										tag:			date.tag,
+										asset: {
+											media:		date.media,
+											credit:		date.credit,
+											caption:	date.caption,
+											thumbnail:	date.thumbnail
+										}
+								};
+							
+								data_obj.timeline.date.push(date);
+							}
+							
 						}
-					};
-				
-					VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, _data_obj);
+						
+						//trace(cellnames);
+						//trace(max_row);
+						//trace(list);
+						
+					}
+					
+					if (is_valid) {
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Finished Parsing Data");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, data_obj);
+					} else {
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Unable to load Google Doc data source");
+					}
 				}
 				
 			},
@@ -231,19 +481,21 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 			storify: {
 				
 				getData: function(raw) {
+					var key, url, storify_timeout;
 					//http://storify.com/number10gov/g8-and-nato-chicago-summit
 					//http://api.storify.com/v1/stories/number10gov/g8-and-nato-chicago-summit
 					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
-					var _key = raw.split("storify.com\/")[1];
-					var _url = "http://api.storify.com/v1/stories/" + _key + "?per_page=300&callback=?";
 					
-					var storify_timeout = setTimeout(function() {
+					key	= raw.split("storify.com\/")[1];
+					url	= "http://api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
+					
+					storify_timeout = setTimeout(function() {
 						trace("STORIFY timeout");
 						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Storify is not responding");
 					}, 6000);
 					
-					VMM.getJSON(_url, VMM.Timeline.DataObj.model.storify.buildData)
+					VMM.getJSON(url, VMM.Timeline.DataObj.model.storify.buildData)
 						.error(function(jqXHR, textStatus, errorThrown) {
 							trace("STORIFY error");
 							trace("STORIFY ERROR: " + textStatus + " " + jqXHR.responseText);

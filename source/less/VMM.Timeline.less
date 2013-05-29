@@ -2,18 +2,10 @@
 	TIMELINE CSS
 	
 	Designed and built by Zach Wise at VeriteCo
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    http://www.gnu.org/licenses/
+	
+	This Source Code Form is subject to the terms of the Mozilla Public
+	License, v. 2.0. If a copy of the MPL was not distributed with this
+	file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 */
 
@@ -21,10 +13,17 @@
 ----------------------------------------------------- */
 	//GFX
 	.base-sprite() {
-		background-image: url(timeline.png?v3.4);
+		background-image: url(timeline.png?v4.4);
+	}
+	.base-sprite2x() {
+		background-image: url(timeline@2x.png?v4.4);
+		background-size: 352px 260px; 
 	}
 	.loading-sprite() {
 		background-image: url(loading.gif?v3.4);
+	}
+	.loading-sprite2x() {
+		background-image: url(loading@2x.gif?v3.4);
 	}
 	
 	// COLORS
@@ -37,31 +36,18 @@
 	@color-dark-fourth: 			#999;
 	@color-dark-fifth: 				#E3E3E3;
 	@color-background-dark:			#E9E9E9;
+	
 	// COLOR THEME
 	@color-theme:					#08C;	//#FF3712; //#FF0000;
 	
 /*	BASE
 ----------------------------------------------------- */
 
-// CSS Reset
-@import "Reset.less";
+// CSS CORE
+@import "Core/VMM.Core.less";
 
-// Core variables and mixins
-@import "Font.Default.less";
-@import "Variables.less";
-@import "Mixins.less"; 
-@import "GFX.less";
-
-// Grid system and page structure
-@import "VMM.Timeline.Core.less";
-@import "VMM.Slider.less";
+// Timeline Specific
 @import "VMM.Timeline.TimeNav.less";
-
-// Typography
-@import "Typography.less";
-
-// Grid system and page structure
-@import "VMM.Timeline.Tooltip.less";
 
 
 /* MEDIA QUERIES
@@ -69,67 +55,65 @@
 
 /* Mobile and iPhone
 ================================================== */
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
+
+/* Non-Retina */
+@media screen and (-webkit-max-device-pixel-ratio: 1) {
 	
 }
 
-/* BELOW 600px
-================================================== */
+/* Retina */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (min--moz-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
 
-@media (max-width: 600px) {
-	.slider {
-		.slider-item {
-			.content {
-				.content-container {
-					display:block;
-					.text {
-						width:100%;
-						max-width:100%;
-						min-width:120px;
-						display:block;
-						.container {
-							display:block;
-							-webkit-hyphens:auto;
-							   -moz-hyphens:auto;
-							    -ms-hyphens:auto;
-							        hyphens:auto;
-							word-wrap:break-word;
-							
-						}
-					}
-					.media {
-						width:100%;
-						min-width:50%;
-						float: none;
-						.media-wrapper {
-							margin-left:0px;
-							margin-right:0px;
-							width:100%;
-							display:block;
-							.media-container {
-								img, iframe {
-									//width:100%;
-									//max-height:350px;
-								}
-							}
-						}
-					}
-					.media.text-media {
-						.media-wrapper {
-							.media-container {
-								border: none;
-							}
-						}
-					}
-				}
-				.content-container.layout-text {
-					
-				}
-				.content-container.layout-media {
-					
-				}
-			}
+}
+/* iPhone Portrait
+================================================== */
+@media screen and (max-device-width: 480px) and (orientation:portrait) {
+	.storyjs-embed.full-embed {
+		height:557px !important;
+		width:320px !important;
+		.vco-feature {
+			height:356px !important;
 		}
 	}
+} 
+/* iPhone Landscape
+================================================== */
+@media screen and (max-device-width: 480px) and (orientation:landscape) {
+	.storyjs-embed.full-embed {
+		height:409px !important;
+		width:480px !important;
+		.vco-feature {
+			height:208px !important;
+		}
+	}
+}
+
+/* iPad Portrait */
+@media screen and (min-device-width: 481px) and (orientation:portrait) {
 	
+}
+
+/* iPad Landscape */
+@media screen and (min-device-width: 481px) and (orientation:landscape) {
+	
+}
+
+@media (max-width: 480px) {
+
+	
+}
+
+
+/* Skinny
+================================================== */
+@media only screen and (max-width: 480px) {
+	.storyjs-embed.full-embed {
+		//max-width: 480px !important;
+	}
+	.vco-timeline {
+		//max-width: 480px !important;
+		.vco-slider {
+		
+		}
+	}
 }

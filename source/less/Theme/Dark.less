@@ -2,19 +2,11 @@
 	TIMELINE CSS
 	
 	Designed and built by Zach Wise at VeriteCo
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    http://www.gnu.org/licenses/
-
+	
+	This Source Code Form is subject to the terms of the Mozilla Public
+	License, v. 2.0. If a copy of the MPL was not distributed with this
+	file, You can obtain one at http://mozilla.org/MPL/2.0/.
+	
 */
 
 /*	THEME DARK
@@ -23,8 +15,14 @@
 	.base-sprite() {
 		background-image: url(themes/timeline-dark.png?v3.4);
 	}
+	.base-sprite2x() {
+		background-image: url(themes/timeline-dark@2x.png?v4.3);
+	}
 	.loading-sprite() {
 		background-image: url(themes/loading.gif?v3.4);
+	}
+	.loading-sprite2x() {
+		background-image: url(themes/loading@2x.gif?v3.4);
 	}
 	
 	// COLORS
@@ -43,93 +41,8 @@
 /*	BASE
 ----------------------------------------------------- */
 
-// CSS Reset
-@import "../Reset.less";
+// CSS CORE
+@import "../Core/VMM.Core.less";
 
-// Core variables and mixins
-@import "../Font.Default.less";
-@import "../Variables.less";
-@import "../Mixins.less"; 
-@import "../GFX.less";
-
-// Grid system and page structure
-@import "../VMM.Timeline.Core.less";
-@import "../VMM.Slider.less";
+// Timeline Specific
 @import "../VMM.Timeline.TimeNav.less";
-
-// Typography
-@import "../Typography.less";
-
-// Grid system and page structure
-@import "../VMM.Timeline.Tooltip.less";
-
-
-/* MEDIA QUERIES
-================================================== */
-
-/* Mobile and iPhone
-================================================== */
-@media only screen and (max-width: 480px), only screen and (max-device-width: 480px) {
-	
-}
-
-/* BELOW 600px
-================================================== */
-
-@media (max-width: 600px) {
-	.slider {
-		.slider-item {
-			.content {
-				.content-container {
-					display:block;
-					.text {
-						width:100%;
-						max-width:100%;
-						min-width:120px;
-						display:block;
-						.container {
-							display:block;
-							-webkit-hyphens:auto;
-							   -moz-hyphens:auto;
-							    -ms-hyphens:auto;
-							        hyphens:auto;
-							word-wrap:break-word;
-							
-						}
-					}
-					.media {
-						width:100%;
-						min-width:50%;
-						float: none;
-						.media-wrapper {
-							margin-left:0px;
-							margin-right:0px;
-							width:100%;
-							display:block;
-							.media-container {
-								img, iframe {
-									//width:100%;
-									//max-height:350px;
-								}
-							}
-						}
-					}
-					.media.text-media {
-						.media-wrapper {
-							.media-container {
-								border: none;
-							}
-						}
-					}
-				}
-				.content-container.layout-text {
-					
-				}
-				.content-container.layout-media {
-					
-				}
-			}
-		}
-	}
-	
-}
