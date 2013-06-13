@@ -522,28 +522,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		function ie7Build() {
-			trace("IE7 or lower");
-			for(var i = 0; i < _dates.length; i++) {
-				trace(_dates[i]);
-				/*
-				var st	= VMM.Date.prettyDate(data.startdate);
-				var en	= VMM.Date.prettyDate(data.enddate);
-				var tag	= "";
-				if (data.tag != null && data.tag != "") {
-					tag		= VMM.createElement("span", data.tag, "slide-tag");
-				}
-						
-				if (st != en) {
-					c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
-				} else {
-					c.text += VMM.createElement("h2", st + tag, "date");
-				}
-				*/
-				
-			}
-		};
-		
 		function updateSize() {
 			trace("UPDATE SIZE");
 			config.width = VMM.Lib.width($timeline);
