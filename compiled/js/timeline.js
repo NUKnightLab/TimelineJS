@@ -1277,6 +1277,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				};
 				
 			if (type.of(d) == "date") {
+				trace("DEBUG THIS, ITs A DATE");
 				date = d;
 			} else {
 				date = new Date(0, 0, 1, 0, 0, 0, 0);
@@ -1398,7 +1399,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						p.second = true;
 						p.millisecond = true;
 					}
-				} else if (d.length <= 5) {
+				} else if (d.length <= 8) {
 					p.year = true;
 					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
@@ -1446,6 +1447,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						
 					} else {
 						date = new Date(Date.parse(d));
+						p.year = true;
+						p.month = true;
+						p.day = true;
+						p.hour = true;
+						p.minute = true;
+						p.second = true;
+						p.millisecond = true;
 					}
 				} else {
 					p.year = true;
@@ -2899,6 +2907,11 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			},
 			
+			errorTimeOutOembed: function(tweet) {
+				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
+				VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage("Still waiting on Twitter: " + tweet.mid) );
+			},
+			
 			pushQue: function() {
 				if (VMM.master_config.twitter.que.length > 0) {
 					VMM.ExternalAPI.twitter.create(VMM.master_config.twitter.que[0], VMM.ExternalAPI.twitter.pushQue);
@@ -2908,7 +2921,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						
 			getOEmbed: function(tweet, callback) {
 				
-				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?";
+				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
+					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOutOembed, VMM.master_config.timers.api, tweet);
+					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
 				
 				VMM.getJSON(the_url, function(d) {
 					var twit	= "",
@@ -2936,9 +2951,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				.error(function(jqXHR, textStatus, errorThrown) {
 					trace("TWITTER error");
 					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
+					clearTimeout(twitter_timeout);
+					//clearTimeout(callback_timeout);
 					VMM.attachElement("#"+tweet.id, VMM.MediaElement.loadingmessage("ERROR LOADING TWEET " + tweet.mid) );
 				})
 				.success(function(d) {
+					clearTimeout(twitter_timeout);
+					clearTimeout(callback_timeout);
 					callback();
 				});
 				
