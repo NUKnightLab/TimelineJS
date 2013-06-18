@@ -1277,6 +1277,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				};
 				
 			if (type.of(d) == "date") {
+				trace("DEBUG THIS, ITs A DATE");
 				date = d;
 			} else {
 				date = new Date(0, 0, 1, 0, 0, 0, 0);
@@ -1398,7 +1399,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						p.second = true;
 						p.millisecond = true;
 					}
-				} else if (d.length <= 5) {
+				} else if (d.length <= 8) {
 					p.year = true;
 					date.setFullYear(parseInt(d, 10));
 					date.setMonth(0);
@@ -1446,6 +1447,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						
 					} else {
 						date = new Date(Date.parse(d));
+						p.year = true;
+						p.month = true;
+						p.day = true;
+						p.hour = true;
+						p.minute = true;
+						p.second = true;
+						p.millisecond = true;
 					}
 				} else {
 					p.year = true;
@@ -2824,9 +2832,14 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var id				= tweet.mid.toString(),
 					error_obj		= { twitterid: tweet.mid },
-					the_url			= "http://api.twitter.com/1/statuses/show.json?id=" + tweet.mid + "&include_entities=true&callback=?",
-					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, tweet),
-					callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
+					the_url			= "http://api.twitter.com/1/statuses/show.json?id=" + tweet.mid + "&include_entities=true&callback=?";
+					//twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, tweet),
+					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
+				
+				VMM.ExternalAPI.twitter.getOEmbed(tweet, callback);
+				
+				/*
+				// Disabled thanks to twitter's new api
 				
 				VMM.getJSON(the_url, function(d) {
 					var id		= d.id_str,
@@ -2871,6 +2884,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					callback();
 				});
 				
+				*/
 			},
 			
 			errorTimeOut: function(tweet) {
@@ -2893,18 +2907,65 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 			},
 			
+			errorTimeOutOembed: function(tweet) {
+				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
+				VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage("Still waiting on Twitter: " + tweet.mid) );
+			},
+			
 			pushQue: function() {
 				if (VMM.master_config.twitter.que.length > 0) {
 					VMM.ExternalAPI.twitter.create(VMM.master_config.twitter.que[0], VMM.ExternalAPI.twitter.pushQue);
 					VMM.master_config.twitter.que.remove(0);
 				}
 			},
-			
-			
+						
+			getOEmbed: function(tweet, callback) {
+				
+				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
+					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOutOembed, VMM.master_config.timers.api, tweet);
+					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
+				
+				VMM.getJSON(the_url, function(d) {
+					var twit	= "",
+						tuser	= "";
+					
+					
+					//	TWEET CONTENT
+					twit += d.html.split("<\/p>\&mdash;")[0] + "</p></blockquote>";
+					tuser = d.author_url.split("twitter.com\/")[1];
+					
+					
+					//	TWEET AUTHOR
+					twit += "<div class='vcard author'>";
+					twit += "<a class='screen-name url' href='" + d.author_url + "' target='_blank'>";
+					twit += "<span class='avatar'></span>";
+					twit += "<span class='fn'>" + d.author_name + "</span>";
+					twit += "<span class='nickname'>@" + tuser + "<span class='thumbnail-inline'></span></span>";
+					twit += "</a>";
+					twit += "</div>";
+					
+					VMM.attachElement("#"+tweet.id.toString(), twit );
+					VMM.attachElement("#text_thumb_"+tweet.id.toString(), d.html );
+					VMM.attachElement("#marker_content_" + tweet.id.toString(), d.html );
+				})
+				.error(function(jqXHR, textStatus, errorThrown) {
+					trace("TWITTER error");
+					trace("TWITTER ERROR: " + textStatus + " " + jqXHR.responseText);
+					clearTimeout(twitter_timeout);
+					//clearTimeout(callback_timeout);
+					VMM.attachElement("#"+tweet.id, VMM.MediaElement.loadingmessage("ERROR LOADING TWEET " + tweet.mid) );
+				})
+				.success(function(d) {
+					clearTimeout(twitter_timeout);
+					clearTimeout(callback_timeout);
+					callback();
+				});
+				
+			},
 			
 			getHTML: function(id) {
 				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
-				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
+				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&omit_script=true&include_entities=true&callback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.onJSONLoaded);
 			},
 			
@@ -3095,7 +3156,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					api_key = Aes.Ctr.decrypt(VMM.ExternalAPI.keys_master.google, VMM.ExternalAPI.keys_master.vp, 256);
 				}
 				
-				map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				
+				/*
+					Investigating a google map api change on the latest release that causes custom map types to stop working
+					http://stackoverflow.com/questions/13486271/google-map-markermanager-cannot-call-method-substr-of-undefined
+					soulution is to use api ver 3.9
+				*/
+				map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&v=3.9&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
 				
 				if (VMM.master_config.googlemaps.active) {
 					VMM.master_config.googlemaps.que.push(m);
@@ -3581,7 +3648,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
 				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
 			},
-						
+									
 			map_providers: {
 				"toner": {
 					"url": 			"http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
@@ -4840,6 +4907,7 @@ if(typeof VMM != 'undefined' && typeof VMM.DragSlider == 'undefined') {
 		
 		function onDragMove(e) {
 			dragMove(e.data.element, e);
+			
 		}
 		
 		function dragStart(elem, delem, e) {
@@ -7352,28 +7420,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 			
 			
-		};
-		
-		function ie7Build() {
-			trace("IE7 or lower");
-			for(var i = 0; i < _dates.length; i++) {
-				trace(_dates[i]);
-				/*
-				var st	= VMM.Date.prettyDate(data.startdate);
-				var en	= VMM.Date.prettyDate(data.enddate);
-				var tag	= "";
-				if (data.tag != null && data.tag != "") {
-					tag		= VMM.createElement("span", data.tag, "slide-tag");
-				}
-						
-				if (st != en) {
-					c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
-				} else {
-					c.text += VMM.createElement("h2", st + tag, "date");
-				}
-				*/
-				
-			}
 		};
 		
 		function updateSize() {
