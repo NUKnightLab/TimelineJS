@@ -17,6 +17,7 @@ module.exports = function(grunt) {
     
     // cdn configuation
     cdn: {
+        repo: '../cdn.knightlab.com',
         path: path.join('..', 'cdn.knightlab.com', 'apps', 'libs', 'timeline')
     },
 
@@ -78,16 +79,25 @@ module.exports = function(grunt) {
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
   // Task aliases
-  grunt.registerTask('check-for-cdn', 'Check for the timeline.knightlab.com repository', function() {
+  grunt.registerTask('check-for-website', 'Check for the website repository', function() {
     // Make sure CDN repo exists
     if(!grunt.file.exists(grunt.config.get('timeline.website'))) {
         grunt.fatal('Could not find local website repository.')
     }
   });
+  grunt.registerTask('check-for-cdn', 'Check for the cdn.knightlab.com repository', function() {
+    // Make sure CDN repo exists
+    if(!grunt.file.exists(grunt.config.get('cdn.repo'))) {
+        grunt.fatal('Could not find local cdn repository.')
+    }
+  });
 
   // Define complex tasks
-  grunt.registerTask('website', "Copy select files to the timeline.knightlab.com website repository", ['check-for-cdn', 'copy:website']);
-  grunt.registerTask('stage', "Stage the release for deployment to the CDN", ['check-for-cdn', 'clean:stg', 'copy:stg']);
-  grunt.registerTask('stage-latest', "Stage the release for deployment to the CDN, and copy it to the latest directory", ['stage', 'clean:stgLatest', 'copy:stgLatest']);
+  grunt.registerTask('website', "Copy select files to the timeline.knightlab.com website repository", 
+    ['check-for-website', 'copy:website']);
+  grunt.registerTask('stage', "Stage the release for deployment to the CDN", 
+    ['check-for-cdn', 'clean:stg', 'copy:stg']);
+  grunt.registerTask('stage-latest', "Stage the release for deployment to the CDN, and copy it to the latest directory", 
+    ['stage', 'clean:stgLatest', 'copy:stgLatest']);
   
 };
