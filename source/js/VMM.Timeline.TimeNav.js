@@ -707,6 +707,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				cur_mark				= 0,
 				in_view_margin			= config.width,
 				pos_cache_array			= [],
+				pos_cache_obj			= {id: i, pos: 0, row: 0, marker: 0},
 				pos_cache_max			= 6,
 				in_view = {
 					left:				timenav_pos.visible.left - in_view_margin,
@@ -728,7 +729,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					pos					= positionOnTimeline(interval, markers[i].relative_pos),
 					row_pos				= 0,
 					is_in_view			= false,
-					pos_cache_obj		= {id: i, pos: 0, row: 0},
+					
 					pos_cache_close		= 0;
 				
 				
@@ -776,6 +777,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				
 				// CONTROL ROW POSITION
 				if (tags.length > 0) {
+					var need_half_row =		false,
+						half_row_number = 	0;
 					
 					for (k = 0; k < tags.length; k++) {
 						if (k < config.nav.rows.current.length) {
@@ -785,10 +788,35 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 									trace("ON LAST ROW");
 									VMM.Lib.addClass(marker.flag, "flag-small-last");
 								}
+								
+								// Experimental, to try and avoid too much stacking on tagged flags
+								if (pos.begin - previous_pos.begin < 5) {
+									if (pos_cache_obj.row == row) {
+										trace("TAGGED FLAG TOO CLOSE ON SAME ROW");
+										trace(pos_cache_obj.row);
+										trace(row);
+										VMM.Lib.addClass(marker.flag, "flag-small");
+										VMM.Lib.addClass(pos_cache_obj.marker.flag, "flag-small");
+										
+										if (row < config.nav.rows.half.length - 1) {
+											//row ++;
+											half_row_number = (row *2) + 1;
+											need_half_row = true;
+										}
+									}
+								} else {
+									VMM.Lib.removeClass(marker.flag, "flag-small");
+								}
+								// END Experimental
+								
 							}
 						}
 					}
-					row_pos = config.nav.rows.current[row];
+					if (need_half_row) {
+						row_pos = config.nav.rows.half[half_row_number];
+					} else {
+						row_pos = config.nav.rows.current[row];
+					}
 				} else {
 					
 					if (pos.begin - previous_pos.begin < (config.nav.marker.width + config.spacing)) {
@@ -813,6 +841,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				// POSITION CACHE
 				pos_cache_obj.pos = pos;
 				pos_cache_obj.row = row;
+				pos_cache_obj.marker = marker;
+				
 				pos_cache_array.push(pos_cache_obj);
 				if (pos_cache_array.length > pos_cache_max) {
 					pos_cache_array.remove(0);
@@ -1416,6 +1446,49 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			trace("INTERVAL TYPE: " + interval.type);
 			trace("INTERVAL MAJOR TYPE: " + interval_major.type);
 			
+			// OVERRIDE INTERVAL USING CONFIG
+			if (config.nav.interval_override) {
+				trace("INTERVAL OVERRIDE");
+				if (config.nav.interval_override == "centuries") {
+					interval					=		interval_calc.century;
+					interval_major				=		interval_calc.millenium;
+					interval_macro				=		interval_calc.decade;
+				} else if (config.nav.interval_override == "decades") {
+					interval					=		interval_calc.decade;
+					interval_major				=		interval_calc.century;
+					interval_macro				=		interval_calc.year;
+				} else if (config.nav.interval_override == "years") {	
+					interval					=		interval_calc.year;
+					interval_major				=		interval_calc.decade;
+					interval_macro				=		interval_calc.month;
+				} else if (config.nav.interval_override == "months") {
+					interval					=		interval_calc.month;
+					interval_major				=		interval_calc.year;
+					interval_macro				=		interval_calc.day;
+				} else if (config.nav.interval_override == "days") {
+					interval					=		interval_calc.day;
+					interval_major				=		interval_calc.month;
+					interval_macro				=		interval_calc.hour;
+				} else if (config.nav.interval_override == "hours") {
+					interval					=		interval_calc.hour;
+					interval_major				=		interval_calc.day;
+					interval_macro				=		interval_calc.minute;
+				} else if (config.nav.interval_override == "minutes") {
+					interval					=		interval_calc.minute;
+					interval_major				=		interval_calc.hour;
+					interval_macro				=		interval_calc.second;
+				} else if (config.nav.interval_override == "seconds") {
+					interval					=		interval_calc.second;
+					interval_major				=		interval_calc.minute;
+					interval_macro				=		interval_calc.second;
+				} else {
+					trace("NO IDEA WHAT THE TYPE SHOULD BE");
+					interval					=		interval_calc.day;
+					interval_major				=		interval_calc.month;
+					interval_macro				=		interval_calc.hour;
+				}
+			}
+			
 			createIntervalElements(interval, interval_array, $timeinterval);
 			createIntervalElements(interval_major, interval_major_array, $timeintervalmajor);
 			
@@ -1465,8 +1538,15 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				_marker_thumb			= "";
 				
 				// THUMBNAIL
+				trace(data[i].asset);
+				trace(data[i].asset.thumbnail);
 				if (data[i].asset != null && data[i].asset != "") {
-					VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 24, 24, data[i].uniqueid));
+					if (data[i].asset.thumbnail != null && data[i].asset.thumbnail != "") {
+						trace("HAS THUMBNAIL");
+						VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 24, 24, data[i].uniqueid));
+					} else {
+						VMM.appendElement(_marker_content, VMM.MediaElement.thumbnail(data[i].asset, 24, 24, data[i].uniqueid));
+					}
 				} else {
 					VMM.appendElement(_marker_content, "<div style='margin-right:7px;height:50px;width:2px;float:left;'></div>");
 				}
