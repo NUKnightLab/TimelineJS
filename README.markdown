@@ -135,6 +135,7 @@ as JSONP, otherwise, we will append `?callback=onJSONP_Data`. See more details b
 Localization
 *default is `en` English*
 Languages available:
+* `af` *Afrikaans*
 * `ar` *Arabic (beta)*
 * `bg` *Bulgarian*
 * `ca` *Catalan*
@@ -143,6 +144,7 @@ Languages available:
 * `de` *German / Deutsch*
 * `el` *Greek*
 * `en` *English*
+* `en-24hr` *English using 24hr time*
 * `es` *Spanish*
 * `eu` *Basque/ Euskara*
 * `fi` *Finnish*
