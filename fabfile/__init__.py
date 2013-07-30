@@ -14,6 +14,7 @@ from fabric.decorators import task
 from fabric.operations import prompt
 from fabric.utils import puts, abort, warn
 
+env.debug = False
 
 #
 # Set paths
