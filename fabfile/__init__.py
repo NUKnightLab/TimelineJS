@@ -186,28 +186,27 @@ def _render_templates(src_path, dst_path):
 #  build steps
 #
 
-def banner(path):
+def banner(conf):
     """
     Place banner at top of js and css files in-place.    
     """
-    banner = BANNER % CONFIG
+    _banner_text = BANNER % CONFIG
    
-    if type(path) == list:
-        for item in path:
-            _banner(item)
-    elif os.path.isdir(path):
-        for item in [join(path, x) for x in os.listdir(path)]:
-            _banner(item)
-    elif os.path.exists(path):
-        if re.match('.*\.(css|js)$', path):        
-            with open(path, 'r+') as fd:
+    def _do(file_path):
+        puts('  %s' % file_path)  
+        with open(file_path, 'r+') as fd:
                 s = fd.read()
                 fd.seek(0)
-                fd.write(banner+s)
-    else:
-        warn('%s does not exist' % path)
+            fd.write(_banner_text+s)
 
-
+    for r in conf:
+        src = join(env.project_path, r)
+        puts('banner: %s' % src)
+        if os.path.isdir(src):
+            for f in _match_files(src, '.*\.(css|js)$'):
+                _do(join(src, f))
+        else:
+            _do(src)
 
 def concat(conf):
     """
