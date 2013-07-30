@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+	88888888888 d8b                        888 d8b                888888   d8888b  
+	    888     Y8P                        888 Y8P                   88b d88P  Y88b 
+	    888                                888                       888 Y88b
+	    888     888 88888b d88b     d88b   888 888 88888b     d88b   888   Y888b
+	    888     888 888  888  88b d8P  Y8b 888 888 888  88b d8P  Y8b 888      Y88b
+	    888     888 888  888  888 88888888 888 888 888  888 88888888 888        888 
+	    888     888 888  888  888 Y8b      888 888 888  888 Y8b      88P Y88b  d88P 
+	    888     888 888  888  888   Y8888  888 888 888  888   Y8888  888   Y8888P
+	                                                                d88P            
+	                                                              d88P             
+	                                                            888P              
+ -->
+<head>
+    {% block header %}
+    <title>Timeline JS - Beautifully crafted timelines that are easy, and intuitive to use.</title>
+    <meta name="description" content="Beautifully crafted timelines that are easy, and intuitive to use.">
+    {% endblock %}
+
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="author" content="Zach Wise">
+	<link rel="shortcut icon" href="{{ static_url }}/favicon.ico"> 
+    <link href="//cloud.webtype.com/css/d4767ecb-457a-4677-8761-72f890add836.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="http://cdn.knightlab.com/libs/blueline/latest/css/blueline.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ static_url }}/css/site.css">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="100">
+
+	<!-- Nav-->
+
+ <div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+        <a href="#" class="brand">Timeline JS</a>
+        <div class="nav-collapse navbar-responsive-collapse collapse" style="height: 0px;">
+          <ul class="nav">
+            <li><a href="#overview" data-scroll="true">Overview</a></li>
+            <li><a href="#description" data-scroll="true">Description</a></li>
+            <li><a href="#examples" data-scroll="true">Examples</a></li>
+            <li><a href="#help" data-scroll="true">Help</a></li>
+          </ul>
+          <ul class="nav pull-right">
+            <li class="knightlab-tab"><a data-toggle="preheader" href="http://knightlab.northwestern.edu" title="Northwesten University Knight Lab"><span>Northwestern University Knight Lab</span></a></li>
+            <!--for local testing add: data-target="/source/preheader.html" -->
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div>
+    </div><!-- /navbar-inner -->
+  </div>
+	{% block content %}
+	{% endblock %}
+	<!-- BEGIN FOOTER -->
+  <footer>
+    <div class="clearfix" id="footer">
+      <div id="footer-wrapper" class="row-fluid">           
+        <div class="span4">
+          <address itemtype="http://data-vocabulary.org/Organization" itemscope="">
+            <span title="Knight Lab | Advancing news media innovation through exploration and experimentation." class="address-name" itemprop="name">Knight Lab</span>
+            <span itemtype="http://data-vocabulary.org/Address" itemscope="" class="address" itemprop="address">
+              <span class="street-address" itemprop="street-address">1845 Sheridan Road<br>Fisk #109 &amp; #111</span>, 
+              <div class="address-group">
+                <span itemprop="locality">Evanston</span>, 
+                <span itemprop="region">IL</span>. <span itemprop="postal-code">60208</span><br>
+                <a class="map" target="_blank" href="https://maps.google.com/maps?q=1845+Sheridan+Road+Evanston+IL+6020&amp;hl=en&amp;ll=42.050942,-87.673511&amp;spn=0.003059,0.004898&amp;sll=42.050647,-87.674246&amp;sspn=0.012237,0.019591&amp;gl=us&amp;hnear=1845+Sheridan+Rd,+Evanston,+Cook,+Illinois+60201&amp;t=m&amp;z=18&amp;iwloc=A"><i>+</i> <span>map</span></a>
+                <span class="address-country" itemprop="country-name">United States</span>
+              </div>
+            </span>
+            <span itemtype="http://www.data-vocabulary.org/Geo/" itemscope="" class="geo" itemprop="geo">
+                Latitude: <span itemprop="latitude">42.056893</span>
+                Longitude: <span itemprop="longitude">-87.676735</span>
+            </span>
+            <span class="tel" itemprop="tel">(847) 467-4971</span>
+            <a itemprop="url" href="http://knightlab.northwestern.edu" class="url">Northwestern University Knight Lab | Advancing media innovation through exploration and experimentation.</a> 
+          </address>
+          <ul class="social">
+            <li><a target="_blank" title="follow @knightlab on twitter" href="http://www.twitter.com/knightlab"><i class="icon-twitter-sign icon-large"></i></a></li>
+            <li><a target="_blank" title="Knight Lab on Facebook" href="https://www.facebook.com/knightlab"><i class="icon-facebook-sign icon-large"></i></a></li>
+            <li><a title="email Knight Lab" href="mailto:Knightlab@northwestern.edu"><i class="icon-sign-blank icon-large iconemail"></i></a></li>
+            <li><a target="_blank" title="Knight Lab on github" href="https://github.com/NUKnightLab/"><i class="icon-github-sign icon-large"></i></a></li>
+            <li><a target="_blank" title="Knight Lab on Tumblr" href="http://knightlab.tumblr.com/"><i class="icon-sign-blank icon-large icontumblr"></i></a></li>
+          </ul>
+        </div>
+
+        <div class="span8">
+          <ul class="logos clearfix">
+            <li><a title="John S. and James L. Knight Foundation" href="http://www.knightfoundation.org/" class="knightfoundation"><span>John S. and James L. Knight Foundation</span></a></li>
+            <li><a title="National Science Foundation" href="http://www.nsf.gov/" class="nsf"><span>National Science Foundation</span></a></li>
+            <li><a title="Robert R. McCormick Foundation" href="http://www.mccormickfoundation.org/" class="mccormickfound"><span>Robert R. McCormick Foundation</span></a></li>
+            <li><a title="Northwestern University" href="http://www.northwestern.edu/" class="northwestern"><span>Northwestern University</span></a></li>
+            <li><a title="McCormick School of Engineering | Northwestern University" href="http://www.mccormick.northwestern.edu/" class="mccormick"><span>McCormick School of Engineering | Northwestern University</span></a></li>
+            <li><a title="Medill School of Journalism | Northwestern University" href="http://www.medill.northwestern.edu" class="medill"><span>Medill School of Journalism | Northwestern University</span></a></li>
+          </ul>
+          <div class="notes">
+            <p><a target="_blank" href="http://www.northwestern.edu/" title="Northwestern University">Northwestern University</a> Knight Lab is a joint initiative of the <a href="http://www.mccormick.northwestern.edu/">Robert R. McCormick School of Engineering and Applied Science</a> and the<a href="http://www.medill.northwestern.edu/"> Medill School of Journalism, Media, Integrated Marketing Communications</a>.</p>
+            <p>The Lab was launched and is sustained by a grant from the <a href="http://www.knightfoundation.org/">John S. and James L. Knight Foundation</a>, with additional support from the<a href="http://www.mccormickfoundation.org/"> Robert R. McCormick Foundation</a> and the<a href="http://www.nsf.gov/"> National Science Foundation</a>.</p>
+          </div>
+        </div>
+        <div class="copyright">
+          &copy; Copyright 2013 <span title="Knight Lab">Northwestern University</span>
+        </div>
+      </div><!-- end #footer-wrapper -->
+    </div><!-- end #footer -->
+    <div id="footer-outer"></div>
+  </footer>
+  <!-- END FOOTER -->
+
+	{% block scripts %}
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://cdn.knightlab.com/libs/blueline/latest/js/blueline.min.js"></script>
+    <!-- Override auto-setting of generator embed path -->
+    <script type="text/javascript">
+        var generator_embed_path = "http://cdn.knightlab.com/libs/timeline/latest/embed/index.html";
+    </script>
+    <!-- build:js http://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed-generator.js -->
+    <script type="text/javascript">
+        var generator_embed_path = "/source/embed/index.html";
+    </script>
+    <script src="/build/js/storyjs-embed-generator.js"></script>
+    <!-- endbuild -->
+    <script src="{{ static_url }}/js/main.js"></script>
+	{% endblock %}
+</body>
+</html>

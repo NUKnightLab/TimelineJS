@@ -1,0 +1,328 @@
+
+{
+    "timeline":
+    {
+        "headline":"Elizabeth Taylor<br/> 1932-2011",
+		"startDate":"1932",
+        "text":"<p>The actress,renowned for her beauty, talent and eventful personal life, was one of the last stars left from Hollywood's golden age. A look at some of the milestones in her life.</p><p>This is demo prototype of this timeline tool. The test content orginates from The New York Time's interactive feature <br/><a href='http://www.nytimes.com/interactive/2011/03/23/movies/20110323-ELIZABETH-TAYLOR-TIMELINE.html' onclick = 'void(0)'>Elizabeth Taylor: 1932-2011</a>.</p>",
+        "type":"default",
+		"asset":
+        {
+            "media":"examples/taylor/born.jpg",
+            "credit":"",
+            "caption":""
+        },
+		"date": [
+            {
+                "startDate":"2011,3,23",
+                "headline":"Elizabeth Taylor Dies in Los Angeles",
+                "asset":
+                {
+                    "media":"examples/taylor/final.jpg",
+                    "credit":"",
+                    "caption":"She died of congestive heart failure at Cedars-Sinai Hospital in Los Angeles."
+                },
+                "tags":"Personal life"
+            },
+            {
+                "startDate":"2004,11,1",
+                "headline":"Reveals Congestive Heart Failure",
+                "text":"Ms. Taylor disclosed that she had congestive heart failure,a disorder in which the heart ",
+                "related":"",
+                "tags":"Personal life"
+            },
+            {
+                "startDate":"2003,1,1",
+                "headline":"Retires from Acting",
+                "text":"Ms. Taylor, whose output steadily decreased beginning in the 1980s, announced her retirement from acting in 2003, saying she preferred to focus on her AIDS charity work.",
+                "asset":
+                {
+                    "media":"examples/taylor/retire.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"2002,1,1",
+                "headline":"Receives Kennedy Center Honor",
+                "text":"Ms. Taylor received a John F. Kennedy Center Honor in 2002.",
+                "asset":
+                {
+                    "media":"examples/taylor/kennedy.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Personal life, Career"
+            },
+            {
+                "startDate":"1999,12,1",
+                "headline":"Introducing Dame Elizabeth Taylor",
+                "text":"Ms. Taylor, a dual citizen of England and the United States, was appointed by Queen Elizabeth II as a Dame Commander of the Order of the British Empire.",
+                "asset":
+                {
+                    "media":"examples/taylor/dame.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Personal life, Career"
+            },
+            {
+                "startDate":"1999,1,1",
+                "headline":"Named a Top Hollywood Legend by AFI",
+                "text":"Ms. Taylor was listed seventh on the American Film Institute's list of the greatest American female screen legends.",
+                "tags":"Career"
+            },
+            {
+                "startDate":"1991,10,6",
+                "headline":"Marries Larry Fortensky",
+				"asset":
+                {
+                    "media":"examples/taylor/fortensky.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor's eighth and final marriage was to Larry Fortensky"
+                },
+                "endDate":"1996,10,31",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1987,1,1",
+                "headline":"Debut of Perfume Line",
+                "text":"In the 1980s and 1990s, Ms. Taylor arguably became better known for her line of perfumes than her acting. Passion, her first licensed product, was released in 1987. White Diamonds followed in 1991.",
+                "asset":
+                {
+                    "media":"http://youtu.be/vjVfu8-Wp6s",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1985",
+                "headline":"AIDS Activism",
+                "text":"Ms. Taylor has been an energetic activist for AIDS-related causes.",
+                "asset":
+                {
+                    "media":"examples/taylor/aids.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "endDate":"2011,2,16",
+                "tags":"Personal life"
+            },
+            {
+                "startDate":"1981",
+                "headline":"Makes Broadway Debut",
+                "text":"Ms. Taylor made her Broadway debut in a revival of \"The Little Foxes\" by Lillian Hellman.",
+                "asset":
+                {
+                    "media":"examples/taylor/broadway.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1976,12,4",
+                "headline":"Marriage to John W. Warner",
+                "asset":
+                {
+                    "media":"examples/taylor/warner.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor's seventh marriage"
+                },
+                "endDate":"1982,11,7",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1975,10,10",
+                "headline":"Remarries Richard Burton",
+                "text":"The second installment of the couple's marriage lasted less than 10 months. Ms. Taylor was also linked to Ardeshir Zahedi, the Iranian ambassador to Washington, during this time.",
+                "asset":
+                {
+                    "media":"examples/taylor/burton-2.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "endDate":"1976,7,29",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1966,1,1",
+                "headline":"Stars in 'Who's Afraid of Virginia Woolf?'",
+                "text":"Ms. Taylor won her second Academy Award for arguably her most acclaimed role.",
+                "asset":
+                {
+                    "media":"examples/taylor/woolfe.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1964,3,15",
+                "headline":"Marries Richard Burton",
+                "asset":
+                {
+                    "media":"examples/taylor/burton.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor left Eddie Fisher and married the actor Richard Burton."
+                },
+                "endDate":"1974,6,26",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1963",
+                "headline":"Stars in 'Cleopatra'",
+                "asset":
+                {
+                    "media":"http://youtu.be/NGDyZHlHklo",
+                    "credit":"",
+                    "caption":"The opulent production was among the most expensive in cinematic history at the time."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1961,4,17",
+                "headline":"Wins First Academy Award",
+                "text":"Ms. Taylor won her first Oscar for her role in \"Butterfield 8.\"",
+                "asset":
+                {
+                    "media":"examples/taylor/oscar.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1961,1,1",
+                "headline":"Stars in 'Butterfield 8'",
+                "text":"One of Ms. Taylor's most acclaimed roles was as a call girl in the 1960 film \"Butterfield 8.\"",
+                "asset":
+                {
+                    "media":"examples/taylor/butterfield.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "endDate":"196002152034",
+                "tags":"Career"
+            },
+            {
+                "startDate":"1959,5,12",
+                "headline":"Marries Eddie Fisher",
+                "asset":
+                {
+                    "media":"examples/taylor/fisher.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor's fourth marriage."
+                },
+                "endDate":"1964,3,6",
+                "tags":"Marriages"
+            },
+            {
+                "startDate":"1957",
+                "headline":"Nominated for an Oscar",
+                "text":"Ms. Taylor received her first Academy Award nomination with a best lead actress nod for \"Raintree County, \" but she did not win. She was also nominated for best actress in \"Cat on a Hot Tin Roof\" (1958); \"Suddenly, Last Summer\" (1959); \"Butterfield 8\" (1960); and \"Who's Afraid of Virginia Woolf?\" (1966).",
+                "asset":
+                {
+                    "media":"http://youtu.be/rDk0JtQHc0A",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1957,2,2",
+                "headline":"Marries Michael Todd",
+                "asset":
+                {
+                    "media":"examples/taylor/todd.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor married Michael Todd,a film and theater producer."
+                },
+                "endDate":"1958,3,22",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1956",
+                "headline":"Stars in 'Giant'",
+                "text":"In another acclaimed early performance, Ms. Taylor starred opposite Rock Hudson and James Dean in George Stevens's epic set in Texas.",
+                "asset":
+                {
+                    "media":"examples/taylor/giant.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1954",
+                "headline":"A Ubiquitous Starlet",
+                "text":"Ms. Taylor's workload increased dramatically after \"A Place in the Sun.\" In 1954, her busiest year, she appeared in four films: \"Beau Brummell\"; \"Elephant Walk\"; \"The Last Time I Saw Paris\"; and \"Rhapsody.\"",
+                "asset":
+                {
+                    "media":"http://youtu.be/ebDVU2OjsSw",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1952",
+                "headline":"Marriage to Michael Wilding",
+                "text":"Ms. Taylor's second marriage, to Michael Wilding, an actor, also ended in divorce. They had two children: Michael Howard Wilding Jr. and Christopher Edward Wilding.",
+                "related":"",
+                "endDate":"1957,1,26",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1951",
+                "headline":"A Child Star Grows Up",
+                "text":"In the 1950s Ms. Taylor matured into adult roles and began to be considered one of the most beautiful women in the world. Her first acclaimed screen performance as an adult was as a socialite, opposite Montgomery Clift, in George Stevens's \"A Place in the Sun\" in 1951.",
+                "asset":
+                {
+                    "media":"examples/taylor/sun.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1950,5,6",
+                "headline":"Marriage to Conrad Hilton Jr.",
+                "asset":
+                {
+                    "media":"examples/taylor/hilton.jpg",
+                    "credit":"",
+                    "caption":"Ms. Taylor was married eight times to seven men."
+                },
+                "endDate":"1951,1,29",
+                "tags":"Marriages, Personal life"
+            },
+            {
+                "startDate":"1944",
+                "headline":"'National Velvet' Makes Her a Star",
+                "text":"Ms. Taylor became a child star after she played Velvet Brown in MGM's \"National Velvet.",
+                "asset":
+                {
+                    "media":"examples/taylor/velvet.jpg",
+                    "credit":"Robin Weiner\/Associated Press",
+                    "caption":"Elizabeth Taylor, with Earvin \"Magic\" Johnson, at an AIDS fundraiser in 1997."
+                },
+                "tags":"Career"
+            },
+            {
+                "startDate":"1942",
+                "headline":"Screen Debut",
+                "text":"Ms. Taylor signed her first movie contract with Universal Pictures in 1941 and made her screen debut, at age 9, the following year in \"There's One Born Every Minute.\"\nMs. Taylor signed with Metro-Goldwyn-Mayer later in 1942 after Universal canceled her contract. \"Lassie Come Home\" (1943) was her first film for MGM; the studio went on to produce most of Ms. Taylor's most notable films.",
+                "tags":"Career"
+            },
+            {
+                "startDate":"1932,2,27",
+                "headline":"Born in London",
+                "text":"<p>Elizabeth Rosemond Taylor was born in London to American parents, Sara Warmbrodt (the actress Sara Sothern) and Francis Taylor. Ms. Taylor was a dual citizen of England and the United States.\nIn 1939, when World War II began, the Taylors returned to America and eventually settled in Los Angeles.</p>",
+                "tags":"Personal life"
+            }
+        ]
+    }
+}

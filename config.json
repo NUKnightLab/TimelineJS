@@ -1,0 +1,163 @@
+//
+// timelinejs configuration 
+// 
+// All file/directory paths are relative to the project directory.
+//
+// Regular expressions must be specified in python regular expression format,
+// but backslashes must be escaped for JSON.  When used to match files, 
+// matching will take place against the the file/directory path relative to 
+// the project directory.
+//
+{
+    "name": "timeline",
+    "author": "Zach Wise",
+    //
+    // build
+    // These commands will be run the exact order in which they appear.
+    //
+    "build": {
+        //
+        // copy files
+        // input: list of objects specifying inputs and outputs
+        //      @src: source file/directory
+        //      @dst: destination file/directory
+        //      @regex: regular expression to match files (if @src is directory)
+        //
+        "copy": [
+            {   
+                "src": "source",
+                "dst": "build",
+                "regex": "css/.*\\.(png|gif)$"
+            },
+            {   
+                "src": "source/embed",
+                "dst": "build/embed"
+            }
+        ],
+        //
+        // compile less files
+        // input: list of objects specifying inputs and output
+        //      @src: source file/directory
+        //      @dst: destination file/directory
+        //      @regex: regular expression to match files (if @src is directory)
+        //
+        "lessc": [
+            {
+                "src": "source/less/VMM.Timeline.less",
+                "dst": "build/css/timeline.css"
+            },
+            {
+                "src": "source/less/Theme/Dark.less",
+                "dst": "build/css/themes/dark.css"
+            },
+            {
+                "src": "source/less/Core/Font",
+                "dst": "build/css/themes/font",
+                "regex": ".*\\.less"
+            }
+        ],
+        // 
+        // process codekit style imports on files
+        // input: list of objects specifying inputs and output
+        //      @src:    source file
+        //      @dst:    destination file
+        //
+        "process": [
+            {
+                "src": "source/js/VMM.Timeline.js",
+                "dst": "build/js/timeline.js"
+            },
+            {
+                "src": "source/js/VMM.Timeline.Min.js",
+                "dst": "build/js/timeline-min.js"
+            },
+            {
+                "src": "source/js/Core/Embed/Embed.CDN.Generator.js",
+                "dst": "build/js/storyjs-embed-generator.js"
+            },
+            {
+                "src": "source/js/Core/Embed/Embed.CDN.js",
+                "dst": "build/js/storyjs-embed-cdn.js"
+            },
+            {
+                "src": "source/js/Core/Embed/Embed.js",
+                "dst": "build/js/storyjs-embed.js"
+            }
+        ],
+        //
+        // concatenate files
+        // input: list of objects specifying inputs and output
+        //      @src:    list of source files
+        //      @dst:    destination file
+        //
+        "concat": [ ],
+        //
+        // minify files using uglifyjs
+        // input list of objects specifying inputs and output
+        //      @src:   source file/directory
+        //      @dst:   destination file/directory 
+        //      @opt:   options to pass to uglifyjs
+        //      @ext:   extension to prepend to destination file name (optional, default = none)
+        //
+        "minify": [
+            {
+                "src": "source/js/Core/Language/locale",
+                "dst": "build/js/locale",
+                "opt": "--no-seqs"
+            },
+            {
+                "src": "build/js/timeline-min.js",
+                "dst": "build/js/timeline-min.js",
+                "opt": "--no-seqs"
+            },
+            {
+                "src": "build/js/storyjs-embed-generator.js",
+                "dst": "build/js/storyjs-embed-generator.js",
+                "opt": "--no-seqs"
+            },
+            {
+                "src": "build/js/storyjs-embed-cdn.js",
+                "dst": "build/js/storyjs-embed-cdn.js",
+                "opt": "--no-seqs"
+            },
+            {
+                "src": "build/js/storyjs-embed.js",
+                "dst": "build/js/storyjs-embed.js",
+                "opt": "--no-seqs"
+            }                
+        ],
+        //
+        // process usermin style build blocks on html files
+        // input: list of files/directorys to process in-place
+        //
+        "usemin": [
+            "build/embed"      
+        ],
+        //
+        // banner-ize files
+        // input: list of file paths
+        //
+        "banner": [ ]
+    },
+    //
+    // stage
+    // copy files a versioned directory in local cdn repository
+    // input: list of objects specifying inputs and outputs
+    //      @src: source file/directory
+    //      @regex: regular expression to match files (if @src is directory)
+    "stage": [
+        {
+            "src": "build",
+            "regex": "(css|embed|js|lib)/.*"
+        }
+    ],
+    //
+    // deploy the website to S3 
+    // - render website/templates >> build/website
+    // - copy website/static >> build/website/static
+    // - run usemin on all html in build/website
+    // - sync build/website with bucket
+    "deploy": {
+        "bucket": "timeline.knightlab.com"
+    }
+}

@@ -1,0 +1,216 @@
+<!-- Make a Timeline -->
+<section id="make" class="container">
+
+  <div class="row">
+    <div class="span12">
+      <h2>Make a Timeline</h2>
+      <p>On your site or blog in no time. As easy as 1-2-3 (<a href="http://www.youtube.com/watch?v=vAWbm4gF9lU">video tutorial</a>)</p>
+    </div>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="step row">
+    <h2 class="span1">1</h2>
+    <div class="span11">
+      <h4>Create a new Spreadsheet</h4>
+      <p>Create a new Google Spreadsheet using our <a href="https://drive.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public" target="_blank" >template</a>. It’s as simple as dropping a date, text, and links into the appropriate columns.</p>
+      <p><a href="https://drive.google.com/previewtemplate?id=0AppSVxABhnltdEhzQjQ4MlpOaldjTmZLclQxQWFTOUE&mode=public" target="_blank" class="btn">Google Spreadsheet Template</a></p>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step row">
+    <h2 class="span1">2</h2>
+    <div class="span11">
+      <h4>Publish to the web</h4>
+      <div class="row">
+        <div class="span5">
+          <p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_small.png" alt="Publish to Web"></p>
+        </div>
+        <div class="span6">
+          <p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_url_small.png" alt="Publish to Web"></p>
+          <p>Under the File menu, select <em>&ldquo;Publish to the Web.&rdquo;</em></p>
+          <p>In the next window, check the box next to <em>&ldquo;Automatically republish when changes are made.&rdquo;</em> Uncheck all other boxes. Click <em>&ldquo;start publishing.&rdquo;</em> This will give you the URL to embed in your HTML file.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <form class="step row form form-horizontal">
+    <h2 class="span1">3</h2>
+    <div class="span11">
+      <h4>Copy/paste URL into the generator</h4>
+      <div class="control-group">
+        <label class="control-label"> Google Spreadsheet or other <a href="#fileformat" data-scroll="true">data source URL</a></label>
+        <div class="controls">
+          <input type="text" id="embed-source-url" class="span4">
+          <p class="help-inline">Make sure you've published it.</p>
+        </div>
+      </div>
+      <!-- Size-->
+      <div class="control-group">
+        <label class="control-label">Size</label>
+        <div class="controls">
+          <div class="input-prepend"><span class="add-on">Width</span>
+            <input type="text" value="100%" placeholder="100%" id="embed-width" class="input-mini">
+          </div>
+          <div class="input-prepend"><span class="add-on">Height</span>
+            <input type="text" value="650" placeholder="650" id="embed-height" class="input-mini">
+          </div>
+        </div>
+      </div>
+
+      <!-- Extra Options -->
+      <p><a class="btn show-options" href="#">More Options <span class="caret"></span></a></p>
+      <div class="more-options">
+        <h4>Customize (Optional)</h4>
+        <!-- Language-->
+          <div class="control-group">
+            <label class="control-label">Language</label>
+            <div class="controls">
+              <select id="embed-language">
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="es">Spanish</option>
+                <option value="it">Italian</option>
+                <option value="de">German / Deutsch</option>
+                <option value="pt">Portuguese</option>
+                <option value="pt-br">Brazilian Portuguese</option>
+                <option value="nl">Dutch</option>
+                <option value="is">Icelandic</option>
+                <option value="no">Norwegian</option>
+                <option value="bg">Bulgarian</option>
+                <option value="sl">Slovenian</option>
+                <option value="hu">Hungarian</option>
+                <option value="hy">Armenian</option>
+                <option value="fo">Faroese</option>
+                <option value="cz">Czech</option>
+                <option value="dk">Danish</option>
+                <option value="id">Indonesian</option>
+                <option value="pl">Polish</option>
+                <option value="ru">Russian</option>
+                <option value="sk">Slovak</option>
+                <option value="sr-la">Serbian - Latin</option>
+                <option value="sr-ly">Serbian - Cyrillic</option>
+                <option value="ca">Catalan</option>
+                <option value="el">Greek</option>
+                <option value="ta">Tamil</option>
+                <option value="tr">Turkish</option>
+                <option value="tl">Tagalog</option>
+                <option value="ja">Japanese</option>
+                <option value="kr">Korean</option>
+                <option value="zh-ch">Chinese</option>
+                <option value="zh-tw">Taiwanese</option>
+                <option value="ar">Arabic (beta)</option>
+              </select>
+            </div>
+          </div>
+          <!-- Map Type-->
+          <div class="control-group">
+            <label class="control-label">Map Type</label>
+            <div class="controls">
+              <select id="embed-maptype">
+                <option value="toner">Stamen Maps: Toner</option>
+                <option value="toner-lines">Stamen Maps: Toner Lines</option>
+                <option value="toner-labels">Stamen Maps: Toner Labels</option>
+                <option value="watercolor">Stamen Maps: Watercolor</option>
+                <option value="sterrain">Stamen Maps: Terrain</option>
+                <option value="ROADMAP">Google Maps: Roadmap</option>
+                <option value="TERRAIN">Google Maps: Terrain</option>
+                <option value="HYBRID">Google Maps: Hybrid</option>
+                <option value="SATELLITE">Google Maps: Satellite</option>
+              </select>
+              <input type="text" placeholder="Google Maps API Key" id="embed-googlemapkey">
+              <p class="help-block">Due to recent changes to the Google Maps API, you need a <a href="https://developers.google.com/places/documentation/#Authentication" target="_blank">API Key</a> in order to use custom map types.</p>
+            </div>
+          </div>
+          <!-- Fonts-->
+          <div class="control-group">
+            <label class="control-label">Fonts</label>
+            <div class="controls">
+              <select id="embed-font">
+                <option value="Bevan-PotanoSans">Bevan & Potano Sans</option>
+                <option value="Georgia-Helvetica">Georgia & Helvetica Neue</option>
+                <option value="Merriweather-NewsCycle">Merriweather & News Cycle</option>
+                <option value="NewsCycle-Merriweather">News Cycle & Merriweather</option>
+                <option value="PoiretOne-Molengo">Poiret One & Molengo</option>
+                <option value="Arvo-PTSans">Arvo & PT Sans</option>
+                <option value="PTSerif-PTSans">PT Serif & PT Sans</option>
+                <option value="DroidSerif-DroidSans">Droid Serif & Droid Sans</option>
+                <option value="Lekton-Molengo">Lekton & Molengo</option>
+                <option value="NixieOne-Ledger">Nixie One & Ledger</option>
+                <option value="AbrilFatface-Average">Abril Fatface & Average</option>
+                <option value="PlayfairDisplay-Muli">Playfair Display & Muli</option>
+                <option value="Rancho-Gudea">Rancho & Gudea</option>
+                <option value="BreeSerif-OpenSans">Bree Serif & Open Sans</option>
+                <option value="SansitaOne-Kameron">Sansita One & Kameron</option>
+                <option value="Pacifico-Arimo">Pacifico & Arimo</option>
+                <option value="PT">PT Sans & PT Narrow & PT Serif</option>
+              </select>
+            </div>
+          </div>
+          <!-- Wordpress Plugin-->
+          <div class="control-group">
+            <label class="control-label">Misc</label>
+            <div class="controls">
+              <label class="checkbox">
+                <input id="embed-wordpressplugin" type="checkbox" value="option1">Wordpress Plugin<span class="help-inline">Is the embed for the <a href="https://github.com/VeriteCo/TimelineJS-Wordpress-Plugin" target="_blank">Wordpress Plugin</a>?</span>
+              </label>
+              <!-- Start at End?-->
+              <label class="checkbox">
+                <input id="embed-startatend" type="checkbox" value="option1">Start at the End?<span class="help-inline">The most recent event will be shown first.</span>
+              </label>
+              <!-- Hash Bookmarks-->
+              <label class="checkbox">
+                <input id="embed-hashbookmark" type="checkbox" value="option1">Hash Bookmarks<span class="help-inline">On each slide change, a # will be added to the end of the url in the url bar. These urls are bookmarkable so you can share or return to the same place in the timeline</span>
+              </label>
+              <!-- Debug-->
+              <label class="checkbox">
+                <input id="embed-debug" type="checkbox" value="option1">Debug<span class="help-inline">In debug mode, you will see console logs.</span>
+              </label>
+            </div>
+          </div>
+          <!-- Start Zoom Adjust-->
+          <div class="control-group">
+            <label class="control-label">Adjust the default calculated zoom level</label>
+            <div class="controls">
+              <input id="embed-startzoomadjust" type="text" value="0" placeholder="0" class="input-mini">
+              <p class="help-block">This will tweak the default zoom level. Equivilent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.</p>
+            </div>
+          </div>
+          <!-- Start at Slide-->
+          <div class="control-group">
+            <label class="control-label">Start at specific slide number?</label>
+            <div class="controls">
+              <div class="input-prepend"><span class="add-on">Slide</span>
+                <input id="embed-startatslide" type="text" value="0" placeholder="0" class="input-mini">
+              </div>
+              <p class="help-block">You can tell TimelineJS to start at a specific slide number</p>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </form>
+
+  <!-- Step 4 -->
+  <div class="step row last">
+    <h2 class="span1">4</h2>
+    <div class="span11">
+      <h4>Embed the code into your website</h4>
+      <p>Grab the embed code and paste it on your site where you want your TimelineJS to appear (just like a YouTube video).</p>
+      <textarea readonly="readonly" style="width: 100%; height: 160px; min-height: 110px; max-height: 300px; resize: none; font-family: Menlo,Monaco,'Courier New',monospace; font-size: 12px;" id="embed_code"><iframe src='http://cdn.knightlab.com/libs/timeline/latest/embed?source=0Agl_Dv6iEbDadHdKcHlHcTB5bzhvbF9iTWwyMmJHdkE&font=Bevan-PotanoSans&maptype=toner&width=600&height=600' width='600' height='600' frameborder='0'></iframe></textarea><br><br>
+      <p><a href="#preview-embed" data-scroll="true" id="iframe-preview-button" class="btn btn-primary">Preview</a></p>
+    </div>
+  </div>
+
+  <!-- Preview -->
+  <div id="preview" class="row">
+    <div id="preview-embed">
+      <h2>Preview</h2>
+      <div id="preview-embed-iframe" class="span12"></div>
+    </div>
+  </div>
+  
+</section>

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		
+		// Add the missing url to the text
+		$("#url").text(window.location.pathname);
+		
+		// Fix the css locations dynamically
+		$("head link").each(function() {
+			for (var i=0; i<window.location.pathname.split(/\//g).length-2; i++)
+				$(this).attr("href", "../" + $(this).attr("href"));
+		});
+		
+	})
+</script>
+<section id="error" class="background-white">
+	<div class="container">
+		<div class="row">
+			<p class="span12 error">
+				Sorry the page <b id="url"></b> could not be found on this server.
+			</p>
+		</div>
+	</div>
+</section>
+{% endblock %}
