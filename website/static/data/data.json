@@ -13,17 +13,6 @@
 		},
 		"date": [
 			{
-				"startDate":"1980,1,18",
-				"headline":"Google Map",
-				"text":"",
-				"asset":
-                {
-                    "media":"http://maps.google.com/maps?q=chicago&hl=en&sll=41.874961,-87.619054&sspn=0.159263,0.351906&t=t&hnear=Chicago,+Cook,+Illinois&z=11",
-                    "credit":"",
-                    "caption":""
-                }
-            },
-			{
                 "startDate":"1979,1,18",
                 "headline":"Google Map",
                 "text":"Just add the link to the map in the media field.",
