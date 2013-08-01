@@ -13,6 +13,17 @@
 		},
 		"date": [
 			{
+				"startDate":"1980,1,18",
+				"headline":"Google Map with no text",
+				"text":"",
+				"asset":
+                {
+                    "media":"http://maps.google.com/maps?q=chicago&hl=en&sll=41.874961,-87.619054&sspn=0.159263,0.351906&t=t&hnear=Chicago,+Cook,+Illinois&z=11",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
                 "startDate":"1979,1,18",
                 "headline":"Google Map",
                 "text":"Just add the link to the map in the media field.",
@@ -47,6 +58,17 @@
                 }
             },
 			{
+                "startDate":"1905",
+                "headline":"YouTube with no text",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://youtu.be/SvmM_YSnWX8",
+                    "credit":"Georges Méliès",
+                    "caption":"Le juif errant"
+                }
+            },
+			{
                 "startDate":"1950,2,7",
                 "headline":"Blockquote",
                 "text":"This is an example of a blockquote.<br/>&lt;blockquote&gt;&ldquo;Just use html blockquotes in the media field.&rdquo;&lt;/blockquote&gt;",
@@ -69,9 +91,20 @@
                 }
             },
 			{
-                "startDate":"1990,2,7",
+                "startDate":"1985,2,7",
                 "headline":"Flickr",
-                "text":"To add a Flickr photo, just paste a link to the photo page in the media field. Example: http://www.flickr.com/photos/zachwise/6687123779/",
+                "text":"To add a Flickr photo, just paste a link to the photo page in the media field. Example: http://www.flickr.com/photos/zachwise/7074630607/",
+                "asset":
+                {
+                    "media":"http://www.flickr.com/photos/zachwise/7074630607/in/photostream/",
+                    "credit":"Zach Wise",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"1990,2,7",
+                "headline":"Flickr with no text",
+                "text":"",
                 "asset":
                 {
                     "media":"http://www.flickr.com/photos/zachwise/7050589957/in/photostream/",
