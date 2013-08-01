@@ -1,4 +1,3 @@
-
 ## Requirements
 
  python 2.7.x
@@ -17,32 +16,32 @@
 
 ## Setup
 
-  # Chance into the parent directory containing your repositories
-  cd path_to_repos_root
+    # Change into the parent directory containing your repositories
+    cd path_to_repos_root
   
-  # Clone the secrets repository (if necessary)
-  git clone git@github.com:NUKnightLab/secrets.git
+    # Clone the secrets repository (if necessary)
+    git clone git@github.com:NUKnightLab/secrets.git
   
-  # Clone the cdn repository (if necessary)
-  git clone git@github.com:NUKnightLab/cdn.knightlab.com.git
+    # Clone the cdn repository (if necessary)
+    git clone git@github.com:NUKnightLab/cdn.knightlab.com.git
   
-  # Clone the timeline repository
-  git clone git@github.com:NUKnightLab/TimelineJS.git
+    # Clone the timeline repository
+    git clone git@github.com:NUKnightLab/TimelineJS.git
   
-  # Change into the timeline repository
-  cd TimelineHS
+    # Change into the timeline repository
+    cd TimelineHS
   
-  # Create a virtual environment
-  mkvirtualenv TimelineJS
+    # Create a virtual environment
+    mkvirtualenv TimelineJS
   
-  # Activate the virtual environment
-  workon TimelineJS
+    # Activate the virtual environment
+    workon TimelineJS
   
-  # Install python requirements
-  pip install -r requirements.txt
+    # Install python requirements
+    pip install -r requirements.txt
   
-  # Run the development server
-  fab serve
+    # Run the development server
+    fab serve
 
 
 ## Overview
