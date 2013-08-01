@@ -69,17 +69,6 @@
                 }
             },
 			{
-                "startDate":"1985,2,7",
-                "headline":"Flickr",
-                "text":"",
-                "asset":
-                {
-                    "media":"http://www.flickr.com/photos/zachwise/7074630607/in/photostream/",
-                    "credit":"Zach Wise",
-                    "caption":""
-                }
-            },
-			{
                 "startDate":"1990,2,7",
                 "headline":"Flickr",
                 "text":"To add a Flickr photo, just paste a link to the photo page in the media field. Example: http://www.flickr.com/photos/zachwise/6687123779/",
