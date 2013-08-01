@@ -25,11 +25,11 @@
     # Clone the cdn repository (if necessary)
     git clone git@github.com:NUKnightLab/cdn.knightlab.com.git
   
-    # Clone the timeline repository
-    git clone git@github.com:NUKnightLab/TimelineJS.git
+    # Clone the timeline repository (and the submodules)
+    git clone --recursive git@github.com:NUKnightLab/TimelineJS.git
   
     # Change into the timeline repository
-    cd TimelineHS
+    cd TimelineJS
   
     # Create a virtual environment
     mkvirtualenv TimelineJS
