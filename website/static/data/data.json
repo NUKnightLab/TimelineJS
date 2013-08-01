@@ -58,17 +58,6 @@
                 }
             },
 			{
-                "startDate":"1905",
-                "headline":"Le juif errant",
-                "text":"",
-                "asset":
-                {
-                    "media":"http://youtu.be/SvmM_YSnWX8",
-                    "credit":"Georges Méliès",
-                    "caption":"Le juif errant"
-                }
-            },
-			{
                 "startDate":"1950,2,7",
                 "headline":"Blockquote",
                 "text":"This is an example of a blockquote.<br/>&lt;blockquote&gt;&ldquo;Just use html blockquotes in the media field.&rdquo;&lt;/blockquote&gt;",
