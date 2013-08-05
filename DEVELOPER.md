@@ -40,9 +40,13 @@
     # Install python requirements
     pip install -r requirements.txt
   
-    # Run the development server
+    # Run the development server. 
     fab serve
 
+    # Re-compile to preview changes. Of course this will need to be in another terminal, or after the fab serve command was put in the
+    # background. It would be great to automate this, but we would like to not add another build system and haven't figured out how to
+    # do it with fabric. Pull requests are welcome!
+    fab build
 
 ## Overview
 
