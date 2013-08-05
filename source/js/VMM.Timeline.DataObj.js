@@ -1,9 +1,4 @@
-/*	VMM.Timeline.DataObj.js
-    Part of TimelineJS, a project of the Northwestern University Knight Lab
-    https://github.com/NUKnightLab/TimelineJS
-    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
-    If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
-    TIMELINE SOURCE DATA PROCESSOR
+/*	TIMELINE SOURCE DATA PROCESSOR
 ================================================== */
 
 if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {
