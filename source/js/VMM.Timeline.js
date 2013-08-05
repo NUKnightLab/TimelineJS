@@ -1,17 +1,14 @@
-/**
-	* TimelineJS
-	* Designed and built by Zach Wise for the Northwestern University Knight Lab
-
-	* This Source Code Form is subject to the terms of the Mozilla Public
-	* License, v. 2.0. If a copy of the MPL was not distributed with this
-	* file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*/  
+/*	VMM.Timeline.js
+    Part of TimelineJS, a project of the Northwestern University Knight Lab
+    https://github.com/NUKnightLab/TimelineJS
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+    If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+    TIMELINE COMPLETE
+================================================== */
 
 /*	* CodeKit Import
 	* http://incident57.com/codekit/
 ================================================== */
-// @codekit-prepend "VMM.Timeline.License.js";
-
 // @codekit-prepend "Core/VMM.StoryJS.js";
 
 // @codekit-append "VMM.Timeline.TimeNav.js";
