@@ -194,7 +194,7 @@ def banner(conf):
    
     def _do(file_path):
         puts('  %s' % file_path)  
-        with open(file_path, 'r+') as fd:
+        with _open_file(file_path, 'r+') as fd:
             s = fd.read()
             fd.seek(0)
             fd.write(_banner_text+s)

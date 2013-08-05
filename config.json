@@ -137,7 +137,7 @@
         // banner-ize files
         // input: list of file paths
         //
-        "banner": [ ]
+        "banner": [ "build/js", "build/css" ]
     },
     //
     // stage
