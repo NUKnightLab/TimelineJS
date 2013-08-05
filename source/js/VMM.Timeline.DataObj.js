@@ -1,4 +1,5 @@
-/*	TIMELINE SOURCE DATA PROCESSOR
+/*	VMM.Timeline.DataObj.js
+    TIMELINE SOURCE DATA PROCESSOR
 ================================================== */
 
 if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undefined') {

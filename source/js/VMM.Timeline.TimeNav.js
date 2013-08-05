@@ -1,4 +1,5 @@
-/* 	TimeNav
+/* 	VMM.Timeline.TimeNav.js
+    TimeNav
 	This class handles the bottom timeline navigation.
 	It requires the VMM.Util class and VMM.Date class
 ================================================== */
