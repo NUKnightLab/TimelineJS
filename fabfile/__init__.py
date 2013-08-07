@@ -46,8 +46,13 @@ env.s3cmd_cfg = join(env.sites_path, 'secrets', 's3cmd.cfg')
 
 # Banner for the top of CSS and JS files
 BANNER = """
-/* %(name)s - v%(version)s - %(date)s
- * Copyright (c) %(year)s %(author)s 
+/* 
+    TimelineJS - ver. %(version)s - %(date)s
+    Copyright (c) 2012-%(year)s Northwestern University
+    a project of the Northwestern University Knight Lab, originally created by Zach Wise
+    https://github.com/NUKnightLab/TimelineJS
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+    If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 """.lstrip()
         
