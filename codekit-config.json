@@ -105,17 +105,6 @@
       "initialSize" : 107669,
       "fileType" : 4096
     },
-    "\/compiled\/js\/locale\/en-24hr.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/en-24hr.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en-24hr-min.js",
-      "fileType" : 64
-    },
     "\/compiled\/js\/locale\/pt-br.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -656,16 +645,16 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ka-min.js",
       "fileType" : 64
     },
-    "\/compiled\/js\/locale\/ja.js" : {
+    "\/compiled\/css\/overlay.png" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
+      "ignore" : 0,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ja.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ja-min.js",
-      "fileType" : 64
+      "inputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
+      "processed" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
+      "initialSize" : 1007,
+      "fileType" : 8192
     },
     "\/source\/js\/Core\/Media\/VMM.MediaType.js" : {
       "ignoreWasSetByUser" : 0,
@@ -689,16 +678,16 @@
       "outputAbbreviatedPath" : "\/tests\/test_googlespreadsheet_bc_era_ages_epoch.html",
       "fileType" : 512
     },
-    "\/compiled\/css\/overlay.png" : {
+    "\/compiled\/js\/locale\/ja.js" : {
       "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
+      "ignore" : 1,
       "hidden" : 0,
       "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
-      "initialSize" : 1007,
-      "fileType" : 8192
+      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/ja.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/ja-min.js",
+      "fileType" : 64
     },
     "\/source\/js\/Core\/Library\/jquery.fancybox.js" : {
       "ignoreWasSetByUser" : 0,
@@ -1574,15 +1563,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
     "\/examples\/example_jquery_load.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1591,6 +1571,15 @@
       "inputAbbreviatedPath" : "\/examples\/example_jquery_load.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
     },
     "\/compiled\/css\/themes\/font\/Lekton-Molengo.css" : {
       "ignoreWasSetByUser" : 0,
