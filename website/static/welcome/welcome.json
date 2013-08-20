@@ -1,0 +1,192 @@
+
+{ 
+	"timeline":
+	{
+		"headline":"Welcome to TimelineJS",
+		"type":"default",
+		"startDate":"1888",
+		"text": "<p>TimelineJS is an open-source tool that enables you to build visually-rich interactive timelines and is available in 40 languages.</p><p>You're looking at an example of one right now.</p><p>Click on the arrow to the right to learn more.</p>",
+		"asset": {
+			"media":"http://2.bp.blogspot.com/-dxJbW0CG8Zs/TmkoMA5-cPI/AAAAAAAAAqw/fQpsz9GpFdo/s1600/voyage-dans-la-lune-1902-02-g.jpg",
+			"credit":"",
+			"caption":""
+		},
+		"date": [
+    		{
+                "startDate":"1851",
+                "headline":"It's Easy to Make Your Own Timeline",
+                "text":"The TimelineJS Embed Generator makes it easy to add a timeline to your own site. Just copy our Google Spreadsheet template, add your events as rows in the spreadsheet, and use our <a href='#make'>generator tool</a> to generate the HTML you need to add to your site.",
+                "asset":
+                {
+                    "media":"/static/welcome/step3.png",
+                    "credit":"",
+                    "caption":"Screenshot from TimelineJS Embed Generator tool (see below)"
+                }
+            },
+    		{
+                "startDate":"1871",
+                "headline":"Illustrate your Timeline with photos, videos, tweets and more.",
+                "text":"Timeline can automatically pull in photos, videos from YouTube or Vimeo, tweets, wikipedia entries, and many other media types to help tell your story.",
+                "asset":
+                {
+                    "media":"",
+                    "credit":"",
+                    "caption":"Screenshot from TimelineJS Embed Generator tool (see below)"
+                }
+            },
+			{
+                "startDate":"1899",
+                "headline":"YouTube video",
+                "text":"To add a YouTube video, just add a link to it in the media field. No embedding necessary. http://youtu.be/lIvftGgps24",
+                "asset":
+                {
+                    "media":"http://youtu.be/lIvftGgps24",
+                    "credit":"Georges Méliès",
+                    "caption":"Le portrait mystérieux"
+                }
+            },
+			{
+                "startDate":"1902",
+                "headline":"YouTube with no text",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://youtu.be/7JDaOOw0MEE",
+                    "credit":"Georges Méliès",
+                    "caption":"A Trip to the Moon / Le Voyage dans la lune"
+                }
+            },
+			{
+                "startDate":"1902",
+                "headline":"Wikipedia",
+                "text":"Add a link to a <a href='http://en.wikipedia.org/wiki/A_Trip_to_the_Moon' target='_blank'>Wikipedia entry</a> in the media field to show an excerpt alongside your text.",
+                "asset":
+                {
+                    "media":"http://en.wikipedia.org/wiki/A_Trip_to_the_Moon",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"1950,2,7",
+                "headline":"Blockquote",
+                "text":"This is an example of a blockquote. <br/>&lt;blockquote&gt;&ldquo;Just use html blockquotes in the media field.&rdquo;&lt;/blockquote&gt;",
+                "asset":
+                {
+                    "media":"<blockquote>“You have brains in your head. You have feet in your shoes. You can steer yourself in any direction you choose. You're on your own, and you know what you know. And you are the guy who'll decide where to go.”</blockquote>",
+                    "credit":"Dr. Seuss",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"1960,2,7",
+                "headline":"Website",
+                "text":"This is an example of a website. Just paste a link to the site in the media field.",
+                "asset":
+                {
+                    "media":"http://www.w3schools.com/",
+                    "credit":"w3schools",
+                    "caption":"http://w3schools.com"
+                }
+            },
+			{
+                "startDate":"1979,1,18",
+                "headline":"Google Map",
+                "text":"Google Maps are easy too. Just add the link to the map in the media field.",
+                "asset":
+                {
+                    "media":"http://maps.google.com/maps?hl=en&sll=42.05083,-87.674194&sspn=0.020170947570668576,0.036220713642592585&z=15",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+				"startDate":"1980,1,18",
+				"headline":"Google Map with no text",
+				"text":"",
+				"asset":
+                {
+                    "media":"http://maps.google.com/maps?q=chicago&hl=en&sll=41.874961,-87.619054&sspn=0.159263,0.351906&t=t&hnear=Chicago,+Cook,+Illinois&z=11",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"1985,2,7",
+                "headline":"Flickr",
+                "text":"To add a Flickr photo, just paste a link to the photo page in the media field. Example: http://www.flickr.com/photos/zachwise/7074630607/",
+                "asset":
+                {
+                    "media":"http://www.flickr.com/photos/zachwise/7074630607/in/photostream/",
+                    "credit":"Zach Wise",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"1990,2,7",
+                "headline":"Flickr with no text",
+                "text":"",
+                "asset":
+                {
+                    "media":"http://www.flickr.com/photos/zachwise/7050589957/in/photostream/",
+                    "credit":"Zach Wise",
+                    "caption":"March to work."
+                }
+            },
+			{
+                "startDate":"2001,2,10",
+                "headline":"A Tweet",
+                "text":"To add a tweet, just paste a link to the tweet stats in the media field. Example: http://twitter.com/alykat/status/164184609519697920",
+                "asset":
+                {
+                    "media":"http://twitter.com/alykat/status/164184609519697920",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2002,12,10",
+                "headline":"Yet Another Tweet",
+                "asset":
+                {
+                    "media":"http://twitter.com/ArjunaSoriano/status/164181156147900416",
+                    "credit":"",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2011,8,23",
+                "headline":"Vimeo",
+                "text":"<p>Just add a link to the video in the media field. Example: https://vimeo.com/33211636</p>",
+                "asset":
+                {
+                    "media":"https://vimeo.com/33211636",
+                    "credit":"Denis Chapon",
+                    "caption":""
+                }
+            },
+			{
+                "startDate":"2012,1,18",
+                "headline":"SoundCloud ",
+                "text":"Just add a link to the track in the media field.",
+                "asset":
+                {
+                    "media":"http://soundcloud.com/beastieboys/make-some-noise",
+                    "credit":"",
+                    "caption":"R.I.P. MCA."
+                }
+            },
+			{
+                "startDate":"2013,10,01",
+                "headline":"Get started!",
+                "text":"Use the <a href='#make'>generator form</a> to make your first timeline now.",
+                "asset":
+                {
+                    "media":"",
+                    "credit":"",
+                    "caption":""
+                }
+            }
+        ]
+    }
+}
