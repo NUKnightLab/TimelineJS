@@ -56,19 +56,19 @@ Files in the `website` directory are specific to the website.
 
 `config.json` is used to control building, staging, and deployment
 
+## Updating the documentation site
 
-## Deploying to the CDN
+Documentation site files are in the `website` directory. To review your edits locally, run `fab serve` to start a local server on [http://localhost:5000](http://localhost:5000). 
 
-To stage your changes to a versioned directory in your local CDN repository, type `fab stage` This runs a build, copies the files into a versioned directory in your local `cdn.knightlab.com` repository, and tags the last commit with a version number.
+## Deploying updates to the documentation site (timeline.knightlab.com)
 
-To stage your changes to the `latest` directory in your local CDN repository, type `fab stage_latest` This copies files from a versioned directory in your local `cdn.knightlab.com` respository into the corresponding `latest` directory. 
+To deploy to S3, type `fab deploy`.
 
-You must push and deploy all CDN changes separately from that repository.
+## Deploying javascript changes to the CDN
 
+To stage your changes to a versioned directory in your local CDN repository, type `fab stage` You will be prompted for the new version number. After you provide it, this `fab stage` runs a build, copies the files into a versioned directory in your local `cdn.knightlab.com` repository, and tags the last commit with a version number.
 
-## Deploying to S3 (timeline.knightlab.com)
+To stage your changes to the `latest` directory in your local CDN repository, type `fab stage_latest` You will be prompted for which version number you want to stage as the 'latest' version on the CDN. This copies files from the directory with that version in your local `cdn.knightlab.com` respository into the corresponding `latest` directory -- so you will have to have used `fab stage` before this.
 
-To deploy to S3, type `fab deploy`. 
+You must push and deploy all CDN changes separately from that repository. Don't forget to edit the index page there until we work out some automated index building system.
 
-
-  
