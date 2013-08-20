@@ -89,7 +89,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			nav: {
 				start_page: 		false,
 				interval_width: 	200,
-				interval_override: 	false, // change this to override the interval of years, months etc.
 				density: 			4,
 				minor_width: 		0,
 				minor_left:			0,

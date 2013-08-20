@@ -13,17 +13,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/it-min.js",
       "fileType" : 64
     },
-    "\/source\/gfx\/fancybox_sprite@2x.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/fancybox_sprite@2x.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/fancybox_sprite@2x.png",
-      "initialSize" : 6553,
-      "fileType" : 8192
-    },
     "\/compiled\/css\/themes\/font\/Lora-Istok.css" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -104,17 +93,6 @@
       "outputAbbreviatedPath" : "\/dev_examples\/archive\/taylor\/oscar.jpg",
       "initialSize" : 107669,
       "fileType" : 4096
-    },
-    "\/compiled\/js\/locale\/en-24hr.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/js\/locale\/en-24hr.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/en-24hr-min.js",
-      "fileType" : 64
     },
     "\/compiled\/js\/locale\/pt-br.js" : {
       "ignoreWasSetByUser" : 0,
@@ -341,17 +319,6 @@
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/zh-cn-min.js",
       "fileType" : 64
     },
-    "\/compiled\/css\/fancybox_sprite.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/fancybox_sprite.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/css\/fancybox_sprite.png",
-      "initialSize" : 1362,
-      "fileType" : 8192
-    },
     "\/source\/js\/Core\/Language\/VMM.Language.js" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -564,17 +531,6 @@
       "outputAbbreviatedPath" : "\/source\/jade\/sections\/embed-generator.html",
       "fileType" : 512
     },
-    "\/source\/js\/Core\/Language\/locale\/hu.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 1,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/hu.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hu.js",
-      "fileType" : 64
-    },
     "\/compiled\/css\/timeline@2x.png" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 0,
@@ -585,6 +541,17 @@
       "outputAbbreviatedPath" : "\/compiled\/css\/timeline@2x.png",
       "initialSize" : 49364,
       "fileType" : 8192
+    },
+    "\/source\/js\/Core\/Language\/locale\/hu.js" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 0,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 1,
+      "inputAbbreviatedPath" : "\/source\/js\/Core\/Language\/locale\/hu.js",
+      "outputStyle" : 1,
+      "syntaxCheckerStyle" : 0,
+      "outputAbbreviatedPath" : "\/compiled\/js\/locale\/hu.js",
+      "fileType" : 64
     },
     "\/source\/jade\/tests\/test_extra_html.jade" : {
       "ignoreWasSetByUser" : 0,
@@ -688,28 +655,6 @@
       "compileDebug" : 1,
       "outputAbbreviatedPath" : "\/tests\/test_googlespreadsheet_bc_era_ages_epoch.html",
       "fileType" : 512
-    },
-    "\/compiled\/css\/overlay.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/css\/overlay.png",
-      "initialSize" : 1007,
-      "fileType" : 8192
-    },
-    "\/source\/js\/Core\/Library\/jquery.fancybox.js" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/js\/Core\/Library\/jquery.fancybox.js",
-      "outputStyle" : 1,
-      "syntaxCheckerStyle" : 0,
-      "outputAbbreviatedPath" : "\/source\/js\/Core\/Library\/jquery.fancybox-min.js",
-      "fileType" : 64
     },
     "\/compiled\/css\/themes\/font\/Georgia-Helvetica.css" : {
       "ignoreWasSetByUser" : 0,
@@ -1574,15 +1519,6 @@
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
     },
-    "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 1,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css",
-      "outputAbbreviatedPath" : "No Output Path",
-      "fileType" : 16
-    },
     "\/examples\/example_jquery_load.html" : {
       "ignoreWasSetByUser" : 0,
       "ignore" : 1,
@@ -1591,6 +1527,15 @@
       "inputAbbreviatedPath" : "\/examples\/example_jquery_load.html",
       "outputAbbreviatedPath" : "No Output Path",
       "fileType" : 2048
+    },
+    "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css" : {
+      "ignoreWasSetByUser" : 0,
+      "ignore" : 1,
+      "hidden" : 0,
+      "outputPathIsSetByUser" : 0,
+      "inputAbbreviatedPath" : "\/compiled\/css\/themes\/font\/NixieOne-Ledger.css",
+      "outputAbbreviatedPath" : "No Output Path",
+      "fileType" : 16
     },
     "\/compiled\/css\/themes\/font\/Lekton-Molengo.css" : {
       "ignoreWasSetByUser" : 0,
@@ -1866,17 +1811,6 @@
       "outputStyle" : 1,
       "fileType" : 1,
       "debugStyle" : 0
-    },
-    "\/compiled\/css\/fancybox_sprite@2x.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/compiled\/css\/fancybox_sprite@2x.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/compiled\/css\/fancybox_sprite@2x.png",
-      "initialSize" : 6553,
-      "fileType" : 8192
     },
     "\/source\/js\/Core\/Language\/locale\/gl.js" : {
       "ignoreWasSetByUser" : 0,
@@ -2342,17 +2276,6 @@
       "initialSize" : 42976,
       "fileType" : 8192
     },
-    "\/source\/gfx\/fancybox_sprite.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/fancybox_sprite.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/fancybox_sprite.png",
-      "initialSize" : 1362,
-      "fileType" : 8192
-    },
     "\/source\/js\/Core\/Embed\/Embed.js" : {
       "ignoreWasSetByUser" : 1,
       "ignore" : 0,
@@ -2722,17 +2645,6 @@
       "syntaxCheckerStyle" : 0,
       "outputAbbreviatedPath" : "\/compiled\/js\/locale\/es-min.js",
       "fileType" : 64
-    },
-    "\/source\/gfx\/overlay.png" : {
-      "ignoreWasSetByUser" : 0,
-      "ignore" : 0,
-      "hidden" : 0,
-      "outputPathIsSetByUser" : 0,
-      "inputAbbreviatedPath" : "\/source\/gfx\/overlay.png",
-      "processed" : 0,
-      "outputAbbreviatedPath" : "\/source\/gfx\/overlay.png",
-      "initialSize" : 1007,
-      "fileType" : 8192
     },
     "\/source\/less\/VMM.Timeline.less" : {
       "ieCompatibility" : 1,

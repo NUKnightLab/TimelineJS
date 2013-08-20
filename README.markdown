@@ -144,7 +144,6 @@ Languages available:
 * `de` *German / Deutsch*
 * `el` *Greek*
 * `en` *English*
-* `en-24hr` *English using 24hr time*
 * `es` *Spanish*
 * `eu` *Basque/ Euskara*
 * `fi` *Finnish*

@@ -16,3 +16,4 @@ tmtags
 source/gfx/Sprites/
 /node_modules
 *.pyc
+codekit-config.json
