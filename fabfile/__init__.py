@@ -427,7 +427,7 @@ def debug():
             
 @task
 def serve():
-    """Run the development server"""
+    """Run the local version of the documentation site (timeline.knightlab.com)"""
     with lcd(join(env.project_path)):
         local('python website/app.py')
  
