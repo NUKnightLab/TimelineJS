@@ -1,13 +1,12 @@
+/* 
+    TimelineJS - ver. 2.26.0 - 2013-09-24
+    Copyright (c) 2012-2013 Northwestern University
+    a project of the Northwestern University Knight Lab, originally created by Zach Wise
+    https://github.com/NUKnightLab/TimelineJS
+    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. 
+    If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 /* **********************************************
-     Begin VMM.StoryJS.License.js
-********************************************** *//*!
-	StoryJS
-	Designed and built by Zach Wise at VéritéCo
-
-	This Source Code Form is subject to the terms of the Mozilla Public
-	License, v. 2.0. If a copy of the MPL was not distributed with this
-	file, You can obtain one at http://mozilla.org/MPL/2.0/.
-*//* **********************************************
      Begin LazyLoad.js
 ********************************************** *//*jslint browser: true, eqeqeq: true, bitwise: true, newcap: true, immed: true, regexp: false *//*
 LazyLoad makes it easy and painless to lazily load one or more external
