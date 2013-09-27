@@ -24,7 +24,10 @@
   
     # Clone the cdn repository (if necessary)
     git clone git@github.com:NUKnightLab/cdn.knightlab.com.git
-  
+ 
+    # Clone the fablib repository (if necessary)
+    git clone git@github.com:NUKnightLab/fablib.git
+ 
     # Clone the timeline repository (and the submodules)
     git clone --recursive git@github.com:NUKnightLab/TimelineJS.git
   
