@@ -2843,7 +2843,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				var id				= tweet.mid.toString(),
 					error_obj		= { twitterid: tweet.mid },
-					the_url			= "http://api.twitter.com/1/statuses/show.json?id=" + tweet.mid + "&include_entities=true&callback=?";
+					the_url			= "//api.twitter.com/1/statuses/show.json?id=" + tweet.mid + "&include_entities=true&callback=?";
 					//twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, tweet),
 					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
 				
@@ -2902,7 +2902,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace("TWITTER JSON ERROR TIMEOUT " + tweet.mid);
 				VMM.attachElement("#"+tweet.id.toString(), VMM.MediaElement.loadingmessage("Still waiting on Twitter: " + tweet.mid) );
 				// CHECK RATE STATUS
-				VMM.getJSON("http://api.twitter.com/1/account/rate_limit_status.json", function(d) {
+				VMM.getJSON("//api.twitter.com/1/account/rate_limit_status.json", function(d) {
 					trace("REMAINING TWITTER API CALLS " + d.remaining_hits);
 					trace("TWITTER RATE LIMIT WILL RESET AT " + d.reset_time);
 					var mes = "";
@@ -2932,7 +2932,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						
 			getOEmbed: function(tweet, callback) {
 				
-				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
+				var the_url = "//api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
 					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOutOembed, VMM.master_config.timers.api, tweet);
 					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
 				
@@ -2976,7 +2976,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			getHTML: function(id) {
 				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
-				var the_url = "http://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&omit_script=true&include_entities=true&callback=?";
+				var the_url = "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&omit_script=true&include_entities=true&callback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.onJSONLoaded);
 			},
 			
@@ -3023,7 +3023,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					
 					/* FETCH THE DATA
 					================================================== */
-					var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + twitter_id + "&include_entities=true&callback=?";
+					var the_url = "//api.twitter.com/1/statuses/show.json?id=" + twitter_id + "&include_entities=true&callback=?";
 					VMM.getJSON(the_url, function(d) {
 						
 						var tweet = {}
@@ -3064,7 +3064,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					_number_of_tweets = number_of_tweets;
 				}
 				
-				var the_url = "http://search.twitter.com/search.json?q=" + tweets + "&rpp=" + _number_of_tweets + "&include_entities=true&result_type=mixed";
+				var the_url = "//search.twitter.com/search.json?q=" + tweets + "&rpp=" + _number_of_tweets + "&include_entities=true&result_type=mixed";
 				var tweetArray = [];
 				VMM.getJSON(the_url, function(d) {
 					
@@ -3092,7 +3092,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var error_obj = {
 					twitterid: id
 				};
-				var the_url = "http://api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
+				var the_url = "//api.twitter.com/1/statuses/show.json?id=" + id + "&include_entities=true&callback=?";
 				var twitter_timeout = setTimeout(VMM.ExternalAPI.twitter.errorTimeOut, VMM.master_config.timers.api, id);
 				
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.formatJSON)
@@ -3173,7 +3173,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					http://stackoverflow.com/questions/13486271/google-map-markermanager-cannot-call-method-substr-of-undefined
 					soulution is to use api ver 3.9
 				*/
-				map_url = "http://maps.googleapis.com/maps/api/js?key=" + api_key + "&v=3.9&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
+				map_url = "//maps.googleapis.com/maps/api/js?key=" + api_key + "&v=3.9&libraries=places&sensor=false&callback=VMM.ExternalAPI.googlemaps.onMapAPIReady";
 				
 				if (VMM.master_config.googlemaps.active) {
 					VMM.master_config.googlemaps.que.push(m);
@@ -3662,38 +3662,38 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 									
 			map_providers: {
 				"toner": {
-					"url": 			"http://{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"url": 			"//{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 					
 				},
 				"toner-lines": {
-					"url": 			"http://{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"url": 			"//{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"toner-labels": {
-					"url": 			"http://{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"url": 			"//{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"sterrain": {
-					"url": 			"http://{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"url": 			"//{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
 					"minZoom": 		4,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"apple": {
-					"url": 			"http://gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
+					"url": 			"//gsp2.apple.com/tile?api=1&style=slideshow&layers=default&lang=en_US&z={z}&x={x}&y={y}&v=9",
 					"minZoom": 		4,
 					"maxZoom": 		14,
 					"attribution": 	"apple"
 				},
 				"watercolor": {
-					"url": 			"http://{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"url": 			"//{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
 					"minZoom": 		3,
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
@@ -3859,7 +3859,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (m.id.match(/docs.google.com/i)) {
 					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + m.id + "&amp;embedded=true'></iframe>";
 				} else {
-					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + "http://docs.google.com/viewer?url=" + m.id + "&amp;embedded=true'></iframe>";
+					mediaElem	=	"<iframe class='doc' frameborder='0' width='100%' height='100%' src='" + "//docs.google.com/viewer?url=" + m.id + "&amp;embedded=true'></iframe>";
 				}
 				VMM.attachElement("#"+m.uid, mediaElem);
 			},
@@ -3890,7 +3890,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				var the_url = "http://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
+				var the_url = "//api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
 				
 				VMM.getJSON(the_url, function(d) {
 					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
@@ -3966,9 +3966,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		instagram: {
 			get: function(m, thumb) {
 				if (thumb) {
-					return "http://instagr.am/p/" + m.id + "/media/?size=t";
+					return "//instagr.am/p/" + m.id + "/media/?size=t";
 				} else {
-					return "http://instagr.am/p/" + m.id + "/media/?size=" + VMM.ExternalAPI.instagram.sizes(VMM.master_config.sizes.api.height);
+					return "//instagr.am/p/" + m.id + "/media/?size=" + VMM.ExternalAPI.instagram.sizes(VMM.master_config.sizes.api.height);
 				}
 			},
 			
@@ -3994,7 +3994,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(m, callback) {
-				var the_url = "http://soundcloud.com/oembed?url=" + m.id + "&format=js&callback=?";
+				var the_url = "//soundcloud.com/oembed?url=" + m.id + "&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+m.uid, d.html);
 					callback();
@@ -4018,7 +4018,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(m, callback) {
-				var the_url = "http://" + m.lang + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + m.id + "&exintro=1&format=json&callback=?";
+				var the_url = "//" + m.lang + ".wikipedia.org/w/api.php?action=query&prop=extracts&redirects=&titles=" + m.id + "&exintro=1&format=json&callback=?";
 				callback_timeout= setTimeout(callback, VMM.master_config.timers.api, m);
 				
 				if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
@@ -4106,7 +4106,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		youtube: {
 			
 			get: function(m) {
-				var the_url = "http://gdata.youtube.com/feeds/api/videos/" + m.id + "?v=2&alt=jsonc&callback=?";
+				var the_url = "//gdata.youtube.com/feeds/api/videos/" + m.id + "?v=2&alt=jsonc&callback=?";
 					
 				VMM.master_config.youtube.que.push(m);
 				
@@ -4243,8 +4243,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				trace("VIMEO CREATE");
 				
 				// THUMBNAIL
-				var thumb_url	= "http://vimeo.com/api/v2/video/" + m.id + ".json",
-					video_url	= "http://player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff";
+				var thumb_url	= "//vimeo.com/api/v2/video/" + m.id + ".json",
+					video_url	= "//player.vimeo.com/video/" + m.id + "?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff";
 					
 				VMM.getJSON(thumb_url, function(d) {
 					VMM.ExternalAPI.vimeo.createThumb(d, m);
@@ -4324,7 +4324,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			create: function(m) {
 				trace("WEB THUMB CREATE");
 				
-				var thumb_url	= "http://free.pagepeeker.com/v2/thumbs.php?";
+				var thumb_url	= "//free.pagepeeker.com/v2/thumbs.php?";
 					url			= m.id.replace("http://", "");//.split("/")[0];
 					
 				// Main Image
@@ -9728,7 +9728,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
 					
 					key	= raw.split("storify.com\/")[1];
-					url	= "http://api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
+					url	= "//api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
 					
 					storify_timeout = setTimeout(function() {
 						trace("STORIFY timeout");
@@ -9815,7 +9815,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							
 							if (typeof dd.source.name != 'undefined') {
 								if (dd.source.name == "flickr") {
-									_date.asset.media		=	"http://flickr.com/photos/" + dd.meta.pathalias + "/" + dd.meta.id + "/";
+									_date.asset.media		=	"//flickr.com/photos/" + dd.meta.pathalias + "/" + dd.meta.id + "/";
 									_date.asset.credit		=	"<a href='" + _date.asset.media + "'>" + dd.attribution.name + "</a>";
 									_date.asset.credit		+=	" on <a href='" + dd.source.href + "'>" + dd.source.name + "</a>";
 								} else if (dd.source.name	==	"instagram") {
