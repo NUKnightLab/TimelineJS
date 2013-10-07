@@ -489,7 +489,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Loading Storify...");
 					
 					key	= raw.split("storify.com\/")[1];
-					url	= "http://api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
+					url	= "//api.storify.com/v1/stories/" + key + "?per_page=300&callback=?";
 					
 					storify_timeout = setTimeout(function() {
 						trace("STORIFY timeout");
@@ -576,7 +576,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							
 							if (typeof dd.source.name != 'undefined') {
 								if (dd.source.name == "flickr") {
-									_date.asset.media		=	"http://flickr.com/photos/" + dd.meta.pathalias + "/" + dd.meta.id + "/";
+									_date.asset.media		=	"//flickr.com/photos/" + dd.meta.pathalias + "/" + dd.meta.id + "/";
 									_date.asset.credit		=	"<a href='" + _date.asset.media + "'>" + dd.attribution.name + "</a>";
 									_date.asset.credit		+=	" on <a href='" + dd.source.href + "'>" + dd.source.name + "</a>";
 								} else if (dd.source.name	==	"instagram") {
