@@ -1,0 +1,6 @@
+2.26.2
+-----
+
+* Start a CHANGELOG
+* Change embed HTML to dynamically set the embed path, to support use over https
+
