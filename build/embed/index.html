@@ -39,7 +39,12 @@
   <div id="timeline-embed"></div>
   <!-- Override -->
   <script type="text/javascript">
-    var embed_path = "http://cdn.knightlab.com/libs/timeline/latest/";
+    var trim_point = window.location.href.indexOf("embed/index.html");
+    if (trim_point > 0) {
+      var embed_path = window.location.href.substring(0,trim_point); // support HTTPS via https://s3.amazonaws.com/cdn.knightlab.com/libs/timeline/latest/embed/index.html
+    } else {
+      var embed_path = "http://cdn.knightlab.com/libs/timeline/latest/";
+    }
   </script>
   <script type="text/javascript" src="../js/storyjs-embed-cdn.js?v214"></script>
   <!-- END Timeline Embed-->
