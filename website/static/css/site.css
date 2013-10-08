@@ -108,3 +108,7 @@ h2.intro {
     text-align: center;
     color: red;
   }
+  
+#mc-embedded-subscribe-form .input-large {
+  width: 260px;
+}  
