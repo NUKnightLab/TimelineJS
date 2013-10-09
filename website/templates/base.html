@@ -26,6 +26,26 @@
     <link href="//cloud.webtype.com/css/d4767ecb-457a-4677-8761-72f890add836.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="http://cdn.knightlab.com/libs/blueline/latest/css/blueline.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ static_url }}/css/site.css">
+  <!-- Google Analytics: don't mess with this stuff -->
+  <!-- named tracker notes from https://developers.google.com/analytics/devguides/collection/gajs/ -->
+  <!-- multi-domain tracking notes from https://developers.google.com/analytics/devguides/collection/gajs/gaTrackingSite -->
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(
+            function() {
+                var pageTracker = _gat._createTracker('UA-27829802-1', 'knightlabTracker');
+             },
+            ['knightlabTracker._setDomainName', 'knightlab.com'] // DON'T CHANGE THIS FOR SUBDOMAINS
+            ['knightlabTracker._setAllowLinker', true], 
+            ['knightlabTracker._trackPageview']
+  );
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+  <!-- End Google Analytics -->
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="100">
 
