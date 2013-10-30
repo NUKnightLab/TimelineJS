@@ -25,13 +25,13 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
 		},
 		messages: {
-			loading_timeline: "Loading Timeline... ",
-			return_to_title: "Return to Title",
-			expand_timeline: "Expand Timeline",
-			contract_timeline: "Contract Timeline",
+			loading_timeline: "Caricamento Timeline... ",
+			return_to_title: "Ritorna al Titolo",
+			expand_timeline: "Espandi la Timeline",
+			contract_timeline: "Contrai la Timeline",
 			wikipedia: "Wikipedia, L’enciclopedia libera",
-			loading_content: "Loading Content",
-			loading: "Loading"
+			loading_content: "Caricamento contenuti",
+			loading: "Caricamento"
 			
 		}
 	}
