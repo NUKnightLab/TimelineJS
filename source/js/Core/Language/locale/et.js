@@ -7,7 +7,7 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "et"
 		},
 		date: {
-			month: ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "Oktoober", "november", "detsember"],
+			month: ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"],
 			month_abbr: ["jaan.", "veebr.", "märts", "apr.", "mai", "juuni", "juuli", "aug.", "sept.", "okt.", "nov.", "dets."],
 			day: ["pühapäev","esmaspäev", "teisipäev", "kolmapäev", "neljapäev", "reede", "laupäev"],
 			day_abbr: ["P","E", "T", "K", "N", "R", "L"]
