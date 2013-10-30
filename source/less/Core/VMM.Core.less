@@ -1,0 +1,404 @@
+/*
+ * VMM StoryJS Core
+ * Basic and global styles for generating structural layout
+ * ------------------------------------------------------------------------------------------- */
+ 
+/*	BASE
+----------------------------------------------------- */
+//	CSS Reset
+@import "Reset.less";
+
+//	Core variables and mixins
+@import "Font.Default.less";
+@import "Variables.less";
+@import "Mixins.less"; 
+@import "GFX.less";
+@import "Typography.less";
+@import "VMM.Tooltip.less";
+@import "VMM.FancyBox.less"; 
+
+//	Grid system and page structure
+@import "VMM.Slider.less";
+
+
+/* StoryJS Embed
+================================================== */
+.storyjs-embed {
+	background-color: @color-base;
+	margin-bottom:20px;
+	border: 1px solid @color-line;
+	padding-top:20px;
+	padding-bottom:20px;
+	clear:both;
+	
+	.border-radius(10px);
+	.box-shadow(1px 1px 3px rgba(0,0,0,.35));
+}
+.storyjs-embed.full-embed {
+	overflow:hidden;
+	border: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	clear:both;
+	
+	.border-radius(0) !important;
+	.box-shadow(0 0px 0px rgba(0, 0, 0, 0.25)) !important;
+}
+.storyjs-embed.sized-embed {
+	overflow:hidden;
+	border: 1px solid @color-line;
+	padding-top:7px;
+	padding-bottom:7px;
+	margin: 0 !important;
+	clear:both;
+	
+	.box-shadow(0 0px 0px rgba(0, 0, 0, 0.25)) !important;
+}
+
+/* StoryJS
+================================================== */
+.vco-storyjs {
+	width: 100%;
+	height:100%;
+	padding:0px;
+	margin:0px;
+	background-color:@color-background;
+	position: absolute;
+	z-index:100;
+	clear:both;
+	overflow:hidden;
+	
+	.vmm-clear:before,
+	.vmm-clear:after {
+		content:"";
+		display:table;
+	}
+	.vmm-clear:after {
+		clear:both;
+	}
+	.vmm-clear {
+		*zoom:1;
+	}
+	
+	/* FEATURE
+	================================================== */
+	.vco-feature {
+		width: 100%;
+		.slider, .vco-slider {
+			width: 100%;
+			float: left;
+			position: relative;
+			z-index:10;
+			padding-top:@base-space;
+			.box-shadow();
+		}
+	}
+	
+	/* FEEDBACK
+	================================================== */
+	.vco-feedback {
+		position: absolute;
+		display:table;
+		overflow:hidden;
+		top:0px;
+		left:0px;
+		z-index:205;
+		width: 100%;
+		height:100%;
+		//background-color: @color-base;
+	}
+	div.vco-loading, div.vco-explainer {
+		display:table;
+		text-align:center;
+		min-width: 100px;
+		margin-top:@base-space;
+		height:100%;
+		width:100%;
+		background-color: @color-background;
+		.vco-loading-container, .vco-explainer-container {
+			display:table-cell;
+			vertical-align:middle;
+			.vco-loading-icon {
+				display:block;
+				background-repeat:no-repeat;
+				vertical-align:middle;
+				margin-left:auto;
+				margin-right:auto;
+				text-align:center;
+				.loading-sprite();
+				width:28px;
+				height:28px;
+			}
+			.vco-gesture-icon {
+				display:block;
+				background-repeat:no-repeat;
+				vertical-align:middle;
+				margin-left:auto;
+				margin-right:auto;
+				text-align:center;
+				.icon-touch-gesture();
+				width:48px;
+				height:48px;
+			}
+			.vco-message {
+				display:block;
+			}
+			.vco-message, .vco-message p {
+				text-align:center;
+				font-size: @base-font-small;
+				line-height:@base-font-small + 2;
+				text-transform: uppercase;
+				margin-top:@base-space/2;
+				margin-bottom:@base-space/2;
+			}
+									
+		}
+		.vco-explainer-container {
+			//background-color:@color-dark-second;
+			//background-color: fade(@color-dark, 65%);
+			
+		}					
+	}
+	div.vco-explainer {
+		background-color: transparent;
+		//height:400px;
+		//margin-top:100px;
+		
+	}
+	.vco-bezel {
+		background-color:@color-dark-second;
+		background-color: fade(@color-dark, 80%);
+		//border: 1px solid fade(@color-base, 50%);
+		width:80px;
+		height:50px;
+		padding:50px;
+		padding-top:25px;
+		padding: 25px 20px 50px 20px;
+		margin:auto;
+		.border-radius(10px);
+		.vco-message, .vco-message p {
+			color: @color-base;
+			font-weight: bold;
+		}
+	}
+	/* Container
+	================================================== */
+	.vco-container.vco-main {
+		position: absolute;
+		top:0px;
+		left:0px;
+		padding-bottom:3px;
+		//margin-top:@base-space;
+		width: auto;
+		height: auto;
+		margin:0px;
+		clear:both;
+	}
+	img, embed, object, video, iframe {
+		max-width: 100%;
+	}
+	iframe {
+		//margin-bottom:5px;
+	}
+	
+	
+	img {
+		max-height:100%;
+		border: 1px solid @color-credit;
+	}
+	a {
+		color:@color-theme;
+		text-decoration: none;
+	}
+	a:hover {
+		color:@color-theme-dark;
+		text-decoration: underline;
+	}
+	
+	
+	.vcard {
+		float:right;
+		margin-bottom:@base-space;
+		a {
+			color: @color-dark-second;
+		}
+		a:hover {
+			text-decoration: none;
+			.fn {
+				text-decoration: underline;
+			}
+		}
+		.fn, .nickname {
+				
+			padding-left: 42px;
+		}
+		.fn {
+			display:block;
+			font-weight: bold;
+
+		}
+		.nickname {
+			margin-top:1px;
+			display:block;
+			color: @color-dark-third;
+		}
+			
+		.avatar {
+			float:left;
+			display: block;
+			width: 32px;
+			height: 32px;
+			img {
+				-moz-border-radius: 5px;
+				-webkit-border-radius: 5px;
+				border-radius: 5px;
+			}
+		}
+	}
+	
+	.thumbnail {
+		width:@base-thumb;
+		height:@base-thumb;
+		overflow:hidden;
+		float:left;
+		margin:0;
+		margin-right:1px;
+		margin-top:6px;
+		
+		//Fixes for bootstrap sites
+		border:0;
+		padding:0;
+	    -webkit-border-radius: 0;
+	       -moz-border-radius: 0;
+	            border-radius: 0;
+	    -webkit-box-shadow: none;
+	       -moz-box-shadow: none;
+	            box-shadow: none;
+	}
+	// fixes for bootstrap sites
+	a.thumbnail:hover {
+		-webkit-box-shadow: none;
+		   -moz-box-shadow: none;
+		        box-shadow: none;
+	}
+	
+	.thumbnail.thumb-plaintext {
+		.icon-plaintext();
+	}
+	.thumbnail.thumb-quote {
+		.icon-quote();
+	}
+	.thumbnail.thumb-document {
+		.icon-document();
+	}
+	.thumbnail.thumb-photo {
+		.icon-photo();
+		border:0;
+		img {
+			border:0px none @color-line !important;
+		}
+	}
+	.thumbnail.thumb-twitter {
+		.icon-twitter();
+	}
+	.thumbnail.thumb-vimeo {
+		.icon-vimeo();
+	}
+	.thumbnail.thumb-vine {
+		.icon-vine();
+	}
+	.thumbnail.thumb-youtube {
+		.icon-youtube();
+	}
+	.thumbnail.thumb-video {
+		.icon-video();
+	}
+	.thumbnail.thumb-audio {
+		.icon-audio();
+	}
+	.thumbnail.thumb-map {
+		.icon-mappin();
+	}
+	.thumbnail.thumb-website {
+		.icon-website();
+	}
+	.thumbnail.thumb-link {
+		.icon-link();
+	}
+	.thumbnail.thumb-wikipedia {
+		.icon-wikipedia();
+	}
+	.thumbnail.thumb-storify {
+		.icon-storify();
+	}
+	.thumbnail.thumb-googleplus {
+		.icon-googleplus();
+	}
+	thumbnail.thumb-instagram {
+		.icon-instagram();
+	}
+	
+	thumbnail.thumb-instagram-full {
+		.icon-instagram-full();
+	}
+	.thumb-storify-full {
+		//display:inline-block;
+		height:12px;
+		.icon-storify-full();
+	}
+	
+	.thumbnail-inline {
+		width:16px;
+		height:14px;
+		overflow:hidden;
+		display:inline-block;
+		margin-right:1px;
+		margin-left:3px;
+		margin-top:2px;
+		//float:left;
+		.opacity(50);
+	}
+	.twitter {
+		.thumbnail-inline {
+			.icon-twitter-inline();
+		}
+	}
+	.storify {
+		.thumbnail-inline {
+			.icon-storify-inline();
+		}
+	}
+	.googleplus {
+		.thumbnail-inline {
+			.icon-googleplus-inline();
+		}
+	}
+	
+	
+	.zFront {
+		z-index:204;
+	}
+	
+}
+
+
+/* RETINA
+================================================== */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), 
+only screen and (min-device-pixel-ratio: 2) {
+	.vco-storyjs {
+		div.vco-loading, div.vco-explainer {
+			.vco-loading-container, .vco-explainer-container {
+				.vco-loading-icon {
+					.loading-sprite2x();
+				}
+				.vco-gesture-icon {
+					.icon-touch-gesture2x();
+				}
+			}
+		}
+	}
+}
+
+
+

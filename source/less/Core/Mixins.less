@@ -1,0 +1,236 @@
+/* Mixins.less
+ * Snippets of reusable CSS to develop faster and keep code readable
+ * ----------------------------------------------------------------- */
+ 
+// Text Font
+.text-font(@fontsize: 15px) {
+	font-size: @fontsize;
+ 	line-height: round((@fontsize/100) * 130);
+}
+// Border Radius
+.border-radius(@radius: 5px) {
+ 	-webkit-border-radius: @radius;
+ 	   -moz-border-radius: @radius;
+ 	        border-radius: @radius;
+}
+// User Select
+.user-select(@userselect) {
+ 	-webkit-user-select: @userselect;
+ 	   -moz-user-select: @userselect;
+ 	        user-select: @userselect;
+}
+// Box Shadow
+.box-shadow(@shadow: 1px 1px 7px rgba(0,0,0,.30)) {
+	-webkit-box-shadow: @shadow;
+	   -moz-box-shadow: @shadow;
+	        box-shadow: @shadow;
+}
+// Media Shadow
+.media-shadow(@shadow: 0 1px 3px 0px @color-dark-fourth) {
+	-webkit-box-shadow: @shadow;
+ 	   -moz-box-shadow: @shadow;
+ 	        box-shadow: @shadow;
+ 	border: 1px solid;
+ 	border-color: @color-line @color-dark-fourth @color-dark-fourth @color-line;
+}
+// Transform
+.transform(@transform) {
+ 	-webkit-transform: @transform;
+ 	   -moz-transform: @transform;
+ 	    -ms-transform: @transform;
+ 	     -o-transform: @transform;
+ 	        transform: @transform;
+}
+// Transitions
+.transition(@transition) {
+ 	-webkit-transition: @transition;
+ 	   -moz-transition: @transition;
+ 	    -ms-transition: @transition;
+ 	     -o-transition: @transition;
+ 	        transition: @transition;
+}
+// Background clipping
+.background-clip(@clip) {
+ 	-webkit-background-clip: @clip;
+ 	   -moz-background-clip: @clip;
+ 	        background-clip: @clip;
+}
+// Opacity
+.opacity(@opacity: 100) {
+ 	filter: e(%("alpha(opacity=%d)", @opacity));
+ 	-khtml-opacity: @opacity / 100;
+ 	  -moz-opacity: @opacity / 100;
+ 	       opacity: @opacity / 100;
+}
+// Hyphens
+.hyphens(@hyphens: auto) {
+ 	-webkit-hyphens:@hyphens;
+ 	   -moz-hyphens:@hyphens;
+ 	    -ms-hyphens:@hyphens;
+ 	        hyphens:@hyphens;
+}
+// Clear Fix
+.clearfix() {
+	*zoom: 1;
+	&:before,
+	&:after {
+		display: table;
+		content: "";
+	}
+	&:after {
+		clear: both;
+	}
+} 
+// Reset filters for IE
+.reset-filter() {
+	filter: e(%("progid:DXImageTransform.Microsoft.gradient(enabled = false)"));
+}
+// Center-align a block level element
+.center-block() {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+// Button backgrounds
+// ------------------
+.buttonBackground(@startColor, @endColor, @textColor: #fff, @textShadow: 0 -1px 0 rgba(0,0,0,.25)) {
+	// gradientBar will set the background to a pleasing blend of these, to support IE<=9
+	.gradientBar(@startColor, @endColor, @textColor, @textShadow);
+	*background-color: @endColor; /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+	.reset-filter();
+
+	// in these cases the gradient won't cover the background, so we override
+	&:hover, &:active, &.active, &.disabled, &[disabled] {
+		color: @textColor;
+		background-color: @endColor;
+		*background-color: darken(@endColor, 5%);
+	}
+
+	// IE 7 + 8 can't handle box-shadow to show active, so we darken a bit ourselves
+	&:active,
+	&.active {
+		background-color: darken(@endColor, 10%) e("\9");
+	}
+}
+// Font Stacks
+#font {
+	.shorthand(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-size: @size;
+		font-weight: @weight;
+		line-height: @lineHeight;
+	}
+	.sans-serif(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-family: @font-sansserif;
+		font-size: @size;
+		font-weight: @weight;
+		line-height: @lineHeight;
+	}
+	.font-body(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-family: @fontBody, Helvetica, Arial, sans-serif;
+		font-size: @size;
+		font-weight: @weight;
+ 		line-height: @lineHeight;
+	}
+	.font-header(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-family: @fontHeader;
+		font-size: @size;
+		font-weight: @weight;
+		line-height: @lineHeight;
+	}
+	.serif(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-family: @font-serif;
+		font-size: @size;
+		font-weight: @weight;
+		line-height: @lineHeight;
+	}
+	.monospace(@weight: normal, @size: 12px, @lineHeight: 20px) {
+		font-family: "Monaco", Courier New, monospace;
+		font-size: @size;
+		font-weight: @weight;
+		line-height: @lineHeight;
+	}
+
+	.navigation(@weight: normal, @size: 14px, @lineHeight: 20px) {
+		font-family: @font-sansserif;
+	    font-size: @size;
+	    font-weight: @weight;
+	    line-height: @lineHeight;
+	  }
+}
+
+// CSS3 Content Columns
+.content-columns(@columnCount, @columnGap: 20px) {
+  -webkit-column-count: @columnCount;
+     -moz-column-count: @columnCount;
+          column-count: @columnCount;
+  -webkit-column-gap: @columnGap;
+     -moz-column-gap: @columnGap;
+          column-gap: @columnGap;
+}
+
+// Add an alphatransparency value to any background or border color (via Elyse Holladay)
+#translucent {
+  .background(@color: @white, @alpha: 1) {
+    background-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+  }
+  .border(@color: @white, @alpha: 1) {
+    border-color: hsla(hue(@color), saturation(@color), lightness(@color), @alpha);
+    background-clip: padding-box;
+  }
+}
+
+// Gradient Bar Colors for buttons and alerts
+.gradientBar(@primaryColor, @secondaryColor, @textColor: #fff, @textShadow: 0 -1px 0 rgba(0,0,0,.25)) {
+	color: @textColor;
+	text-shadow: @textShadow;
+	#gradient > .vertical(@primaryColor, @secondaryColor);
+	border-color: @secondaryColor @secondaryColor darken(@secondaryColor, 15%);
+	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) fadein(rgba(0,0,0,.1), 15%);
+}
+// Gradients
+#gradient {
+  .horizontal (@startColor: #555, @endColor: #333) {
+    background-color: @endColor;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, right top, from(@startColor), to(@endColor)); // Konqueror
+    background-image: -moz-linear-gradient(left, @startColor, @endColor); // FF 3.6+
+    background-image: -ms-linear-gradient(left, @startColor, @endColor); // IE10
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @startColor), color-stop(100%, @endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(left, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(left, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(left, @startColor, @endColor); // Le standard
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@startColor,@endColor)); // IE9 and down
+  }
+  .vertical (@startColor: #555, @endColor: #333) {
+    background-color: @endColor;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(@startColor), to(@endColor)); // Konqueror
+    background-image: -moz-linear-gradient(top, @startColor, @endColor); // FF 3.6+
+    background-image: -ms-linear-gradient(top, @startColor, @endColor); // IE10
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @startColor), color-stop(100%, @endColor)); // Safari 4+, Chrome 2+
+    background-image: -webkit-linear-gradient(top, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(top, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(top, @startColor, @endColor); // The standard
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@startColor,@endColor)); // IE9 and down
+  }
+  .directional (@startColor: #555, @endColor: #333, @deg: 45deg) {
+    background-color: @endColor;
+    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(@deg, @startColor, @endColor); // FF 3.6+
+    background-image: -ms-linear-gradient(@deg, @startColor, @endColor); // IE10
+    background-image: -webkit-linear-gradient(@deg, @startColor, @endColor); // Safari 5.1+, Chrome 10+
+    background-image: -o-linear-gradient(@deg, @startColor, @endColor); // Opera 11.10
+    background-image: linear-gradient(@deg, @startColor, @endColor); // The standard
+  }
+  .vertical-three-colors(@startColor: #00b3ee, @midColor: #7a43b6, @colorStop: 50%, @endColor: #c3325f) {
+    background-color: @endColor;
+    background-repeat: no-repeat;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@startColor), color-stop(@colorStop, @midColor), to(@endColor));
+    background-image: -webkit-linear-gradient(@startColor, @midColor @colorStop, @endColor);
+    background-image: -moz-linear-gradient(top, @startColor, @midColor @colorStop, @endColor);
+    background-image: -ms-linear-gradient(@startColor, @midColor @colorStop, @endColor);
+    background-image: -o-linear-gradient(@startColor, @midColor @colorStop, @endColor);
+    background-image: linear-gradient(@startColor, @midColor @colorStop, @endColor);
+    filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@startColor,@endColor)); // IE9 and down, gets no color-stop at all for proper fallback
+  }
+}

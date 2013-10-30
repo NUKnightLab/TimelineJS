@@ -1,0 +1,50 @@
+/*
+	FONT
+	Merriweather and NewsCycle 
+	http://www.google.com/webfonts#UsePlace:use/Collection:News+Cycle:400,700|Merriweather:400,700,900
+------------------------------------------------------------------------------------------- */
+
+@font-serif:	'Merriweather', serif;
+@font-sans:		'News Cycle', sans-serif;
+
+.vco-storyjs {
+	font-family: @font-serif;
+	/*	HEADERS
+	------------------------------------------------------------------------------------------- */
+	.twitter, .vcard, .messege, .credit, .caption, .zoom-in, .zoom-out, .back-home, .time-interval div, .time-interval-major div, .nav-container {
+		font-family: @font-sans !important;
+	}
+	.vco-feature {
+		h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
+			font-family: @font-sans !important;
+		}
+	}
+	.timenav, .flag-content, .era {
+		h1, h2, h3, h4, h5, h6 {
+			font-family: @font-sans !important;
+		}
+	}
+	/*	CONTENT
+	------------------------------------------------------------------------------------------- */
+	p, blockquote, blockquote p, .twitter blockquote p {
+		font-family: @font-sans !important;
+	}
+	p {
+		font-size:16px;
+		line-height:22px;
+	}
+	.wikipedia p {
+		font-size: 14px !important;
+		line-height: 20px !important;
+	}
+	
+	.vco-feature {
+		h1, h2, h3, h4, h5, h6 {
+			font-family: @font-serif;
+			font-weight: 900;
+		}
+	}
+}
+.timeline-tooltip {
+	font-family: @font-sans;
+}

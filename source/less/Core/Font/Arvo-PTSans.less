@@ -1,0 +1,39 @@
+/*
+	FONT
+	Arvo and PT Sans 
+------------------------------------------------------------------------------------------- */
+
+@font-serif:	'Arvo', serif;
+@font-sans:		'PT Sans', sans-serif;
+
+.vco-storyjs {
+	font-family: @font-serif;
+	/*	HEADERS
+	------------------------------------------------------------------------------------------- */
+	.twitter, .vcard, .messege, .credit, .caption, .zoom-in, .zoom-out, .back-home, .time-interval div, .time-interval-major div, .nav-container {
+		font-family: @font-sans !important;
+	}
+	.vco-feature {
+		h1.date, h2.date, h3.date, h4.date, h5.date, h6.date {
+			font-family: @font-sans !important;
+		}
+	}
+	.timenav, .flag-content, .era {
+		h1, h2, h3, h4, h5, h6 {
+			font-family: @font-sans !important;
+		}
+	}
+	/*	CONTENT
+	------------------------------------------------------------------------------------------- */
+	p, blockquote, blockquote p, .twitter blockquote p {
+		font-family: @font-serif !important;
+	}
+	.vco-feature {
+		h1, h2, h3, h4, h5, h6 {
+			font-family: @font-serif;
+		}
+	}
+}
+.timeline-tooltip {
+	font-family: @font-sans;
+}

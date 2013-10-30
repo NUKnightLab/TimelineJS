@@ -1,0 +1,86 @@
+/*	VARIABLES
+----------------------------------------------------- */
+
+/* COLOR SCHEME
+================================================== */
+@color-theme-dark:				darken(@color-theme, 15);
+@color-theme-complement:		spin(@color-theme, 180);
+@color-theme-complement-dark:	darken(@color-theme-complement, 15);
+@color-theme-complement-darker:	darken(@color-theme-complement, 30);
+
+@color-theme-split1:			spin(@color-theme, -158);
+@color-theme-split2:			spin(@color-theme, 158);
+
+@color-theme-triad1:			spin(@color-theme, -135);
+@color-theme-triad2:			spin(@color-theme, 135);
+
+@color-theme-tetrad1:			spin(@color-theme, 180);
+@color-theme-tetrad2:			spin(@color-theme, 150);
+@color-theme-tetrad3:			spin(@color-theme, 30);
+@color-theme-tetrad4:			spin(@color-theme, 210);
+@color-theme-tetrad5:			spin(@color-theme, -30);
+@color-theme-tetrad6:			@color-theme;
+
+@color-theme-tetra1:			spin(@color-theme, -90);
+@color-theme-tetra2:			spin(@color-theme, 90);
+
+@color-theme-analog1:			spin(@color-theme, -22);
+@color-theme-analog2:			spin(@color-theme, 22);
+
+@color-background:				@color-base;
+
+@white:             			@color-base;
+
+/* NAVIGATION COLORS
+================================================== */
+@color-nav-date: 				#AAA; // 33%
+@color-nav-description: 		@color-dark-fourth; // 40%
+@color-nav-title: 				@color-dark-fourth;
+
+@color-navigation-time: 		@color-dark-third; // 60%
+@color-navigation-major-time: 	@color-dark-second; // 80%
+@color-navigation-time-strong: 	@color-dark; // 100%
+
+@era-background: 				#E2E2E2; //#E3E3E3; // 11%
+@era-line:						@color-line;
+@era-text:						@color-feature-date;
+
+/* FEATURE COLORS
+================================================== */
+@color-feature-date: 			@color-dark-fourth;
+@color-feature-description: 	@color-dark-third;
+@color-feature-title: 			@color-dark;
+
+
+@color-caption:					@color-dark-third;
+@color-credit:					@color-dark-fourth;
+
+/* BASE SIZES
+================================================== */
+@base-font-small: 				11px;
+@base-font: 					15px;
+@base-font-large:				24px;
+
+@base-line: 					20px;
+@base-line-large: 				32px;
+
+@base-space: 					15px;
+@base-thumb: 					24px;
+
+
+/* FEATURE SIZES
+================================================== */
+@feature-content-text: 			200px;
+@feature-content-width: 		720px;
+@feature-content-height: 		400px;
+@feature-nav-width: 			100px;
+@feature-nav-height: 			200px;
+@feature-nav-icon-wh: 			24px;
+
+/* NAVIGATION SIZES
+================================================== */
+@navigation-height: 			200px;
+@navigation-time-height: 		50px;
+@navigation-content-height: 	@navigation-height - @navigation-time-height;
+@navigation-marker-height:		6px;
+
