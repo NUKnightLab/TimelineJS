@@ -228,7 +228,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (d.left_adjust < 0 ) {
 				if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
 					//onNextClick(e);
-					if (current_slide == slides.length - 1) {
+					if (current_slide >= slides.length - 1) {
 						backToCurrentSlide();
 					} else {
 						goToSlide(current_slide+1, "easeOutExpo");
@@ -239,7 +239,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 					
 				}
 			} else if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
-				if (current_slide == 0) {
+				if (current_slide <= 0) {
 					backToCurrentSlide();
 				} else {
 					goToSlide(current_slide-1, "easeOutExpo");
@@ -255,7 +255,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* NAVIGATION
 		================================================== */
 		function onNextClick(e) {
-			if (current_slide == slides.length - 1) {
+			if (current_slide >= slides.length - 1) {
 				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide+1);
@@ -264,7 +264,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		function onPrevClick(e) {
-			if (current_slide == 0) {
+			if (current_slide <= 0) {
 				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide-1);
@@ -319,6 +319,13 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* UPDATE
 		================================================== */
 		function upDate() {
+			//setup boundaries
+			current_slide = current_slide >= slides.length - 1 ? 
+				slides.length - 1 : 
+				(current_slide <= 0 ? 
+					0 : 
+					current_slide);
+			
 			config.current_slide = current_slide;
 			VMM.fireEvent(layout, "UPDATE");
 		};
