@@ -316,16 +316,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			detachMessege();
 		}
 		
+		function _setCurrentSlide(n){
+		  //setup boundaries
+			current_slide = n >= slides.length - 1 ? 
+				slides.length - 1 : 
+				(n <= 0 ? 0 : n);
+		}
+		
 		/* UPDATE
 		================================================== */
 		function upDate() {
-			//setup boundaries
-			current_slide = current_slide >= slides.length - 1 ? 
-				slides.length - 1 : 
-				(current_slide <= 0 ? 
-					0 : 
-					current_slide);
-			
+			_setCurrentSlide(current_slide);
 			config.current_slide = current_slide;
 			VMM.fireEvent(layout, "UPDATE");
 		};
@@ -624,6 +625,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// Set current slide
 			current_slide	= n;
+			upDate();
 			_pos			= slides[current_slide].leftpos();
 			
 			

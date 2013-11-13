@@ -322,6 +322,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		function onMarkerHover(e) {
 			VMM.Lib.toggleClass(e.data.elem, "zFront");
 		};
+		function _setCurrentMarker(n){
+			//setup boundaries
+			current_marker = n >= markers.length - 1 ? 
+				markers.length - 1 : 
+				(n <= 0 ? 0 : n);
+		}
 		
 		function goToMarker(n, ease, duration, fast, firstrun) {
 			trace("GO TO MARKER");
@@ -330,7 +336,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				is_last		= false,
 				is_first	= false;
 			
-			current_marker = 	n;
+			_setCurrentMarker(n);
 			
 			timenav_pos.left			= (config.width/2) - markers[current_marker].pos_left
 			timenav_pos.visible.left	= Math.abs(timenav_pos.left) - 100;
