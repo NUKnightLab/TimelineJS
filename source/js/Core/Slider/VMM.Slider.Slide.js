@@ -17,7 +17,8 @@ if (typeof VMM.Slider != 'undefined') {
 			_id			= "slide_",
 			_class		= 0,
 			timer		= {pushque:"", render:"", relayout:"", remove:"", skinny:false},
-			times		= {pushque:500, render:100, relayout:100, remove:30000};
+			times		= {pushque:500, render:100, relayout:100, remove:30000},
+			swapMedia = !!VMM.Timeline.Config.slider.swapMedia;
 		
 		_id				= _id + data.uniqueid;
 		this.enqueue	= _enqueue;
@@ -153,14 +154,20 @@ if (typeof VMM.Slider != 'undefined') {
 		};
 		
 		var reLayout = function(skinny, reload) {
+			
 			if (c.has.text)	{
 				if (skinny) {
 					if (!is_skinny || reload) {
 						VMM.Lib.removeClass($slide, "pad-left");
 						VMM.Lib.detach($text);
 						VMM.Lib.detach($media);
-						VMM.Lib.append($slide, $text);
-						VMM.Lib.append($slide, $media);
+						if(swapMedia){
+							VMM.Lib.append($slide, $media);
+							VMM.Lib.append($slide, $text);
+						}else{
+							VMM.Lib.append($slide, $text);
+							VMM.Lib.append($slide, $media);
+						}
 						is_skinny = true;
 					} 
 				} else {
@@ -168,8 +175,13 @@ if (typeof VMM.Slider != 'undefined') {
 						VMM.Lib.addClass($slide, "pad-left");
 						VMM.Lib.detach($text);
 						VMM.Lib.detach($media);
-						VMM.Lib.append($slide, $media);
-						VMM.Lib.append($slide, $text);
+						if(swapMedia){
+							VMM.Lib.append($slide, $media);
+							VMM.Lib.append($slide, $text);
+						}else{
+							VMM.Lib.append($slide, $text);
+							VMM.Lib.append($slide, $media);
+						}
 						is_skinny = false;
 						
 					} 
@@ -177,10 +189,20 @@ if (typeof VMM.Slider != 'undefined') {
 			} else if (reload) {
 				if (c.has.headline) {
 					VMM.Lib.detach($text);
-					VMM.Lib.append($slide, $text);
 				}
 				VMM.Lib.detach($media);
-				VMM.Lib.append($slide, $media);
+			
+				if(swapMedia){
+					VMM.Lib.append($slide, $media);
+					if (c.has.headline) {
+						VMM.Lib.append($slide, $text);
+					}
+				}else{
+					if (c.has.headline) {
+						VMM.Lib.append($slide, $text);
+					}
+					VMM.Lib.append($slide, $media);
+				}
 			}
 		}
 		
@@ -204,7 +226,9 @@ if (typeof VMM.Slider != 'undefined') {
 						}
 						
 						if (st != en) {
-							c.text += VMM.createElement("h2", st + " &mdash; " + en + tag, "date");
+							c.text += VMM.createElement("h2", "<span class='timeline_slider_startDate'>" + st 
+										+ "</span><span class='timeline_slider_separator'> &mdash;</span><span class='timeline_slider_endDate'>" + en+ tag 
+										+ '</br>', "date");
 						} else {
 							c.text += VMM.createElement("h2", st + tag, "date");
 						}
@@ -265,8 +289,10 @@ if (typeof VMM.Slider != 'undefined') {
 				} else {
 					VMM.Lib.addClass($slide, c.layout);
 					VMM.Lib.addClass($slide, "pad-left");
-					VMM.Lib.detach($text);
-					VMM.Lib.append($slide, $text);
+					if(!swapMedia){
+						VMM.Lib.detach($text);
+						VMM.Lib.append($slide, $text);
+					}
 				}
 				
 			} else {
