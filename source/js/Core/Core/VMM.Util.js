@@ -286,7 +286,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			if (!text) {
 				return text;
 			}
-			text = text.replace(/<\s*\w.*?>/g,"");
+			text = text.replace(/<\/?\s*\w.*?>/g,"");
 			return text;
 		},
 		
