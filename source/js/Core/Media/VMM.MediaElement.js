@@ -82,7 +82,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type	==	"iframe") {
 					mediaElem		=	"<div class='thumbnail thumb-video'></div>";
 					return mediaElem;
-				} else if (m.type	==	"unknown") {
+                } else if (m.type	==	"unknown") {
 					if (m.id.match("blockquote")) {
 						mediaElem	=	"<div class='thumbnail thumb-quote'></div>";
 					} else {
@@ -193,6 +193,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 				} else if (m.type		==	"quote") { 
 					isTextMedia			=	true;
 					mediaElem			=	"<div class='plain-text-quote'>" + m.id + "</div>";
+				} else if (m.type       ==  "customHtml") {
+					isTextMedia			=	true;
+                    mediaElem = "<div class='plain-text timeline-custom-html'><div class='container'>" + m.id + "</div></div>";
+				} 
 			// UNKNOWN
 				} else if (m.type		==	"unknown") { 
 					trace("NO KNOWN MEDIA TYPE FOUND TRYING TO JUST PLACE THE HTML"); 

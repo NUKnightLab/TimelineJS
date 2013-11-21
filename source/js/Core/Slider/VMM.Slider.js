@@ -189,7 +189,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.Lib.width($slides_items, (slides.length * config.slider.content.width));
 			
-			if (_from_start) {
+			if (_from_start && slides[current_slide]) {
 				VMM.Lib.css($slider_container, "left", slides[current_slide].leftpos());
 			}
 			
@@ -228,7 +228,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			if (d.left_adjust < 0 ) {
 				if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
 					//onNextClick(e);
-					if (current_slide == slides.length - 1) {
+					if (current_slide >= slides.length - 1) {
 						backToCurrentSlide();
 					} else {
 						goToSlide(current_slide+1, "easeOutExpo");
@@ -239,7 +239,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 					
 				}
 			} else if (Math.abs(d.left_adjust) > (config.slider.width / 2) ) {
-				if (current_slide == 0) {
+				if (current_slide <= 0) {
 					backToCurrentSlide();
 				} else {
 					goToSlide(current_slide-1, "easeOutExpo");
@@ -255,7 +255,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		/* NAVIGATION
 		================================================== */
 		function onNextClick(e) {
-			if (current_slide == slides.length - 1) {
+			if (current_slide >= slides.length - 1) {
 				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide+1);
@@ -264,7 +264,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 		}
 		
 		function onPrevClick(e) {
-			if (current_slide == 0) {
+			if (current_slide <= 0) {
 				backToCurrentSlide();
 			} else {
 				goToSlide(current_slide-1);
@@ -316,9 +316,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			detachMessege();
 		}
 		
+		function _setCurrentSlide(n){
+		  //setup boundaries
+			current_slide = n >= slides.length - 1 ? 
+				slides.length - 1 : 
+				(n <= 0 ? 0 : n);
+		}
+		
 		/* UPDATE
 		================================================== */
 		function upDate() {
+			_setCurrentSlide(current_slide);
 			config.current_slide = current_slide;
 			VMM.fireEvent(layout, "UPDATE");
 		};
@@ -371,7 +379,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 					slides[current_slide + i].enqueue = false;
 				}
 				if ( !( (current_slide - i) < 0 ) ) {
+					if(config.slideShow){
+						VMM.bindEvent(slides[current_slide - i].elem(),config.slideShow,config.events.slide_show);
+					}
 					slides[current_slide - i].show();
+					VMM.fireEvent(slides[current_slide - i].elem(),config.events.slide_show);
 					slides[current_slide - i].enqueue = false;
 				}
 			}
@@ -475,7 +487,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				//VMM.Lib.addClass(".slider-item .content-container", "pad-left");
 				VMM.Lib.removeClass(".slider-item .content-container", "pad-top");
 				
-				VMM.Lib.css(".slider-item .layout-text-media .media", "float", "left" );
+				//VMM.Lib.css(".slider-item .layout-text-media .media", "float", "left" );
 				VMM.Lib.css(".slider-item .layout-text-media", "display", "table" );
 				
 				VMM.Lib.css(".slider-item .media blockquote p", "line-height", "36px" );
@@ -557,7 +569,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			for(i = 0; i < slides.length; i++) {
 				
 				slides[i].layout(is_skinny);
-				
+				slides[i].css("zoom", "1");
 				if (slides[i].content_height() > config.slider.height + 20) {
 					slides[i].css("display", "block");
 				} else {
@@ -613,6 +625,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			// Set current slide
 			current_slide	= n;
+			upDate();
 			_pos			= slides[current_slide].leftpos();
 			
 			
@@ -792,7 +805,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.Lib.visible(navigation.prevBtn, false);
 			goToSlide(config.current_slide, "easeOutExpo", __duration, true, true);
-			
+			VMM.fireEvent(global,"ALLSLIDESLOADED");
 			_active = true;
 		};
 		

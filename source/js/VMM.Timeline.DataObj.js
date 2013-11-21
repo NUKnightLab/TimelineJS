@@ -9,7 +9,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 		getData: function (raw_data) {
 			VMM.Timeline.DataObj.data_obj = {};
 			VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Timeline.Config.language.messages.loading_timeline);
-			if (type.of(raw_data) == "object") {
+			if (Object.prototype.toString.call( raw_data ) === '[object Object]' || type.of(raw_data) == "object") {
 				trace("DATA SOURCE: JSON OBJECT");
 				VMM.Timeline.DataObj.parseJSON(raw_data);
 			} else if (type.of(raw_data) == "string") {

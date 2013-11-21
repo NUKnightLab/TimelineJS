@@ -52,9 +52,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			embed:					false,
 			events: {
 				data_ready:			"DATAREADY",
+				noData:			    "NODATA",
 				messege:			"MESSEGE",
 				headline:			"HEADLINE",
 				slide_change:		"SLIDE_CHANGE",
+				slide_show:			"SLIDE_SHOW",
 				resize:				"resize"
 			},
 			id: 					timeline_id,
@@ -130,7 +132,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				nav: {
 					width: 			100,
 					height: 		200
-				}
+				},
+				swapMedia:			false
 			},
 			ease: 					"easeInOutExpo",
 			duration: 				1000,
@@ -264,6 +267,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function onDatesProcessed() {
 			build();
+		}
+		
+		function noDateToProcess() {
+			VMM.fireEvent(global, config.events.noData);
 		}
 		
 		function reSize() {
@@ -405,7 +412,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			// EVENTS
 			VMM.bindEvent(global, onDataReady, config.events.data_ready);
 			VMM.bindEvent(global, showMessege, config.events.messege);
-			
+			VMM.bindEvent(global, config.noData, config.events.noData);
 			VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
 			
 			/* GET DATA
@@ -550,138 +557,142 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			_dates = [];
 			VMM.fireEvent(global, config.events.messege, "Building Dates");
 			updateSize();
-			
-			for(var i = 0; i < data.date.length; i++) {
-				
-				if (data.date[i].startDate != null && data.date[i].startDate != "") {
+			if(data.date.length == 0){
+				noDateToProcess();
+			}else{
+				for(var i = 0; i < data.date.length; i++) {
 					
-					var _date		= {},
-						do_start	= VMM.Date.parse(data.date[i].startDate, true),
-						do_end;
+					if (data.date[i].startDate != null && data.date[i].startDate != "") {
 						
-					_date.startdate		= do_start.date;
-					_date.precisiondate	= do_start.precision;
-					
-					if (!isNaN(_date.startdate)) {
+						var _date		= {},
+							do_start	= VMM.Date.parse(data.date[i].startDate, true),
+							do_end;
+							
+						_date.startdate		= do_start.date;
+						_date.precisiondate	= do_start.precision;
 						
-					
-						// END DATE
-						if (data.date[i].endDate != null && data.date[i].endDate != "") {
-							_date.enddate = VMM.Date.parse(data.date[i].endDate);
-						} else {
-							_date.enddate = _date.startdate;
-						}
+						if (!isNaN(_date.startdate)) {
+							
 						
-						_date.needs_slug = false;
-						
-						if (data.date[i].headline == "") {
-							if (data.date[i].slug != null && data.date[i].slug != "") {
-								_date.needs_slug = true;
+							// END DATE
+							if (data.date[i].endDate != null && data.date[i].endDate != "") {
+								_date.enddate = VMM.Date.parse(data.date[i].endDate);
+							} else {
+								_date.enddate = _date.startdate;
 							}
-						}
+							
+							_date.needs_slug = false;
+							
+							if (data.date[i].headline == "") {
+								if (data.date[i].slug != null && data.date[i].slug != "") {
+									_date.needs_slug = true;
+								}
+							}
+							
+							_date.title				= data.date[i].headline;
+							_date.headline			= data.date[i].headline;
+							_date.type				= data.date[i].type;
+							_date.date				= VMM.Date.prettyDate(_date.startdate, false, _date.precisiondate);
+							_date.asset				= data.date[i].asset;
+							_date.fulldate			= _date.startdate.getTime();
+							_date.text				= data.date[i].text;
+							_date.content			= "";
+							_date.tag				= data.date[i].tag;
+							_date.slug				= data.date[i].slug;
+							_date.uniqueid			= VMM.Util.unique_ID(7);
+							_date.classname			= data.date[i].classname;
+							
+							
+							_dates.push(_date);
+						} 
 						
-						_date.title				= data.date[i].headline;
-						_date.headline			= data.date[i].headline;
-						_date.type				= data.date[i].type;
-						_date.date				= VMM.Date.prettyDate(_date.startdate, false, _date.precisiondate);
-						_date.asset				= data.date[i].asset;
-						_date.fulldate			= _date.startdate.getTime();
-						_date.text				= data.date[i].text;
-						_date.content			= "";
-						_date.tag				= data.date[i].tag;
-						_date.slug				= data.date[i].slug;
-						_date.uniqueid			= VMM.Util.unique_ID(7);
-						_date.classname			= data.date[i].classname;
-						
-						
-						_dates.push(_date);
-					} 
-					
-				}
-				
-			};
-			
-			/* CUSTOM SORT
-			================================================== */
-			if (data.type != "storify") {
-				_dates.sort(function(a, b){
-					return a.fulldate - b.fulldate
-				});
-			}
-			
-			/* CREATE START PAGE IF AVAILABLE
-			================================================== */
-			if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
-
-				var startpage_date,
-					do_start,
-					_date			= {},
-					td_num			= 0,
-					td;
-					
-				if (typeof data.startDate != 'undefined') {
-					do_start		= VMM.Date.parse(data.startDate, true);
-					startpage_date	= do_start.date;
-				} else {
-					startpage_date = false;
-				}
-				trace("HAS STARTPAGE");
-				trace(startpage_date);
-				
-				if (startpage_date && startpage_date < _dates[0].startdate) {
-					_date.startdate = new Date(startpage_date);
-				} else {
-					td = _dates[0].startdate;
-					_date.startdate = new Date(_dates[0].startdate);
-				
-					if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
-						// trace("YEAR ONLY");
-						_date.startdate.setFullYear(td.getFullYear() - 1);
-					} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
-						// trace("YEAR MONTH");
-						_date.startdate.setMonth(td.getMonth() - 1);
-					} else if (td.getHours() === 0 && td.getMinutes() === 0) {
-						// trace("YEAR MONTH DAY");
-						_date.startdate.setDate(td.getDate() - 1);
-					} else  if (td.getMinutes() === 0) {
-						// trace("YEAR MONTH DAY HOUR");
-						_date.startdate.setHours(td.getHours() - 1);
-					} else {
-						// trace("YEAR MONTH DAY HOUR MINUTE");
-						_date.startdate.setMinutes(td.getMinutes() - 1);
 					}
+					
+				};
+				
+				/* CUSTOM SORT
+				================================================== */
+				if (data.type != "storify") {
+					_dates.sort(function(a, b){
+						return a.fulldate - b.fulldate
+					});
 				}
 				
-				_date.uniqueid		= VMM.Util.unique_ID(7);
-				_date.enddate		= _date.startdate;
-				_date.precisiondate	= do_start.precision;
-				_date.title			= data.headline;
-				_date.headline		= data.headline;
-				_date.text			= data.text;
-				_date.type			= "start";
-				_date.date			= VMM.Date.prettyDate(data.startDate, false, _date.precisiondate);
-				_date.asset			= data.asset;
-				_date.slug			= false;
-				_date.needs_slug	= false;
-				_date.fulldate		= _date.startdate.getTime();
-				
-				if (config.embed) {
-					VMM.fireEvent(global, config.events.headline, _date.headline);
+				/* CREATE START PAGE IF AVAILABLE
+				================================================== */
+				if (data.headline != null && data.headline != "" && data.text != null && data.text != "") {
+
+					var startpage_date,
+						do_start,
+						_date			= {},
+						td_num			= 0,
+						td;
+						
+					if (typeof data.startDate != 'undefined') {
+						do_start		= VMM.Date.parse(data.startDate, true);
+						startpage_date	= do_start.date;
+					} else {
+						startpage_date = false;
+					}
+					trace("HAS STARTPAGE");
+					trace(startpage_date);
+					
+					if (startpage_date && startpage_date < _dates[0].startdate) {
+						_date.startdate = new Date(startpage_date);
+					} else {
+						td = _dates[0].startdate;
+						_date.startdate = new Date(_dates[0].startdate);
+					
+						if (td.getMonth() === 0 && td.getDate() == 1 && td.getHours() === 0 && td.getMinutes() === 0 ) {
+							// trace("YEAR ONLY");
+							_date.startdate.setFullYear(td.getFullYear() - 1);
+						} else if (td.getDate() <= 1 && td.getHours() === 0 && td.getMinutes() === 0) {
+							// trace("YEAR MONTH");
+							_date.startdate.setMonth(td.getMonth() - 1);
+						} else if (td.getHours() === 0 && td.getMinutes() === 0) {
+							// trace("YEAR MONTH DAY");
+							_date.startdate.setDate(td.getDate() - 1);
+						} else  if (td.getMinutes() === 0) {
+							// trace("YEAR MONTH DAY HOUR");
+							_date.startdate.setHours(td.getHours() - 1);
+						} else {
+							// trace("YEAR MONTH DAY HOUR MINUTE");
+							_date.startdate.setMinutes(td.getMinutes() - 1);
+						}
+					}
+					
+					_date.uniqueid		= VMM.Util.unique_ID(7);
+					_date.enddate		= _date.startdate;
+					_date.precisiondate	= do_start.precision;
+					_date.title			= data.headline;
+					_date.headline		= data.headline;
+					_date.text			= data.text;
+					_date.type			= "start";
+					_date.date			= VMM.Date.prettyDate(data.startDate, false, _date.precisiondate);
+					_date.asset			= data.asset;
+					_date.slug			= false;
+					_date.needs_slug	= false;
+					_date.fulldate		= _date.startdate.getTime();
+					
+					if (config.embed) {
+						VMM.fireEvent(global, config.events.headline, _date.headline);
+					}
+					
+					_dates.unshift(_date);
 				}
 				
-				_dates.unshift(_date);
+				/* CUSTOM SORT
+				================================================== */
+				if (data.type != "storify") {
+					_dates.sort(function(a, b){
+						return a.fulldate - b.fulldate
+					});
+				}
+				
+				onDatesProcessed();
 			}
-			
-			/* CUSTOM SORT
-			================================================== */
-			if (data.type != "storify") {
-				_dates.sort(function(a, b){
-					return a.fulldate - b.fulldate
-				});
-			}
-			
-			onDatesProcessed();
 		}
+		
 		
 	};
 
