@@ -216,7 +216,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						is_valid	= false;
 					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Parsing Google Doc Data");
-					
+
 					function getGVar(v) {
 						if (typeof v != 'undefined') {
 							return v.$t;
@@ -224,7 +224,9 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							return "";
 						}
 					}
-					if (typeof d.feed.entry != 'undefined') {
+					if (typeof d.feed.entry == 'undefined') {
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Error parsing spreadsheet. Make sure you have no blank rows and that the headers have not been changed.");
+					} else {
 						is_valid = true;
 						
 						for(var i = 0; i < d.feed.entry.length; i++) {
@@ -273,8 +275,6 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								data_obj.timeline.date.push(date);
 							}
 						};
-						
-					} else {
 						
 					}
 					
@@ -335,7 +335,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						k			= 0;
 					
 					VMM.fireEvent(global, VMM.Timeline.Config.events.messege, VMM.Language.messages.loading_timeline + " Parsing Google Doc Data (cells)");
-					
+
 					function getGVar(v) {
 						if (typeof v != 'undefined') {
 							return v.$t;
@@ -424,7 +424,6 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 
 						for(i = 0; i < list.length; i++) {
 							var date	= list[i];
-							
 							if (date.type.match("start") || date.type.match("title") ) {
 								data_obj.timeline.startDate		= date.startDate;
 								data_obj.timeline.headline		= date.headline;
@@ -443,37 +442,39 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								}
 								data_obj.timeline.era.push(era);
 							} else {
-								var date = {
-										type:			"google spreadsheet",
-										startDate:		date.startDate,
-										endDate:		date.endDate,
-										headline:		date.headline,
-										text:			date.text,
-										tag:			date.tag,
-										asset: {
-											media:		date.media,
-											credit:		date.credit,
-											caption:	date.caption,
-											thumbnail:	date.thumbnail
-										}
-								};
-							
-								data_obj.timeline.date.push(date);
+								if (date.startDate) {
+
+									var date = {
+											type:			"google spreadsheet",
+											startDate:		date.startDate,
+											endDate:		date.endDate,
+											headline:		date.headline,
+											text:			date.text,
+											tag:			date.tag,
+											asset: {
+												media:		date.media,
+												credit:		date.credit,
+												caption:	date.caption,
+												thumbnail:	date.thumbnail
+											}
+									};
+								
+									data_obj.timeline.date.push(date);
+
+								} else {
+									trace("Skipping item " + i + " in list: no start date.")
+								}
 							}
 							
 						}
 						
-						//trace(cellnames);
-						//trace(max_row);
-						//trace(list);
-						
 					}
-					
+					is_valid = data_obj.timeline.date.length > 0;
 					if (is_valid) {
 						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Finished Parsing Data");
 						VMM.fireEvent(global, VMM.Timeline.Config.events.data_ready, data_obj);
 					} else {
-						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Unable to load Google Doc data source");
+						VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Unable to load Google Doc data source. Make sure you have no blank rows and that the headers have not been changed.");
 					}
 				}
 				
