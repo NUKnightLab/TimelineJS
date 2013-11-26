@@ -380,7 +380,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		googlemaps: {
 			
-			maptype: "toner",
+			maptype: "TERRAIN", 
 			
 			setMapType: function(d) {
 				if (d != "") {
