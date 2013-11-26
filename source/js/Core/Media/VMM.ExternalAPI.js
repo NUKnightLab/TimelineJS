@@ -380,7 +380,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		
 		googlemaps: {
 			
-			maptype: "TERRAIN", 
+			maptype: "TERRAIN", // see also below for default if this is a google type
 			
 			setMapType: function(d) {
 				if (d != "") {
@@ -510,7 +510,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						layer				=	VMM.ExternalAPI.googlemaps.maptype;
 					}
 				} else {
-					layer					=	"toner";
+					layer				=	google.maps.MapTypeId['TERRAIN'];
 				}
 				
 				

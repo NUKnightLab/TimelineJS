@@ -62,7 +62,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			type: 					"timeline",
 			touch:					false,
 			orientation: 			"normal", 
-			maptype: 				"toner",
+			maptype: 				"",
 			version: 				"2.x", 
 			preload:				4,
 			current_slide:			0,
