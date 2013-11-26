@@ -67,6 +67,7 @@ function getLinkAndIframe() {
 		e_startzoomadjust	= document.getElementById('embed-startzoomadjust'),
 		e_startatslide		= document.getElementById('embed-startatslide'),
 		e_debug				= document.getElementById('embed-debug'),
+		e_googlemapkey		= document.getElementById('embed-googlemapkey'),
 		start_at_end		= false,
 		hash_bookmark		= false,
 		is_debug			= false,
@@ -130,6 +131,10 @@ function getLinkAndIframe() {
 		wp	+= "debug='" + is_debug + "' ";
 	}
 	
+	if (e_googlemapkey.value != "") {
+		wp	+= "gmap_key='" + e_googlemapkey.value + "' ";
+	}
+	
 	if (parseInt(e_startatslide.value, 10) > 0) {
 		wp	+= "start_at_slide='" + parseInt(e_startatslide.value, 10) + "' ";
 	}
@@ -164,7 +169,11 @@ function getLinkAndIframe() {
 	if (parseInt(e_startzoomadjust.value, 10) > 0) {
 		vars	+= "&start_zoom_adjust=" + parseInt(e_startzoomadjust.value, 10);
 	}
-		
+	
+	if (e_googlemapkey.value != "") {
+		vars	+= "&gmap_key=" + e_googlemapkey.value;
+	}
+	
 	if (e_width.value > 0) {
 		vars	+= "&width=" + e_width.value; 
 	}
