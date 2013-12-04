@@ -21,7 +21,9 @@ $(document).ready(function() {
 
     return false;
   });
-
+ 
+  $("#font-preview-trigger").popover()
+ 
   // Preview
   $("#iframe-preview-button").click(function () {
     var $embed = $("#preview");
@@ -29,6 +31,8 @@ $(document).ready(function() {
     $embed.show();
     $("body,html").animate({scrollTop: $embed.offset().top - 60}, 250);
   });
+
+
 
   // Embed Generator
   updateEmbedCode();
