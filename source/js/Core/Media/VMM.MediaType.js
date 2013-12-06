@@ -124,9 +124,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('iframe')) {
 			media.type = "iframe";
 			trace("IFRAME")
-			trace( d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1]);
-			media.id = d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1];
-			success = true;
+			regex = /src=['"](\S+?)['"]\s/;
+			group = d.match(regex);
+			if (group) {
+				media.id = group[1];
+			}
+			trace( "iframe url: " + media.id );
+			success = Boolean(media.id);
 		} else {
 			trace("unknown media");  
 			media.type = "unknown";
