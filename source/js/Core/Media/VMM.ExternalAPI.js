@@ -1346,7 +1346,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
-						LoadLib.js('http://www.youtube.com/player_api', function() {
+						LoadLib.js('//www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
 						});
 					}
