@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.26.5 - 2013-12-04
+    TimelineJS - ver. 2.27.0 - 2013-12-11
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -4112,7 +4112,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
-						LoadLib.js('http://www.youtube.com/player_api', function() {
+						LoadLib.js('//www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
 						});
 					}
@@ -4718,9 +4718,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('iframe')) {
 			media.type = "iframe";
 			trace("IFRAME")
-			trace( d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1]);
-			media.id = d.match(/src\=([^\s]*)\s/)[1].split(/"/)[1];
-			success = true;
+			regex = /src=['"](\S+?)['"]\s/;
+			group = d.match(regex);
+			if (group) {
+				media.id = group[1];
+			}
+			trace( "iframe url: " + media.id );
+			success = Boolean(media.id);
 		} else {
 			trace("unknown media");  
 			media.type = "unknown";
