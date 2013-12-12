@@ -2,12 +2,7 @@
 .DS_Store*
 dev_examples/
 cdn/
-compiled/generator.html
-compiled/index.html
-compiled/generator-backup.html
-compiled/js/storyjs-embed-cdn.js
-compiled/js/storyjs-embed-generator.js
-compiled/css/timeline-generator.css
+compiled
 *.tmproj
 *.tmproject
 tmtags
