@@ -554,7 +554,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			interval_calc.minute.minor 				= 60;
 			
 			// SECOND
-			interval_calc.second.type 				= "decade";
+			interval_calc.second.type 				= "second";
 			interval_calc.second.first 				= _first.seconds;
 			interval_calc.second.base 				= Math.floor(_first.seconds);
 			interval_calc.second.last 				= _last.seconds;
@@ -643,6 +643,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				timerelative.start	= _first.hours;
 			} else if (_type == "minute") {
 				timerelative.start	= _first.minutes;
+			} else if (_type == "second") {
+				timerelative.start	= _first.seconds;
 			}
 			
 			/* LAST
@@ -678,6 +680,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					timerelative.end	= _last.hours;
 				} else if (_type == "minute") {
 					timerelative.end	= _last.minutes;
+				} else if (_type == "second") {
+					timerelative.end	= _last.seconds;
 				}
 				
 			} else {
