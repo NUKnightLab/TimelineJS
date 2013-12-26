@@ -255,6 +255,10 @@ JSON is the native data format for TimelineJS.
 Remember, JSON is picky. A misplaced comma or quotation mark can
 prevent the timeline from loading properly. 
 
+Note that optional tags on events (dates) puts them in an annotated `swimlane`
+in the TimeNav. Adding the `tags` list to the JSON file allows you to control
+the order of these swimlanes.
+
 Here is the full model:
 ```javascript
 
@@ -269,6 +273,10 @@ Here is the full model:
 			"credit":"Credit Name Goes Here",
 			"caption":"Caption text goes here"
 		},
+		"tags": [
+				"optional",
+				"list"
+		],
 		"date": [
 			{
 				"startDate":"2011,12,10",
@@ -318,6 +326,10 @@ storyjs_jsonp_data = {
 			"credit":"Credit Name Goes Here",
 			"caption":"Caption text goes here"
 		},
+		"tags": [
+				"optional",
+				"list"
+		],
 		"date": [
 			{
 				"startDate":"2011,12,10",

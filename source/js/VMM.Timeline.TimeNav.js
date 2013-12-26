@@ -137,12 +137,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* INIT
 		================================================== */
-		this.init = function(d,e) {
+		this.init = function(d,e,t) {
 			trace('VMM.Timeline.TimeNav init');
 			// need to evaluate d
 			// some function to determine type of data and prepare it
 			if(typeof d != 'undefined') {
-				this.setData(d, e);
+				this.setData(d, e, t);
 			} else {
 				trace("WAITING ON DATA");
 			}
@@ -150,11 +150,12 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		/* GETTERS AND SETTERS
 		================================================== */
-		this.setData = function(d,e) {
+		this.setData = function(d,e, t) {
 			if(typeof d != 'undefined') {
 				data = {};
 				data = d;
 				eras = e;
+        if(typeof t!='undefined') tags=t;
 				build();
 			} else{
 				trace("NO DATA");

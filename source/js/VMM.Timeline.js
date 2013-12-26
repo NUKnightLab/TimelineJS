@@ -500,7 +500,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				
 				// INITIALIZE COMPONENTS
 				slider.init(_dates);
-				timenav.init(_dates, data.era);
+				timenav.init(_dates, data.era, data.tags);
 			
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);
