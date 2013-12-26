@@ -252,9 +252,9 @@ To enable finer control over the navigation slider, the following are
 used:
 
 * `nav.height` describes total height of the nav-slider, including the ruler
-  (default 200)
+  (default 200px)
 * `nav.content_height` describes the height without the ruler. As the ruler is
-  generally 50px (unless you do some CSS changes) this is `nav.height`-50. so
+  generally 50px (unless you do some CSS changes) this is `nav.height-50`, so
 default is 150px
 * `nav.marker.height` describes marker/row height, default is 50px. Note that if you
   have more than `nav.content_height`/`nav.marker.height` rows - then the row
@@ -269,8 +269,8 @@ rows.
 Finally - any change in size requires you to also handle the CSS. The common
 case is just adding space for more rows, keeping the nicely formatted 50/25px
 height. Here is an example of doing just that; There are also full files in git:
-[example_json.rows.html](https://github.com/rpeleg1970/TimelineJS/blob/master/examples/example_json.rows.html) 
-and [example_json.rows.json](https://github.com/rpeleg1970/TimelineJS/blob/master/examples/example_json.rows.json)
+[example_json.rows.html](https://github.com/rpeleg1970/TimelineJS/blob/swimlanes/examples/example_json.rows.html) 
+and [example_json.rows.json](https://github.com/rpeleg1970/TimelineJS/blob/swimlanes/examples/example_json.rows.json)
 ```html
       <!-- BEGIN Timeline Embed -->
       <div id="timeline-embed"></div>
@@ -311,9 +311,9 @@ JSON is the native data format for TimelineJS.
 Remember, JSON is picky. A misplaced comma or quotation mark can
 prevent the timeline from loading properly. 
 
-Note that optional tags on events (dates) puts them in an annotated `swimlane`
+Note that optional tags on events (dates) puts them in an annotated row
 in the TimeNav. Adding the `tags` list to the JSON file allows you to control
-the order of these swimlanes.
+the order of these rows.
 
 Here is the full model:
 ```javascript
