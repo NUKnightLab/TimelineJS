@@ -714,7 +714,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				pos_offset				= -2,
 				row_depth				= 0,
 				row_depth_sub			= 0,
-				line_last_height_pos	= 150,
+				line_last_height_pos	= config.nav.content_height,
 				line_height				= 6,
 				cur_mark				= 0,
 				in_view_margin			= config.width,
