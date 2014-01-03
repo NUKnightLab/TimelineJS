@@ -10,7 +10,7 @@ var WebFontConfig;
 
 if(typeof embed_path == 'undefined' || typeof embed_path == 'undefined') {
 	// REPLACE WITH YOUR BASEPATH IF YOU WANT OTHERWISE IT WILL TRY AND FIGURE IT OUT
-	var embed_path = getEmbedScriptPath("storyjs-embed.js").split("js/")[0];
+	var embed_path = getEmbedScriptPath("storyjs-embed.js").slice(0, -3);
 }
 
 function getEmbedScriptPath(scriptname) {
