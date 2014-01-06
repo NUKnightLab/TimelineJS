@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.27.0 - 2013-12-11
+    TimelineJS - ver. 2.27.1 - 2014-01-06
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -35,8 +35,7 @@
 .vco-storyjs p,.vco-storyjs blockquote,.vco-storyjs blockquote p,.vco-storyjs .twitter blockquote p{font-family:"Georgia",Times New Roman,Times,serif !important}
 .vco-storyjs .vco-feature h1,.vco-storyjs .vco-feature h2,.vco-storyjs .vco-feature h3,.vco-storyjs .vco-feature h4,.vco-storyjs .vco-feature h5,.vco-storyjs .vco-feature h6{font-family:"Georgia",Times New Roman,Times,serif}
 .timeline-tooltip{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif}
-.thumbnail{background-image:url(themes/timeline-dark.png?v3.4)}
-@media only screen and (-webkit-min-device-pixel-ratio:2),only screen and (min-device-pixel-ratio:2){.thumbnail{background-image:url(themes/timeline-dark@2x.png?v4.3);background-size:352px 260px}}.vco-storyjs{font-size:15px;font-weight:normal;line-height:20px;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;}.vco-storyjs p{font-size:15px;font-weight:normal;line-height:20px;margin-bottom:20px;color:#aaa}.vco-storyjs p small{font-size:12px;line-height:17px}
+.vco-storyjs{font-size:15px;font-weight:normal;line-height:20px;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;}.vco-storyjs p{font-size:15px;font-weight:normal;line-height:20px;margin-bottom:20px;color:#aaa}.vco-storyjs p small{font-size:12px;line-height:17px}
 .vco-storyjs p:first-child{margin-top:20px}
 .vco-storyjs .vco-navigation p{color:#999}
 .vco-storyjs .vco-feature h3,.vco-storyjs .vco-feature h4,.vco-storyjs .vco-feature h5,.vco-storyjs .vco-feature h6{margin-bottom:15px}
