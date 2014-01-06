@@ -67,6 +67,15 @@ Documentation site files are in the `website` directory. To review your edits lo
 
 To deploy to S3, type `fab deploy`.
 
+## Adding support for a new language
+
+* Add the file with the correct ISO-639 language code name in the `source/js/Core/Language/locale` directory.
+* Update website/templates/_make.html to refer to the new file (remember to sort alphabetically by language name, not code)
+* create a test timeline using the new language to verify that it basically works
+* deploy a new version (don't forget to stage_wp)
+* update knightlab-timeline.php in the TimelineJS-Wordpress-Plugin repo and release that too.
+
+
 ## Deploying javascript changes to the CDN
 
 To stage your changes to a versioned directory in your local CDN repository, type `fab stage` You will be prompted for the new version number. After you provide it, this `fab stage` runs a build, copies the files into a versioned directory in your local `cdn.knightlab.com` repository, and tags the last commit with a version number.
