@@ -1230,6 +1230,16 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 
 			isInstagramUrl: function(url) {
 				return url.match("instagr.am/p/") || url.match("instagram.com/p/");
+			},
+
+			getInstagramIdFromUrl: function(url) {
+				try {
+					return d.split("\/p\/")[1].split("/")[0];	
+				} catch(e) {
+					trace("Invalid Instagram url: " + url);
+					return null;
+				}
+				
 			}
 		},
 		
