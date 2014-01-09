@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.28.0 - 2014-01-09
+    TimelineJS - ver. 2.28.1 - 2014-01-09
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -3893,7 +3893,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var the_url = "//api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
 				
 				VMM.getJSON(the_url, function(d) {
-					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
+					var flickr_id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d.sizes.size[0].url);
 				
 					var flickr_large_id = "#" + m.uid,
 						flickr_thumb_id = "#" + m.uid + "_thumb";
@@ -3959,8 +3959,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				return _size;
+			},
+
+			getFlickrIdFromUrl: function(url) {
+				var idx = url.indexOf("flickr.com/photos/");
+				if (idx == -1) return null; 
+				var pos = idx + "flickr.com/photos/".length;
+				var photo_info = url.substr(pos)
+				if (photo_info.indexOf('/') == -1) return null;
+				if (photo_info.indexOf('/') == 0) photo_info = photo_info.substr(1);
+				return photo_info.split("/")[1];
 			}
-			
 		},
 		
 		instagram: {
@@ -3983,6 +3992,20 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				return _size;
+			},
+
+			isInstagramUrl: function(url) {
+				return url.match("instagr.am/p/") || url.match("instagram.com/p/");
+			},
+
+			getInstagramIdFromUrl: function(url) {
+				try {
+					return url.split("\/p\/")[1].split("/")[0];	
+				} catch(e) {
+					trace("Invalid Instagram url: " + url);
+					return null;
+				}
+				
 			}
 		},
 		
@@ -4399,7 +4422,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-photo' id='" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"instagram") {
-					mediaElem		=	"<div class='thumbnail thumb-instagram' id='" + uid + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-instagram' id='" + uid + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m, true) + "'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
 					mediaElem		=	"<div class='thumbnail thumb-youtube' id='" + uid + "_thumb'></div>";
@@ -4494,7 +4517,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// INSTAGRAM
 				} else if (m.type		==	"instagram") {
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m) + "'></a></div>";
-					//VMM.ExternalAPI.instagram.get(m.id, uid);
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + m.uid + "'>" + loading_messege + "</div>";
@@ -4680,16 +4702,14 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			success = true;
 		} else if (d.match("flickr.com/photos/")) {
 			media.type = "flickr";
-			var pos = d.indexOf("flickr.com/photos/") + "flickr.com/photos/".length;
-			var photo_info = d.substr(pos)
-			media.id = photo_info.split("/")[1];
+			media.id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d)
 			media.link = d;
 			success = Boolean(media.id);
-		} else if (d.match("instagr.am/p/")) {
+		} else if (VMM.ExternalAPI.instagram.isInstagramUrl(d)) {
 			media.type = "instagram";
 			media.link = d;
-			media.id = d.split("\/p\/")[1].split("/")[0];
-			success = true;
+			media.id = VMM.ExternalAPI.instagram.getInstagramIdFromUrl(d)
+			success = Boolean(media.id);
 		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
 			media.type = "image";
 			media.id = d;
