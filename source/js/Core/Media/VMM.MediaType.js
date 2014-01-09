@@ -86,9 +86,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			success = true;
 		} else if (d.match("flickr.com/photos/")) {
 			media.type = "flickr";
-			var pos = d.indexOf("flickr.com/photos/") + "flickr.com/photos/".length;
-			var photo_info = d.substr(pos)
-			media.id = photo_info.split("/")[1];
+			media.id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d)
 			media.link = d;
 			success = Boolean(media.id);
 		} else if (d.match("instagr.am/p/")) {

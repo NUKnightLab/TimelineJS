@@ -1127,7 +1127,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				var the_url = "//api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
 				
 				VMM.getJSON(the_url, function(d) {
-					var flickr_id = d.sizes.size[0].url.split("photos\/")[1].split("/")[1];
+					var flickr_id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d.sizes.size[0].url);
 				
 					var flickr_large_id = "#" + m.uid,
 						flickr_thumb_id = "#" + m.uid + "_thumb";
@@ -1193,8 +1193,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				return _size;
+			},
+
+			getFlickrIdFromUrl: function(url) {
+				var idx = url.indexOf("flickr.com/photos/");
+				if (idx == -1) return null; 
+				var pos = idx + "flickr.com/photos/".length;
+				var photo_info = url.substr(pos)
+				if (photo_info.indexOf('/') == -1) return null;
+				if (photo_info.indexOf('/') == 0) photo_info = photo_info.substr(1);
+				return photo_info.split("/")[1];
 			}
-			
 		},
 		
 		instagram: {
