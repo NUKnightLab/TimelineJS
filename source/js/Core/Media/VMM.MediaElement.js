@@ -38,7 +38,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 					mediaElem		=	"<div class='thumbnail thumb-photo' id='" + uid + "_thumb'></div>";
 					return mediaElem;
 				} else if (m.type	==	"instagram") {
-					mediaElem		=	"<div class='thumbnail thumb-instagram' id='" + uid + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m.id, true) + "'></div>";
+					mediaElem		=	"<div class='thumbnail thumb-instagram' id='" + uid + "_thumb'><img src='" + VMM.ExternalAPI.instagram.get(m, true) + "'></div>";
 					return mediaElem;
 				} else if (m.type	==	"youtube") {
 					mediaElem		=	"<div class='thumbnail thumb-youtube' id='" + uid + "_thumb'></div>";
@@ -133,7 +133,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			// INSTAGRAM
 				} else if (m.type		==	"instagram") {
 					mediaElem			=	"<div class='media-image media-shadow'><a href='" + m.link + "' target='_blank'><img src='" + VMM.ExternalAPI.instagram.get(m) + "'></a></div>";
-					//VMM.ExternalAPI.instagram.get(m.id, uid);
 			// GOOGLE DOCS
 				} else if (m.type		==	"googledoc") {
 					mediaElem			=	"<div class='media-frame media-shadow doc' id='" + m.uid + "'>" + loading_messege + "</div>";
