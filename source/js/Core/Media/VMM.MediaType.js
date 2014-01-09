@@ -89,7 +89,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d)
 			media.link = d;
 			success = Boolean(media.id);
-		} else if (d.match("instagr.am/p/")) {
+		} else if (VMM.ExternalAPI.instagram.isInstagramUrl(d)) {
 			media.type = "instagram";
 			media.link = d;
 			media.id = d.split("\/p\/")[1].split("/")[0];

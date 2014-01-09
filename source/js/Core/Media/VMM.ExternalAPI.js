@@ -1226,6 +1226,10 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 				
 				return _size;
+			},
+
+			isInstagramUrl: function(url) {
+				return url.match("instagr.am/p/") || url.match("instagram.com/p/");
 			}
 		},
 		
