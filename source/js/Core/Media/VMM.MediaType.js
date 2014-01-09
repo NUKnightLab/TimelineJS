@@ -84,11 +84,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 				media.user = d.split("google.com/")[1].split("/posts/")[0];
 			}
 			success = true;
-		} else if (d.match("flickr.com/photos")) {
+		} else if (d.match("flickr.com/photos/")) {
 			media.type = "flickr";
-			media.id = d.split("photos\/")[1].split("/")[1];
+			var pos = d.indexOf("flickr.com/photos/") + "flickr.com/photos/".length;
+			var photo_info = d.substr(pos)
+			media.id = photo_info.split("/")[1];
 			media.link = d;
-			success = true;
+			success = Boolean(media.id);
 		} else if (d.match("instagr.am/p/")) {
 			media.type = "instagram";
 			media.link = d;
