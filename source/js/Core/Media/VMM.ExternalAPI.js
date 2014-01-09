@@ -1234,7 +1234,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 
 			getInstagramIdFromUrl: function(url) {
 				try {
-					return d.split("\/p\/")[1].split("/")[0];	
+					return url.split("\/p\/")[1].split("/")[0];	
 				} catch(e) {
 					trace("Invalid Instagram url: " + url);
 					return null;
