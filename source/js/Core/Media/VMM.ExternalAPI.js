@@ -202,7 +202,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				})
 				.success(function(d) {
 					clearTimeout(twitter_timeout);
-					clearTimeout(callback_timeout);
+					// clearTimeout(callback_timeout);
 					callback();
 				});
 				
@@ -479,16 +479,17 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						return google.maps.ImageMapType.call(this, {
 							"getTileUrl": function(coord, zoom) {
 								var index = 	(zoom + coord.x + coord.y) % VMM.ExternalAPI.googlemaps.map_subdomains.length;
-								return [
-									provider.url
+								var retURL =  provider.url
 										.replace("{S}", VMM.ExternalAPI.googlemaps.map_subdomains[index])
 										.replace("{Z}", zoom)
 										.replace("{X}", coord.x)
 										.replace("{Y}", coord.y)
 										.replace("{z}", zoom)
 										.replace("{x}", coord.x)
-										.replace("{y}", coord.y)
-								];
+										.replace("{y}", coord.y);
+
+								// trace(retURL);
+								return retURL;
 							},
 							"tileSize": 		new google.maps.Size(256, 256),
 							"name":				name,
