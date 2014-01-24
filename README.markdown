@@ -136,46 +136,58 @@ Localization
 *default is `en` English*
 Languages available:
 * `af` *Afrikaans*
-* `ar` *Arabic (beta)*
+* `ar` *Arabic*
+* `hy` *Armenian*
+* `eu` *Basque*
 * `bg` *Bulgarian*
 * `ca` *Catalan*
+* `zh-ch` *Chinese*
 * `cz` *Czech*
 * `da` *Danish*
-* `de` *German / Deutsch*
-* `el` *Greek*
+* `nl` *Dutch*
 * `en` *English*
-* `es` *Spanish*
-* `eu` *Basque/ Euskara*
-* `fi` *Finnish*
+* `en-24hr` *English (24-hour time)*
+* `eo` *Esperanto*
+* `et` *Estonian*
 * `fo` *Faroese*
+* `fa` *Farsi*
+* `fi` *Finnish*
 * `fr` *French*
 * `gl` *Galician*
-* `hu` *Hungarian*
-* `hy` *Armenian*
-* `id` *Indonesian*
-* `is` *Icelandic*
-* `it` *Italian*
-* `iw` *Hebrew (beta)*
-* `ja` *Japanese*
 * `ka` *Georgian*
+* `de` *German / Deutsch*
+* `el` *Greek*
+* `he` *Hebrew*
+* `hu` *Hungarian*
+* `is` *Icelandic*
+* `id` *Indonesian*
+* `it` *Italian*
+* `ja` *Japanese*
 * `ko` *Korean*
 * `lv` *Latvian*
-* `nl` *Dutch*
+* `lt` *Lithuanian*
+* `lb` *Luxembourgish*
+* `ms` *Malay*
+* `ne` *Nepali*
 * `no` *Norwegian*
 * `pl` *Polish*
-* `pt-br` *Brazilian Portuguese*
 * `pt` *Portuguese*
+* `pt-br` *Portuguese (Brazilian)*
+* `rm` *Romansh*
 * `ru` *Russian*
+* `sr-cy` *Serbian - Cyrillic*
+* `sr` *Serbian - Latin*
+* `si` *Sinhalese*
 * `sk` *Slovak*
 * `sl` *Slovenian*
-* `sr-cy` *Serbian (Cyrillic)*
-* `sr` *Serbian (Latin)*
+* `es` *Spanish*
 * `sv` *Swedish*
-* `ta` *Tamil*
 * `tl` *Tagalog*
-* `tr` *Turkish*
-* `zh-cn` *Chinese*
+* `ta` *Tamil*
 * `zh-tw` *Taiwanese*
+* `te` *Telugu*
+* `tr` *Turkish*
+
 
 
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://spreadsheets.google.com/pub?key=p9pdwsai2hDMsLkXsoM05KQ&gid=1)
@@ -227,20 +239,23 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 
 ###Font Options 
 `font:`
-* `Arvo-PTSans`
-* `Merriweather-NewsCycle`
-* `PoiretOne-Molengo`
-* `PTSerif-PTSans`
-* `DroidSerif-DroidSans`
-* `Lekton-Molengo`
-* `NixieOne-Ledger`
-* `AbrilFatface-Average`
-* `PlayfairDisplay-Muli`
-* `Rancho-Gudea`
-* `Bevan-PotanoSans`
-* `BreeSerif-OpenSans`
-* `SansitaOne-Kameron`
-* `Pacifico-Arimo`
+* `AbrilFatface-Average` *Abril Fatface & Average*
+* `Arvo-PTSans` *Arvo & PT Sans*
+* `Bevan-PotanoSans` *Bevan & Potano Sans*
+* `BreeSerif-OpenSans` *Bree Serif & Open Sans*
+* `DroidSerif-DroidSans` *Droid Serif & Droid Sans*
+* `Georgia-Helvetica` *Georgia & Helvetica Neue*
+* `Lekton-Molengo` *Lekton & Molengo*
+* `Merriweather-NewsCycle` *Merriweather & News Cycle*
+* `NewsCycle-Merriweather` *News Cycle & Merriweather*
+* `NixieOne-Ledger` *Nixie One & Ledger*
+* `Pacifico-Arimo` *Pacifico & Arimo*
+* `PlayfairDisplay-Muli` *Playfair Display & Muli*
+* `PoiretOne-Molengo` *Poiret One & Molengo*
+* `PTSerif-PTSans` *PT Serif & PT Sans*
+* `PT` *PT Sans & PT Narrow & PT Serif*
+* `Rancho-Gudea` *Rancho & Gudea*
+* `SansitaOne-Kameron` *Sansita One & Kameron*
 * Or make your own
 
 ####Font Combination Preview:
