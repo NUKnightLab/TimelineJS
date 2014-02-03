@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.29.0 - 2014-01-22
+    TimelineJS - ver. 2.29.1 - 2014-02-03
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -4348,7 +4348,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			create: function(m) {
 				trace("WEB THUMB CREATE");
 				
-				var thumb_url	= "//free.pagepeeker.com/v2/thumbs.php?";
+				var thumb_url	= "//api.pagepeeker.com/v2/thumbs.php?";
 					url			= m.id.replace("http://", "");//.split("/")[0];
 					
 				// Main Image
