@@ -5,6 +5,7 @@
 	- [Add it to your site](#add-it-to-your-site)
 		- [Using Inline (easiest)](#using-inline-easiest)
 		- [Using a method (advanced)](#using-a-method-advanced)
+		- [Loading the files](#loading-the-files)
 	- [Config Options](#config-options)
 		- [Language](#language)
 		- [Start at End](#start-at-end)
@@ -40,6 +41,7 @@ Creating one is as easy as filling in a Google spreadsheet or as detailed as
 JSON.
  
 ## Add it to your site
+
 ### Using Inline (*easiest*)
 Place the embed code where you want the timeline to show in the `<body>` of your site. See [Config Options](#config-options) for a full list of what you can set in the config.
 
@@ -63,7 +65,7 @@ Place the embed code where you want the timeline to show in the `<body>` of your
 			js:					'path_to_js/timeline-min.js'	//OPTIONAL PATH TO JS
 		}
 	</script>
-	<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
+	<script type="text/javascript" src="http://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script>
 ```
 ### Using a method (*advanced*)
 You could also initialize a new timeline using the `createStoryJS` method after `storyjs-embed.js` has been loaded
@@ -84,7 +86,7 @@ Here's a simple example:
 		<!-- jQuery -->
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 		<!-- BEGIN TimelineJS -->
-		<script type="text/javascript" src="path_to_js/storyjs-embed.js"></script>
+		<script type="text/javascript" src="http://cdn.knightlab.com/libs/timeline/latest/js/storyjs-embed.js"></script>
 		<script>
 			$(document).ready(function() {
 				createStoryJS({
@@ -103,6 +105,24 @@ Here's a simple example:
 	</body>
 ```
 
+### Loading the files
+If you like, you may load TimelineJS from the KnightLab's CDN. The examples above demonstrate how to do this using `story-embed.js`, which is the simplest way to set up a Timeline of your own.
+
+If for some reason you need more fine-grained control over your timeline, load the javascript and CSS files separately. We recommend that you load them from our CDN.
+
+```html
+<!-- always load the CSS -->
+<link rel="stylesheet" type="text/css" href="http://cdn.knightlab.com/libs/timeline/latest/css/timeline.css">
+<!-- and then one of either -->
+<script type="text/javascript" src="http://cdn.knightlab.com/libs/timeline/latest/js/timeline.js"></script>
+<!-- or -->
+<script type="text/javascript" src="http://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js"></script>
+<!-- but no need for both -->
+```
+
+If you need to use the files on an HTTPS server, you can change the beginning of the url from `http://cdn.knightlab.com/libs/timeline/` to `https://s3.amazonaws.com/cdn.knightlab.com/libs/timeline/` 
+
+If you need to serve copies of the files from your own server, use the entire contents of the ["/build/" directory](https://github.com/NUKnightLab/TimelineJS/tree/master/build) of our GitHub repository. If you use a local copy of `story-embed.js` it should automatically load the other Timeline resources from your server.
 	
 ## Config Options
 Here are some of the options you can set in the config.
