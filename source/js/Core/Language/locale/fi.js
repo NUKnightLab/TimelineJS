@@ -18,11 +18,11 @@ if(typeof VMM != 'undefined') {
 			month: "mmmm yyyy",
 			full_short: "d. mmm",
 			full: "d. mmmm yyyy",
-			time_short: "h:MM:SS TT",
-			time_no_seconds_short: "h:MM TT",
-			time_no_seconds_small_date: "h:MM TT'<br/><small>'d. mmmm yyyy'</small>'",
-			full_long: "mmm d yyyy 'klo' h:MM TT",
-			full_long_small_date: "h:MM TT'<br/><small>d. mmm yyyy'</small>'"
+			time_short: "HH:MM:SS",
+			time_no_seconds_short: "HH:MM",
+			time_no_seconds_small_date: "HH:MM'<br/><small>'d. mmmm yyyy'</small>'",
+			full_long: "mmm d yyyy 'klo' HH:MM",
+			full_long_small_date: "HH:MM'<br/><small>d. mmm yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Ladataan aikajanaa… ",
