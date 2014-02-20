@@ -161,7 +161,7 @@ Languages available:
 * `eu` *Basque*
 * `bg` *Bulgarian*
 * `ca` *Catalan*
-* `zh-ch` *Chinese*
+* `zh-cn` *Chinese*
 * `cz` *Czech*
 * `da` *Danish*
 * `nl` *Dutch*
