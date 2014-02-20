@@ -160,7 +160,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.twitter.que.length > 0) {
 					VMM.ExternalAPI.twitter.create(VMM.master_config.twitter.que[0], VMM.ExternalAPI.twitter.pushQue);
-					VMM.master_config.twitter.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.twitter.que,0);
 				}
 			},
 						
@@ -1064,7 +1064,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.googleplus.que.length > 0) {
 					VMM.ExternalAPI.googleplus.create(VMM.master_config.googleplus.que[0], VMM.ExternalAPI.googleplus.pushQue);
-					VMM.master_config.googleplus.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.googleplus.que,0);
 				}
 				/*
 				for(var i = 0; i < VMM.master_config.googleplus.que.length; i++) {
@@ -1171,7 +1171,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.flickr.que.length > 0) {
 					VMM.ExternalAPI.flickr.create(VMM.master_config.flickr.que[0], VMM.ExternalAPI.flickr.pushQue);
-					VMM.master_config.flickr.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.flickr.que,0);
 				}
 			},
 			
@@ -1262,7 +1262,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.soundcloud.que.length > 0) {
 					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[0], VMM.ExternalAPI.soundcloud.pushQue);
-					VMM.master_config.soundcloud.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.soundcloud.que,0);
 				}
 			}
 			
@@ -1354,7 +1354,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (VMM.master_config.wikipedia.que.length > 0) {
 					trace("WIKIPEDIA PUSH QUE " + VMM.master_config.wikipedia.que.length);
 					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[0], VMM.ExternalAPI.wikipedia.pushQue);
-					VMM.master_config.wikipedia.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.wikipedia.que,0);
 				}
 
 			}
@@ -1524,7 +1524,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.vimeo.que.length > 0) {
 					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[0], VMM.ExternalAPI.vimeo.pushQue);
-					VMM.master_config.vimeo.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.vimeo.que,0);
 				}
 			}
 			
@@ -1553,7 +1553,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.vine.que.length > 0) {
 					VMM.ExternalAPI.vine.create(VMM.master_config.vine.que[0], VMM.ExternalAPI.vine.pushQue);
-					VMM.master_config.vine.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.vine.que,0);
 				}
 			}
 			

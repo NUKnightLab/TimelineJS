@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.29.1 - 2014-02-03
+    TimelineJS - ver. 2014-02-20-16-24-17 - 2014-02-20
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -338,15 +338,6 @@ function trace( msg ) {
 			//alert(msg);
 		}
 	}
-}
-
-/*	Array Remove - By John Resig (MIT Licensed)
-	http://ejohn.org/blog/javascript-array-remove/
-================================================== */
-Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
 }
 
 /* Extending Date to include Week
@@ -1776,6 +1767,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return this;
 		},
 		
+		removeRange: function(array, from, to) { // rather than change Array.prototype; Thanks Jeff McWhirter for nudge
+  			var rest = array.slice((to || from) + 1 || array.length);
+  			array.length = from < 0 ? array.length + from : from;
+  			return array.push.apply(array, rest);
+		},
+
 		/*	* CORRECT PROTOCOL (DOES NOT WORK)
 		================================================== */
 		correctProtocol: function(url) {
@@ -2926,7 +2923,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.twitter.que.length > 0) {
 					VMM.ExternalAPI.twitter.create(VMM.master_config.twitter.que[0], VMM.ExternalAPI.twitter.pushQue);
-					VMM.master_config.twitter.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.twitter.que,0);
 				}
 			},
 						
@@ -3830,7 +3827,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.googleplus.que.length > 0) {
 					VMM.ExternalAPI.googleplus.create(VMM.master_config.googleplus.que[0], VMM.ExternalAPI.googleplus.pushQue);
-					VMM.master_config.googleplus.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.googleplus.que,0);
 				}
 				/*
 				for(var i = 0; i < VMM.master_config.googleplus.que.length; i++) {
@@ -3937,7 +3934,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.flickr.que.length > 0) {
 					VMM.ExternalAPI.flickr.create(VMM.master_config.flickr.que[0], VMM.ExternalAPI.flickr.pushQue);
-					VMM.master_config.flickr.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.flickr.que,0);
 				}
 			},
 			
@@ -4028,7 +4025,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.soundcloud.que.length > 0) {
 					VMM.ExternalAPI.soundcloud.create(VMM.master_config.soundcloud.que[0], VMM.ExternalAPI.soundcloud.pushQue);
-					VMM.master_config.soundcloud.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.soundcloud.que,0);
 				}
 			}
 			
@@ -4120,7 +4117,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				if (VMM.master_config.wikipedia.que.length > 0) {
 					trace("WIKIPEDIA PUSH QUE " + VMM.master_config.wikipedia.que.length);
 					VMM.ExternalAPI.wikipedia.create(VMM.master_config.wikipedia.que[0], VMM.ExternalAPI.wikipedia.pushQue);
-					VMM.master_config.wikipedia.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.wikipedia.que,0);
 				}
 
 			}
@@ -4290,7 +4287,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.vimeo.que.length > 0) {
 					VMM.ExternalAPI.vimeo.create(VMM.master_config.vimeo.que[0], VMM.ExternalAPI.vimeo.pushQue);
-					VMM.master_config.vimeo.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.vimeo.que,0);
 				}
 			}
 			
@@ -4319,7 +4316,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			pushQue: function() {
 				if (VMM.master_config.vine.que.length > 0) {
 					VMM.ExternalAPI.vine.create(VMM.master_config.vine.que[0], VMM.ExternalAPI.vine.pushQue);
-					VMM.master_config.vine.que.remove(0);
+					VMM.Util.removeRange(VMM.master_config.vine.que,0);
 				}
 			}
 			
@@ -8448,7 +8445,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				pos_cache_obj.row = row;
 				pos_cache_array.push(pos_cache_obj);
 				if (pos_cache_array.length > pos_cache_max) {
-					pos_cache_array.remove(0);
+					VMM.Util.removeRange(pos_cache_array,0);
 				}
 				
 				//if (is_animated && is_in_view) {

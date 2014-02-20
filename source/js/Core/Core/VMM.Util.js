@@ -8,6 +8,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return this;
 		},
 		
+		removeRange: function(array, from, to) { // rather than change Array.prototype; Thanks Jeff McWhirter for nudge
+  			var rest = array.slice((to || from) + 1 || array.length);
+  			array.length = from < 0 ? array.length + from : from;
+  			return array.push.apply(array, rest);
+		},
+
 		/*	* CORRECT PROTOCOL (DOES NOT WORK)
 		================================================== */
 		correctProtocol: function(url) {
