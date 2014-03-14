@@ -7,10 +7,10 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "hu"
 		},
 		date: {
-			month: ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"],
-			month_abbr: ["Jan.", "Febr.", "Márc", "Ápr.", "Máj.", "Jún.", "Júl.", "Aug.", "Szept.", "Okt.", "Nov.", "Dec."],
-			day: ["Vasárnap","Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
-			day_abbr: ["Vas.","Hétfő", "Kedd", "Szer.", "Csüt.", "Pén.", "Szom."]
+			month: ["január", "február", "március", "április", "május", "június", "július", "augusztus", "szeptember", "október", "november", "december"],
+			month_abbr: ["jan.", "febr.", "márc", "ápr.", "máj.", "jún.", "júl.", "aug.", "szept.", "okt.", "nov.", "dec."],
+			day: ["vasárnap","hétfő", "kedd", "szerda", "csütörtök", "péntek", "szombat"],
+			day_abbr: ["vas.","hétfő", "kedd", "szer.", "csüt.", "pén.", "szom."]
 		}, 
 		dateformats: {
 			year: "yyyy",
