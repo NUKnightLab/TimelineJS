@@ -22,10 +22,8 @@
     # Clone the secrets repository (if necessary)
     git clone git@github.com:NUKnightLab/secrets.git
   
-    # Clone the cdn repository (if necessary)
+    # Clone KnightLab support repositories (General public, you can skip this step)
     git clone git@github.com:NUKnightLab/cdn.knightlab.com.git
- 
-    # Clone the fablib repository (if necessary)
     git clone git@github.com:NUKnightLab/fablib.git
  
     # Clone the timeline repository (and the submodules)
