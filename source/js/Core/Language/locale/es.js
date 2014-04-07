@@ -27,7 +27,7 @@ if(typeof VMM != 'undefined') {
 		messages: {
 			loading_timeline: "Cronología esta cargando",
 			return_to_title: "Volver al título",
-			expand_timeline: "Enlargar la cronología",
+			expand_timeline: "Expandir la cronología",
 			contract_timeline: "Reducir la cronología",
 			wikipedia: "Desde Wikipedia, la enciclopedia libre",
 			loading_content: "cargando",
