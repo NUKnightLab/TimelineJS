@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.30.0 - 2014-02-20
+    TimelineJS - ver. 2.30.1 - 2014-04-07
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -9463,6 +9463,11 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							VMM.Timeline.DataObj.model.googlespreadsheet.buildData(d);
 						})
 							.error(function(jqXHR, textStatus, errorThrown) {
+								if (jqXHR.status == 400) {
+									VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Error reading Google spreadsheet. Check the URL and make sure it's published to the web.");
+									clearTimeout(timeout);
+									return;
+								}
 								trace("Google Docs ERROR");
 								trace("Google Docs ERROR: " + textStatus + " " + jqXHR.responseText);
 							})
