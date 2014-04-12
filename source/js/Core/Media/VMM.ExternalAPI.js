@@ -892,7 +892,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			map_attribution: {
 				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
-				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
+				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple",
+				"osm":				"&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
 			},
 									
 			map_providers: {
@@ -932,6 +933,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					"minZoom": 		3,
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
+				},
+				"osm": {
+					"url": 			"//tile.openstreetmap.org/{z}/{x}/{y}.png",
+					"minZoom": 		3,
+					"maxZoom": 		18,
+					"attribution":		"osm"
 				}
 			}
 		},
