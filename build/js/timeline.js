@@ -4651,11 +4651,16 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.hd	= VMM.Util.getUrlVars(d)["hd"];
 		    media.type = "youtube";
 		    success = true;
-		} else if (d.match('(player.)?vimeo\.com')) {
+		} 
+		//due to vimeo website need login to play the video,
+		//while use the iframe of player site will go into 
+		//this if, so just comment it and let code go into
+		//the iframe if below.
+		/*else if (d.match('(player.)?vimeo\.com')) {
 		    media.type = "vimeo";
 		    media.id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];;
 		    success = true;
-	    } else if (d.match('(www.)?dailymotion\.com')) {
+	    }*/ else if (d.match('(www.)?dailymotion\.com')) {
 			media.id = d.split(/video\/|\/\/dailymotion\.com\//)[1];
 			media.type = "dailymotion";
 			success = true;
@@ -4736,6 +4741,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.id = d;
 			success = true;
 		} else if (d.match('iframe')) {
+			//alert('yes!');
 			media.type = "iframe";
 			trace("IFRAME")
 			regex = /src=['"](\S+?)['"]\s/;
