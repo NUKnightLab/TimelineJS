@@ -4651,7 +4651,22 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.hd	= VMM.Util.getUrlVars(d)["hd"];
 		    media.type = "youtube";
 		    success = true;
-		} else if (d.match('(player.)?vimeo\.com')) {
+		} else if (d.match('iframe')) {
+			media.type = "iframe";
+			trace("IFRAME")
+			regex = /src=['"](\S+?)['"]\s/;
+			group = d.match(regex);
+			if (group) {
+				media.id = group[1];
+			}
+			trace( "iframe url: " + media.id );
+			success = Boolean(media.id);
+		} 
+		//Due to vimeo website need login to play the video, it not very convenient.
+		//But use the iframe of player.vimeo.com site will go into 
+		//this if-clause first, so just move the iframe-if-clause before the vimeo-if-clause will
+		//be OK.
+		else if (d.match('(player.)?vimeo\.com')) {
 		    media.type = "vimeo";
 		    media.id = d.split(/video\/|\/\/vimeo\.com\//)[1].split(/[?&]/)[0];;
 		    success = true;
@@ -4735,16 +4750,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "quote";
 			media.id = d;
 			success = true;
-		} else if (d.match('iframe')) {
-			media.type = "iframe";
-			trace("IFRAME")
-			regex = /src=['"](\S+?)['"]\s/;
-			group = d.match(regex);
-			if (group) {
-				media.id = group[1];
-			}
-			trace( "iframe url: " + media.id );
-			success = Boolean(media.id);
 		} else {
 			trace("unknown media");  
 			media.type = "unknown";
