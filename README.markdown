@@ -271,8 +271,8 @@ Here is the full model:
 		},
 		"date": [
 			{
-				"startDate":"2011,12,10",
-				"endDate":"2011,12,11",
+				"startDate":"2011,12,10,07,02,10",
+				"endDate":"2011,12,11,08,11",
 				"headline":"Headline Goes Here",
 				"text":"<p>Body text goes here, some HTML is OK</p>",
 				"tag":"This is Optional",
