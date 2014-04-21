@@ -279,7 +279,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 * Or make your own
 
 ####Font Combination Preview:
-![Font Combination Preview](http://timeline.verite.co/gfx/font-options.png)
+![Font Combination Preview](http://timeline.knightlab.com/static/img/make/font-options.png)
 
 ## File Formats
 
