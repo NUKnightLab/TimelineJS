@@ -67,6 +67,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			preload:				4,
 			current_slide:			0,
 			hash_bookmark:			false,
+			use_hashbang:           false,
 			start_at_end: 			false,
 			start_at_slide:			0,
 			start_zoom_adjust:		0,
@@ -149,14 +150,20 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		}
 		
 		if(window.location.hash) {
-			 var hash					=	window.location.hash.substring(1);
+			 var hash					=	(config.use_hashbang) 
+                ? window.location.hash.substring(2) 
+                : window.location.hash.substring(1);
+
 			 if (!isNaN(hash)) {
 			 	 config.current_slide	=	parseInt(hash);
 			 }
 		}
 		
 		window.onhashchange = function () {
-			var hash					=	window.location.hash.substring(1);
+			var hash					=	(config.use_hashbang) 
+                ? window.location.hash.substring(2) 
+                : window.location.hash.substring(1);
+			
 			if (config.hash_bookmark) {
 				if (is_moving) {
 					goToEvent(parseInt(hash));
@@ -320,7 +327,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function setHash(n) {
 			if (config.hash_bookmark) {
-				window.location.hash = "#" + n.toString();
+				window.location.hash = "#" + ((config.use_hashbang)? "!" : "") +  n.toString();
 			}
 		}
 		
@@ -688,3 +695,4 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	VMM.Timeline.Config = {};
 	
 };
+
