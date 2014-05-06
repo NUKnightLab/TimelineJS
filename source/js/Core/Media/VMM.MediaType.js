@@ -94,7 +94,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.link = d;
 			media.id = VMM.ExternalAPI.instagram.getInstagramIdFromUrl(d)
 			success = Boolean(media.id);
-		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
+		} else if (d.match(/jpg|jpeg|png|gif|svg/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
 			media.type = "image";
 			media.id = d;
 			success = true;
