@@ -257,6 +257,9 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 	* `HYBRID`
 	* `SATELLITE`
 
+* OpenStreetMap
+	- `osm`
+
 ###Font Options 
 `font:`
 * `AbrilFatface-Average` *Abril Fatface & Average*
