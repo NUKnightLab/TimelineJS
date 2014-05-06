@@ -25,10 +25,10 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'dddd',' d. mmm',' yyyy'</small>'"
 		},
 		messages: {
-			loading_timeline: "Laster timeline... ",
+			loading_timeline: "Laster tidslinje... ",
 			return_to_title: "Tilbake til tittel",
-			expand_timeline: "Utvid timeline",
-			contract_timeline: "Krymp timeline",
+			expand_timeline: "Utvid tidslinje",
+			contract_timeline: "Krymp tidslinje",
 			wikipedia: "Fra Wikipedia, den frie encyklopedi",
 			loading_content: "Laster innhold",
 			loading: "Laster"
