@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.30.1 - 2014-04-07
+    TimelineJS - ver. 2.31.0 - 2014-05-06
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -3655,7 +3655,8 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			map_attribution: {
 				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
-				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple"
+				"apple": 			"Map data &copy; 2012  Apple, Imagery &copy; 2012 Apple",
+				"osm":				"&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
 			},
 									
 			map_providers: {
@@ -3695,6 +3696,12 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					"minZoom": 		3,
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
+				},
+				"osm": {
+					"url": 			"//tile.openstreetmap.org/{z}/{x}/{y}.png",
+					"minZoom": 		3,
+					"maxZoom": 		18,
+					"attribution":		"osm"
 				}
 			}
 		},
@@ -4376,6 +4383,7 @@ function onYouTubePlayerAPIReady() {
 	VMM.ExternalAPI.youtube.onAPIReady();
 }
 
+
 /* **********************************************
      Begin VMM.MediaElement.js
 ********************************************** */
@@ -4403,17 +4411,18 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaElement == 'undefined') {
 			if (h != null && h != "") {_h = h};
 			if (uid != null && uid != "") {_uid = uid};
 			
-			if (data.media != null && data.media != "") {
+
+			if (data.thumbnail != null && data.thumbnail != "") {
+					trace("CUSTOM THUMB");
+					mediaElem =	"<div class='thumbnail thumb-custom' id='" + uid + "_custom_thumb'><img src='" + data.thumbnail + "'></div>";
+					return mediaElem;
+			} else if (data.media != null && data.media != "") {
 				var _valid		= true,
 					mediaElem	= "",
 					m			= VMM.MediaType(data.media); //returns an object with .type and .id
 					
 				// DETERMINE THUMBNAIL OR ICON
-				if (data.thumbnail != null && data.thumbnail != "") {
-					trace("CUSTOM THUMB");
-					mediaElem		=	"<div class='thumbnail thumb-custom' id='" + uid + "_custom_thumb'><img src='" + data.thumbnail + "'></div>";
-					return mediaElem;
-				} else if (m.type == "image") {
+				if (m.type == "image") {
 					mediaElem		=	"<div class='thumbnail thumb-photo'></div>";
 					return mediaElem;
 				} else if (m.type	==	"flickr") {
@@ -4708,7 +4717,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.link = d;
 			media.id = VMM.ExternalAPI.instagram.getInstagramIdFromUrl(d)
 			success = Boolean(media.id);
-		} else if (d.match(/jpg|jpeg|png|gif/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
+		} else if (d.match(/jpg|jpeg|png|gif|svg/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
 			media.type = "image";
 			media.id = d;
 			success = true;
@@ -7420,7 +7429,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			// IE7
 			if (ie7) {
 				ie7 = true;
-				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher.");
+				VMM.fireEvent(global, config.events.messege, "Internet Explorer " + VMM.Browser.version + " is not supported by TimelineJS. Please update your browser to version 8 or higher. If you are using a recent version of Internet Explorer you may need to disable compatibility mode in your browser.");
 			} else {
 				
 				detachMessege();
@@ -7622,6 +7631,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 	VMM.Timeline.Config = {};
 	
 };
+
 
 /* **********************************************
      Begin VMM.Timeline.TimeNav.js

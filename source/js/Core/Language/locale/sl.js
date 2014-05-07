@@ -7,10 +7,10 @@ if (typeof VMM != 'undefined') {
 			wikipedia: "sl"
 		},
 		date: {
-			month: ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "Avgust", "September", "Oktober", "November", "December"],
-			month_abbr: ["Jan.", "Feb.", "Marec", "April", "Maj", "Junij", "July", "Avg.", "Sept.", "Okt.", "Nov.", "Dec."],
-			day: ["Nedelja", "Ponedeljek", "Torek", "Sreda", "Čertek", "Petek", "Sobota"],
-			day_abbr: ["Ned.", "Pon.", "Tor.", "Sre.", "Čet.", "Pet.", "Sob."]
+			month: ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"],
+			month_abbr: ["jan.", "feb.", "marec", "april", "maj", "junij", "july", "avg.", "sept.", "okt.", "nov.", "dec."],
+			day: ["nedelja", "ponedeljek", "torek", "sreda", "čertek", "petek", "sobota"],
+			day_abbr: ["ned.", "pon.", "tor.", "sre.", "Čet.", "pet.", "sob."]
 		},
 		dateformats: {
 			year: "yyyy",
