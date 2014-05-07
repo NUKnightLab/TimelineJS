@@ -162,6 +162,7 @@ Languages available:
 * `bg` *Bulgarian*
 * `ca` *Catalan*
 * `zh-cn` *Chinese*
+* `hr` *Croatian / Hrvatski*
 * `cz` *Czech*
 * `da` *Danish*
 * `nl` *Dutch*
@@ -207,6 +208,7 @@ Languages available:
 * `zh-tw` *Taiwanese*
 * `te` *Telugu*
 * `tr` *Turkish*
+* `uk` *Ukrainian*
 
 
 
