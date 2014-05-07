@@ -8,9 +8,10 @@
 
 var WebFontConfig;
 
-if(typeof embed_path == 'undefined' || typeof embed_path == 'undefined') {
+if(typeof embed_path == 'undefined') {
 	// REPLACE WITH YOUR BASEPATH IF YOU WANT OTHERWISE IT WILL TRY AND FIGURE IT OUT
-	var embed_path = getEmbedScriptPath("storyjs-embed.js").split("js/")[0];
+	var _tmp_script_path = getEmbedScriptPath("storyjs-embed.js");
+	var embed_path = _tmp_script_path.substr(0,_tmp_script_path.lastIndexOf('js/'))
 }
 
 function getEmbedScriptPath(scriptname) {
