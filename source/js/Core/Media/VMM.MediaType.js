@@ -23,6 +23,20 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "twitter-ready";
 		    media.id = d;
 		    success = true;
+		} else if (d.match('<blockquote')) {
+			media.type = "quote";
+			media.id = d;
+			success = true;
+		} else if (d.match('<iframe')) {
+			media.type = "iframe";
+			trace("IFRAME")
+			regex = /src=['"](\S+?)['"]\s/;
+			group = d.match(regex);
+			if (group) {
+				media.id = group[1];
+			}
+			trace( "iframe url: " + media.id );
+			success = Boolean(media.id);
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
 				media.id	= VMM.Util.getUrlVars(d)["v"];
@@ -117,20 +131,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "storify";
 			media.id = d;
 			success = true;
-		} else if (d.match('blockquote')) {
-			media.type = "quote";
-			media.id = d;
-			success = true;
-		} else if (d.match('iframe')) {
-			media.type = "iframe";
-			trace("IFRAME")
-			regex = /src=['"](\S+?)['"]\s/;
-			group = d.match(regex);
-			if (group) {
-				media.id = group[1];
-			}
-			trace( "iframe url: " + media.id );
-			success = Boolean(media.id);
 		} else {
 			trace("unknown media");  
 			media.type = "unknown";
