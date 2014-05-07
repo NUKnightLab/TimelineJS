@@ -32,12 +32,12 @@ typeof VMM != "undefined" && (VMM.Language = {
         full_long_small_date: "H:MM'<br/><small>d mmm',' yyyy'</small>'"
     },
     messages: {
-        loading_timeline: "Завантажую... ",
+        loading_timeline: "Завантаження...",
         return_to_title: "Повернутися до початку",
         expand_timeline: "Збільшити",
         contract_timeline: "Зменьшити",
         wikipedia: "З Wikipedia, вільної енциклопедії",
-        loading_content: "Завантажую зміст",
+        loading_content: "Завантаження вмісту",
         loading: "Завантаження"
     }
 });
