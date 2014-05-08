@@ -1467,23 +1467,26 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			stopPlayers: function() {
 				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {
 					if (VMM.master_config.youtube.array[i].playing) {
-						var the_name = VMM.master_config.youtube.array[i].name;
-						VMM.master_config.youtube.array[i].player[the_name].stopVideo();
+						if (typeof VMM.master_config.youtube.array[i].player.the_name !== 'undefined') {
+							VMM.master_config.youtube.array[i].player.the_name.stopVideo();
+						}
 					}
 				}
 			},
-			
+			 
 			onStateChange: function(e) {
 				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {
-					var the_name = VMM.master_config.youtube.array[i].name;
-					if (VMM.master_config.youtube.array[i].player[the_name] == e.target) {
+					for (var z in VMM.master_config.youtube.array[i].player) {
+						if (VMM.master_config.youtube.array[i].player[z] == e.target) {
+							VMM.master_config.youtube.array[i].player.the_name = VMM.master_config.youtube.array[i].player[z];
+						}
+					}
+					if (VMM.master_config.youtube.array[i].player.the_name == e.target) {
 						if (e.data == YT.PlayerState.PLAYING) {
 							VMM.master_config.youtube.array[i].playing = true;
-							trace(VMM.master_config.youtube.array[i].hd)
-							if (VMM.master_config.youtube.array[i].hd) {
-								// SET TO HD
-								// DOESN'T WORK AS OF NOW
-								//VMM.master_config.youtube.array[i].player.setPlaybackQuality("hd720");
+							if (VMM.master_config.youtube.array[i].hd === false) {
+								VMM.master_config.youtube.array[i].hd = true;
+								VMM.master_config.youtube.array[i].player.the_name.setPlaybackQuality("hd720");
 							}
 						}
 					}
