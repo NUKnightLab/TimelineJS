@@ -10,7 +10,7 @@ if (typeof VMM != 'undefined') {
 			month: ["januar", "februar", "marec", "april", "maj", "junij", "julij", "avgust", "september", "oktober", "november", "december"],
 			month_abbr: ["jan.", "feb.", "marec", "april", "maj", "junij", "july", "avg.", "sept.", "okt.", "nov.", "dec."],
 			day: ["nedelja", "ponedeljek", "torek", "sreda", "čertek", "petek", "sobota"],
-			day_abbr: ["ned.", "pon.", "tor.", "sre.", "Čet.", "pet.", "sob."]
+			day_abbr: ["ned.", "pon.", "tor.", "sre.", "čet.", "pet.", "sob."]
 		},
 		dateformats: {
 			year: "yyyy",
