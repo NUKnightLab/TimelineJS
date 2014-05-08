@@ -1259,7 +1259,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(m, callback) {
-				var the_url = "//soundcloud.com/oembed?url=" + m.id + "&format=js&callback=?";
+				var the_url = "//soundcloud.com/oembed?url=" + m.id + "&maxheight=168&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+m.uid, d.html);
 					callback();
