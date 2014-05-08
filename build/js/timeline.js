@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.31.0 - 2014-05-06
+    TimelineJS - ver. 2.32.0 - 2014-05-08
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -4230,23 +4230,26 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			stopPlayers: function() {
 				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {
 					if (VMM.master_config.youtube.array[i].playing) {
-						var the_name = VMM.master_config.youtube.array[i].name;
-						VMM.master_config.youtube.array[i].player[the_name].stopVideo();
+						if (typeof VMM.master_config.youtube.array[i].player.the_name !== 'undefined') {
+							VMM.master_config.youtube.array[i].player.the_name.stopVideo();
+						}
 					}
 				}
 			},
-			
+			 
 			onStateChange: function(e) {
 				for(var i = 0; i < VMM.master_config.youtube.array.length; i++) {
-					var the_name = VMM.master_config.youtube.array[i].name;
-					if (VMM.master_config.youtube.array[i].player[the_name] == e.target) {
+					for (var z in VMM.master_config.youtube.array[i].player) {
+						if (VMM.master_config.youtube.array[i].player[z] == e.target) {
+							VMM.master_config.youtube.array[i].player.the_name = VMM.master_config.youtube.array[i].player[z];
+						}
+					}
+					if (VMM.master_config.youtube.array[i].player.the_name == e.target) {
 						if (e.data == YT.PlayerState.PLAYING) {
 							VMM.master_config.youtube.array[i].playing = true;
-							trace(VMM.master_config.youtube.array[i].hd)
-							if (VMM.master_config.youtube.array[i].hd) {
-								// SET TO HD
-								// DOESN'T WORK AS OF NOW
-								//VMM.master_config.youtube.array[i].player.setPlaybackQuality("hd720");
+							if (VMM.master_config.youtube.array[i].hd === false) {
+								VMM.master_config.youtube.array[i].hd = true;
+								VMM.master_config.youtube.array[i].player.the_name.setPlaybackQuality("hd720");
 							}
 						}
 					}
@@ -4646,6 +4649,20 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "twitter-ready";
 		    media.id = d;
 		    success = true;
+		} else if (d.match('<blockquote')) {
+			media.type = "quote";
+			media.id = d;
+			success = true;
+		} else if (d.match('<iframe')) {
+			media.type = "iframe";
+			trace("IFRAME")
+			regex = /src=['"](\S+?)['"]\s/;
+			group = d.match(regex);
+			if (group) {
+				media.id = group[1];
+			}
+			trace( "iframe url: " + media.id );
+			success = Boolean(media.id);
 		} else if (d.match('(www.)?youtube|youtu\.be')) {
 			if (d.match('v=')) {
 				media.id	= VMM.Util.getUrlVars(d)["v"];
@@ -4740,20 +4757,6 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "storify";
 			media.id = d;
 			success = true;
-		} else if (d.match('blockquote')) {
-			media.type = "quote";
-			media.id = d;
-			success = true;
-		} else if (d.match('iframe')) {
-			media.type = "iframe";
-			trace("IFRAME")
-			regex = /src=['"](\S+?)['"]\s/;
-			group = d.match(regex);
-			if (group) {
-				media.id = group[1];
-			}
-			trace( "iframe url: " + media.id );
-			success = Boolean(media.id);
 		} else {
 			trace("unknown media");  
 			media.type = "unknown";
