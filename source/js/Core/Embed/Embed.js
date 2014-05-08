@@ -155,6 +155,7 @@ function createStoryJS(c, src) {
 	================================================== */
 	// Check for old installs still using the old method of language
 	if (storyjs_e_config.js.match("locale")) {
+		// TODO Issue #618 better splitting
 		storyjs_e_config.lang = storyjs_e_config.js.split("locale/")[1].replace(".js", "");
 		storyjs_e_config.js		= path.js + 'timeline-min.js?' + js_version;
 	}
@@ -201,6 +202,7 @@ function createStoryJS(c, src) {
 		// FONT CSS
 		var fn;
 		if (storyjs_e_config.font.match("/")) {
+			// TODO Issue #618 better splitting
 			fn				= storyjs_e_config.font.split(".css")[0].split("/");
 			path.font.name	= fn[fn.length -1];
 			path.font.css	= storyjs_e_config.font;
