@@ -424,7 +424,7 @@ using Google Docs:
 	
 ### Storify:
 
-Support for Storify is still in it's early stages. It works though. Just paste a link to the storify story as the source.
+Support for Storify is still in its early stages. It works though. Just paste a link to the storify story as the source.
 
 ## Media
 
