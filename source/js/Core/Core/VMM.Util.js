@@ -111,20 +111,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			return out;
 		},
 		
-		/*	* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
-		================================================== */
-		number2money: function(n, symbol, padding) {
-			var symbol = (symbol !== null) ? symbol : true; // add $
-			var padding = (padding !== null) ? padding : false; //pad with .00
-			var number = VMM.Math2.floatPrecision(n,2); // rounded correctly to two digits, if decimals passed
-			var formatted = this.niceNumber(number);
-			// no decimal and padding is enabled
-			if (!formatted.split(/\./g)[1] && padding) formatted = formatted + ".00";
-			// add money sign
-			if (symbol) formatted = "$"+formatted;
-			return formatted;
-		},
-		
 		/*	* Returns a word count number
 		================================================== */
 		wordCount: function(s) {
