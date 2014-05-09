@@ -84,7 +84,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			}
 			media.type = "twitter";
 			success = true;
-		} else if (d.match("maps.google") && !d.match("staticmap")) {
+		} else if (d.match("maps.google") && !d.match("staticmap") && !d.match('streetview')) {
 			media.type = "google-map";
 		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
 			success = true;
@@ -109,7 +109,11 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.link = d;
 			media.id = VMM.ExternalAPI.instagram.getInstagramIdFromUrl(d)
 			success = Boolean(media.id);
-		} else if (d.match(/jpg|jpeg|png|gif|svg/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
+		} else if (d.match(/jpg|jpeg|png|gif|svg/i) || 
+				   d.match("staticmap") || 
+				   d.match("yfrog.com") || 
+				   d.match("twitpic.com") ||
+				   d.match('maps.googleapis.com/maps/api/streetview')) {
 			media.type = "image";
 			media.id = d;
 			success = true;
