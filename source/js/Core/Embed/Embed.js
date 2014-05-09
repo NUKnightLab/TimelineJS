@@ -234,13 +234,15 @@ function createStoryJS(c, src) {
 	    ready.has_jquery = jQuery;
 	    ready.has_jquery = true;
 		if (ready.has_jquery) {
-			var jquery_version = parseFloat(jQuery.fn.jquery);
-			if (jquery_version < parseFloat(jquery_version_required) ) {
-				//console.log("NOT THE REQUIRED VERSION OF JQUERY, LOADING THE REQUIRED VERSION");
-				//console.log("YOU HAVE VERSION " + jQuery.fn.jquery + ", JQUERY VERSION " + jquery_version_required + " OR ABOVE NEEDED");
-				ready.jquery = false;
-			} else {
-				ready.jquery = true;
+			var jquery_version_array = jQuery.fn.jquery.split(".");
+			var jquery_version_required_array = jquery_version_required.split(".");
+			ready.jquery = true;
+			for (i = 0; i < 2; i++) {
+				if (parseFloat(jquery_version_array[i]) < parseFloat(jquery_version_required_array[i])) {
+					//console.log("NOT THE REQUIRED VERSION OF JQUERY, LOADING THE REQUIRED VERSION");
+					//console.log("YOU HAVE VERSION " + jQuery.fn.jquery + ", JQUERY VERSION " + jquery_version_required + " OR ABOVE NEEDED");
+					ready.jquery = false;
+				}
 			}
 		}
 	} catch(err) {
