@@ -1,3 +1,38 @@
+2.33.0
+------
+#526 fix jQuery version check so 1.10.x > 1.9.x
+#529 fix untagify to remove closing tags as well
+#567 be more permissive about iframe markup
+#512 fix Dark.css theme even though themes are generally not supported
+#520 treat Streetview API urls as images, not maps
+#536 fix typo in README.md
+#623 set maxheight on soundcloud embeds
+#624 'crush' pngs
+#625 deal with nutty MSIE user agent strings
+
+2.32.0
+------
+Stop YouTube players when slide changes
+Better method for determining embed path root
+Check for iframe and blockquote media before other url tests
+Add languages: 'hr' (Croatian), 'uk' (Ukrainian)
+minor fixes to language files for 'fi' (Finnish) 'sl' (Slovenian)
+
+2.31.0
+------
+Add languages: 'ro' (Romanian), 'th' (Thai)
+minor fixes to language files for 'es' (Spanish) 'fa' (Farsi), 'hu' (Hungarian), 'no' (Norwegian)
+add OpenStreetMap as a map option ('osm')
+Support '.svg' as an image media type
+support custom thumbnails when no media is specified
+clearer warning about "compatibility mode" to IE users.
+
+2.30.0
+------
+Fix language code for 'zh-cn' (Chinese)
+add 'fa' (Farsi)
+Move 'remove' function from Array.prototype to a util method to avoid adverse affects on other JS code.
+
 2.26.2
 -----
 
