@@ -8,6 +8,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.version = this.searchVersion(navigator.userAgent)
 				|| this.searchVersion(navigator.appVersion)
 				|| "an unknown version";
+			this.tridentVersion = this.searchTridentVersion(navigator.userAgent);
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
 			this.orientation = this.searchOrientation(window.orientation);
@@ -56,6 +57,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			var index = dataString.indexOf(this.versionSearchString);
 			if (index == -1) return;
 			return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+		},
+		searchTridentVersion: function (dataString) {
+		    var index = dataString.indexOf("Trident/");
+		    if (index == -1) return 0;
+		    return parseFloat(dataString.substring(index + 8));
 		},
 		dataBrowser: [
 			{
