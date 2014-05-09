@@ -1,5 +1,6 @@
 2.33.0
 ------
+#589 remove unused code that refers to non-existent modules
 #526 fix jQuery version check so 1.10.x > 1.9.x
 #529 fix untagify to remove closing tags as well
 #567 be more permissive about iframe markup
