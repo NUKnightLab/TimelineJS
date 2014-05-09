@@ -30,7 +30,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('<iframe')) {
 			media.type = "iframe";
 			trace("IFRAME")
-			regex = /src=['"](\S+?)['"]\s/;
+			regex = /src=['"](\S+?)['"]/;
 			group = d.match(regex);
 			if (group) {
 				media.id = group[1];
