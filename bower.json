@@ -8,7 +8,7 @@
   ],
   "description": "A Storytelling Timeline built in JavaScript.",
   "main": [
-    "build/js/timeline-min.js",
+    "build/js/timeline.js",
     "build/css/timeline.css",
     "build/embed/index.html",
     "build/js/storyjs-embed.js",
@@ -27,7 +27,7 @@
   "license": "MPL v2.0",
   "ignore": [
     "**/.*",
-    "exemples",
+    "examples",
     "tests",
     "website"
   ]
