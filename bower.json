@@ -24,6 +24,10 @@
     "googledocs",
     "storify"
   ],
+  "repository": {
+  "type": "git",
+  "url": "git@github.com:NUKnightLab/TimelineJS.git"
+  },
   "license": "MPL v2.0",
   "ignore": [
     "**/.*",
