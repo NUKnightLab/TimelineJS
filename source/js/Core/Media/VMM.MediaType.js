@@ -88,6 +88,10 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "google-map";
 		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
 			success = true;
+		} else if (d.match(/www.google.\w+\/maps/)) {
+			media.type = "google-map";
+		    media.id = d;
+			success = true;
 		} else if (d.match("plus.google")) {
 			media.type = "googleplus";
 		    media.id = d.split("/posts/")[1];

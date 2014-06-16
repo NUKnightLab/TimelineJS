@@ -514,22 +514,32 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					layer				=	google.maps.MapTypeId['TERRAIN'];
 				}
 				
-				
-				if (type.of(VMM.Util.getUrlVars(m.id)["ll"]) == "string") {
-					has_location			= true;
-					latlong					= VMM.Util.getUrlVars(m.id)["ll"].split(",");
-					location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+				var new_google_url_regex = new RegExp(/@([0-9\.\-]+),([0-9\.\-]+),(\d+)z/);
+
+				if (m.id.match(new_google_url_regex)) {
+					var match = m.id.match(new_google_url_regex)
+					lat = parseFloat(match[1]);
+					lng = parseFloat(match[2]);
+					location = new google.maps.LatLng(lat,lng);
+					zoom = parseFloat(match[3]);
+					has_location = has_zoom = true;
+				} else {
+					if (type.of(VMM.Util.getUrlVars(m.id)["ll"]) == "string") {
+							has_location			= true;
+							latlong					= VMM.Util.getUrlVars(m.id)["ll"].split(",");
+							location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+							
+						} else if (type.of(VMM.Util.getUrlVars(m.id)["sll"]) == "string") {
+							latlong					= VMM.Util.getUrlVars(m.id)["sll"].split(",");
+							location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+						} 
+						
+						if (type.of(VMM.Util.getUrlVars(m.id)["z"]) == "string") {
+							has_zoom				=	true;
+							zoom					=	parseFloat(VMM.Util.getUrlVars(m.id)["z"]);
+						}
+				}				
 					
-				} else if (type.of(VMM.Util.getUrlVars(m.id)["sll"]) == "string") {
-					latlong					= VMM.Util.getUrlVars(m.id)["sll"].split(",");
-					location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
-				} 
-				
-				if (type.of(VMM.Util.getUrlVars(m.id)["z"]) == "string") {
-					has_zoom				=	true;
-					zoom					=	parseFloat(VMM.Util.getUrlVars(m.id)["z"]);
-				}
-				
 				map_options = {
 					zoom:						zoom,
 					draggable: 					false, 
