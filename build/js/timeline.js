@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.32.0 - 2014-05-08
+    TimelineJS - ver. 2.33.0 - 2014-06-17
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -1006,6 +1006,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.version = this.searchVersion(navigator.userAgent)
 				|| this.searchVersion(navigator.appVersion)
 				|| "an unknown version";
+			this.tridentVersion = this.searchTridentVersion(navigator.userAgent);
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
 			this.orientation = this.searchOrientation(window.orientation);
@@ -1054,6 +1055,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			var index = dataString.indexOf(this.versionSearchString);
 			if (index == -1) return;
 			return parseFloat(dataString.substring(index+this.versionSearchString.length+1));
+		},
+		searchTridentVersion: function (dataString) {
+		    var index = dataString.indexOf("Trident/");
+		    if (index == -1) return 0;
+		    return parseFloat(dataString.substring(index + 8));
 		},
 		dataBrowser: [
 			{
@@ -1636,7 +1642,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 	 */
 
 	var dateFormat = function () {
-		var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+		var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[WLloSZ]|"[^"]*"|'[^']*'/g,
 			timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
 			timezoneClip = /[^-+\dA-Z]/g,
 			pad = function (val, len) {
@@ -1681,6 +1687,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				M = date[_ + "Minutes"](),
 				s = date[_ + "Seconds"](),
 				L = date[_ + "Milliseconds"](),
+				W = date.getWeek(),
 				o = utc ? 0 : date.getTimezoneOffset(),
 				flags = {
 					d:    d,
@@ -1709,7 +1716,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					TT:   H < 12 ? "AM" : "PM",
 					Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
 					o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-					S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
+					S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10],
+					W: 	W
 				};
 
 			return mask.replace(token, function ($0) {
@@ -1868,20 +1876,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 				out.push(i);
 			}
 			return out;
-		},
-		
-		/*	* Given an int or decimal, turn that into string in $xxx,xxx.xx format.
-		================================================== */
-		number2money: function(n, symbol, padding) {
-			var symbol = (symbol !== null) ? symbol : true; // add $
-			var padding = (padding !== null) ? padding : false; //pad with .00
-			var number = VMM.Math2.floatPrecision(n,2); // rounded correctly to two digits, if decimals passed
-			var formatted = this.niceNumber(number);
-			// no decimal and padding is enabled
-			if (!formatted.split(/\./g)[1] && padding) formatted = formatted + ".00";
-			// add money sign
-			if (symbol) formatted = "$"+formatted;
-			return formatted;
 		},
 		
 		/*	* Returns a word count number
@@ -2051,7 +2045,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			if (!text) {
 				return text;
 			}
-			text = text.replace(/<\s*\w.*?>/g,"");
+			text = text.replace(/<\/?\s*\w.*?>/g,"");
 			return text;
 		},
 		
@@ -2241,6 +2235,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 		
 	}).init();
 }
+
 
 /* **********************************************
      Begin LazyLoad.js
@@ -3277,22 +3272,32 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					layer				=	google.maps.MapTypeId['TERRAIN'];
 				}
 				
-				
-				if (type.of(VMM.Util.getUrlVars(m.id)["ll"]) == "string") {
-					has_location			= true;
-					latlong					= VMM.Util.getUrlVars(m.id)["ll"].split(",");
-					location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+				var new_google_url_regex = new RegExp(/@([0-9\.\-]+),([0-9\.\-]+),(\d+)z/);
+
+				if (m.id.match(new_google_url_regex)) {
+					var match = m.id.match(new_google_url_regex)
+					lat = parseFloat(match[1]);
+					lng = parseFloat(match[2]);
+					location = new google.maps.LatLng(lat,lng);
+					zoom = parseFloat(match[3]);
+					has_location = has_zoom = true;
+				} else {
+					if (type.of(VMM.Util.getUrlVars(m.id)["ll"]) == "string") {
+							has_location			= true;
+							latlong					= VMM.Util.getUrlVars(m.id)["ll"].split(",");
+							location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+							
+						} else if (type.of(VMM.Util.getUrlVars(m.id)["sll"]) == "string") {
+							latlong					= VMM.Util.getUrlVars(m.id)["sll"].split(",");
+							location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
+						} 
+						
+						if (type.of(VMM.Util.getUrlVars(m.id)["z"]) == "string") {
+							has_zoom				=	true;
+							zoom					=	parseFloat(VMM.Util.getUrlVars(m.id)["z"]);
+						}
+				}				
 					
-				} else if (type.of(VMM.Util.getUrlVars(m.id)["sll"]) == "string") {
-					latlong					= VMM.Util.getUrlVars(m.id)["sll"].split(",");
-					location				= new google.maps.LatLng(parseFloat(latlong[0]),parseFloat(latlong[1]));
-				} 
-				
-				if (type.of(VMM.Util.getUrlVars(m.id)["z"]) == "string") {
-					has_zoom				=	true;
-					zoom					=	parseFloat(VMM.Util.getUrlVars(m.id)["z"]);
-				}
-				
 				map_options = {
 					zoom:						zoom,
 					draggable: 					false, 
@@ -3895,7 +3900,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				} else {
 					api_key = Aes.Ctr.decrypt(VMM.master_config.api_keys_master.flickr, VMM.master_config.vp, 256)
 				}
-				var the_url = "//api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
+				var the_url = "https://api.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=" + api_key + "&photo_id=" + m.id + "&format=json&jsoncallback=?";
 				
 				VMM.getJSON(the_url, function(d) {
 					var flickr_id = VMM.ExternalAPI.flickr.getFlickrIdFromUrl(d.sizes.size[0].url);
@@ -4022,7 +4027,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			},
 			
 			create: function(m, callback) {
-				var the_url = "//soundcloud.com/oembed?url=" + m.id + "&format=js&callback=?";
+				var the_url = "//soundcloud.com/oembed?url=" + m.id + "&maxheight=168&format=js&callback=?";
 				VMM.getJSON(the_url, function(d) {
 					VMM.attachElement("#"+m.uid, d.html);
 					callback();
@@ -4656,7 +4661,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('<iframe')) {
 			media.type = "iframe";
 			trace("IFRAME")
-			regex = /src=['"](\S+?)['"]\s/;
+			regex = /src=['"](\S+?)['"]/;
 			group = d.match(regex);
 			if (group) {
 				media.id = group[1];
@@ -4667,6 +4672,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			if (d.match('v=')) {
 				media.id	= VMM.Util.getUrlVars(d)["v"];
 			} else if (d.match('\/embed\/')) {
+				// TODO Issue #618 better splitting
 				media.id	= d.split("embed\/")[1].split(/[?&]/)[0];
 			} else if (d.match(/v\/|v=|youtu\.be\//)){
 				media.id	= d.split(/v\/|v=|youtu\.be\//)[1].split(/[?&]/)[0];
@@ -4709,9 +4715,13 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			}
 			media.type = "twitter";
 			success = true;
-		} else if (d.match("maps.google") && !d.match("staticmap")) {
+		} else if (d.match("maps.google") && !d.match("staticmap") && !d.match('streetview')) {
 			media.type = "google-map";
 		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
+			success = true;
+		} else if (d.match(/www.google.\w+\/maps/)) {
+			media.type = "google-map";
+		    media.id = d;
 			success = true;
 		} else if (d.match("plus.google")) {
 			media.type = "googleplus";
@@ -4734,7 +4744,11 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.link = d;
 			media.id = VMM.ExternalAPI.instagram.getInstagramIdFromUrl(d)
 			success = Boolean(media.id);
-		} else if (d.match(/jpg|jpeg|png|gif|svg/i) || d.match("staticmap") || d.match("yfrog.com") || d.match("twitpic.com")) {
+		} else if (d.match(/jpg|jpeg|png|gif|svg|bmp/i) || 
+				   d.match("staticmap") || 
+				   d.match("yfrog.com") || 
+				   d.match("twitpic.com") ||
+				   d.match('maps.googleapis.com/maps/api/streetview')) {
 			media.type = "image";
 			media.id = d;
 			success = true;
@@ -4745,6 +4759,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 		} else if (d.match('(www.)?wikipedia\.org')) {
 			media.type = "wikipedia";
 			//media.id = d.split("wiki\/")[1];
+			// TODO Issue #618 better splitting
 			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
 			media.id = wiki_id.replace(" ", "%20");
 			media.lang = d.split("//")[1].split(".wikipedia")[0];
@@ -7357,7 +7372,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			/* GET DATA
 			================================================== */
 			if (VMM.Browser.browser == "Explorer" || VMM.Browser.browser == "MSIE") {
-				if ( parseInt(VMM.Browser.version, 10) <= 7 ) {
+			    if (parseInt(VMM.Browser.version, 10) <= 7 && (VMM.Browser.tridentVersion == null || VMM.Browser.tridentVersion < 4)) {
 					ie7 = true;
 				}
 			}
@@ -9447,11 +9462,24 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 		model: {
 			
 			googlespreadsheet: {
-				
+				extractSpreadsheetKey: function(url) {
+					var key	= VMM.Util.getUrlVars(url)["key"];
+					if (!key) {
+						if (url.match("docs.google.com/spreadsheets/d/")) {
+							var pos = url.indexOf("docs.google.com/spreadsheets/d/") + "docs.google.com/spreadsheets/d/".length;
+							var tail = url.substr(pos);
+							key = tail.split('/')[0]
+						}
+					}
+					if (!key) { key = url}
+					return key;
+				},
 				getData: function(raw) {
 					var getjsondata, key, worksheet, url, timeout, tries = 0;
 					
-					key	= VMM.Util.getUrlVars(raw)["key"];
+					// new Google Docs URLs can specify 'key' differently. 
+					// that format doesn't seem to have a way to specify a worksheet.
+					key	= VMM.Timeline.DataObj.model.googlespreadsheet.extractSpreadsheetKey(raw);
 					worksheet = VMM.Util.getUrlVars(raw)["worksheet"];
 					if (typeof worksheet == "undefined") worksheet = "od6";
 					
@@ -9573,7 +9601,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 				getDataCells: function(raw) {
 					var getjsondata, key, url, timeout, tries = 0;
 					
-					key	= VMM.Util.getUrlVars(raw)["key"];
+					key	= VMM.Timeline.DataObj.model.googlespreadsheet.extractSpreadsheetKey(raw);
 					url	= "https://spreadsheets.google.com/feeds/cells/" + key + "/od6/public/values?alt=json";
 					
 					timeout = setTimeout(function() {
