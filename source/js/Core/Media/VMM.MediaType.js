@@ -86,7 +86,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			success = true;
 		} else if (d.match("maps.google") && !d.match("staticmap") && !d.match('streetview')) {
 			media.type = "google-map";
-		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
+		    media.id = d;
 			success = true;
 		} else if (d.match(/www.google.\w+\/maps/)) {
 			media.type = "google-map";
