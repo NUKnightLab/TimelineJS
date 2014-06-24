@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.33.0 - 2014-06-17
+    TimelineJS - ver. 2.33.1 - 2014-06-24
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -4717,7 +4717,7 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			success = true;
 		} else if (d.match("maps.google") && !d.match("staticmap") && !d.match('streetview')) {
 			media.type = "google-map";
-		    media.id = d.split(/src=['|"][^'|"]*?['|"]/gi);
+		    media.id = d;
 			success = true;
 		} else if (d.match(/www.google.\w+\/maps/)) {
 			media.type = "google-map";
