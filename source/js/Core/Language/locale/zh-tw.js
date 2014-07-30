@@ -13,16 +13,16 @@ if(typeof VMM != 'undefined') {
 			day_abbr: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"]
 		}, 
 		dateformats: {
-			year: "yyyy",
+			year: "yyyy年",
 			month_short: "mmm",
-			month: "mmmm yyyy",
-			full_short: "d mmm",
-			full: "d mmmm yyyy",
+			month: "yyyy年 mmmm",
+			full_short: "mmm d",
+			full: "yyyy年mmmm d日",
 			time_short: "HH:MM:ss",
 			time_no_seconds_short: "HH:MM",
-			time_no_seconds_small_date: "HH:MM'<br/><small>'d mmmm yyyy'</small>'",
-			full_long: "dddd',' d mmm yyyy 'um' HH:MM",
-			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
+			time_no_seconds_small_date: "HH:MM'<br/><small>'yyyy年mmmm d日'</small>'",
+			full_long: "dddd',' yyyy年mmmm d日 'um' HH:MM",
+			full_long_small_date: "HH:MM'<br/><small>'dddd',' yyyy年mmmm d日'</small>'"
 		},
 		messages: {
 			loading_timeline: "載入時間線... ",
