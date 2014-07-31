@@ -3,8 +3,8 @@ NOTE: To use these examples, you must run a simple local webserver. They WILL NO
 If you have python installed, here are simple steps to do this.
 
 1. Open a terminal shell
-1. Change to the examples directory (.../TimelineJS/examples)
+1. Make sure you are in the "root" directory that you checked out from GitHub
 1. Type `python -m SimpleHTTPServer 8000`
-1. in your web browser, open `http://localhost:8000/example_json.html` (or whatever other file you want to see
+1. in your web browser, open `http://localhost:8000/examples/example_json.html` (or whatever other file you want to see
 )
 
