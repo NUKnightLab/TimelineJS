@@ -427,9 +427,10 @@ if(typeof VMM != 'undefined') {
 				jQuery(element).stop();
 			}
 		},
-		
+
+		// TODO: Consider removing this as it's referenced by one commented line
 		delay_animate: function(delay, element, duration, ease, att, callback_function) {
-			if (VMM.Browser.features.css.transitions) {
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
@@ -478,9 +479,7 @@ if(typeof VMM != 'undefined') {
 				_att = {opacity: 0}
 			}
 
-
-			if (VMM.Browser.features.css.transitions) {
-
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((_duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
