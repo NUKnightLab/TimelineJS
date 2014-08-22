@@ -689,6 +689,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			} else {
 				VMM.Lib.css(layout, "overflow-y", "hidden" );
 				var scroll_height = 0;
+
+                // FIXME: Chrome cannot optimize this try/catch block, which appears to be unnecessary – see https://github.com/NUKnightLab/TimelineJS/pull/681#issuecomment-52365420
 				try {
 					scroll_height = VMM.Lib.prop(layout, "scrollHeight");
 					VMM.Lib.animate(layout, _duration, _ease, {scrollTop: scroll_height - VMM.Lib.height(layout) });
