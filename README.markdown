@@ -436,6 +436,13 @@ Just copy and paste the address of the media from the browser bar
 into the media parameter. TimelineJS will auto-magically pull in the media via their api and
 format it.
 
+Alternatively, you can add your own video tag html if you wish to use your own media.
+```javascript
+"asset": {
+	"media":"<video autobuffer='autobuffer' controls='controls' src='path/to/video'></video>"
+}
+```
+
 ## Best practices
 
 Tips and tricks to best utilize TimelineJS
