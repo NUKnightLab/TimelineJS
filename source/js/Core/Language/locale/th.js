@@ -16,22 +16,22 @@ if(typeof VMM != 'undefined') {
             year: "yyyy",
             month_short: "mmm",
             month: "mmmm yyyy",
-            full_short: "mmm d",
-            full: "mmmm d',' yyyy",
+            full_short: "d mmm",
+            full: "d mmmm yyyy",
             time_short: "h:MM:ss TT",
             time_no_seconds_short: "h:MM TT",
-            time_no_seconds_small_date: "h:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-            full_long: "mmm d',' yyyy 'at' h:MM TT",
-            full_long_small_date: "h:MM TT'<br/><small>mmm d',' yyyy'</small>'"
+            time_no_seconds_small_date: "h:MM TT'<br/><small>'d mmmm yyyy'</small>'",
+            full_long: "d mmmm yyyy 'เวลา' h:MM TT",
+            full_long_small_date: "h:MM TT'<br/><small>d mmm yyyy'</small>'"
         },
         messages: {
-            loading_timeline: "Loading Timeline... ",
-            return_to_title: "Return to Title",
-            expand_timeline: "Expand Timeline",
-            contract_timeline: "Contract Timeline",
-            wikipedia: "From Wikipedia, the free encyclopedia",
-            loading_content: "Loading Content",
-            loading: "Loading"
+            loading_timeline: "กำลังสร้างไทม์ไลน์... ",
+            return_to_title: "กลับสู้หน้าหลัก",
+            expand_timeline: "ขยายไทม์ไลน์",
+            contract_timeline: "ย่อไทม์ไลน์",
+            wikipedia: "จากวิกิพีเดีย สารานุกรมเสรี",
+            loading_content: "กำลังโหลดข้อมูล",
+            loading: "กำลังโหลด"
         }
     }
 }
