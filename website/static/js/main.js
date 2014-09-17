@@ -1,14 +1,21 @@
-$(document).ready(function() {
+// overcome Timeline's stupid jQuery loading
+var $blueline = $.noConflict();
+$blueline(document).ready(function() {
+  var $ = $blueline;
+  function navSmartScroll($destination) {
+    var offset = $(".navbar").height() || 0,
+        scrollTop = $destination.offset().top - 30;
+    $("body,html").animate({scrollTop: scrollTop}, 350);
+  }
+
   // Navbar scrollTo
   $(".navbar .nav a, [data-scroll='true']").click(function (e) {
     var $target = $(this)
       , href = $target.attr("href")
       , hash = href.substring(href.lastIndexOf('/') + 1)
-      , $destination = $(hash)
-      , offset = $(".navbar").height() || 0
-      , scrollTop = $destination.offset().top - 30;
+      , $destination = $(hash);
 
-    $("body,html").animate({scrollTop: scrollTop}, 350);
+    navSmartScroll($destination);
 
     return false;
   });
@@ -50,4 +57,14 @@ $(document).ready(function() {
   $('#embed-startatslide').change(function(evt) { updateEmbedCode(evt); });
   $('#embed-startzoomadjust').change(function(evt) { updateEmbedCode(evt); });
   $('#embed-debug').change(function(evt) { updateEmbedCode(evt); });
+
+  $('.collapse').on('show',function(e) {
+    window.location.hash = "show-" + $(this).attr('id');
+  })
+
+  if (window.location.hash.match(/#show-/)) {
+    var $target = $("#" + window.location.hash.substr(6));
+    $target.collapse('show');
+    navSmartScroll($target.prev());
+  }
 });
