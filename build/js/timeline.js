@@ -4139,13 +4139,13 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 		youtube: {
 			
 			get: function(m) {
-				var the_url = "//gdata.youtube.com/feeds/api/videos/" + m.id + "?v=2&alt=jsonc&callback=?";
+				var the_url = "https://gdata.youtube.com/feeds/api/videos?q=" + m.id + "?&alt=jsonc&callback=?";
 					
 				VMM.master_config.youtube.que.push(m);
 				
 				if (!VMM.master_config.youtube.active) {
 					if (!VMM.master_config.youtube.api_loaded) {
-						LoadLib.js('//www.youtube.com/player_api', function() {
+						LoadLib.js('https://www.youtube.com/player_api', function() {
 							trace("YouTube API Library Loaded");
 						});
 					}
