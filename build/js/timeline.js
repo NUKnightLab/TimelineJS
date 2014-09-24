@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.33.1 - 2014-06-24
+    TimelineJS - ver. 2014-09-24-20-13-09 - 2014-09-24
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -9541,7 +9541,12 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						for(var i = 0; i < d.feed.entry.length; i++) {
 							var dd		= d.feed.entry[i],
 								dd_type	= "";
-						
+
+							if (typeof(dd.gsx$startdate) == 'undefined') {
+								VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Missing start date. Make sure the headers of your Google Spreadsheet have not been changed.");
+								return;
+							}
+
 							if (typeof dd.gsx$type != 'undefined') {
 								dd_type = dd.gsx$type.$t;
 							} else if (typeof dd.gsx$titleslide != 'undefined') {

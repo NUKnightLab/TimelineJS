@@ -250,7 +250,12 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						for(var i = 0; i < d.feed.entry.length; i++) {
 							var dd		= d.feed.entry[i],
 								dd_type	= "";
-						
+
+							if (typeof(dd.gsx$startdate) == 'undefined') {
+								VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Missing start date. Make sure the headers of your Google Spreadsheet have not been changed.");
+								return;
+							}
+
 							if (typeof dd.gsx$type != 'undefined') {
 								dd_type = dd.gsx$type.$t;
 							} else if (typeof dd.gsx$titleslide != 'undefined') {
