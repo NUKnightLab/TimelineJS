@@ -28,11 +28,15 @@ var _gaq = _gaq || [];
 	var ga = document.createElement('script'), s = document.getElementsByTagName('script')[0];
 	ga.type = 'text/javascript';
 	ga.async = true;
-	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	s.parentNode.insertBefore(ga, s);
-	
-	_gaq.push(['_setAccount', embed_analytics]);
-	_gaq.push(['_trackPageview']);
+
+	if ('https:' != document.location.protocol) { // analytics in https embeds problematic for IE 9/10/some Android
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(ga, s);
+		
+		_gaq.push(['_setAccount', embed_analytics]);
+		_gaq.push(['_trackPageview']);
+
+	}
 	
 })();
 
