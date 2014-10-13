@@ -12,7 +12,7 @@
   
  [UglifyJS](https://github.com/mishoo/UglifyJS)
  
-    # npm install -g uglify-js@1
+    # npm install -g uglify-js@">=2.4"
 
 ## Setup
 
