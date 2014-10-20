@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2014-10-10-19-54-13 - 2014-10-10
+    TimelineJS - ver. 2.34.0 - 2014-10-20
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -523,22 +523,11 @@ if(typeof VMM != 'undefined') {
 			});
 			/* CHECK FOR IE
 			================================================== */
+      // Leaving for posterity - removed previous HTTPS url rewriting that was breaking IE9/10 loading data over HTTPS
 			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
 				trace("IE JSON");
-				var ie_url = url;
-				if (ie_url.match('^http://')){
-					return jQuery.getJSON(ie_url, data, callback);
-				} else if (ie_url.match('^https://')) {
-					ie_url = ie_url.replace("https://","http://");
-					return jQuery.getJSON(ie_url, data, callback);
-				} else {
-					return jQuery.getJSON(url, data, callback);
-				}
-				
-			} else {
-				return jQuery.getJSON(url, data, callback);
-
 			}
+			return jQuery.getJSON(url, data, callback);
 		}
 	}
 	
