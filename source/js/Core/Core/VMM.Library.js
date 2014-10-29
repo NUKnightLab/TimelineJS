@@ -131,11 +131,16 @@ if(typeof VMM != 'undefined') {
 			});
 			/* CHECK FOR IE
 			================================================== */
-      // Leaving for posterity - removed previous HTTPS url rewriting that was breaking IE9/10 loading data over HTTPS
-			if ( VMM.Browser.browser == "Explorer" && parseInt(VMM.Browser.version, 10) >= 7 && window.XDomainRequest) {
-				trace("IE JSON");
+			if ( VMM.Browser.browser == "Explorer" && 
+				 parseInt(VMM.Browser.version, 10) >= 7 && 
+				 window.XDomainRequest && 
+				 url.match('^https?://')) {
+				trace("old IE JSON doesn't like retrieving from different protocol");
+					var colon = url.indexOf(':');
+					url = url.substr(colon+1); 
 			}
 			return jQuery.getJSON(url, data, callback);
+
 		}
 	}
 	
