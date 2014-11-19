@@ -73,6 +73,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				date = d;
 			} else {
 				date = new Date(0); 
+				date.setMonth(0); date.setDate(1); date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
@@ -142,7 +143,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						p.year = true;
 					}
 					if (date_array[0] >= 0) {
-						date.setMonth(date_array[0] - 1);
+						var month = date_array[0] - 1;
+						date.setMonth(month);
+						// if (date.getMonth() != month) { 
+						// 	date.setMonth(month); // WTF javascript?
+						// }
 						p.month = true;
 					}
 					if (date_array[1] >= 0) {

@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.35.0 - 2014-11-19
+    TimelineJS - ver. 2014-11-19-22-14-30 - 2014-11-19
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -1327,7 +1327,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 						p.year = true;
 					}
 					if (date_array[0] >= 0) {
-						date.setMonth(date_array[0] - 1);
+						var month = date_array[0] - 1;
+						date.setMonth(month);
+						if (date.getMonth() != month) { 
+							date.setMonth(month);
+						}
 						p.month = true;
 					}
 					if (date_array[1] >= 0) {
