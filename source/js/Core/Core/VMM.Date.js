@@ -72,8 +72,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				trace("DEBUG THIS, ITs A DATE");
 				date = d;
 			} else {
-				date = new Date(0, 0, 1, 0, 0, 0, 0);
-				
+				date = new Date(0); 
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
