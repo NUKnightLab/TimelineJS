@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.34.1 - 2014-10-29
+    TimelineJS - ver. 2.35.0 - 2014-11-19
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS

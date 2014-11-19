@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.34.1 - 2014-10-29
+    TimelineJS - ver. 2.35.0 - 2014-11-19
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -1257,8 +1257,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 				trace("DEBUG THIS, ITs A DATE");
 				date = d;
 			} else {
-				date = new Date(0, 0, 1, 0, 0, 0, 0);
-				
+				date = new Date(0); 
 				if ( d.match(/,/gi) ) {
 					date_array = d.split(",");
 					for(var i = 0; i < date_array.length; i++) {
