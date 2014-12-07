@@ -29,9 +29,9 @@ if(typeof VMM != 'undefined') {
 			return_to_title: "Zurück zum Anfang",
 			expand_timeline: "Chronologie vergrößern",
 			contract_timeline: "Chronologie verkleinern",
-			wikipedia: "Wikipedia, Die freie Enzyklopädie",
-			loading_content: "Loading",
-			loading: "Loading"
+			wikipedia: "aus Wikipedia, der freien Enzyklopädie",
+			loading_content: "Inhalte werden geladen...",
+			loading: "Lädt..."
 		}
 	}
 }
