@@ -25,10 +25,10 @@ if(typeof VMM != 'undefined') {
 			full_long_small_date: "HH:MM'<br/><small>'dddd',' d mmm yyyy'</small>'"
 		},
 		messages:{
-			loading_timeline: "Ładowanie Timeline... ",
+			loading_timeline: "Ładowanie osi czasu... ",
 			return_to_title: "Wróć do tytułu",
-			expand_timeline: "Powiększ Timeline",
-			contract_timeline: "Zmniejsz Timeline",
+			expand_timeline: "Powiększ oś czasu",
+			contract_timeline: "Pomniejsz oś czasu",
 			wikipedia: "Z Wikipedii, wolnej encyklopedii",
 			loading_content: "Ładowanie zawartości",
 			loading: "Ładowanie"
