@@ -1,3 +1,25 @@
+2.35.3 (pending)
+------
+#693 Update Polish locale
+#732 Updated German Translations
+
+2.35.2 (2014-11-24)
+------
+fix half-width bug on small displays
+
+2.35.1 (2014-11-19)
+------
+#719 whackamole with JS dates
+
+2.35.0 (2014-11-19)
+------
+#718 Issue with dates in 1970 in GMT/BST time zones
+
+2.34.1
+------
+#710 fix regression from #706 re IE https
+#709 retina image for loading.gif (even though we don't use it)
+
 2.34.0
 ------
 Remove HTTPS URL rewriting for older IE.
