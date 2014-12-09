@@ -2,6 +2,8 @@
 ------
 #693 Update Polish locale
 #732 Updated German Translations
+#733 Move "Swipe to Navigate" to I18N. Now we need translations for 55 languages!
+#722 Support 'youtubeTheme' config option
 
 2.35.2 (2014-11-24)
 ------
