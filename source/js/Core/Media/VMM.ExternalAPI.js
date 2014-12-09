@@ -1435,9 +1435,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					width: 					'640',
 					playerVars: {
 						enablejsapi: 1,
-						color: ("dark" == VMM.master_config.Timeline.youtubeTheme) ? "black" : "white",
+						color: ("dark" == VMM.master_config.Timeline.youtubeTheme) ? "red" : "white", // https://developers.google.com/youtube/player_parameters#color
 						showinfo: 0,
-						theme: ("undefined" !== VMM.master_config.Timeline.youtubeTheme) ? VMM.master_config.Timeline.youtubeTheme : "light",
+						theme: ("undefined" !== VMM.master_config.Timeline.youtubeTheme) ? VMM.master_config.Timeline.youtubeTheme : "light", // https://developers.google.com/youtube/player_parameters#theme
 						start: m.start,
 						rel: 0
 					},
