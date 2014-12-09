@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Acurtar a cronoloxía",
 			wikipedia: "Dende Wikipedia, a enciclopedia libre",
 			loading_content: "cargando",
-			loading: "cargando"
-		}
+			loading: "cargando",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

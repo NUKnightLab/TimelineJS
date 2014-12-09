@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Свиване",
 			wikipedia: "От Уикипедия, свободната енциклопедия",
 			loading_content: "Съдържанието се зарежда",
-			loading: "Зарежда се"
-		}
+			loading: "Зарежда се",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

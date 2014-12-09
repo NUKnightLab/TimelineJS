@@ -30,7 +30,7 @@
 			contract_timeline: "کوچکنمایی",
 			wikipedia: "از ویکی پدیا، دانشنامه آزاد",
 			loading_content: "بارگذاری",
-			loading: "بارگذاری"
-		}
+			loading: "بارگذاری",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Förminska tidslinje",
 			wikipedia: "Från Wikipedia, den fria encyklopedin",
 			loading_content: "Laddar innehåll",
-			loading: "Laddar"
-		}
+			loading: "Laddar",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

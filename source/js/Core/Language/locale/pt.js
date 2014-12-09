@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Colapsar Timeline",
 			wikipedia: "Wikipedia, A enciclopedia Livre.",
 			loading_content: "A carregar o conteúdo",
-			loading: "A carregar"
-		}
+			loading: "A carregar",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Նեղացնել ժամանակագրությունը",
 			wikipedia: "Ըստ Վիքիպեդիա ազատ հանրագիտարանի",
 			loading_content: "Բովանդակությունը բեռնվում է",
-			loading: "Բեռնում"
-		}
+			loading: "Բեռնում",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

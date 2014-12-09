@@ -34,7 +34,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Malpliampleksigu Kronologio",
 			wikipedia: "El Vikipedio, la libera enciklopedio",
 			loading_content: "Ŝarĝante enhavo",
-			loading: "Ŝarĝante"
-		}
+			loading: "Ŝarĝante",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Tiivistä aikajanaa",
 			wikipedia: "Wikipediasta",
 			loading_content: "Ladataan sisältöä",
-			loading: "Ladataan"
-		}
+			loading: "Ladataan",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

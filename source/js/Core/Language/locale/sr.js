@@ -31,8 +31,8 @@ if (typeof VMM != 'undefined') {
 			contract_timeline: "Umanji",
 			wikipedia: "Iz Vikipedije, slobodne enciklopedije",
 			loading_content: "Sadržaj se učitava",
-			loading: "Učitava se"
-		}
+			loading: "Učitava se",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }
 

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Træk tidslinien sammen",
 			wikipedia: "Fra Wikipedia",
 			loading_content: "Henter indhold",
-			loading: "Henter"
-		}
+			loading: "Henter",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

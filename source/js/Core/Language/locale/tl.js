@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Contract Timeline",
 			wikipedia: "Mula sa Wikipedia, ang malayang ensiklopedya",
 			loading_content: "Loading Content",
-			loading: "Loading"
-		}
+			loading: "Loading",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

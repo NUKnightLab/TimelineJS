@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "縮短時間",
 			wikipedia: "擷取自維基百科, 自由之百科全書",
 			loading_content: "載入內容",
-			loading: "載入中"
-			
+			loading: "載入中",
+			swipe_nav: "Swipe to Navigate"			
 		}
 	}
 }

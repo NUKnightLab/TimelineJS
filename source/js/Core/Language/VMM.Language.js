@@ -31,7 +31,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			contract_timeline: "Contract Timeline",
 			wikipedia: "From Wikipedia, the free encyclopedia",
 			loading_content: "Loading Content",
-			loading: "Loading"
+			loading: "Loading",
+			swipe_nav: "Swipe to Navigate"
 		}
 	}
 };

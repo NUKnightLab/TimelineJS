@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Krymp tidslinje",
 			wikipedia: "Fra Wikipedia, den frie encyklopedi",
 			loading_content: "Laster innhold",
-			loading: "Laster"
-		}
+			loading: "Laster",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

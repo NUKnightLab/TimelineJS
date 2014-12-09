@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Krimp die tydlyn",
 			wikipedia: "Van Wikipedia, die gratis ensiklopedie",
 			loading_content: "Die inhoud laai",
-			loading: "Aan't laai"
-		}
+			loading: "Aan't laai",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }
 

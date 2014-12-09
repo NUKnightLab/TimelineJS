@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 		    contract_timeline: "Réduire la frise",
 			wikipedia: "Extrait de Wikipedia, l'encyclopédie libre",
 			loading_content: "Chargement",
-			loading: "Chargement"
-			
+			loading: "Chargement",
+			swipe_nav: "Swipe to Navigate"			
 		}
 	}
 }

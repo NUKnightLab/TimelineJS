@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Pomniejsz oś czasu",
 			wikipedia: "Z Wikipedii, wolnej encyklopedii",
 			loading_content: "Ładowanie zawartości",
-			loading: "Ładowanie"
-		}
+			loading: "Ładowanie",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

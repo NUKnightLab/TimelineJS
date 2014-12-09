@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "タイムラインを縮めます",
 			wikipedia: "出典：フリー百科事典『ウィキペディア（Wikipedia）』",
 			loading_content: "コンテンツをロードしています",
-			loading: "ローディング"
-			
+			loading: "ローディング",
+			swipe_nav: "Swipe to Navigate"			
 		}
 	}
 }

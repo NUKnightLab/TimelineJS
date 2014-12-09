@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Contract Timeline",
 			wikipedia: "From Wikipedia, the free encyclopedia",
 			loading_content: "Φόρτωση Περιεχομένου",
-			loading: "Γίνεται Φόρτωση"
-		}
+			loading: "Γίνεται Φόρτωση",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

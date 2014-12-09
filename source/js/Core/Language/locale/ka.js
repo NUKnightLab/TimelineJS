@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Contract Timeline",
 			wikipedia: "თავისუფალი ენციკლოპედია Wikipedia-დან",
 			loading_content: "შინაარსის ჩამოტვირთვა",
-			loading: "ჩამოტვირთვა"
-		}
+			loading: "ჩამოტვირთვა",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

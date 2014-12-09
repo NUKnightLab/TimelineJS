@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Sbalit časovou osu",
 			wikipedia: "Zdroj: otevřená encyklopedie Wikipedia",
 			loading_content: "Nahrávám obsah",
-			loading: "Nahrávám"
-		}
+			loading: "Nahrávám",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

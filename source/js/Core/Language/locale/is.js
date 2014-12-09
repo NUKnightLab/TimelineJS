@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Minnka tímalínu",
 			wikipedia: "From Wikipedia, the free encyclopedia",
 			loading_content: "Raða",
-			loading: "Raða"
-			
+			loading: "Raða",
+			swipe_nav: "Swipe to Navigate"			
 		}
 	}
 }

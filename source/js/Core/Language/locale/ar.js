@@ -32,7 +32,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "الاتفاقية",
 			wikipedia: "من ويكيبيديا, الموسوعة الحرة",
 			loading_content: "تحميل المحتوى",
-			loading: "تحميل"
-		}
+			loading: "تحميل",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

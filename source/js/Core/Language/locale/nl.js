@@ -31,8 +31,8 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Tijdlijn inzoomen",
 			wikipedia: "From Wikipedia, the free encyclopedia",
 			loading_content: "Inhoud laden",
-			loading: "Laden"
-			
+			loading: "Laden",
+			swipe_nav: "Swipe to Navigate"			
 		}
 	}
 }

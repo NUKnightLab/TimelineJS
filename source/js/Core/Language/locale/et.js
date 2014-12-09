@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Vaata kaugemalt",
 			wikipedia: "Wikipedia, vaba entsüklopeedia",
 			loading_content: "Laadib sisu",
-			loading: "Laadib"
-		}
+			loading: "Laadib",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

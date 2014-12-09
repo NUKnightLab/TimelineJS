@@ -31,8 +31,8 @@ if (typeof VMM != 'undefined') {
 			contract_timeline: "Txikiago ikusi",
 			wikipedia: "Wikipedia entziklopedia libretik",
 			loading_content: "Edukia kargatzen",
-			loading: "Kargatzen"
-		}
+			loading: "Kargatzen",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }
 

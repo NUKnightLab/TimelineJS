@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Minka t&iacute;&eth;arr&aacute;s",
 			wikipedia: "Fr· Wikipedia",
 			loading_content: "Lesur inn tilfar",
-			loading: "Lesur inn"
-		}
+			loading: "Lesur inn",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

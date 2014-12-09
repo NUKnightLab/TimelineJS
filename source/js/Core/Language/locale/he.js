@@ -32,7 +32,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "צמצם את ציר הזמן",
 			wikipedia: "מויקיפדיה, האינציקלופדיה החופשית",
 			loading_content: "התוכן בטעינה...",
-			loading: "טוען..."
-		}
+			loading: "טוען...",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

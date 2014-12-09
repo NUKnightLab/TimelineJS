@@ -781,7 +781,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 				// EXPLAINER
 				$explainer = VMM.appendAndGetElement($slider_mask, "<div>", "vco-feedback", "");
-				showMessege(null, "Swipe to Navigate");
+				showMessege(null, VMM.master_config.language.messages.swipe_nav);
 				VMM.Lib.height($explainer, config.slider.height);
 				VMM.bindEvent($explainer, onExplainerClick);
 				VMM.bindEvent($explainer, onExplainerClick, 'touchend');

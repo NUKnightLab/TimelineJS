@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2014-11-26-21-25-11 - 2014-11-26
+    TimelineJS - ver. 2014-12-09-18-51-25 - 2014-12-09
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -2720,7 +2720,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 			contract_timeline: "Contract Timeline",
 			wikipedia: "From Wikipedia, the free encyclopedia",
 			loading_content: "Loading Content",
-			loading: "Loading"
+			loading: "Loading",
+			swipe_nav: "Swipe to Navigate"
 		}
 	}
 };
@@ -5856,7 +5857,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				
 				// EXPLAINER
 				$explainer = VMM.appendAndGetElement($slider_mask, "<div>", "vco-feedback", "");
-				showMessege(null, "Swipe to Navigate");
+				showMessege(null, VMM.master_config.language.messages.swipe_nav);
 				VMM.Lib.height($explainer, config.slider.height);
 				VMM.bindEvent($explainer, onExplainerClick);
 				VMM.bindEvent($explainer, onExplainerClick, 'touchend');

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Reduir la cronologia",
 			wikipedia: "Des de Wikipedia, l'enciclopèdia lliure",
 			loading_content: "Carregant contingut",
-			loading: "Carregant"
-		}
+			loading: "Carregant",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

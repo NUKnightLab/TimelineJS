@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Ciutkan Timeline",
 			wikipedia: "dari Wikipedia, ensiklopedia bebas",
 			loading_content: "Memuat Isi",
-			loading: "Memuat"
-		}
+			loading: "Memuat",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

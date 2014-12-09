@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Zaman Çizelgesini Daralt",
 			wikipedia: "Wikipedia'dan, özgür ansiklopedi",
 			loading_content: "İçerik Yükleniyor",
-			loading: "Yükleniyor"
-		}
+			loading: "Yükleniyor",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

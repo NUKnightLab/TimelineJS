@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Sašaurināt grafiku",
 			wikipedia: "No Wikipedia, brīvās enciklopēdijas",
 			loading_content: "Ielādējas saturs",
-			loading: "Ielādējas"
-		}
+			loading: "Ielādējas",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

@@ -30,7 +30,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "టైమ్‌లైన్‌ను కుదించండి",
 			wikipedia: "స్వేచ్ఛా విజ్ఞాన సర్వస్వమైన వికీపీడియా నుండి",
 			loading_content: "విషయం లోడవుతూంది",
-			loading: "లోడవుతూంది"
-		}
+			loading: "లోడవుతూంది",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

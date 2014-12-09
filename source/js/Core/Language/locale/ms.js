@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Kecilkan Garis Masa",
 			wikipedia: "Daripada Wikipedia, ensiklopedia bebas.",
 			loading_content: "Memuat Kandungan",
-			loading: "Memuat"
-		}
+			loading: "Memuat",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "Kicsinyítés",
 			wikipedia: "A Wikipédiából, a szabad enciklopédiából",
 			loading_content: "Tartalom betöltése",
-			loading: "Betöltés"
-		}
+			loading: "Betöltés",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

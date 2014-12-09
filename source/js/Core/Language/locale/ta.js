@@ -31,7 +31,7 @@ if(typeof VMM != 'undefined') {
 			contract_timeline: "நேரக்கோட்டை சுருக்க",
 			wikipedia: "கட்டற்ற கலைக்களஞ்சியம், விக்கிப்பீடியாவிலிருந்து",
 			loading_content: "உள்ளடக்கம் தரவேறுகிறது...",
-			loading: "தரவேறுகிறது"
-		}
+			loading: "தரவேறுகிறது",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }

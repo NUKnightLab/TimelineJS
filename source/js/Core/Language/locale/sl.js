@@ -31,7 +31,7 @@ if (typeof VMM != 'undefined') {
 			contract_timeline: "Pokrči časovni trak",
 			wikipedia: "Vir Wikipedija",
 			loading_content: "Nalaganje vsebine",
-			loading: "Nalaganje"
-		}
+			loading: "Nalaganje",
+			swipe_nav: "Swipe to Navigate"		}
 	}
 }
