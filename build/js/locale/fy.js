@@ -1,4 +1,4 @@
-/* English LANGUAGE 
+/* Frisian LANGUAGE 
 ================================================== */
 if(typeof VMM != 'undefined') {
 	VMM.Language = {
@@ -7,8 +7,8 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "fy"
 		},
 		date: {
-			month: ["Foarmoanne", "Sellemoanne", "Foarjiersmoanne", "Gersmoanne", "Blommemoanne", "Simmermoanne", "Heamoanne", "Rispmoanne", "Hjerstmoanne", "Wynmoanne", "Slachtmoanne", "Wintermoanne"],
-			month_abbr: ["Jan.", "Feb.", "Mar", "Apr", "Mei", "Juni", "Juli", "Aug.", "Sept.", "Okt.", "Nov.", "Des."],
+			month: ["Jannewaris", "Febrewaris", "Maart", "April", "Maaie", "Juny", "July", "Augustus", "Septimber", "Oktober", "Novimber", "Desimber"],
+			month_abbr: ["Jan.", "Feb.", "Mar", "Apr", "Maaie", "July", "July", "Aug.", "Sept.", "Okt.", "Nov.", "Des."],
 			day: ["Snein","Moandei", "Tiisdei", "Woansdei", "Tongersdei", "Freed", "Sneon"],
 			day_abbr: ["Snein","Moandei", "Tiisdei", "Woansdei", "Tongersdei", "Freed", "Sneon"]
 		}, 
