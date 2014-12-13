@@ -4,9 +4,12 @@ Jinja2==2.7
 MarkupSafe==0.18
 Werkzeug==0.9.3
 boto==2.13.3
+cuisine==0.7.4
+fablib==0.1.0
 itsdangerous==0.22
 paramiko==1.10.1
 ply==3.4
 pycrypto==2.6
-wsgiref==0.1.2
 python-magic==0.4.6
+wsgiref==0.1.2
+
