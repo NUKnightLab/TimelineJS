@@ -1207,7 +1207,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 		},
 			
 		month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-		month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
+		month_abbr: ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 		day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 		day_abbr: ["Sun.", "Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."],
 		hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -2697,7 +2697,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Language == 'undefined') {
 		},
 		date: {
 			month: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-			month_abbr: ["Jan.", "Feb.", "March", "April", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
+			month_abbr: ["Jan.", "Feb.", "Mar.", "Apr.", "May", "June", "July", "Aug.", "Sept.", "Oct.", "Nov.", "Dec."],
 			day: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
 			day_abbr: ["Sun.","Mon.", "Tues.", "Wed.", "Thurs.", "Fri.", "Sat."]
 		}, 
@@ -10078,3 +10078,4 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 	};
 	
 }
+
