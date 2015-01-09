@@ -113,6 +113,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			}
 		}
 		
+		// Get index using Slide Name for hash routing
+		this.findSlideIndexByName = function(n) {
+			for (var i = 0; i < slides.length; i++)
+			{
+				if (slides[i].slideName == n) {
+					return i;
+				}
+			}
+			return -1;
+		};
+		
+		
 		/* GETTERS AND SETTERS
 		================================================== */
 		this.setData = function(d) {
@@ -799,7 +811,3 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 	};
 	
 }
-
-
-
-

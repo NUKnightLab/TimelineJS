@@ -155,11 +155,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			 }
 		}
 		
+		// Routes number AND Slide Name
 		window.onhashchange = function () {
 			var hash					=	window.location.hash.substring(1);
 			if (config.hash_bookmark) {
 				if (is_moving) {
-					goToEvent(parseInt(hash));
+					if ( isNaN(parseInt(hash)) ) {
+						// if string, find the index and route to it
+						var slideI = slider.findSlideIndexByName(hash);
+						if ( slideI != -1 ) goToEvent(slideI);
+					} else {
+						goToEvent(parseInt(hash));
+					}
 				} else {
 					is_moving = false;
 				}
@@ -580,6 +587,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 							}
 						}
 						
+						_date.slideName		= data.date[i].slideName;
 						_date.title				= data.date[i].headline;
 						_date.headline			= data.date[i].headline;
 						_date.type				= data.date[i].type;

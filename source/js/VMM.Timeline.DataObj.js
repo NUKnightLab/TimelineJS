@@ -282,6 +282,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							} else {
 								var date = {
 										type:			"google spreadsheet",
+										slideName:		getGVar(dd.gsx$slidename),
 										startDate:		getGVar(dd.gsx$startdate),
 										endDate:		getGVar(dd.gsx$enddate),
 										headline:		getGVar(dd.gsx$headline),
