@@ -908,26 +908,34 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 									
 			map_providers: {
 				"toner": {
-					"url": 			"//{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"url": 			(document.location.protocol === "https:" ?
+								"https://stamen-tiles-{S}a.ssl.fastly.net/toner/{Z}/{X}/{Y}.png" :
+								"//{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png"),
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 					
 				},
 				"toner-lines": {
-					"url": 			"//{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"url": 			(document.location.protocol === "https:" ?
+								"https://stamen-tiles-{S}a.ssl.fastly.net/toner-lines/{Z}/{X}/{Y}.png" :
+								"//{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png"),
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"toner-labels": {
-					"url": 			"//{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"url": 			(document.location.protocol === "https:" ?
+								"https://stamen-tiles-{S}a.ssl.fastly.net/toner-labels/{Z}/{X}/{Y}.png" :
+								"//{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png"),
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"sterrain": {
-					"url": 			"//{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"url": 			(document.location.protocol === "https:" ?
+								"https://stamen-tiles-{S}a.ssl.fastly.net/terrain/{Z}/{X}/{Y}.jpg" :
+								"//{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg"),
 					"minZoom": 		4,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
@@ -939,7 +947,9 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					"attribution": 	"apple"
 				},
 				"watercolor": {
-					"url": 			"//{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"url": 			(document.location.protocol === "https:" ?
+								"https://stamen-tiles-{S}a.ssl.fastly.net/watercolor/{Z}/{X}/{Y}.jpg" :
+								"//{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg"),
 					"minZoom": 		3,
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
