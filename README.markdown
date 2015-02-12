@@ -16,6 +16,7 @@
 		- [Map Style Types](#map-style-types)
 		- [Font Options](#font-options)
 			- [Font Combination Preview:](#font-combination-preview)
+		- [Nav Rows](#nav-rows)
 	- [File Formats](#file-formats)
 		- [JSON:](#json)
 		- [JSONP :](#jsonp-)
@@ -286,6 +287,61 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 ####Font Combination Preview:
 ![Font Combination Preview](http://timeline.knightlab.com/static/img/make/font-options.png)
 
+###Nav Rows
+To enable finer control over the navigation slider, the following are
+used:
+
+* `nav.height` describes total height of the nav-slider, including the ruler
+  (default 200px)
+* `nav.content_height` describes the height without the ruler. As the ruler is
+  generally 50px (unless you do some CSS changes) this is `nav.height-50`, so
+default is 150px
+* `nav.marker.height` describes marker/row height, default is 50px. Note that if you
+  have more than `nav.content_height`/`nav.marker.height` rows - then the row
+height reduces to half. So in the default case you can fit 3 rows, and if more rows are
+added, the height is reduced to 25px and 6 rows can fit. No fitting is done
+beyond this, so if you have more rows, increase your nav sizes.
+
+Controlling rows is done by placing tags on `date` items (see [JSON:](#json) below). The tags label the rows and create affinity for events.
+Also - by adding a `tags` section you can list the desired order of the tagged
+rows.
+
+Finally - any change in size requires you to also handle the CSS. The common
+case is just adding space for more rows, keeping the nicely formatted 50/25px
+height. Here is an example of doing just that; There are also full files in git:
+[example_json.rows.html](https://github.com/rpeleg1970/TimelineJS/blob/swimlanes/examples/example_json.rows.html) 
+and [example_json.rows.json](https://github.com/rpeleg1970/TimelineJS/blob/swimlanes/examples/example_json.rows.json)
+```html
+      <!-- BEGIN Timeline Embed -->
+      <div id="timeline-embed"></div>
+      <script type="text/javascript">
+        var timeline_config = {
+         width: "100%",
+         height: "100%",
+         nav: {
+           content_height: 300,
+           height: 350,
+           marker: {
+             height: 50
+           }
+         },
+         source: 'example_json.rows.json'
+        }
+      </script>
+      <script type="text/javascript" src="../dev_examples/build/js/storyjs-embed.js"></script>
+      <style>
+        .vco-timeline .vco-navigation{height:350px;}
+        .vco-timeline .vco-navigation .timenav-background{height: 300px;}
+        .vco-timeline .vco-navigation .timenav-background .timenav-line{height: 300px;}
+        .vco-timeline .vco-navigation .timenav-background .timenav-interval-background{top:301px;}
+        .vco-timeline .vco-navigation .timenav .content .marker .dot{top:300px;}
+        .vco-timeline .vco-navigation .timenav .content .marker .line{height:300px;}
+        .vco-timeline .vco-navigation .timenav .time{top:300px;}
+      </style>
+      <!-- END Timeline Embed-->
+
+```
+
 ## File Formats
 
 ### JSON:
@@ -294,6 +350,10 @@ JSON is the native data format for TimelineJS.
 
 Remember, JSON is picky. A misplaced comma or quotation mark can
 prevent the timeline from loading properly. 
+
+Note that optional tags on events (dates) puts them in an annotated row
+in the TimeNav. Adding the `tags` list to the JSON file allows you to control
+the order of these rows.
 
 Here is the full model:
 ```javascript
@@ -309,6 +369,10 @@ Here is the full model:
 			"credit":"Credit Name Goes Here",
 			"caption":"Caption text goes here"
 		},
+		"tags": [
+				"optional",
+				"list"
+		],
 		"date": [
 			{
 				"startDate":"2011,12,10",
@@ -358,6 +422,10 @@ storyjs_jsonp_data = {
 			"credit":"Credit Name Goes Here",
 			"caption":"Caption text goes here"
 		},
+		"tags": [
+				"optional",
+				"list"
+		],
 		"date": [
 			{
 				"startDate":"2011,12,10",

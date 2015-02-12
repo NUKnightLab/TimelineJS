@@ -109,6 +109,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				rows: 				[1, 1, 1],
 				width: 				960,
 				height: 			200,
+				content_height: 			150,
 				marker: {
 					width: 			150,
 					height: 		50
@@ -188,7 +189,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 			
 			config.nav.width			= config.width;
-			config.nav.height			= 200;
+			// config.nav.height			= 200; This comes from the default merged config
 			config.feature.width		= config.width;
 			config.feature.height		= config.height - config.nav.height;
 			config.nav.zoom.adjust		= parseInt(config.start_zoom_adjust, 10);
@@ -500,7 +501,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				
 				// INITIALIZE COMPONENTS
 				slider.init(_dates);
-				timenav.init(_dates, data.era);
+				timenav.init(_dates, data.era, data.tags);
 			
 				// RESIZE EVENT LISTENERS
 				VMM.bindEvent(global, reSize, config.events.resize);

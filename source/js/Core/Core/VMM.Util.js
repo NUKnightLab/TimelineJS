@@ -37,7 +37,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			var x;
 			for (x in config_to_merge) {
 				if (Object.prototype.hasOwnProperty.call(config_to_merge, x)) {
-					config_main[x] = config_to_merge[x];
+          if(typeof(config_main[x])=="object") {
+            VMM.Util.mergeConfig(config_main[x],config_to_merge[x]);
+          } else {
+					  config_main[x] = config_to_merge[x];
+          }
 				}
 			}
 			return config_main;
