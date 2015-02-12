@@ -32,6 +32,6 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "aus Wikipedia, der freien Enzyklopädie",
 			loading_content: "Inhalte werden geladen...",
 			loading: "Lädt...",
-			swipe_nav: "Swipe to Navigate"		}
+			swipe_nav: "Wischen zum navigieren"		}
 	}
 }
