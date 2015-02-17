@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2.35.4 - 2015-02-17
+    TimelineJS - ver. 2015-02-17-22-18-48 - 2015-02-17
     Copyright (c) 2012-2013 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -666,28 +666,27 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		
+
 		prop: function(element, aName, value) {
-			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
-			    VMM.Lib.attribute(element, aName, value);
+			if (typeof jQuery == 'undefined' || !('prop' in jQuery.fn)) {
+			    return VMM.Lib.attribute(element, aName, value);
+			} else if (typeof value != 'undefined') {
+				return jQuery(element).prop(aName, value);
 			} else {
-				jQuery(element).prop(aName, value);
+				return jQuery(element).prop(aName);
 			}
 		},
-		
+
 		attribute: function(element, aName, value) {
-			
-			if (value != null && value != "") {
-				if( typeof( jQuery ) != 'undefined' ){
-					jQuery(element).attr(aName, value);
-				}
-			} else {
-				if( typeof( jQuery ) != 'undefined' ){
+			if (typeof(jQuery) != 'undefined') {
+				if (typeof(value) != 'undefined' && value != null && value != "") {
+					return jQuery(element).attr(aName, value);
+				} else {
 					return jQuery(element).attr(aName);
 				}
 			}
 		},
-		
+
 		visible: function(element, show) {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -813,9 +812,10 @@ if(typeof VMM != 'undefined') {
 				jQuery(element).stop();
 			}
 		},
-		
+
+		// TODO: Consider removing this as it's referenced by one commented line
 		delay_animate: function(delay, element, duration, ease, att, callback_function) {
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
@@ -838,8 +838,8 @@ if(typeof VMM != 'undefined') {
 			var _ease		= "easein",
 				_que		= false,
 				_duration	= 1000,
-				_att		= {};
-			
+				_att;
+
 			if (duration != null) {
 				if (duration < 1) {
 					_duration = 1;
@@ -859,20 +859,18 @@ if(typeof VMM != 'undefined') {
 			
 			
 			if (att != null) {
-				_att = att
+				_att = att;
 			} else {
-				_att = {opacity: 0}
+				_att = {opacity: 0};
 			}
-			
-			
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				
+
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((_duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
 				_ease = " cubic-bezier(0.33, 0.66, 0.66, 1)";
 				//_ease = " ease-in-out";
-				for (x in _att) {
+				for (var x in _att) {
 					if (Object.prototype.hasOwnProperty.call(_att, x)) {
 						trace(x + " to " + _att[x]);
 						VMM.Lib.css(element, '-webkit-transition',  x + ' ' + __duration + _ease);
@@ -1004,12 +1002,17 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
 			this.orientation = this.searchOrientation(window.orientation);
+			this.features = {
+				css: {
+					transitions: this.cssTransitionSupport()
+				}
+			};
 		},
 		searchOrientation: function(orientation) {
 			var orient = "";
-			if ( orientation == 0  || orientation == 180) {  
+			if ( orientation == 0  || orientation == 180) {
 				orient = "portrait";
-			} else if ( orientation == 90 || orientation == -90) {  
+			} else if ( orientation == 90 || orientation == -90) {
 				orient = "landscape";
 			} else {
 				orient = "normal";
@@ -1147,9 +1150,30 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 				subString: "Linux",
 				identity: "Linux"
 			}
-		]
+		],
+		cssTransitionSupport: function () {
+			// See https://gist.github.com/jackfuchs/556448
+			var b = document.body || document.documentElement,
+			s = b.style,
+			p = 'transition';
 
-	}
+			if (typeof s[p] == 'string') {
+				return true;
+			}
+
+			// Tests for vendor specific prop
+			var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+			p = p.charAt(0).toUpperCase() + p.substr(1);
+
+			for (var i=0; i<v.length; i++) {
+				if (typeof s[v[i] + p] == 'string') {
+					return true;
+				}
+			}
+
+			return false;
+		}
+	};
 	VMM.Browser.init();
 }
 
@@ -5765,6 +5789,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			} else {
 				VMM.Lib.css(layout, "overflow-y", "hidden" );
 				var scroll_height = 0;
+
+                // FIXME: Chrome cannot optimize this try/catch block, which appears to be unnecessary – see https://github.com/NUKnightLab/TimelineJS/pull/681#issuecomment-52365420
 				try {
 					scroll_height = VMM.Lib.prop(layout, "scrollHeight");
 					VMM.Lib.animate(layout, _duration, _ease, {scrollTop: scroll_height - VMM.Lib.height(layout) });
@@ -7088,7 +7114,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			ease: 					"easeInOutExpo",
 			duration: 				1000,
 			gmap_key: 				"",
-			language: 				VMM.Language
+			language: 				VMM.Language,
+			tagSortFunction: 		function (arr) {
+				arr.sort(function (a, b) {
+					return a.localeCompare(b);
+				})
+			}
 		};
 		
 		if ( w != null && w != "") {
@@ -9194,6 +9225,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// CREATE TAGS
 			tags = VMM.Util.deDupeArray(tags);
+
+			config.tagSortFunction(tags);
+
 			if (tags.length > 3) {
 				config.nav.rows.current = config.nav.rows.half;
 			} else {
