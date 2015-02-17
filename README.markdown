@@ -180,6 +180,7 @@ Languages available:
 * `de` *German / Deutsch*
 * `el` *Greek*
 * `he` *Hebrew*
+* `hi` *Hindi*
 * `hu` *Hungarian*
 * `is` *Icelandic*
 * `id` *Indonesian*
