@@ -16,13 +16,13 @@ if(typeof VMM != 'undefined') {
 			year: "yyyy",
 			month_short: "mmm",
 			month: "mmmm yyyy",
-			full_short: "mmm d",
-			full: "mmmm d',' yyyy",
+			full_short: "d'.' mmm",
+			full: "d'.' mmmm yyyy",
 			time_short: "h:MM:SS TT",
 			time_no_seconds_short: "hh:MM TT",
-			time_no_seconds_small_date: "hh:MM TT'<br/><small>'mmmm d',' yyyy'</small>'",
-			full_long: "dddd',' mmm d',' yyyy 'at' hh:MM TT",
-			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' mmm d',' yyyy'</small>'"
+			time_no_seconds_small_date: "hh:MM TT'<br/><small>'d'.' mmmm  yyyy'</small>'",
+			full_long: "dddd',' d'.' mmm  yyyy 'kl.' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>'dddd',' d'.' mmm  yyyy'</small>'"
 		},
 		messages: {
 			loading_timeline: "Raða upp tímalínu... ",
