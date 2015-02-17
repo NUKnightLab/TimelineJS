@@ -159,6 +159,7 @@ Languages available:
 * `ar` *Arabic*
 * `hy` *Armenian*
 * `eu` *Basque*
+* `be` *Belarusian*
 * `bg` *Bulgarian*
 * `ca` *Catalan*
 * `zh-cn` *Chinese*
@@ -182,6 +183,7 @@ Languages available:
 * `hu` *Hungarian*
 * `is` *Icelandic*
 * `id` *Indonesian*
+* `ga` *Irish*
 * `it` *Italian*
 * `ja` *Japanese*
 * `ko` *Korean*
@@ -194,6 +196,7 @@ Languages available:
 * `pl` *Polish*
 * `pt` *Portuguese*
 * `pt-br` *Portuguese (Brazilian)*
+* `ro` *Romanian*
 * `rm` *Romansh*
 * `ru` *Russian*
 * `sr-cy` *Serbian - Cyrillic*
@@ -207,6 +210,7 @@ Languages available:
 * `ta` *Tamil*
 * `zh-tw` *Taiwanese*
 * `te` *Telugu*
+* `th` *Thai*
 * `tr` *Turkish*
 * `uk` *Ukrainian*
 
