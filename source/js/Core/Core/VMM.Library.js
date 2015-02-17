@@ -274,28 +274,27 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-		
+
 		prop: function(element, aName, value) {
-			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
-			    VMM.Lib.attribute(element, aName, value);
+			if (typeof jQuery == 'undefined' || !('prop' in jQuery.fn)) {
+			    return VMM.Lib.attribute(element, aName, value);
+			} else if (typeof value != 'undefined') {
+				return jQuery(element).prop(aName, value);
 			} else {
-				jQuery(element).prop(aName, value);
+				return jQuery(element).prop(aName);
 			}
 		},
-		
+
 		attribute: function(element, aName, value) {
-			
-			if (value != null && value != "") {
-				if( typeof( jQuery ) != 'undefined' ){
-					jQuery(element).attr(aName, value);
-				}
-			} else {
-				if( typeof( jQuery ) != 'undefined' ){
+			if (typeof(jQuery) != 'undefined') {
+				if (typeof(value) != 'undefined' && value != null && value != "") {
+					return jQuery(element).attr(aName, value);
+				} else {
 					return jQuery(element).attr(aName);
 				}
 			}
 		},
-		
+
 		visible: function(element, show) {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
@@ -421,9 +420,10 @@ if(typeof VMM != 'undefined') {
 				jQuery(element).stop();
 			}
 		},
-		
+
+		// TODO: Consider removing this as it's referenced by one commented line
 		delay_animate: function(delay, element, duration, ease, att, callback_function) {
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
@@ -446,8 +446,8 @@ if(typeof VMM != 'undefined') {
 			var _ease		= "easein",
 				_que		= false,
 				_duration	= 1000,
-				_att		= {};
-			
+				_att;
+
 			if (duration != null) {
 				if (duration < 1) {
 					_duration = 1;
@@ -467,20 +467,18 @@ if(typeof VMM != 'undefined') {
 			
 			
 			if (att != null) {
-				_att = att
+				_att = att;
 			} else {
-				_att = {opacity: 0}
+				_att = {opacity: 0};
 			}
-			
-			
-			if (VMM.Browser.device == "mobile" || VMM.Browser.device == "tablet") {
-				
+
+			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
 				var _tdd		= Math.round((_duration/1500)*10)/10,
 					__duration	= _tdd + 's';
 					
 				_ease = " cubic-bezier(0.33, 0.66, 0.66, 1)";
 				//_ease = " ease-in-out";
-				for (x in _att) {
+				for (var x in _att) {
 					if (Object.prototype.hasOwnProperty.call(_att, x)) {
 						trace(x + " to " + _att[x]);
 						VMM.Lib.css(element, '-webkit-transition',  x + ' ' + __duration + _ease);
