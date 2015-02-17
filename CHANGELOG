@@ -1,6 +1,8 @@
 2.35.3 (pending)
 ------
+#689 Update Thai locale
 #693 Update Polish locale
+#705 Frisian localization
 #722 Support 'youtubeTheme' config option
 #732 Updated German Translations
 #733 Move "Swipe to Navigate" to I18N. Now we need translations for 55 languages!
