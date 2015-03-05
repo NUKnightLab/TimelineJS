@@ -32,6 +32,29 @@
     </style>
     <!-- HTML5 shim, for IE6-8 support of HTML elements--><!--[if lt IE 9]>
     <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+    <!-- allow dynamic document title through query param -->
+    <script type="text/javascript">
+     (function() {
+          try {
+               var params = location.search.split(/[?&]/),
+                   i = params.length-1,
+                   title = /title/i,
+                   keyVal;
+                    
+               for (i;i>=0;i--) {
+                    keyVal = params[i].split('=');
+                    if (title.test(keyVal[0])) {
+                         document.title = decodeURIComponent(keyVal[1]);
+                    }
+               }
+          } catch (e) {
+               if (window.console && console.log) {
+                    console.log(e.message || e);
+               }
+          }
+     }());
+    </script>
   </head>
 </html>
 <body>
