@@ -218,7 +218,7 @@ Languages available:
 
 
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/NUKnightLab/TimelineJS/blob/master/source/js/Core/Language/locale/en.js) and find your language's [two letter code here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 ###Start at End 
 `start_at_end`
