@@ -236,12 +236,16 @@ if(typeof VMM != 'undefined' && typeof VMM.Util == 'undefined') {
 			    return text.replace(exp, "<a href='$1' target='_blank'>$3</a>");
 			}
 			// Email addresses
-			var emailAddressPattern = /([a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/gim;
+			var emailAddressPattern = /([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)/gim;
 			
+			//var twitterHandlePattern = /(@([\w]+))/g;
 			var twitterHandlePattern = /\B@([\w-]+)/gm;
 			var twitterSearchPattern = /(#([\w]+))/g;
 
 			return text
+				//.replace(urlPattern, "<a target='_blank' href='$&' onclick='void(0)'>$&</a>")
+				.replace(url_pattern, url_replace)
+				.replace(pseudoUrlPattern, "$1<a target='_blank' class='hyphenate' onclick='void(0)' href='http://$2'>$2</a>")
 				.replace(emailAddressPattern, "<a target='_blank' onclick='void(0)' href='mailto:$1'>$1</a>")
 				.replace(twitterHandlePattern, "<a href='http://twitter.com/$1' target='_blank' onclick='void(0)'>@$1</a>");
 				

@@ -218,7 +218,7 @@ Languages available:
 
 
 
-Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/VeriteCo/StoryJS-Core/blob/master/Language/locale/en.js) and find your language's [two letter code here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/NUKnightLab/TimelineJS/blob/master/source/js/Core/Language/locale/en.js) and find your language's [two letter code here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 ###Start at End 
 `start_at_end`
@@ -317,8 +317,8 @@ Here is the full model:
 		},
 		"date": [
 			{
-				"startDate":"2011,12,10",
-				"endDate":"2011,12,11",
+				"startDate":"2011,12,10,07,02,10",
+				"endDate":"2011,12,11,08,11",
 				"headline":"Headline Goes Here",
 				"text":"<p>Body text goes here, some HTML is OK</p>",
 				"tag":"This is Optional",
