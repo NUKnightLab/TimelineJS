@@ -98,11 +98,23 @@
 		}
 		.nav-previous {
 			.icon {
-				.icon-previous-light();
+				.icon-previous();
 				margin-left: @base-space - 5;
 			}
 		}
 		.nav-next {
+			.icon {
+				.icon-next();
+				margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh + 5;
+			}
+		}
+		.nav-previous:hover {
+			.icon {
+				.icon-previous-light();
+				margin-left: @base-space - 5;
+			}
+		}
+		.nav-next:hover {
 			.icon {
 				.icon-next-light();
 				margin-left: @feature-nav-width - @base-space - @feature-nav-icon-wh + 5;
