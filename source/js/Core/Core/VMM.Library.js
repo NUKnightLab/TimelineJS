@@ -274,27 +274,28 @@ if(typeof VMM != 'undefined') {
 				}
 			}
 		},
-
+		
 		prop: function(element, aName, value) {
-			if (typeof jQuery == 'undefined' || !('prop' in jQuery.fn)) {
-			    return VMM.Lib.attribute(element, aName, value);
-			} else if (typeof value != 'undefined') {
-				return jQuery(element).prop(aName, value);
+			if (typeof jQuery == 'undefined' || !/[1-9]\.[3-9].[1-9]/.test(jQuery.fn.jquery)) {
+			    VMM.Lib.attribute(element, aName, value);
 			} else {
-				return jQuery(element).prop(aName);
+				jQuery(element).prop(aName, value);
 			}
 		},
-
+		
 		attribute: function(element, aName, value) {
-			if (typeof(jQuery) != 'undefined') {
-				if (typeof(value) != 'undefined' && value != null && value != "") {
-					return jQuery(element).attr(aName, value);
-				} else {
+			
+			if (value != null && value != "") {
+				if( typeof( jQuery ) != 'undefined' ){
+					jQuery(element).attr(aName, value);
+				}
+			} else {
+				if( typeof( jQuery ) != 'undefined' ){
 					return jQuery(element).attr(aName);
 				}
 			}
 		},
-
+		
 		visible: function(element, show) {
 			if (show != null) {
 				if( typeof( jQuery ) != 'undefined' ){
