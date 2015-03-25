@@ -446,8 +446,8 @@ if(typeof VMM != 'undefined') {
 			var _ease		= "easein",
 				_que		= false,
 				_duration	= 1000,
-				_att;
-
+				_att		= {};
+			
 			if (duration != null) {
 				if (duration < 1) {
 					_duration = 1;
@@ -467,9 +467,9 @@ if(typeof VMM != 'undefined') {
 			
 			
 			if (att != null) {
-				_att = att;
+				_att = att
 			} else {
-				_att = {opacity: 0};
+				_att = {opacity: 0}
 			}
 
 			if (VMM.Browser.features.css.transitions && !('scrollTop' in _att)) {
