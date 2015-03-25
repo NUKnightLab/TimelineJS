@@ -1,3 +1,7 @@
+2.35.6 (2015-03-25)
+------
+Restore original animation/easing (revert pull #681)
+
 2.35.5 (2015-02-26)
 ------
 #672,679,681,683 a series of presentation/performance tweaks from @acdha
