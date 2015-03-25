@@ -478,7 +478,7 @@ if(typeof VMM != 'undefined') {
 					
 				_ease = " cubic-bezier(0.33, 0.66, 0.66, 1)";
 				//_ease = " ease-in-out";
-				for (var x in _att) {
+				for (x in _att) {
 					if (Object.prototype.hasOwnProperty.call(_att, x)) {
 						trace(x + " to " + _att[x]);
 						VMM.Lib.css(element, '-webkit-transition',  x + ' ' + __duration + _ease);
