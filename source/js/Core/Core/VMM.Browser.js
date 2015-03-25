@@ -12,17 +12,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 			this.OS = this.searchString(this.dataOS) || "an unknown OS";
 			this.device = this.searchDevice(navigator.userAgent);
 			this.orientation = this.searchOrientation(window.orientation);
-			this.features = {
-				css: {
-					transitions: this.cssTransitionSupport()
-				}
-			};
 		},
 		searchOrientation: function(orientation) {
 			var orient = "";
-			if ( orientation == 0  || orientation == 180) {
+			if ( orientation == 0  || orientation == 180) {  
 				orient = "portrait";
-			} else if ( orientation == 90 || orientation == -90) {
+			} else if ( orientation == 90 || orientation == -90) {  
 				orient = "landscape";
 			} else {
 				orient = "normal";
@@ -160,29 +155,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Browser == 'undefined') {
 				subString: "Linux",
 				identity: "Linux"
 			}
-		],
-		cssTransitionSupport: function () {
-			// See https://gist.github.com/jackfuchs/556448
-			var b = document.body || document.documentElement,
-			s = b.style,
-			p = 'transition';
+		]
 
-			if (typeof s[p] == 'string') {
-				return true;
-			}
-
-			// Tests for vendor specific prop
-			var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
-			p = p.charAt(0).toUpperCase() + p.substr(1);
-
-			for (var i=0; i<v.length; i++) {
-				if (typeof s[v[i] + p] == 'string') {
-					return true;
-				}
-			}
-
-			return false;
-		}
-	};
+	}
 	VMM.Browser.init();
 }
