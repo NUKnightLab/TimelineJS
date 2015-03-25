@@ -175,8 +175,8 @@
     // - copy website/static >> build/website/static
     // - run usemin on all html in build/website
     // - sync build/website with bucket
-    "deploy": {
-        "stg": {"bucket": "timeline.knilab.com"},
-        "prd": {"bucket": "timeline.knightlab.com"}
+     "deploy": {
+        "stg": {"bucket": "timeline.knilab.com", "usemin_context": {"cdn": "dev"}},
+        "prd": {"bucket": "timeline.knightlab.com", "usemin_context": {"cdn": "latest"}}
     }
 }
