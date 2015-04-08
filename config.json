@@ -147,7 +147,7 @@
                 "template": [
                     "/*",
                     "    TimelineJS - ver. %(version)s - %(date)s",
-                    "    Copyright (c) 2012-2013 Northwestern University",
+                    "    Copyright (c) 2012-2015 Northwestern University",
                     "    a project of the Northwestern University Knight Lab, originally created by Zach Wise",
                     "    https://github.com/NUKnightLab/TimelineJS",
                     "    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.",
