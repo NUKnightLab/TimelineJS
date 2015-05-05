@@ -29,10 +29,11 @@ if(typeof VMM != 'undefined') {
 			loading_timeline: "جاري التحميل... ",
 			return_to_title: "العودة",
 			expand_timeline: "تكبير العرض",
-			contract_timeline: "الاتفاقية",
+			contract_timeline: "تصغير العرض",
 			wikipedia: "من ويكيبيديا, الموسوعة الحرة",
 			loading_content: "تحميل المحتوى",
 			loading: "تحميل",
-			swipe_nav: "Swipe to Navigate"		}
+			swipe_nav: "التصفح باللمس"		
+		}
 	}
 }
