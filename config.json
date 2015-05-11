@@ -182,7 +182,7 @@
                 "cdn": "dev"
             },
             "deploy_context": {
-                "generator_embed_path": "//test.knightlab.com/libs/timeline/dev/embed/index.html"
+                "generator_embed_path": "//cdn.knightlab.com/libs/timeline/dev/embed/index.html"
             }                
         },
         "prd": {
@@ -191,7 +191,7 @@
                 "cdn": "latest"
             },
             "deploy_context": {
-                "generator_embed_path": "//test.knightlab.com/libs/timeline/latest/embed/index.html"
+                "generator_embed_path": "//cdn.knightlab.com/libs/timeline/latest/embed/index.html"
             }                
         }
     }

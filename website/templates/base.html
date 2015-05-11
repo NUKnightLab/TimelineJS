@@ -26,9 +26,9 @@
     meta name="viewport" content="initial-scale=1,width=device-width" 
     someone needs to go through Blueline and fix the small viewport CSS details before we can turn this on.
   -->
-	<link rel="shortcut icon" href="//test.knightlab.com/libs/blueline/latest/assets/logos/favicon.ico"> 
+	<link rel="shortcut icon" href="//cdn.knightlab.com/libs/blueline/latest/assets/logos/favicon.ico"> 
     <link href="//cloud.webtype.com/css/d4767ecb-457a-4677-8761-72f890add836.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="//test.knightlab.com/libs/blueline/latest/css/blueline.min.css">
+	<link rel="stylesheet" href="//cdn.knightlab.com/libs/blueline/latest/css/blueline.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ static_url }}/css/site.css">
   <!-- Google Analytics: don't mess with this stuff -->
   <!-- named tracker notes from https://developers.google.com/analytics/devguides/collection/gajs/ -->
@@ -138,13 +138,13 @@
 
 	{% block scripts %}
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="//test.knightlab.com/libs/blueline/latest/js/blueline.min.js"></script>
+    <script src="//cdn.knightlab.com/libs/blueline/latest/js/blueline.min.js"></script>
 
     <!-- Override -->
     <script type="text/javascript">
         var generator_embed_path = "{{ generator_embed_path }}";
     </script>
-    <!-- build:js //test.knightlab.com/libs/timeline/%(cdn)s/js/storyjs-embed-generator.js -->
+    <!-- build:js //cdn.knightlab.com/libs/timeline/%(cdn)s/js/storyjs-embed-generator.js -->
     <script type="text/javascript">
         var generator_embed_path = "/source/embed/index.html";
     </script>
