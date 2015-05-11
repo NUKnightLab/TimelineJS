@@ -176,7 +176,23 @@
     // - run usemin on all html in build/website
     // - sync build/website with bucket
      "deploy": {
-        "stg": {"bucket": "timeline.knilab.com", "usemin_context": {"cdn": "dev"}},
-        "prd": {"bucket": "timeline.knightlab.com", "usemin_context": {"cdn": "latest"}}
+        "stg": {
+            "bucket": "timeline.knilab.com", 
+            "usemin_context": {
+                "cdn": "dev"
+            },
+            "deploy_context": {
+                "generator_embed_path": "//test.knightlab.com/libs/timeline/dev/embed/index.html"
+            }                
+        },
+        "prd": {
+            "bucket": "timeline.knightlab.com", 
+            "usemin_context": {
+                "cdn": "latest"
+            },
+            "deploy_context": {
+                "generator_embed_path": "//test.knightlab.com/libs/timeline/latest/embed/index.html"
+            }                
+        }
     }
 }
