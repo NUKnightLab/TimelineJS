@@ -15,23 +15,24 @@ if(typeof VMM != 'undefined') {
 		dateformats: {
 			year: "yyyy",
 			month_short: "mmm",
-			month: "mmmm yyyy",
+			month: "mmmm 'de' yyyy",
 			full_short: "d mmm",
-			full: "d mmmm yyyy",
-			time_short: "HH:MM:SS",
-			time_no_seconds_short: "HH:MM",
-			time_no_seconds_small_date: "'<small>'d mmmm yyyy'</small>' HH:MM",
-			full_long: "dddd',' d mmm yyyy HH:MM",
-			full_long_small_date: "HH:MM'<br/><small>d mmm yyyy'</small>'"
+			full: "d 'de' mmmm 'de' yyyy",
+			time_short: "hh:MM:ss",
+			time_no_seconds_short: "hh:MM",
+			time_no_seconds_small_date: "hh:MM TT'<br/><small>'d 'de' mmmm 'de' yyyy'</small>'",
+			full_long: "d 'de' mmm 'de' yyyy 'a las' hh:MM TT",
+			full_long_small_date: "hh:MM TT'<br/><small>d 'de' mmm',' yyyy'</small>'"
 		},
 		messages: {
-			loading_timeline: "La cronología esta cargando",
-			return_to_title: "Volver al título",
-			expand_timeline: "Expandir la cronología",
+			loading_timeline: "Cargando la Cronología... ",
+			return_to_title: "Volver al Título",
+			expand_timeline: "Expandir la Cronología",
 			contract_timeline: "Reducir la cronología",
 			wikipedia: "Desde Wikipedia, la enciclopedia libre",
-			loading_content: "cargando",
-			loading: "cargando",
-			swipe_nav: "Swipe to Navigate"		}
+			loading_content: "Cargando Contenido",
+			loading: "Cargando",
+			swipe_nav: "Pasar a Navegación"
+		}
 	}
 }
