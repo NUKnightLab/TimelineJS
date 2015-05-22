@@ -232,7 +232,7 @@ You can tell TimelineJS to start at a specific slide number
 
 ###Start Zoom Adjust
 `start_zoom_adjust`
-This will tweak the default zoom level. Equivilent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.
+This will tweak the default zoom level. Equivalent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.
 *default is 0*
 
 ###Hash Bookmark 
