@@ -1,6 +1,6 @@
 /*
-    TimelineJS - ver. 2.36.0 - 2015-05-12
-    Copyright (c) 2012-2013 Northwestern University
+    TimelineJS - ver. 2015-06-09-18-26-18 - 2015-06-09
+    Copyright (c) 2012-2015 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
     This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
@@ -7435,7 +7435,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* BUILD DISPLAY
 		================================================== */
 		function build() {
-			
+			if (!(data && data.length && data.length > 0)) {
+				showMessege(null, "Error reading data.");
+				return;
+			}
 			// START AT SLIDE
 			if (parseInt(config.start_at_slide) > 0 && config.current_slide == 0) {
 				config.current_slide = parseInt(config.start_at_slide); 
@@ -7525,7 +7528,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate		= do_start.date;
 					_date.precisiondate	= do_start.precision;
 					
-					if (!isNaN(_date.startdate)) {
+					if (isNaN(_date.startdate)) {
+						trace("Failed to parse start date " + data.date[i].startDate);
+					} else {
 						
 					
 						// END DATE
@@ -7563,6 +7568,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 				
 			};
+
+			if (data.date.length != _dates.length) {
+				showMessege(null,"Error processing data. Check for invalid date formats.")
+				return;
+			}
 			
 			/* CUSTOM SORT
 			================================================== */
