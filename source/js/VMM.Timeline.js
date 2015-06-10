@@ -267,10 +267,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		function onDatesProcessed() {
-			build();
-		}
-		
 		function reSize() {
 			
 			updateSize();
@@ -553,6 +549,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		// BUILD DATE OBJECTS
+		// called from onDataReady, passes to function build 
 		function buildDates() {
 			
 			_dates = [];
@@ -695,7 +692,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				});
 			}
 			
-			onDatesProcessed();
+			build();
 		}
 		
 	};
