@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2015-06-09-18-26-18 - 2015-06-09
+    TimelineJS - ver. 2015-06-10-15-48-54 - 2015-06-10
     Copyright (c) 2012-2015 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -1500,7 +1500,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			}
 			
 			
-			if (type.of(d) == "date") {
+			if (type.of(d) != "date") {
+				trace("Expected a 'date' type");
+				return d;
+			} else {
 				
 				if (type.of(p) == "object") {
 					if (p.millisecond || p.second && d.getSeconds() >= 1) {
@@ -1611,9 +1614,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					}
 						
 				}
-			} else {
-				trace("NOT A VALID DATE?");
-				trace(d);
 			}
 				
 			if (is_pair) {
@@ -9569,6 +9569,10 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							}
 						
 							if (dd_type.match("start") || dd_type.match("title") ) {
+								if (data_obj.timeline.startDate) {
+									VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Multiple 'title' slides. You should only have one row with 'title' in the 'type' column.");
+									return;
+								}
 								data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
 								data_obj.timeline.headline		= getGVar(dd.gsx$headline);
 								data_obj.timeline.asset.media	= getGVar(dd.gsx$media);
