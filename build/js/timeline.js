@@ -1,5 +1,5 @@
 /*
-    TimelineJS - ver. 2015-06-10-15-48-54 - 2015-06-10
+    TimelineJS - ver. 2015-06-10-16-17-35 - 2015-06-10
     Copyright (c) 2012-2015 Northwestern University
     a project of the Northwestern University Knight Lab, originally created by Zach Wise
     https://github.com/NUKnightLab/TimelineJS
@@ -1500,10 +1500,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 			}
 			
 			
-			if (type.of(d) != "date") {
-				trace("Expected a 'date' type");
-				return d;
-			} else {
+			if (type.of(d) == "date") {
 				
 				if (type.of(p) == "object") {
 					if (p.millisecond || p.second && d.getSeconds() >= 1) {
@@ -1614,6 +1611,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Date == 'undefined') {
 					}
 						
 				}
+			} else {
+				trace("NOT A VALID DATE?");
+				trace(d);
 			}
 				
 			if (is_pair) {
@@ -7225,10 +7225,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			
 		};
 		
-		function onDatesProcessed() {
-			build();
-		}
-		
 		function reSize() {
 			
 			updateSize();
@@ -7435,7 +7431,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* BUILD DISPLAY
 		================================================== */
 		function build() {
-			if (!(data && data.length && data.length > 0)) {
+			if (!(data && data.date && data.date.length && data.date.length > 0)) {
 				showMessege(null, "Error reading data.");
 				return;
 			}
@@ -7511,6 +7507,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		// BUILD DATE OBJECTS
+		// called from onDataReady, passes to function build 
 		function buildDates() {
 			
 			_dates = [];
@@ -7653,7 +7650,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				});
 			}
 			
-			onDatesProcessed();
+			build();
 		}
 		
 	};
@@ -9570,7 +9567,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 						
 							if (dd_type.match("start") || dd_type.match("title") ) {
 								if (data_obj.timeline.startDate) {
-									VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Multiple 'title' slides. You should only have one row with 'title' in the 'type' column.");
+									VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Invalid data: Multiple 'title' slides. You should only have one row with 'title' in the 'type' column.");
 									return;
 								}
 								data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
