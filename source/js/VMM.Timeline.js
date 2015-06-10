@@ -473,10 +473,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* BUILD DISPLAY
 		================================================== */
 		function build() {
-			if (!(data && data.length && data.length > 0)) {
-				showMessege(null, "Error reading data.");
-				return;
-			}
 			// START AT SLIDE
 			if (parseInt(config.start_at_slide) > 0 && config.current_slide == 0) {
 				config.current_slide = parseInt(config.start_at_slide); 
