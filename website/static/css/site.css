@@ -22,7 +22,41 @@ footer {
   #overview hgroup {
     text-align: center;
   }
+  #teaser {
+      display: block;
+      margin: 30px 0 -10px;
+      font-family: sans-serif;
+      color: #147693;
+  }
+  .new {
+      font-style: italic;
+      color: #333;
+      font-weight: bold;
+      margin-right: 3px;
+  }
 
+  #teaser:hover,
+  #teaser:active,
+  #teaser:focus {
+      text-decoration: none;
+  }
+  #teaser .arrow {
+    border-radius: 20px;
+    background-color: #0f9bd1;
+    color: white;
+    padding: 0px 8px 4px;
+    font-size: 26px;
+    margin-left: 2px;
+    display: inline-block;
+  }
+  #teaser .arrow:before{
+      content: "»";
+    display: inline-block;
+
+  }
+  #teaser .arrow:hover {
+      background-color: #147693;
+  }
 /* Timeline */
 #demo { 
   width: 100%;
@@ -78,6 +112,7 @@ h2.intro {
   margin: 20px auto 30px;
   max-width: 900px;
   padding: 0 20px;
+  font-size: 36px;
 }
 #examples .row { 
   margin-bottom: 20px;
