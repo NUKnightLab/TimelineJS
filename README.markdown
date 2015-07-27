@@ -120,8 +120,6 @@ If for some reason you need more fine-grained control over your timeline, load t
 <!-- but no need for both -->
 ```
 
-If you need to use the files on an HTTPS server, you can change the beginning of the url from `https://cdn.knightlab.com/libs/timeline/` to `https://s3.amazonaws.com/cdn.knightlab.com/libs/timeline/` 
-
 If you need to serve copies of the files from your own server, use the entire contents of the ["/build/" directory](https://github.com/NUKnightLab/TimelineJS/tree/master/build) of our GitHub repository. If you use a local copy of `story-embed.js` it should automatically load the other Timeline resources from your server.
 	
 ## Config Options
