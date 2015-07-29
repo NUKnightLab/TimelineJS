@@ -5270,6 +5270,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			
 			VMM.Lib.width($slides_items, (slides.length * config.slider.content.width));
 			
+			if(typeof current_slide == "undefined"){
+				current_slide = 0;
+			}
+			
 			if (_from_start) {
 				VMM.Lib.css($slider_container, "left", slides[current_slide].leftpos());
 			}
