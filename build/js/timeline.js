@@ -532,6 +532,8 @@ if(typeof VMM != 'undefined') {
 					url = url.substr(colon+1); 
 			}
 			return jQuery.getJSON(url, data, callback);
+			//JSG 2015.Aug.24 return jQuery.ajax(url, data, callback); changed from getJSON to ajax based on:
+			//http://stackoverflow.com/questions/1002367/jquery-ajax-jsonp-ignores-a-timeout-and-doesnt-fire-the-error-event
 
 		}
 	}
@@ -7349,7 +7351,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			createConfig(c);
 			createStructure();
 			
-			if (type.of(_data) == "string") {
+			if (type.of(_data) == "string" || type.of(_data) == "object") {
 				config.source	= _data;
 			}
 			
