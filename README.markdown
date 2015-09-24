@@ -1,3 +1,15 @@
+# This Version of Timeline is no longer under development
+
+Knight Lab has created a new version at https://github.com/NUKnightLab/TimelineJS3 . The new library should work with existing Google Spreadsheets, but not existing TimelineJS JSON files. Knight Lab will continue to serve this version of Timeline from
+
+* https://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js
+* https://cdn.knightlab.com/libs/timeline/latest/js/timeline.js
+* https://cdn.knightlab.com/libs/timeline/latest/css/timeline.css
+
+However, no future development on this line of code is planned.
+
+----
+
 **Table of Contents**
 
 - [TimelineJS](#timelinejs)
@@ -24,8 +36,8 @@
 	- [Media](#media)
 	- [Best practices](#best-practices)
 	- [License](#license)
-	
-# TimelineJS 
+
+# TimelineJS
 ## Document history with TimelineJS
 
 There are lots of timeline tools on the web but they are almost all either
@@ -39,7 +51,7 @@ in the future.
 
 Creating one is as easy as filling in a Google spreadsheet or as detailed as
 JSON.
- 
+
 ## Add it to your site
 
 ### Using Inline (*easiest*)
@@ -100,7 +112,7 @@ Here's a simple example:
 		</script>
 		<!-- END TimelineJS -->
 	</head>
-	<body>	
+	<body>
 		<div id="my-timeline"></div>
 	</body>
 ```
@@ -121,7 +133,7 @@ If for some reason you need more fine-grained control over your timeline, load t
 ```
 
 If you need to serve copies of the files from your own server, use the entire contents of the ["/build/" directory](https://github.com/NUKnightLab/TimelineJS/tree/master/build) of our GitHub repository. If you use a local copy of `story-embed.js` it should automatically load the other Timeline resources from your server.
-	
+
 ## Config Options
 Here are some of the options you can set in the config.
 
@@ -218,12 +230,12 @@ Languages available:
 
 Help us add more. Grab a copy of a language file and replace it with your language [Example language file](https://github.com/NUKnightLab/TimelineJS/blob/master/source/js/Core/Language/locale/en.js) and find your language's [two letter code here](http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
-###Start at End 
+###Start at End
 `start_at_end`
 set to true to start the timeline on the last date.
 *default is false*
 
-###Start at Slide 
+###Start at Slide
 `start_at_slide`
 You can tell TimelineJS to start at a specific slide number
 *default is 0*
@@ -233,18 +245,18 @@ You can tell TimelineJS to start at a specific slide number
 This will tweak the default zoom level. Equivalent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.
 *default is 0*
 
-###Hash Bookmark 
+###Hash Bookmark
 `hash_bookmark`
 set to true to allow bookmarking slides using the hash tag
 *default is false*
 
-###Debug 
+###Debug
 `debug`
 Will log events etc to the console.
 *default is false*
 
 
-###Map Style Types 
+###Map Style Types
 Due to recent changes to the Google Maps API, you need a [API Key](https://developers.google.com/places/documentation/#Authentication) in order to use custom map types.
 `gmap_key:`
 *required in order to use maptype*
@@ -256,7 +268,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 	* `toner-labels`
 	* `watercolor`
 	* `sterrain`
-		
+
 * Google Maps
 	* `ROADMAP`
 	* `TERRAIN`
@@ -266,7 +278,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 * OpenStreetMap
 	- `osm`
 
-###Font Options 
+###Font Options
 `font:`
 * `AbrilFatface-Average` *Abril Fatface & Average*
 * `Arvo-PTSans` *Arvo & PT Sans*
@@ -297,7 +309,7 @@ Due to recent changes to the Google Maps API, you need a [API Key](https://devel
 JSON is the native data format for TimelineJS.
 
 Remember, JSON is picky. A misplaced comma or quotation mark can
-prevent the timeline from loading properly. 
+prevent the timeline from loading properly.
 
 Here is the full model:
 ```javascript
@@ -337,7 +349,7 @@ Here is the full model:
 				"text":"<p>Body text goes here, some HTML is OK</p>",
 				"tag":"This is Optional"
 			}
-			
+
 		]
 	}
 }
@@ -385,9 +397,9 @@ storyjs_jsonp_data = {
 				"headline":"Headline Goes Here",
 				"tag":"This is Optional"
 			}
-			
+
 		]
-		
+
 	}
 }
 ```
@@ -406,7 +418,7 @@ using Google Docs:
   1. Make the spreadsheet public:   
 	Google Docs are automatically set to private but the spreadsheet must be
 	public.
-	
+
 	Click the blue “Share” button on the top right-hand corner. In the “Share
 	settings” window, you’ll see the private setting of the spreadsheet: click
 	“Change...”. In the Visibility options window, choose “Public on the Web” and
@@ -414,7 +426,7 @@ using Google Docs:
 
   2. Publish to the Web  
 	Under the File menu, select “Publish to the Web.”
-	
+
 	In the next window, check the box next to “Automatically republish when
 	changes are made.” Uncheck all other boxes. Click “start publishing.” This
 	will give you the URL to embed in your HTML file.
@@ -425,7 +437,7 @@ using Google Docs:
 	etc.), then paste it into the timeline’s HTML file (see [Add it to your site](#add-it-to-your-site) )
 
 
-	
+
 ### Storify:
 
 Support for Storify is still in its early stages. It works though. Just paste a link to the storify story as the source.
@@ -448,10 +460,8 @@ Tips and tricks to best utilize TimelineJS
   2. Pick stories that have a strong chronological narrative. It does not work well for stories that need to jump around in the timeline.
   3. Include events that build up to major occurrences, not just the major events.
   4. Don't overwhelm the user. A timeline with hundreds of events is probably not the best use of the format.
-  
+
 ## License
 This Source Code Form is subject to the terms of the Mozilla Public
 License, v. 2.0. If a copy of the MPL was not distributed with this
 file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-
