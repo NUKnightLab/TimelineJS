@@ -92,10 +92,7 @@ if __name__ == "__main__":
         opts, args = getopt.getopt(sys.argv[1:], "sp:", ["port="])
         for opt, arg in opts:
             if opt == '-s':
-                ssl_context = (
-                    os.path.join(site_dir, 'website.crt'), 
-                    os.path.join(site_dir, 'website.key'))
-
+                ssl_context = 'adhoc'
             elif opt in ('-p', '--port'):
                 port = int(arg)
             else:
