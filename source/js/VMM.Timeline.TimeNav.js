@@ -1231,7 +1231,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				VMM.Lib.css(int_obj.element, "text-indent", -(VMM.Lib.width(int_obj.element)/2));
 				VMM.Lib.css(int_obj.element, "opacity", "0");
 				
-				// add the interval element to the array
+				// Add the interval element to the array
 				_array.push(int_obj);
 				
 			}
