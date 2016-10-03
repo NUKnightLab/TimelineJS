@@ -52,7 +52,7 @@ if(typeof VMM != 'undefined') {
                 "Jeu.",
                 "Vend.",
                 "Sam."
-            ],
+            ]
         },
         era_labels: { // specify prefix or suffix to apply to formatted date. Blanks mean no change.
             positive_year: {
