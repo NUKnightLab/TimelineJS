@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>InstaDiary</title>
+		<meta name="description" content="Insta Diary">
+
+		<style>
+			html, body {
+				height:100%;
+				padding: 0px;
+				margin: 0px;
+			}
+			#timeline-embed{
+				margin:0px !important;
+				border:0px solid #CCC !important;
+				padding:0px !important;
+				-webkit-border-radius:0px !important;
+				-moz-border-radius:0px !important;
+				border-radius:0px !important;
+				-moz-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				-webkit-box-shadow:0 0px 0px rgba(0, 0, 0, 0.25) !important;
+				box-shadow:0px 0px 0px rgba(0, 0, 0, 0.25) !important;
+			}
+			
+		</style>
+				<script type="text/javascript" src="../compiled/lib/jquery-min.js">	</script>
+	</head>
+
+	<body>
+		<div id="timeline-embed"></div>
+
+		<script type="text/javascript">
+		var timeline_config;
+		var access_tokeninsta ="provide the access_token here";
+		var userid = "provide the user id here";
+
+		
+		var fetch_url = "https://api.instagram.com/v1/users/"+userid+"/media/recent/?access_token="+access_tokeninsta;
+		
+			$(document).ready(function(){
+				$.get(fetch_url,function(response){
+
+					var data2load = 
+				'{"timeline": {"headline":"Instagram Diary of User '+response.data[0].user.full_name+'","type":"default","text":"Singam","asset":{"media":"'+response.data[0].user.profile_picture+'","credit":"MainCredit","caption":"MainCaption"},"date" : [';
+
+					response.data.forEach(function(element,index){
+						if(index!=0)
+						{
+							data2load += ',';
+						}
+						data2load += '{';
+						data2load += '"startDate":"'+(new Date(element.created_time*1000)).toJSON()+'",';
+						if(element.caption != null)
+						{
+							data2load += '"headline":"<section contenteditable=\\"true\\">'+element.caption.text.replace(/[^a-zA-Z 0-9.]+/g,'')+'</section>",';	
+						}
+						else
+						{
+							data2load += '"headline":"<section contenteditable=\\"true\\">HEadline</section>",';
+						}
+						data2load += '"text":"Likes = '+element.likes.count+'<br/><h4>Comments </h4> <br/><section contenteditable=\\"true\\"><ul>';
+						element.comments.data.forEach(function(comment){
+							data2load +=	 "<li><b>"+comment.from.full_name.replace(/[^a-zA-Z 0-9.]+/g,'')+"</b>  - "+comment.text.replace(/[^a-zA-Z 0-9.]+/g,'')+"</li>";
+						});
+						data2load += '</ul></section>","asset": { "media":"'+element.images.standard_resolution.url+'",';
+						data2load += '"thumbnail":"'+element.images.thumbnail.url+'",';
+						data2load += '"credit":"simplecredit","caption":"simplecaption"}}';
+
+						
+					});	
+
+					data2load += 	'] } }';
+
+					var objdata2load = JSON.parse(data2load);
+					timeline_config = {
+						width: 	"100%",
+						height: "100%",
+						source: objdata2load,
+						//start_at_end:	true,					//OPTIONAL
+						//hash_bookmark: true,					//OPTIONAL
+						css: 	'../compiled/css/timeline.css',	//OPTIONAL
+						js: 	'../compiled/js/timeline-min.js'	//OPTIONAL
+					};
+					
+					var loadembed = document.createElement('script');
+					loadembed.setAttribute("type","text/javascript");
+					loadembed.setAttribute("src","../compiled/js/timeline-embed.js");
+						
+					if (typeof loadembed!="undefined")
+					{
+						 document.getElementsByTagName("head")[0].appendChild(loadembed);
+					}
+				});	
+			});
+		</script>
+
+	</body>
+</html>
