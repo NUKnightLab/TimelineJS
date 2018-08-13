@@ -1,0 +1,111 @@
+{
+    "type":"object",
+    "$schema": "http://json-schema.org/draft-03/schema",
+    "id": "http://jsonschema.net",
+    "required":true,
+    "properties":{ 
+        "timeline": { 
+            "type":"object", 
+            "id": "http://jsonschema.net/timeline", 
+            "required":true, 
+            "properties":{
+                "headline": { 
+                    "type":"string", 
+                    "id": "http://jsonschema.net/timeline/headline", 
+                    "required":false 
+                }, 
+                "text": { 
+                    "type":"string", 
+                    "id": "http://jsonschema.net/timeline/text", 
+                    "required":false 
+                },
+                "type": { 
+                    "type":"string", 
+                    "id": "http://jsonschema.net/timeline/type", 
+                    "required": true,
+                    "default": "default"
+                }, 
+                "asset": { 
+                    "type":"object", 
+                    "id": "http://jsonschema.net/timeline/asset", 
+                    "required":false, 
+                    "properties":{ 
+                        "caption": { 
+                            "type":"string", 
+                            "id": "http://jsonschema.net/timeline/asset/caption", 
+                            "required":false 
+                        }, 
+                        "credit": { 
+                            "type":"string", 
+                            "id": "http://jsonschema.net/timeline/asset/credit", 
+                            "required":false 
+                        }, "media": { 
+                            "type":"string", 
+                            "id": "http://jsonschema.net/timeline/asset/media", 
+                            "required":false 
+                        } 
+                    } 
+                }, 
+                "date": { 
+                    "type":"array", 
+                    "id": "http://jsonschema.net/timeline/date", 
+                    "required":false, 
+                    "items": { 
+                        "type":"object", 
+                        "id": "http://jsonschema.net/timeline/date/0", 
+                        "required":false, 
+                        "properties":{
+                            "startDate": { 
+                                "type":"string", 
+                                "id": "http://jsonschema.net/timeline/date/0/startDate", 
+                                "required":false 
+                            },
+                            "endDate": { 
+                                "type":"string", 
+                                "id": "http://jsonschema.net/timeline/date/0/endDate", 
+                                "required":false 
+                            },
+                            "headline": { 
+                                "type":"string", 
+                                "id": "http://jsonschema.net/timeline/date/0/headline", 
+                                "required":false 
+                            },
+                            "text": { 
+                                "type":"string", 
+                                "id": "http://jsonschema.net/timeline/date/0/text", 
+                                "required":false 
+                            },
+                            "asset": { 
+                                "type":"object", 
+                                "id": "http://jsonschema.net/timeline/date/0/asset", 
+                                "required":false, 
+                                "properties":{ 
+                                    "caption": { 
+                                        "type":"string", 
+                                        "id": "http://jsonschema.net/timeline/date/0/asset/caption", 
+                                        "required":false 
+                                    }, 
+                                    "credit": { 
+                                        "type":"string", 
+                                        "id": "http://jsonschema.net/timeline/date/0/asset/credit", 
+                                        "required":false 
+                                    }, 
+                                    "media": { 
+                                        "type":"string", 
+                                        "id": "http://jsonschema.net/timeline/date/0/asset/media", 
+                                        "required":false 
+                                    },
+                                    "thumbnail": {
+                                        "type":"string", 
+                                        "id": "http://jsonschema.net/timeline/date/0/asset/thumbnail", 
+                                        "required":false 
+                                    }
+                                } 
+                            }
+                        } 
+                    } 
+                }
+            } 
+        } 
+    }
+}
