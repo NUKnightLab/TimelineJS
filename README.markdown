@@ -1,6 +1,10 @@
 # This Version of Timeline is no longer under development
 
-Knight Lab has created a new version at https://github.com/NUKnightLab/TimelineJS3 . The new library should work with existing Google Spreadsheets, but not existing TimelineJS JSON files. Knight Lab will continue to serve this version of Timeline from
+Therefore, GitHub issues and pull requests have been disabled. 
+
+Knight Lab has created a new version at https://github.com/NUKnightLab/TimelineJS3 . The new library should work with existing Google Spreadsheets, but not existing TimelineJS JSON files. The new version of TimelineJS requires a new JSON format, and there is no direct conversion tool, although it should not be too complicated to manually or programatically convert an old JSON file.
+
+Knight Lab will continue to serve this version of Timeline from
 
 * https://cdn.knightlab.com/libs/timeline/latest/js/timeline-min.js
 * https://cdn.knightlab.com/libs/timeline/latest/js/timeline.js
