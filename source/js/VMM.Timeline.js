@@ -440,7 +440,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			slider.setSlide(0);
 			timenav.setMarker(0, config.ease,config.duration);
 		};
-		
+		//call this function before loading timeline with new data
+		this.reset = function() {
+			config.current_slide = 0;
+			slider.setSlide(0);
+			timenav.setMarker(0, config.ease,config.duration);
+		}
 		/* DATA 
 		================================================== */
 		function getData(url) {
