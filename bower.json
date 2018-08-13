@@ -8,12 +8,7 @@
   ],
   "description": "A Storytelling Timeline built in JavaScript.",
   "main": [
-    "build/js/timeline.js",
-    "build/css/timeline.css",
-    "build/embed/index.html",
-    "build/js/storyjs-embed.js",
-    "build/js/storyjs-embed-generator.js",
-    "build/js/storyjs-embed-cdn.js"
+    "build"
   ],
   "keywords": [
     "timeline",
