@@ -28,7 +28,7 @@ if(typeof VMM != 'undefined') {
             loading_timeline: "Chargiar la cronologia... ",
             return_to_title: "Turnar al titel",
             expand_timeline: "Expander la cronologia",
-            contract_timeline: "Contract Timeline",
+            contract_timeline: "Reducir la cronologia",
             wikipedia: "Da Vichipedia, l'enciclopedia libra",
             loading_content: "Chargiar il cuntegn",
             loading: "Chargiar"
