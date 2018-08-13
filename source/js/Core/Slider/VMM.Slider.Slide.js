@@ -22,6 +22,7 @@ if (typeof VMM.Slider != 'undefined') {
 		_id				= _id + data.uniqueid;
 		this.enqueue	= _enqueue;
 		this.id			= _id;
+		this.slideName = data.slideName;
 		
 		
 		element		=	VMM.appendAndGetElement(_parent, "<div>", "slider-item");
