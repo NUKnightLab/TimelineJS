@@ -166,7 +166,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 						
 			getOEmbed: function(tweet, callback) {
 				
-				var the_url = "//api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
+				var the_url = "https://api.twitter.com/1/statuses/oembed.json?id=" + tweet.mid + "&omit_script=true&include_entities=true&callback=?",
 					twitter_timeout	= setTimeout(VMM.ExternalAPI.twitter.errorTimeOutOembed, VMM.master_config.timers.api, tweet);
 					//callback_timeout= setTimeout(callback, VMM.master_config.timers.api, tweet);
 				
@@ -210,7 +210,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 			
 			getHTML: function(id) {
 				//var the_url = document.location.protocol + "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&callback=?";
-				var the_url = "//api.twitter.com/1/statuses/oembed.json?id=" + id+ "&omit_script=true&include_entities=true&callback=?";
+				var the_url = "https://api.twitter.com/1/statuses/oembed.json?id=" + id+ "&omit_script=true&include_entities=true&callback=?";
 				VMM.getJSON(the_url, VMM.ExternalAPI.twitter.onJSONLoaded);
 			},
 			
@@ -898,7 +898,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				}
 			},
 			
-			map_subdomains: ["", "a.", "b.", "c.", "d."],
+			map_subdomains: ["a", "b", "c", "d"],
 			
 			map_attribution: {
 				"stamen": 			"Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://creativecommons.org/licenses/by-sa/3.0'>CC BY SA</a>.",
@@ -908,26 +908,26 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 									
 			map_providers: {
 				"toner": {
-					"url": 			"//{S}tile.stamen.com/toner/{Z}/{X}/{Y}.png",
+					"url": "https://stamen-tiles-{S}.a.ssl.fastly.net/toner/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 					
 				},
 				"toner-lines": {
-					"url": 			"//{S}tile.stamen.com/toner-lines/{Z}/{X}/{Y}.png",
+					"url": "https://stamen-tiles-{S}.a.ssl.fastly.net/toner-lines/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"toner-labels": {
-					"url": 			"//{S}tile.stamen.com/toner-labels/{Z}/{X}/{Y}.png",
+					"url": "https://stamen-tiles-{S}.a.ssl.fastly.net/toner-labels/{Z}/{X}/{Y}.png",
 					"minZoom": 		0,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
 				},
 				"sterrain": {
-					"url": 			"//{S}tile.stamen.com/terrain/{Z}/{X}/{Y}.jpg",
+					"url": "https://stamen-tiles-{S}.a.ssl.fastly.net/terrain/{Z}/{X}/{Y}.jpg",
 					"minZoom": 		4,
 					"maxZoom": 		20,
 					"attribution": 	"stamen"
@@ -939,7 +939,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 					"attribution": 	"apple"
 				},
 				"watercolor": {
-					"url": 			"//{S}tile.stamen.com/watercolor/{Z}/{X}/{Y}.jpg",
+					"url": "https://stamen-tiles-{S}.a.ssl.fastly.net/watercolor/{Z}/{X}/{Y}.jpg",
 					"minZoom": 		3,
 					"maxZoom": 		16,
 					"attribution": 	"stamen"
@@ -1566,7 +1566,7 @@ if(typeof VMM != 'undefined' && typeof VMM.ExternalAPI == 'undefined') {
 				
 				// VIDEO
 				// TODO: NEED TO ADD ASYNC SCRIPT TO TIMELINE FLOW
-				VMM.attachElement("#" + m.uid, "<iframe frameborder='0' width='100%' height='100%' src='" + video_url + "'></iframe><script async src='http://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>");
+				VMM.attachElement("#" + m.uid, "<iframe frameborder='0' width='100%' height='100%' src='" + video_url + "'></iframe><script async src='https://platform.vine.co/static/scripts/embed.js' charset='utf-8'></script>");
 				
 			},
 			

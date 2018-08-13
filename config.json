@@ -147,7 +147,7 @@
                 "template": [
                     "/*",
                     "    TimelineJS - ver. %(version)s - %(date)s",
-                    "    Copyright (c) 2012-2013 Northwestern University",
+                    "    Copyright (c) 2012-2015 Northwestern University",
                     "    a project of the Northwestern University Knight Lab, originally created by Zach Wise",
                     "    https://github.com/NUKnightLab/TimelineJS",
                     "    This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.",
@@ -175,8 +175,24 @@
     // - copy website/static >> build/website/static
     // - run usemin on all html in build/website
     // - sync build/website with bucket
-    "deploy": {
-        "stg": {"bucket": "timeline.knilab.com"},
-        "prd": {"bucket": "timeline.knightlab.com"}
+     "deploy": {
+        "stg": {
+            "bucket": "timeline.knilab.com", 
+            "usemin_context": {
+                "cdn": "dev"
+            },
+            "deploy_context": {
+                "generator_embed_path": "https://cdn.knightlab.com/libs/timeline/dev/embed/index.html"
+            }                
+        },
+        "prd": {
+            "bucket": "timeline.knightlab.com", 
+            "usemin_context": {
+                "cdn": "latest"
+            },
+            "deploy_context": {
+                "generator_embed_path": "https://cdn.knightlab.com/libs/timeline/latest/embed/index.html"
+            }                
+        }
     }
 }

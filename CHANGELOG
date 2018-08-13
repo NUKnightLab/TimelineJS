@@ -1,9 +1,30 @@
-2.35.3 (pending)
+2.35.6 (2015-03-25)
 ------
+Restore original animation/easing (revert pull #681)
+
+2.35.5 (2015-02-26)
+------
+#672,679,681,683 a series of presentation/performance tweaks from @acdha
+Fix auto-linking regression
+
+2.35.4 (2015-02-17)
+------
+Fix Stamen map tile URL bug
+
+
+2.35.3 (2015-02-17)
+------
+#673 Update Taiwanese locale
+#689 Update Thai locale
 #693 Update Polish locale
+#705 Frisian localization
+#722 Support 'youtubeTheme' config option
 #732 Updated German Translations
 #733 Move "Swipe to Navigate" to I18N. Now we need translations for 55 languages!
-#722 Support 'youtubeTheme' config option
+#744 Hindi localization
+#745 Update Icelandic date formats
+#749 Irish localization
+#762 Belarusian localization
 
 2.35.2 (2014-11-24)
 ------

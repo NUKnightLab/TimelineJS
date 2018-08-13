@@ -125,15 +125,15 @@ if(typeof VMM != 'undefined' && typeof VMM.MediaType == 'undefined') {
 			media.type = "googledoc";
 			media.id = d;
 			success = true;
-		} else if (d.match('(www.)?wikipedia\.org')) {
+		} else if (d.match('^(?:http|https)://.*wikipedia\.org/wiki/([^\s#]+)')) {
 			media.type = "wikipedia";
 			//media.id = d.split("wiki\/")[1];
 			// TODO Issue #618 better splitting
-			var wiki_id = d.split("wiki\/")[1].split("#")[0].replace("_", " ");
+			var wiki_id = d.match('^(?:http|https)://.*wikipedia\.org/wiki/([^\s#]+)')[1].replace("_", " ");
 			media.id = wiki_id.replace(" ", "%20");
 			media.lang = d.split("//")[1].split(".wikipedia")[0];
 			success = true;
-		} else if (d.indexOf('http://') == 0) {
+		} else if (d.indexOf('http://') == 0 || d.indexOf('https://') == 0) {
 			media.type = "website";
 			media.id = d;
 			success = true;

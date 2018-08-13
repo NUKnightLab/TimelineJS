@@ -5,7 +5,10 @@
     <div class="span12">
       <h2>Make a Timeline</h2>
       <p>TimelineJS works on any site or blog. Make your own in four easy steps. (<a href="http://www.youtube.com/watch?v=vAWbm4gF9lU">video tutorial</a>)</p>
-    </div>
+      <div id="body-teaser">
+        <p><span class="new">New!</span>There's a new version of TimelineJS that is now available for beta testing. TimelineJS 3 is a full rewrite designed to make this popular tool more flexible for authors and developers.</p>
+        <a class="btn btn-success" href="https://timeline3.knightlab.com">Try TimelineJS 3 now »</a>
+      </div>
   </div>
 
   <!-- Step 1 -->
@@ -26,11 +29,13 @@
       <div class="row">
         <div class="span5">
           <p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_small.png" alt="Publish to Web"></p>
+          <p>Under the File menu, select <em>&ldquo;Publish to the Web.&rdquo;</em></p>
+          <p>In the next window, click the blue "publish" button. When asked, "Are you sure…?" click OK.</p>
+          <p>Now, copy the URL that appears in the center of the window. You'll use this in the next step.</p>
         </div>
         <div class="span6">
-          <p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_url_small.png" alt="Publish to Web"></p>
-          <p>Under the File menu, select <em>&ldquo;Publish to the Web.&rdquo;</em></p>
-          <p>In the next window, check <em>&ldquo;Automatically republish when changes are made.&rdquo;</em> Uncheck all other boxes. Click <em>&ldquo;start publishing.&rdquo;</em> This will give you the URL to embed in your HTML file.</p>
+          <p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_button_small.png" alt="Publish to Web 2"></p><p><img class="img-rounded img-polaroid" src="{{ static_url }}/img/make/publish_to_web_url_small.png" alt="Publish to Web 3"></p>
+          
         </div>
       </div>
     </div>
@@ -76,6 +81,7 @@
                 <option value="ar">Arabic</option>
                 <option value="hy">Armenian</option>
                 <option value="eu">Basque</option>
+                <option value="be">Belarusian</option>
                 <option value="bg">Bulgarian</option>
                 <option value="ca">Catalan</option>
                 <option value="zh-cn">Chinese</option>
@@ -89,14 +95,17 @@
                 <option value="fa">Farsi</option>
                 <option value="fi">Finnish</option>
                 <option value="fr">French</option>
+                <option value="fy">Frisian</option>
                 <option value="gl">Galician</option>
                 <option value="ka">Georgian</option>
                 <option value="de">German / Deutsch</option>
                 <option value="el">Greek</option>
                 <option value="he">Hebrew</option>
+                <option value="hi">Hindi</option>
                 <option value="hu">Hungarian</option>
                 <option value="is">Icelandic</option>
                 <option value="id">Indonesian</option>
+                <option value="ga">Irish</option>
                 <option value="it">Italian</option>
                 <option value="ja">Japanese</option>
                 <option value="ko">Korean</option>
@@ -203,7 +212,7 @@
             <label class="control-label">Adjust the default calculated zoom level</label>
             <div class="controls">
               <input id="embed-startzoomadjust" type="text" value="0" placeholder="0" class="input-mini">
-              <p class="help-block">This will tweak the default zoom level. Equivilent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.</p>
+              <p class="help-block">This will tweak the default zoom level. Equivalent to pressing the zoom in or zoom out button the specified number of times. Negative numbers zoom out.</p>
             </div>
           </div>
           <!-- Start at Slide-->
@@ -227,7 +236,7 @@
     <div class="span11">
       <h4>Embed the code into your website</h4>
       <p>Grab the embed code and paste it on your site where you want your TimelineJS to appear (just like a YouTube video).</p>
-      <textarea readonly="readonly" style="width: 100%; height: 160px; min-height: 110px; max-height: 300px; resize: none; font-family: Menlo,Monaco,'Courier New',monospace; font-size: 12px;" id="embed_code"><iframe src='http://cdn.knightlab.com/libs/timeline/latest/embed/?source=0Agl_Dv6iEbDadHdKcHlHcTB5bzhvbF9iTWwyMmJHdkE&font=Bevan-PotanoSans&maptype=toner&width=600&height=600' width='600' height='600' frameborder='0'></iframe></textarea><br><br>
+      <textarea readonly="readonly" style="width: 100%; height: 160px; min-height: 110px; max-height: 300px; resize: none; font-family: Menlo,Monaco,'Courier New',monospace; font-size: 12px;" id="embed_code"><iframe src='https://cdn.knightlab.com/libs/timeline/latest/embed/?source=0Agl_Dv6iEbDadHdKcHlHcTB5bzhvbF9iTWwyMmJHdkE&font=Bevan-PotanoSans&maptype=toner&width=600&height=600' width='600' height='600' frameborder='0'></iframe></textarea><br><br>
       <p><a href="#preview-embed" data-scroll="true" id="iframe-preview-button" class="btn btn-primary">Preview</a> 
       <a href="#preview-embed" data-scroll="true" id="preview-embed-link" target="_blank" class="btn">Link to Preview</a></p>
     </div>

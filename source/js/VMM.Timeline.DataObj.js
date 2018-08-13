@@ -263,6 +263,10 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 							}
 						
 							if (dd_type.match("start") || dd_type.match("title") ) {
+								if (data_obj.timeline.startDate) {
+									VMM.fireEvent(global, VMM.Timeline.Config.events.messege, "Invalid data: Multiple 'title' slides. You should only have one row with 'title' in the 'type' column.");
+									return;
+								}
 								data_obj.timeline.startDate		= getGVar(dd.gsx$startdate);
 								data_obj.timeline.headline		= getGVar(dd.gsx$headline);
 								data_obj.timeline.asset.media	= getGVar(dd.gsx$media);

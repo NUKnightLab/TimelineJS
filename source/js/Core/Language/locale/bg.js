@@ -18,7 +18,7 @@ if(typeof VMM != 'undefined') {
 			month: "mmmm yyyy",
 			full_short: "d mmm",
 			full: "d mmmm yyyy",
-			time_short: "h:MM:SS TT",
+			time_short: "h:MM:ss TT",
 			time_no_seconds_short: "h:MM TT",
 			time_no_seconds_small_date: "h:MM TT'<br/><small>'d mmmm yyyy'</small>'",
 			full_long: "d mmm yyyy 'at' h:MM TT",
@@ -32,6 +32,6 @@ if(typeof VMM != 'undefined') {
 			wikipedia: "От Уикипедия, свободната енциклопедия",
 			loading_content: "Съдържанието се зарежда",
 			loading: "Зарежда се",
-			swipe_nav: "Swipe to Navigate"		}
+			swipe_nav: "Сменяйте с плъзгане настрани"		}
 	}
 }

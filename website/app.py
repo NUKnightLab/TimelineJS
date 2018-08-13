@@ -74,13 +74,32 @@ def catch_source(path):
    
 @app.route('/')
 @app.route('/<path:path>')
-def catch_all(path='index.html'):
+def catch_all(path='index.html', context=None):
     """Catch-all function which serves every URL."""
-      
+    context = context or {}
     if not os.path.splitext(path)[1]:
         path = os.path.join(path, 'index.html')
-    return render_template(path)
+    return render_template(path, **context)
     
         
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    import getopt
+    
+    ssl_context = None
+    port = 5000
+    
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "sp:", ["port="])
+        for opt, arg in opts:
+            if opt == '-s':
+                ssl_context = 'adhoc'
+            elif opt in ('-p', '--port'):
+                port = int(arg)
+            else:
+                print 'Usage: app.py [-s]'
+                sys.exit(1)   
+    except getopt.GetoptError:
+        print 'Usage: app.py [-s] [-p port]'
+        sys.exit(1)
+       
+    app.run(host='0.0.0.0', port=5000, debug=True, ssl_context=ssl_context)

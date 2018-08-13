@@ -135,7 +135,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			ease: 					"easeInOutExpo",
 			duration: 				1000,
 			gmap_key: 				"",
-			language: 				VMM.Language
+			language: 				VMM.Language,
+			tagSortFunction: 		function (arr) {
+				arr.sort(function (a, b) {
+					return a.localeCompare(b);
+				})
+			}
 		};
 		
 		if ( w != null && w != "") {
@@ -261,10 +266,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			buildDates();
 			
 		};
-		
-		function onDatesProcessed() {
-			build();
-		}
 		
 		function reSize() {
 			
@@ -472,7 +473,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		/* BUILD DISPLAY
 		================================================== */
 		function build() {
-			
 			// START AT SLIDE
 			if (parseInt(config.start_at_slide) > 0 && config.current_slide == 0) {
 				config.current_slide = parseInt(config.start_at_slide); 
@@ -545,6 +545,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		};
 		
 		// BUILD DATE OBJECTS
+		// called from onDataReady, passes to function build 
 		function buildDates() {
 			
 			_dates = [];
@@ -562,7 +563,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 					_date.startdate		= do_start.date;
 					_date.precisiondate	= do_start.precision;
 					
-					if (!isNaN(_date.startdate)) {
+					if (isNaN(_date.startdate)) {
+						trace("Failed to parse start date " + data.date[i].startDate);
+					} else {
 						
 					
 						// END DATE
@@ -600,6 +603,11 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				}
 				
 			};
+
+			if (data.date.length != _dates.length) {
+				showMessege(null,"Error processing data. Check for invalid date formats.")
+				return;
+			}
 			
 			/* CUSTOM SORT
 			================================================== */
@@ -680,7 +688,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				});
 			}
 			
-			onDatesProcessed();
+			build();
 		}
 		
 	};
