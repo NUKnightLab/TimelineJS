@@ -1205,11 +1205,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				}
 				
 				if (_is_year) {
-					if ( int_obj.date.getFullYear() < 0 ) {
-						int_obj.date_string = 	Math.abs( int_obj.date.getFullYear() ).toString() + " B.C.";
-					} else {
-						int_obj.date_string = int_obj.date.getFullYear();
-					}
+					int_obj.date_string = VMM.Calendar.getFullYear(int_obj.date);
 				} else {
 					int_obj.date_string = VMM.Date.prettyDate(int_obj.date, true);
 				}

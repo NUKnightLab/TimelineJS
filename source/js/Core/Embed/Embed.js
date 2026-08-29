@@ -92,6 +92,7 @@ function createStoryJS(c, src) {
 			height:		'100%',
 			source:		'https://docs.google.com/spreadsheet/pub?key=0Agl_Dv6iEbDadFYzRjJPUGktY0NkWXFUWkVIZDNGRHc&output=html',
 			lang:		'en',
+			calendar:   'Gregorian',
 			font:		'default',
 			css:		path.css + 'timeline.css?'+js_version,
 			js:			'',
@@ -184,7 +185,12 @@ function createStoryJS(c, src) {
 		path.locale = path.locale + storyjs_e_config.lang + ".js?" + js_version;
 	}
 	
-		
+	/* PREPARE CALENDAR
+	================================================== */
+	if (storyjs_e_config.calendar != "Gregorian") {
+		path.calendar = storyjs_e_config.calendar;
+	}
+	
 	/* PREPARE
 	================================================== */
 	createEmbedDiv();
@@ -267,10 +273,21 @@ function createStoryJS(c, src) {
 		} else {
 			ready.language = true;
 		}
+		
+		if (storyjs_e_config.calendar != "Gregorian") {
+			LazyLoad.js(path.calendar, onloaded_calendar);
+		} else {
+			ready.calendar = true;
+		}
+	
 		onloaded_check();
 	}
 	function onloaded_language() {
 		ready.language = true;
+		onloaded_check();
+	}
+	function onloaded_calendar() {
+		ready.calendar = true;
 		onloaded_check();
 	}
 	function onloaded_css() {
@@ -291,7 +308,7 @@ function createStoryJS(c, src) {
 			alert("Error Loading Files");
 		} else {
 			ready.checks++;
-			if (ready.js && ready.css && ready.font.css && ready.font.js && ready.language) {
+			if (ready.js && ready.css && ready.font.css && ready.font.js && ready.language && ready.calendar) {
 				if (!ready.finished) {
 					ready.finished = true;
 					buildEmbed();
