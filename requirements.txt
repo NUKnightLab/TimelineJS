@@ -10,3 +10,5 @@ ply==3.4
 pycrypto==2.6
 wsgiref==0.1.2
 python-magic==0.4.6
+pyOpenSSL==0.15.1
+
